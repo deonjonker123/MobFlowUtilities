@@ -1,0 +1,22 @@
+All Rights Reserved
+
+Copyright (c) 2025 [MisterD Modding]
+
+All rights reserved. No part of this software, including but not limited to 
+source code, compiled binaries, assets, documentation, or associated files 
+(the "Software"), may be reproduced, distributed, transmitted, modified, 
+adapted, or used in any form or by any means, without the prior written 
+permission of the copyright holder.
+
+MODPACK EXCEPTION: This mod may be freely included in any modpack, whether 
+private or public, without requiring permission from the copyright holder. 
+Modpack creators are encouraged to provide credit and a link to the original 
+mod page where possible, but this is not required.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
