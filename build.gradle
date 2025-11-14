@@ -46,6 +46,10 @@ neoForge {
         minecraftVersion = project.parchment_minecraft_version
     }
 
+    accessTransformers {
+        file('src/main/resources/META-INF/accesstransformer.cfg')
+    }
+
     // This line is optional. Access Transformers are automatically detected
     // accessTransformers = project.files('src/main/resources/META-INF/accesstransformer.cfg')
 
@@ -175,4 +179,18 @@ idea {
         downloadSources = true
         downloadJavadoc = true
     }
+}
+
+tasks.configureEach {
+    if (name == 'createMinecraftArtifacts') {
+        mustRunAfter 'generateModMetadata'
+    }
+}
+
+tasks.named('jar') {
+    dependsOn 'generateModMetadata'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.incremental = false
 }

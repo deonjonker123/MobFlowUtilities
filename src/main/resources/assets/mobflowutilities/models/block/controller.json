@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "north": "mobflowutilities:block/controller_front_on",
+    "south": "mobflowutilities:block/controller_side",
+    "east": "mobflowutilities:block/controller_side",
+    "west": "mobflowutilities:block/controller_side",
+    "up": "mobflowutilities:block/controller_top",
+    "down": "mobflowutilities:block/controller_bottom",
+    "particle": "mobflowutilities:block/controller_front_on"
+  }
+}

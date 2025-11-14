@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "mobflowutilities:block/controller"
+    },
+    "facing=south": {
+      "model": "mobflowutilities:block/controller",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "mobflowutilities:block/controller",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "mobflowutilities:block/controller",
+      "y": 270
+    }
+  }
+}

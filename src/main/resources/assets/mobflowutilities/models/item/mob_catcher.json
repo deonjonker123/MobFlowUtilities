@@ -1,0 +1,14 @@
+{
+    "parent": "minecraft:item/generated",
+    "textures": {
+        "layer0": "mobflowutilities:item/mob_catcher"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "mobflowutilities:occupied": 1
+            },
+            "model": "mobflowutilities:item/mob_catcher_occupied"
+        }
+    ]
+}

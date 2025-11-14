@@ -1,0 +1,19 @@
+{
+	"variants": {
+		"facing=north": {
+			"model": "mobflowutilities:block/flow_pad_fast"
+		},
+		"facing=south": {
+			"model": "mobflowutilities:block/flow_pad_fast",
+			"y": 180
+		},
+		"facing=east": {
+			"model": "mobflowutilities:block/flow_pad_fast",
+			"y": 90
+		},
+		"facing=west": {
+			"model": "mobflowutilities:block/flow_pad_fast",
+			"y": 270
+		}
+	}
+}

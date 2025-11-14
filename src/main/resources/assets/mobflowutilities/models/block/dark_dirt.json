@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "north": "mobflowutilities:block/dark_dirt_sides",
+    "south": "mobflowutilities:block/dark_dirt_sides",
+    "east": "mobflowutilities:block/dark_dirt_sides",
+    "west": "mobflowutilities:block/dark_dirt_sides",
+    "up": "mobflowutilities:block/dark_dirt_top",
+    "down": "mobflowutilities:block/grass_bottom",
+    "particle": "mobflowutilities:block/dark_dirt_top"
+  }
+}

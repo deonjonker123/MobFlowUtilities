@@ -1,5 +1,7 @@
 package com.misterd.mobflowutilities;
 
+import com.misterd.mobflowutilities.block.MFUBlocks;
+import com.misterd.mobflowutilities.item.MFUItems;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
@@ -47,6 +49,9 @@ public class MobFlowUtilities {
         modEventBus.addListener(this::commonSetup);
 
         NeoForge.EVENT_BUS.register(this);
+
+        MFUItems.register(modEventBus);
+        MFUBlocks.register(modEventBus);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
