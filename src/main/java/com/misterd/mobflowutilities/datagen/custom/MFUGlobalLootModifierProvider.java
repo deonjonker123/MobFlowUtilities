@@ -22,7 +22,7 @@ public class MFUGlobalLootModifierProvider extends GlobalLootModifierProvider {
 
     @Override
     protected void start() {
-        // Hostile mobs that drop Gloom Spores (1% chance)
+        // Hostile mobs that drop Gloom Spores (0.5% chance)
         String[] hostileMobs = {
                 "entities/wither_skeleton", "entities/skeleton", "entities/zombie", "entities/creeper",
                 "entities/spider", "entities/cave_spider", "entities/enderman", "entities/stray",
@@ -33,7 +33,7 @@ public class MFUGlobalLootModifierProvider extends GlobalLootModifierProvider {
 
         for (String mob : hostileMobs) {
             addMobLoot("gloom_spore_from_" + mob.replace("entities/", ""),
-                    mob, MFUItems.GLOOM_SPORE, 0.01F);
+                    mob, MFUItems.GLOOM_SPORE, 0.005F);
         }
 
         // Hostile chests that contain Gloom Spores (30% chance)
@@ -49,7 +49,7 @@ public class MFUGlobalLootModifierProvider extends GlobalLootModifierProvider {
                     chest, MFUItems.GLOOM_SPORE, 0.3F);
         }
 
-        // Passive mobs that drop Glimmer Sprouts (1% chance)
+        // Passive mobs that drop Glimmer Sprouts (0.5% chance)
         String[] passiveMobs = {
                 "entities/rabbit", "entities/fox", "entities/horse", "entities/donkey",
                 "entities/cow", "entities/sheep", "entities/chicken", "entities/pig",
@@ -60,7 +60,7 @@ public class MFUGlobalLootModifierProvider extends GlobalLootModifierProvider {
 
         for (String mob : passiveMobs) {
             addMobLoot("glimmer_sprout_from_" + mob.replace("entities/", ""),
-                    mob, MFUItems.GLIMMER_SPROUT, 0.01F);
+                    mob, MFUItems.GLIMMER_SPROUT, 0.05F);
         }
 
         // Friendly chests that contain Glimmer Sprouts (30% chance)
@@ -79,7 +79,7 @@ public class MFUGlobalLootModifierProvider extends GlobalLootModifierProvider {
                     chest, MFUItems.GLIMMER_SPROUT, 0.3F);
         }
 
-        // All common mobs drop Incubation Crystals (5% chance)
+        // All common mobs drop Incubation Crystals (small% chance)
         String[] allMobs = {
                 "entities/wither_skeleton", "entities/skeleton", "entities/zombie", "entities/creeper",
                 "entities/spider", "entities/cave_spider", "entities/enderman", "entities/stray",
@@ -95,7 +95,7 @@ public class MFUGlobalLootModifierProvider extends GlobalLootModifierProvider {
 
         for (String mob : allMobs) {
             addMobLoot("incubation_crystal_from_" + mob.replace("entities/", ""),
-                    mob, MFUItems.INCUBATION_CRYSTAL, 0.05F);
+                    mob, MFUItems.INCUBATION_CRYSTAL, 0.0001F);
         }
 
         // Boss mobs - guaranteed Glimmer Sprouts
