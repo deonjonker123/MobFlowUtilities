@@ -64,7 +64,6 @@ public record ConfigPacket(
 
         ServerLevel level = player.serverLevel();
 
-        // Only allow configuration if the player is close enough
         if (player.distanceToSqr(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) > 64.0) return;
 
         BlockEntity blockEntity = level.getBlockEntity(pos);
@@ -75,11 +74,9 @@ public record ConfigPacket(
             case COLLECTOR_DOWN_UP_OFFSET -> collector.setDownUpOffset(packet.intValue());
             case COLLECTOR_NORTH_SOUTH_OFFSET -> collector.setNorthSouthOffset(packet.intValue());
             case COLLECTOR_EAST_WEST_OFFSET -> collector.setEastWestOffset(packet.intValue());
-            // Add other side configs if needed
             default -> {}
         }
 
-        // Notify the client that the block has updated
         level.sendBlockUpdated(pos, level.getBlockState(pos), level.getBlockState(pos), 3);
     }
 

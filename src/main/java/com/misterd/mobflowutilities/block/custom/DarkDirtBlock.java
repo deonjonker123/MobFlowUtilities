@@ -42,14 +42,12 @@ public class DarkDirtBlock extends Block {
     protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         super.tick(state, level, pos, random);
 
-        // Reversion: Only revert if in direct sunlight
         boolean inDirectSunlight = level.canSeeSky(pos.above()) && level.isDay();
         if (inDirectSunlight) {
             level.setBlock(pos, Blocks.DIRT.defaultBlockState(), 3);
             return;
         }
 
-        // Spawning: Only spawn when light level == 0
         int lightLevel = level.getMaxLocalRawBrightness(pos.above());
         if (lightLevel == 0) {
             this.attemptMobSpawning(level, pos, random);
@@ -134,7 +132,6 @@ public class DarkDirtBlock extends Block {
                         level.getBlockState(abovePos.above()).isAir() &&
                         level.getBlockState(checkPos).isFaceSturdy(level, checkPos, Direction.UP)) {
 
-                    // Only spawn at light level == 0
                     int lightLevel = level.getMaxLocalRawBrightness(abovePos);
                     if (lightLevel == 0) {
                         return abovePos;

@@ -18,7 +18,6 @@ public class MFUItems {
 
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems("mobflowutilities");
 
-    // Controller upgrade modules
     public static final DeferredItem<Item> BOA_MODULE = ITEMS.register("bane_of_arthropods_module",
             () -> new Item(new Item.Properties()) {
                 @Override
@@ -67,7 +66,6 @@ public class MFUItems {
                 }
             });
 
-    // Gloomsteel materials
     public static final DeferredItem<Item> RAW_GLOOMSTEEL = ITEMS.register("raw_gloomsteel",
             () -> new Item(new Item.Properties()));
 
@@ -77,7 +75,6 @@ public class MFUItems {
     public static final DeferredItem<Item> GLOOMSTEEL_NUGGET = ITEMS.register("gloomsteel_nugget",
             () -> new Item(new Item.Properties()));
 
-    // Spawn control items
     public static final DeferredItem<Item> GLOOM_SPORE = ITEMS.register("gloom_spore",
             () -> new GloomSporeItem(new Item.Properties()) {
                 @Override
@@ -94,7 +91,6 @@ public class MFUItems {
                 }
             });
 
-    // Spawn egg crafting components
     public static final DeferredItem<Item> INCUBATION_CRYSTAL = ITEMS.register("incubation_crystal",
             () -> new Item(new Item.Properties()) {
                 @Override
@@ -109,7 +105,6 @@ public class MFUItems {
     public static final DeferredItem<Item> GENE_SAMPLE_VIAL = ITEMS.register("gene_sample_vial",
             () -> new GeneSampleVialItem(new Item.Properties()));
 
-    // Utility items
     public static final DeferredItem<Item> MOB_CATCHER = ITEMS.register("mob_catcher",
             () -> new MobCatcherItem(new Item.Properties().stacksTo(1)));
 
@@ -119,7 +114,6 @@ public class MFUItems {
     public static final DeferredItem<Item> PAD_WRENCH = ITEMS.register("pad_wrench",
             () -> new PadWrenchItem(new Item.Properties()));
 
-    // Gloomsteel tools
     public static final DeferredItem<SwordItem> GLOOMSTEEL_SWORD = ITEMS.register("gloomsteel_sword",
             () -> new SwordItem(MFUToolTiers.GLOOMSTEEL,
                     new Item.Properties().attributes(SwordItem.createAttributes(MFUToolTiers.GLOOMSTEEL, 3, -2.4F))));
@@ -140,7 +134,6 @@ public class MFUItems {
             () -> new ShovelItem(MFUToolTiers.GLOOMSTEEL,
                     new Item.Properties().attributes(ShovelItem.createAttributes(MFUToolTiers.GLOOMSTEEL, 1.5F, -3.0F))));
 
-    // Special Gloomsteel tools
     public static final DeferredItem<GloomsteelPaxelItem> GLOOMSTEEL_PAXEL = ITEMS.register("gloomsteel_paxel",
             () -> new GloomsteelPaxelItem(new Item.Properties().stacksTo(1)));
 
@@ -148,7 +141,6 @@ public class MFUItems {
             () -> new GloomsteelHammerItem(MFUToolTiers.GLOOMSTEEL, new Item.Properties()
                     .attributes(PickaxeItem.createAttributes(MFUToolTiers.GLOOMSTEEL, 6F, -3f))));
 
-    // Gloomsteel armor
     public static final DeferredItem<ArmorItem> GLOOMSTEEL_HELMET = ITEMS.register("gloomsteel_helmet",
             () -> new ArmorItem(MFUArmorMaterials.GLOOMSTEEL_ARMOR_MATERIAL, ArmorItem.Type.HELMET,
                     new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(27))));

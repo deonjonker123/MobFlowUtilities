@@ -98,10 +98,10 @@ public class FlowPadBlockEntity extends BlockEntity {
 
     private Vec3 getMovementVector(Direction facing, double speed) {
         return switch (facing) {
-            case NORTH -> new Vec3(0, 0, speed);    // Flipped: was -speed
-            case SOUTH -> new Vec3(0, 0, -speed);   // Flipped: was speed
-            case EAST -> new Vec3(-speed, 0, 0);    // Flipped: was speed
-            case WEST -> new Vec3(speed, 0, 0);     // Flipped: was -speed
+            case NORTH -> new Vec3(0, 0, speed);
+            case SOUTH -> new Vec3(0, 0, -speed);
+            case EAST -> new Vec3(-speed, 0, 0);
+            case WEST -> new Vec3(speed, 0, 0);
             default -> Vec3.ZERO;
         };
     }

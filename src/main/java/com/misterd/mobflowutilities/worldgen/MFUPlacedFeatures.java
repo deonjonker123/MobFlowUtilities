@@ -25,25 +25,21 @@ public class MFUPlacedFeatures {
     public static void bootstrap(BootstrapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
 
-        // Overworld Gloomsteel ore: 4 veins per chunk, Y: -64 to 64
         register(context, OVERWORLD_GLOOMSTEEL_ORE_PLACED_KEY,
                 configuredFeatures.getOrThrow(MFUConfiguredFeatures.OVERWORLD_GLOOMSTEEL_ORE_KEY),
                 MFUOrePlacement.commonOrePlacement(4,
                         HeightRangePlacement.uniform(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(64))));
 
-        // Hidden Overworld Gloomsteel ore: 2 veins per chunk, Y: -32 to 32 (more concentrated, air-exposed)
         register(context, OVERWORLD_GLOOMSTEEL_ORE_HIDDEN_KEY,
                 configuredFeatures.getOrThrow(MFUConfiguredFeatures.OVERWORLD_GLOOMSTEEL_ORE_HIDDEN_KEY),
                 MFUOrePlacement.commonOrePlacement(2,
                         HeightRangePlacement.uniform(VerticalAnchor.absolute(-32), VerticalAnchor.absolute(32))));
 
-        // Nether Gloomsteel ore: 4 veins per chunk, Y: -64 to 80
         register(context, NETHER_GLOOMSTEEL_ORE_PLACED_KEY,
                 configuredFeatures.getOrThrow(MFUConfiguredFeatures.NETHER_GLOOMSTEEL_ORE_KEY),
                 MFUOrePlacement.commonOrePlacement(4,
                         HeightRangePlacement.uniform(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(80))));
 
-        // End Gloomsteel ore: 4 veins per chunk, Y: -64 to 80
         register(context, END_GLOOMSTEEL_ORE_PLACED_KEY,
                 configuredFeatures.getOrThrow(MFUConfiguredFeatures.END_GLOOMSTEEL_ORE_KEY),
                 MFUOrePlacement.commonOrePlacement(4,

@@ -26,19 +26,16 @@ public class VoidFilterMenu extends AbstractContainerMenu {
     private boolean ignoreNBT;
     private boolean ignoreDurability;
 
-    // For in-place editing within collector
     @Nullable
     private final BlockPos collectorPos;
     private final int collectorFilterSlotIndex;
     @Nullable
     private final Player player;
 
-    // Constructor for handheld filter (original behavior)
     public VoidFilterMenu(int containerId, Inventory playerInventory, ItemStack filterItem) {
         this(containerId, playerInventory, filterItem, null, -1);
     }
 
-    // Constructor for in-place collector filter editing
     private VoidFilterMenu(int containerId, Inventory playerInventory, ItemStack filterItem,
                            @Nullable BlockPos collectorPos, int filterSlotIndex) {
         super(MFUMenuTypes.VOID_FILTER_MENU.get(), containerId);
@@ -65,7 +62,6 @@ public class VoidFilterMenu extends AbstractContainerMenu {
         this.addPlayerHotbar(playerInventory);
     }
 
-    // Client-side constructor from packet data
     public VoidFilterMenu(int containerId, Inventory playerInventory, FriendlyByteBuf extraData) {
         this(containerId, playerInventory, getFilterFromPacket(playerInventory, extraData),
                 getCollectorPosFromPacket(extraData), getFilterSlotFromPacket(extraData));
@@ -169,11 +165,9 @@ public class VoidFilterMenu extends AbstractContainerMenu {
     }
 
     private void saveFilterData() {
-        // Get fresh reference from collector if editing in-place
         if (this.collectorPos != null && this.collectorFilterSlotIndex >= 0 && this.player != null) {
             BlockEntity be = this.player.level().getBlockEntity(this.collectorPos);
             if (be instanceof CollectorBlockEntity collector) {
-                // Get the actual ItemStack from the collector's inventory
                 this.filterItem = collector.moduleSlots.getStackInSlot(this.collectorFilterSlotIndex);
             }
         }
@@ -185,7 +179,6 @@ public class VoidFilterMenu extends AbstractContainerMenu {
         );
         this.filterItem.set(MFUDataComponents.VOID_FILTER_DATA.get(), newData);
 
-        // Mark the collector as changed so it saves
         if (this.collectorPos != null && this.player != null) {
             BlockEntity be = this.player.level().getBlockEntity(this.collectorPos);
             if (be instanceof CollectorBlockEntity collector) {
@@ -227,7 +220,6 @@ public class VoidFilterMenu extends AbstractContainerMenu {
     @Override
     public void removed(Player player) {
         super.removed(player);
-        // Final save when menu closes
         this.saveFilterData();
     }
 

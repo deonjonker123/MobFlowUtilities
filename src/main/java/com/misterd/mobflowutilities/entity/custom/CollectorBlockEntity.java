@@ -195,7 +195,6 @@ public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
         }
     }
 
-    // XP getters/setters
     public int getStoredXP() { return storedXP; }
 
     public void setStoredXP(int xp) {
@@ -254,7 +253,6 @@ public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
         invalidateCollectionAreaCache();
     }
 
-    // Drops all contents
     public void drops() {
         SimpleContainer inv = new SimpleContainer(outputInventory.getSlots());
         for (int i = 0; i < outputInventory.getSlots(); i++) {
@@ -264,7 +262,6 @@ public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
         Containers.dropContents(level, worldPosition, inv);
     }
 
-    // Serialization
     @Override
     protected void saveAdditional(CompoundTag tag, Provider registries) {
         super.saveAdditional(tag, registries);
@@ -347,7 +344,6 @@ public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
         }
     }
 
-    // MenuProvider
     @Override
     public Component getDisplayName() { return Component.translatable("menu.flowtech.collector"); }
 
@@ -374,7 +370,6 @@ public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
         }
     }
 
-    // Ticking
     public void tick() {
         if (level == null || level.isClientSide()) return;
         tickCounter++;

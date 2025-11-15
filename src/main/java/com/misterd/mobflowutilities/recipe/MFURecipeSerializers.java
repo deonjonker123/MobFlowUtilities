@@ -17,7 +17,6 @@ public class MFURecipeSerializers {
     public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES =
             DeferredRegister.create(BuiltInRegistries.RECIPE_TYPE, MobFlowUtilities.MODID);
 
-    // Genetic Recipe (for spawn egg crafting)
     public static final Supplier<RecipeSerializer<GeneticRecipe>> GENETIC_RECIPE =
             RECIPE_SERIALIZERS.register("genetic_recipe", GeneticRecipe.Serializer::new);
 

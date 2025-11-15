@@ -33,9 +33,6 @@ public class MobCatcherEventHandler {
         InteractionHand hand = event.getHand();
         ItemStack stack = player.getItemInHand(hand);
 
-        // ===================================
-        // Handle DNA Vial (Shift + Right-Click)
-        // ===================================
         if (player.isShiftKeyDown() && stack.getItem() instanceof EmptyGeneVialItem) {
 
             if (target instanceof LivingEntity living) {
@@ -46,9 +43,6 @@ public class MobCatcherEventHandler {
             return;
         }
 
-        // ===================================
-        // Handle Mob Catcher (Shift + Right-Click)
-        // ===================================
         if (player.isShiftKeyDown() && stack.getItem() instanceof MobCatcherItem catcher) {
 
             if (target instanceof LivingEntity living) {
@@ -68,9 +62,6 @@ public class MobCatcherEventHandler {
         }
     }
 
-    // ======================================================
-    // DNA Vial Logic
-    // ======================================================
     private static boolean handleGeneVialInteraction(
             ItemStack stack,
             Player player,
@@ -79,7 +70,6 @@ public class MobCatcherEventHandler {
     ) {
         if (player.level().isClientSide()) return true;
 
-        // Not allowed to collect DNA
         if (!GeneticHelper.canCollectDNA(target.getType())) {
 
             if (target instanceof Player) {
@@ -102,7 +92,6 @@ public class MobCatcherEventHandler {
             return true;
         }
 
-        // Allowed → give filled DNA vial
         ResourceLocation entityKey = GeneticHelper.getEntityKey(target.getType());
         ItemStack filledVial = new ItemStack(MFUItems.GENE_SAMPLE_VIAL.get());
         filledVial.set(MFUDataComponents.ENTITY_DNA.get(), entityKey);

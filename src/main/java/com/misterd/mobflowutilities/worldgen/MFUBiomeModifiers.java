@@ -25,7 +25,6 @@ public class MFUBiomeModifiers {
         HolderGetter<PlacedFeature> placedFeatures = context.lookup(Registries.PLACED_FEATURE);
         HolderGetter<Biome> biomes = context.lookup(Registries.BIOME);
 
-        // Add Gloomsteel ore to Overworld biomes
         context.register(ADD_OVERWORLD_GLOOMSTEEL_ORE,
                 new BiomeModifiers.AddFeaturesBiomeModifier(
                         biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
@@ -37,7 +36,6 @@ public class MFUBiomeModifiers {
                 )
         );
 
-        // Add Gloomsteel ore to Nether biomes
         context.register(ADD_NETHER_GLOOMSTEEL_ORE,
                 new BiomeModifiers.AddFeaturesBiomeModifier(
                         biomes.getOrThrow(BiomeTags.IS_NETHER),
@@ -48,7 +46,6 @@ public class MFUBiomeModifiers {
                 )
         );
 
-        // Add Gloomsteel ore to End biomes
         context.register(ADD_END_GLOOMSTEEL_ORE,
                 new BiomeModifiers.AddFeaturesBiomeModifier(
                         biomes.getOrThrow(BiomeTags.IS_END),

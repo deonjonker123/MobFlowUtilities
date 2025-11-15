@@ -43,7 +43,6 @@ public class MFUBlockEntities {
                             MFUBlocks.FASTEST_FLOW_PAD.get()).build(null));
 
     private static void registerCapabilities(RegisterCapabilitiesEvent event) {
-        // Collector item handler
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, COLLECTOR_BE.get(),
                 (blockEntity, direction) -> {
                     if (blockEntity instanceof CollectorBlockEntity collector) {
@@ -52,7 +51,6 @@ public class MFUBlockEntities {
                     return null;
                 });
 
-        // Controller inventory
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, CONTROLLER_BE.get(),
                 (blockEntity, direction) -> {
                     if (blockEntity instanceof ControllerBlockEntity controller) {

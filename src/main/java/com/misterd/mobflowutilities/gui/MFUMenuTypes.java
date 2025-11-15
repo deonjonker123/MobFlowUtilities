@@ -13,25 +13,17 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class MFUMenuTypes {
-    public static final DeferredRegister<MenuType<?>> MENUS;
-    public static final DeferredHolder<MenuType<?>, MenuType<CollectorMenu>> COLLECTOR_MENU;
-    public static final DeferredHolder<MenuType<?>, MenuType<ControllerMenu>> CONTROLLER_MENU;
-    public static final DeferredHolder<MenuType<?>, MenuType<VoidFilterMenu>> VOID_FILTER_MENU;
+    public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(Registries.MENU, "mobflowutilities");
+
+    public static final DeferredHolder<MenuType<?>, MenuType<CollectorMenu>> COLLECTOR_MENU = registerMenuType("collector_menu", CollectorMenu::new);
+    public static final DeferredHolder<MenuType<?>, MenuType<ControllerMenu>> CONTROLLER_MENU = registerMenuType("controller_menu", ControllerMenu::new);
+    public static final DeferredHolder<MenuType<?>, MenuType<VoidFilterMenu>> VOID_FILTER_MENU = registerMenuType("void_filter_menu", VoidFilterMenu::new);
 
     private static <T extends AbstractContainerMenu> DeferredHolder<MenuType<?>, MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory) {
-        return MENUS.register(name, () -> {
-            return IMenuTypeExtension.create(factory);
-        });
+        return MENUS.register(name, () -> IMenuTypeExtension.create(factory));
     }
 
     public static void register(IEventBus eventBus) {
         MENUS.register(eventBus);
-    }
-
-    static {
-        MENUS = DeferredRegister.create(Registries.MENU, "mobflowutilities");
-        CONTROLLER_MENU = registerMenuType("controller_menu", ControllerMenu::new);
-        COLLECTOR_MENU = registerMenuType("collector_menu", CollectorMenu::new);
-        VOID_FILTER_MENU = registerMenuType("void_filter_menu", VoidFilterMenu::new);
     }
 }

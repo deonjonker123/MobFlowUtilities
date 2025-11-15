@@ -25,30 +25,24 @@ public class MFUConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> END_GLOOMSTEEL_ORE_KEY = registerKey("end_gloomsteel_ore");
 
     public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
-        // Rule tests for different dimensions
         TagMatchTest stoneOreReplaceables = new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES);
         TagMatchTest deepslateOreReplaceables = new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES);
         BlockMatchTest netherReplaceables = new BlockMatchTest(Blocks.NETHERRACK);
         BlockMatchTest endReplaceables = new BlockMatchTest(Blocks.END_STONE);
 
-        // Overworld Gloomsteel ore targets (stone and deepslate variants)
         List<OreConfiguration.TargetBlockState> overworldGloomsteelOres = List.of(
                 OreConfiguration.target(stoneOreReplaceables, MFUBlocks.GLOOMSTEEL_STONE_ORE.get().defaultBlockState()),
                 OreConfiguration.target(deepslateOreReplaceables, MFUBlocks.GLOOMSTEEL_DEEPSLATE_ORE.get().defaultBlockState())
         );
 
-        // Hidden ore configuration (with discard chance on air exposure)
         OreConfiguration hiddenGloomsteelConfig = new OreConfiguration(overworldGloomsteelOres, 12, 0.9F);
 
-        // Register Overworld ores (both normal and hidden)
         register(context, OVERWORLD_GLOOMSTEEL_ORE_HIDDEN_KEY, Feature.ORE, hiddenGloomsteelConfig);
         register(context, OVERWORLD_GLOOMSTEEL_ORE_KEY, Feature.ORE, new OreConfiguration(overworldGloomsteelOres, 12));
 
-        // Register Nether ore
         register(context, NETHER_GLOOMSTEEL_ORE_KEY, Feature.ORE,
                 new OreConfiguration(netherReplaceables, MFUBlocks.GLOOMSTEEL_NETHERRACK_ORE.get().defaultBlockState(), 12));
 
-        // Register End ore
         register(context, END_GLOOMSTEEL_ORE_KEY, Feature.ORE,
                 new OreConfiguration(endReplaceables, MFUBlocks.GLOOMSTEEL_ENDSTONE_ORE.get().defaultBlockState(), 12));
     }

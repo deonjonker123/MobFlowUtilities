@@ -40,12 +40,9 @@ public record OpenFilterPacket(BlockPos collectorPos, int filterSlotIndex) imple
                 BlockEntity blockEntity = serverPlayer.level().getBlockEntity(packet.collectorPos);
 
                 if (blockEntity instanceof CollectorBlockEntity collector) {
-                    // Get the filter from the specified module slot
                     ItemStack filterStack = collector.moduleSlots.getStackInSlot(packet.filterSlotIndex);
 
-                    // Verify it's actually a void filter
                     if (filterStack.getItem() instanceof VoidFilterItem) {
-                        // Open the filter GUI with the in-place filter using the factory method
                         serverPlayer.openMenu(
                                 VoidFilterMenu.createForCollectorFilter(
                                         Component.translatable("gui.mobflowutilities.void_filter"),

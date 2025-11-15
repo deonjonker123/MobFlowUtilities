@@ -40,9 +40,6 @@ public class GlimmerGrassBlock extends Block {
     protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         super.tick(state, level, pos, random);
 
-        // No reversion - Glimmer Grass never reverts
-
-        // Spawning: Only spawn when light level >= 7
         int lightLevel = level.getMaxLocalRawBrightness(pos.above());
         if (lightLevel >= 7) {
             this.attemptMobSpawning(level, pos, random);
@@ -116,7 +113,6 @@ public class GlimmerGrassBlock extends Block {
                         level.getBlockState(abovePos.above()).isAir() &&
                         level.getBlockState(checkPos).isFaceSturdy(level, checkPos, Direction.UP)) {
 
-                    // Only spawn at light level >= 7
                     int lightLevel = level.getMaxLocalRawBrightness(abovePos);
                     if (lightLevel >= 7) {
                         return abovePos;

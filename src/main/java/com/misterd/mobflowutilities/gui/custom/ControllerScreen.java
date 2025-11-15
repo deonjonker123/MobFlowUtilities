@@ -21,7 +21,6 @@ public class ControllerScreen extends AbstractContainerScreen<ControllerMenu> {
     protected void init() {
         super.init();
         this.clearWidgets();
-        this.titleLabelX = (this.imageWidth - this.font.width(this.title)) / 2;
     }
 
     protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
@@ -44,7 +43,6 @@ public class ControllerScreen extends AbstractContainerScreen<ControllerMenu> {
 
     @Override
     protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-        // Custom color for your screen's title
         guiGraphics.drawString(
                 this.font,
                 this.title,
@@ -54,7 +52,6 @@ public class ControllerScreen extends AbstractContainerScreen<ControllerMenu> {
                 false
         );
 
-        // Custom color for the player's inventory label
         guiGraphics.drawString(
                 this.font,
                 this.playerInventoryTitle,

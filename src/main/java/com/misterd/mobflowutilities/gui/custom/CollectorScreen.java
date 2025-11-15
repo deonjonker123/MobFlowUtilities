@@ -182,7 +182,6 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
     }
 
     private void addFilterEditButtons(int leftPos, int topPos) {
-        // Filter slot 1 edit button (module slot index 1)
         ImageButton editFilter1Button = new ImageButton(
                 leftPos + 177,
                 topPos + 5,
@@ -194,7 +193,6 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
         editFilter1Button.setTooltip(Tooltip.create(Component.translatable("tooltip.mobflowutilities.collector.edit_filter")));
         this.addRenderableWidget(editFilter1Button);
 
-        // Filter slot 2 edit button (module slot index 2)
         ImageButton editFilter2Button = new ImageButton(
                 leftPos + 195,
                 topPos + 5,
@@ -206,7 +204,6 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
         editFilter2Button.setTooltip(Tooltip.create(Component.translatable("tooltip.mobflowutilities.collector.edit_filter")));
         this.addRenderableWidget(editFilter2Button);
 
-        // Filter slot 3 edit button (module slot index 3)
         ImageButton editFilter3Button = new ImageButton(
                 leftPos + 213,
                 topPos + 5,
@@ -372,7 +369,6 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
         PoseStack poseStack = guiGraphics.pose();
         float scale = 0.65F;
 
-        // Draw offset values
         poseStack.pushPose();
         poseStack.scale(scale, scale, 1.0F);
 
@@ -385,7 +381,6 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
 
         poseStack.popPose();
 
-        // Draw offset labels
         poseStack.pushPose();
         poseStack.scale(scale, scale, 1.0F);
 
@@ -449,7 +444,6 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
 
-        // Tooltip for XP collection toggle
         if (mouseX >= x + 117 && mouseX <= x + 131 && mouseY >= y + 113 && mouseY <= y + 130) {
             Component tooltipText = this.xpCollectionEnabled
                     ? Component.translatable("tooltip.mobflowutilities.collector.xp_collection.enabled")
@@ -457,7 +451,6 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
             guiGraphics.renderTooltip(this.font, tooltipText, mouseX, mouseY);
         }
 
-        // Tooltip for XP stored display
         float scale = 0.8F;
         int displayWidth = (int) (this.font.width(this.getXpDisplayText()) * scale);
         int displayHeight = (int) (9.0F * scale);
@@ -471,7 +464,6 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
             guiGraphics.renderTooltip(this.font, tooltipText, mouseX, mouseY);
         }
 
-        // Tooltip for Down/Up offset
         if (mouseX >= x + 192 && mouseX <= x + 204 && mouseY >= y + 68 && mouseY <= y + 76) {
             MutableComponent tooltipText = Component.translatable(
                     "tooltip.mobflowutilities.collector.offset.down_up.value",
@@ -480,7 +472,6 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
             guiGraphics.renderTooltip(this.font, tooltipText, mouseX, mouseY);
         }
 
-        // Tooltip for North/South offset
         if (mouseX >= x + 192 && mouseX <= x + 204 && mouseY >= y + 90 && mouseY <= y + 98) {
             MutableComponent tooltipText = Component.translatable(
                     "tooltip.mobflowutilities.collector.offset.north_south.value",
@@ -489,7 +480,6 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
             guiGraphics.renderTooltip(this.font, tooltipText, mouseX, mouseY);
         }
 
-        // Tooltip for East/West offset
         if (mouseX >= x + 192 && mouseX <= x + 204 && mouseY >= y + 112 && mouseY <= y + 120) {
             MutableComponent tooltipText = Component.translatable(
                     "tooltip.mobflowutilities.collector.offset.east_west.value",
@@ -511,7 +501,6 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
 
     @Override
     protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-        // Custom color for your screen's title
         guiGraphics.drawString(
                 this.font,
                 this.title,
@@ -521,7 +510,6 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
                 false
         );
 
-        // Custom color for the player's inventory label
         guiGraphics.drawString(
                 this.font,
                 this.playerInventoryTitle,
