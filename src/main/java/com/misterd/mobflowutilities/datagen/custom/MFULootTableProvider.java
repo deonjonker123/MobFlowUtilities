@@ -23,7 +23,6 @@ public class MFULootTableProvider extends BlockLootSubProvider {
 
     @Override
     protected void generate() {
-        // Standard block drops (drop themselves)
         dropSelf( MFUBlocks.GLOOMSTEEL_BLOCK.get());
         dropSelf( MFUBlocks.RAW_GLOOMSTEEL_BLOCK.get());
         dropSelf( MFUBlocks.CONTROLLER.get());
@@ -34,7 +33,6 @@ public class MFULootTableProvider extends BlockLootSubProvider {
         dropSelf( MFUBlocks.DARK_GLASS.get());
         dropSelf( MFUBlocks.GLIMMER_LAMP.get());
 
-        // Ore drops (drop raw gloomsteel)
         add(MFUBlocks.GLOOMSTEEL_STONE_ORE.get(),
                 block -> createOreDrop( MFUBlocks.GLOOMSTEEL_STONE_ORE.get(),
                         MFUItems.RAW_GLOOMSTEEL.get()));
@@ -51,7 +49,6 @@ public class MFULootTableProvider extends BlockLootSubProvider {
                 block -> createOreDrop( MFUBlocks.GLOOMSTEEL_ENDSTONE_ORE.get(),
                         MFUItems.RAW_GLOOMSTEEL.get()));
 
-        // Special spawn blocks (drop dirt when broken)
         add(MFUBlocks.DARK_DIRT.get(),
                 block -> LootTable.lootTable()
                         .withPool(LootPool.lootPool()

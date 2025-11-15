@@ -26,41 +26,33 @@ public class MFUItemTagProvider extends ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        // Add Gloomsteel ores to common ore tag
         tag(Tags.Items.ORES)
                 .add((MFUBlocks.GLOOMSTEEL_STONE_ORE.get()).asItem())
                 .add((MFUBlocks.GLOOMSTEEL_DEEPSLATE_ORE.get()).asItem())
                 .add((MFUBlocks.GLOOMSTEEL_NETHERRACK_ORE.get()).asItem())
                 .add((MFUBlocks.GLOOMSTEEL_ENDSTONE_ORE.get()).asItem());
 
-        // Add Gloomsteel ingot to common ingots tag
         tag(Tags.Items.INGOTS)
                 .add(MFUItems.GLOOMSTEEL_INGOT.get());
 
-        // Add raw Gloomsteel to common raw materials tag
         tag(Tags.Items.RAW_MATERIALS)
                 .add(MFUItems.RAW_GLOOMSTEEL.get());
 
-        // Mod-specific Gloomsteel ore tag
         tag(MFUTags.Items.ORES_GLOOMSTEEL)
                 .add((MFUBlocks.GLOOMSTEEL_STONE_ORE.get()).asItem())
                 .add((MFUBlocks.GLOOMSTEEL_DEEPSLATE_ORE.get()).asItem())
                 .add((MFUBlocks.GLOOMSTEEL_NETHERRACK_ORE.get()).asItem())
                 .add((MFUBlocks.GLOOMSTEEL_ENDSTONE_ORE.get()).asItem());
 
-        // Mod-specific Gloomsteel ingot tag
         tag(MFUTags.Items.INGOTS_GLOOMSTEEL)
                 .add(MFUItems.GLOOMSTEEL_INGOT.get());
 
-        // Mod-specific Gloomsteel nugget tag
         tag(MFUTags.Items.NUGGETS_GLOOMSTEEL)
                 .add(MFUItems.GLOOMSTEEL_NUGGET.get());
 
-        // Mod-specific raw Gloomsteel tag
         tag(MFUTags.Items.RAW_MATERIALS_GLOOMSTEEL)
                 .add(MFUItems.RAW_GLOOMSTEEL.get());
 
-        // Controller upgrade modules
         tag(MFUTags.Items.MOBFLOWUTILITIES_MODULES)
                 .add(MFUItems.BOA_MODULE.get())
                 .add(MFUItems.FIRE_ASPECT_MODULE.get())
@@ -70,31 +62,28 @@ public class MFUItemTagProvider extends ItemTagsProvider {
                 .add(MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get())
                 .add(MFUItems.VOID_FILTER_MODULE.get());
 
-        // Utility tools
         tag(MFUTags.Items.MOBFLOWUTILITIES_TOOLS)
                 .add(MFUItems.PAD_WRENCH.get())
                 .add(MFUItems.MOB_CATCHER.get());
 
-        // Vanilla tool tags - Gloomsteel tools
         tag(ItemTags.SWORDS)
                 .add(MFUItems.GLOOMSTEEL_SWORD.get());
 
         tag(ItemTags.PICKAXES)
                 .add(MFUItems.GLOOMSTEEL_PICKAXE.get())
-                .add(MFUItems.GLOOMSTEEL_PAXEL.get());  // Paxel is pickaxe
+                .add(MFUItems.GLOOMSTEEL_PAXEL.get());
 
         tag(ItemTags.AXES)
                 .add(MFUItems.GLOOMSTEEL_AXE.get())
-                .add(MFUItems.GLOOMSTEEL_PAXEL.get());  // Paxel is axe
+                .add(MFUItems.GLOOMSTEEL_PAXEL.get());
 
         tag(ItemTags.SHOVELS)
                 .add(MFUItems.GLOOMSTEEL_SHOVEL.get())
-                .add(MFUItems.GLOOMSTEEL_PAXEL.get());  // Paxel is shovel
+                .add(MFUItems.GLOOMSTEEL_PAXEL.get());
 
         tag(ItemTags.HOES)
                 .add(MFUItems.GLOOMSTEEL_HOE.get());
 
-        // Gloomsteel armor for smithing table
         tag(ItemTags.TRIMMABLE_ARMOR)
                 .add(MFUItems.GLOOMSTEEL_HELMET.get())
                 .add(MFUItems.GLOOMSTEEL_CHESTPLATE.get())

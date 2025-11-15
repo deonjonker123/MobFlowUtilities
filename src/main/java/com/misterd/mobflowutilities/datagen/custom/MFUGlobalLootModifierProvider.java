@@ -22,7 +22,6 @@ public class MFUGlobalLootModifierProvider extends GlobalLootModifierProvider {
 
     @Override
     protected void start() {
-        // Hostile mobs that drop Gloom Spores (0.5% chance)
         String[] hostileMobs = {
                 "entities/wither_skeleton", "entities/skeleton", "entities/zombie", "entities/creeper",
                 "entities/spider", "entities/cave_spider", "entities/enderman", "entities/stray",
@@ -36,7 +35,6 @@ public class MFUGlobalLootModifierProvider extends GlobalLootModifierProvider {
                     mob, MFUItems.GLOOM_SPORE, 0.005F);
         }
 
-        // Hostile chests that contain Gloom Spores (30% chance)
         String[] hostileChests = {
                 "chests/bastion_bridge", "chests/bastion_treasure", "chests/bastion_other",
                 "chests/end_city_treasure", "chests/stronghold_corridor", "chests/stronghold_crossing",
@@ -49,7 +47,6 @@ public class MFUGlobalLootModifierProvider extends GlobalLootModifierProvider {
                     chest, MFUItems.GLOOM_SPORE, 0.3F);
         }
 
-        // Passive mobs that drop Glimmer Sprouts (0.5% chance)
         String[] passiveMobs = {
                 "entities/rabbit", "entities/fox", "entities/horse", "entities/donkey",
                 "entities/cow", "entities/sheep", "entities/chicken", "entities/pig",
@@ -63,7 +60,6 @@ public class MFUGlobalLootModifierProvider extends GlobalLootModifierProvider {
                     mob, MFUItems.GLIMMER_SPROUT, 0.005F);
         }
 
-        // Friendly chests that contain Glimmer Sprouts (30% chance)
         String[] friendlyChests = {
                 "chests/village/village_plains_house", "chests/village/village_desert_house",
                 "chests/village/village_savanna_house", "chests/village/village_snowy_house",
@@ -79,7 +75,6 @@ public class MFUGlobalLootModifierProvider extends GlobalLootModifierProvider {
                     chest, MFUItems.GLIMMER_SPROUT, 0.3F);
         }
 
-        // All common mobs drop Incubation Crystals (Ultra rare)
         String[] allMobs = {
                 "entities/wither_skeleton", "entities/skeleton", "entities/zombie", "entities/creeper",
                 "entities/spider", "entities/cave_spider", "entities/enderman", "entities/stray",
@@ -98,23 +93,19 @@ public class MFUGlobalLootModifierProvider extends GlobalLootModifierProvider {
                     mob, MFUItems.INCUBATION_CRYSTAL, 0.0001F);
         }
 
-        // Boss mobs - guaranteed Glimmer Sprouts
         addBossLoot("glimmer_sprout_from_ender_dragon", "entities/ender_dragon", MFUItems.GLIMMER_SPROUT);
         addBossLoot("glimmer_sprout_from_elder_guardian", "entities/elder_guardian", MFUItems.GLIMMER_SPROUT);
 
-        // Boss mobs - guaranteed Gloom Spores
         addBossLoot("gloom_spore_from_warden", "entities/warden", MFUItems.GLOOM_SPORE);
         addBossLoot("gloom_spore_from_wither", "entities/wither", MFUItems.GLOOM_SPORE);
         addBossLoot("gloom_spore_from_ravager", "entities/ravager", MFUItems.GLOOM_SPORE);
 
-        // Boss mobs - guaranteed Incubation Crystals
         addBossLoot("incubation_crystal_from_ender_dragon", "entities/ender_dragon", MFUItems.INCUBATION_CRYSTAL);
         addBossLoot("incubation_crystal_from_elder_guardian", "entities/elder_guardian", MFUItems.INCUBATION_CRYSTAL);
         addBossLoot("incubation_crystal_from_warden", "entities/warden", MFUItems.INCUBATION_CRYSTAL);
         addBossLoot("incubation_crystal_from_wither", "entities/wither", MFUItems.INCUBATION_CRYSTAL);
         addBossLoot("incubation_crystal_from_ravager", "entities/ravager", MFUItems.INCUBATION_CRYSTAL);
 
-        // Treasure chests with Gloomsteel equipment
         String[] treasureChests = {
                 "chests/village/village_armorer", "chests/village/village_mason",
                 "chests/village/village_toolsmith", "chests/village/village_weaponsmith",
@@ -126,7 +117,6 @@ public class MFUGlobalLootModifierProvider extends GlobalLootModifierProvider {
                 "chests/woodland_mansion"
         };
 
-        // Gloomsteel tools in chests (30% chance each)
         for (String chest : treasureChests) {
             addChestLoot("gloomsteel_sword_from_" + chest.replace("chests/", ""),
                     chest, MFUItems.GLOOMSTEEL_SWORD, 0.3F);
@@ -140,7 +130,6 @@ public class MFUGlobalLootModifierProvider extends GlobalLootModifierProvider {
                     chest, MFUItems.GLOOMSTEEL_HOE, 0.3F);
         }
 
-        // Gloomsteel armor in chests (30% chance each)
         for (String chest : treasureChests) {
             addChestLoot("gloomsteel_helmet_from_" + chest.replace("chests/", ""),
                     chest, MFUItems.GLOOMSTEEL_HELMET, 0.3F);

@@ -27,7 +27,6 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
 
     @Override
     protected void buildRecipes(RecipeOutput recipeOutput) {
-        // Gloomsteel smeltables
         List<ItemLike> GLOOMSTEEL_SMELTABLES = List.of(
                 MFUItems.RAW_GLOOMSTEEL,
                 MFUBlocks.GLOOMSTEEL_STONE_ORE,
@@ -38,7 +37,6 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
 
         List<ItemLike> GLOOMSTEEL_RAW_BLOCK_SMELTABLES = List.of(MFUBlocks.RAW_GLOOMSTEEL_BLOCK);
 
-        // Raw Gloomsteel block packing/unpacking
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC,  MFUBlocks.RAW_GLOOMSTEEL_BLOCK.get())
                 .pattern("GGG")
                 .pattern("GGG")
@@ -52,7 +50,6 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_raw_gloomsteel_block", has( MFUBlocks.RAW_GLOOMSTEEL_BLOCK))
                 .save(recipeOutput);
 
-        // Gloomsteel block packing/unpacking
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC,  MFUBlocks.GLOOMSTEEL_BLOCK.get())
                 .pattern("GGG")
                 .pattern("GGG")
@@ -66,7 +63,6 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_gloomsteel_block", has( MFUBlocks.GLOOMSTEEL_BLOCK))
                 .save(recipeOutput);
 
-        // Gloomsteel ingot from nuggets
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC,  MFUItems.GLOOMSTEEL_INGOT.get())
                 .pattern("NNN")
                 .pattern("NNN")
@@ -80,7 +76,6 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_gloomsteel_ingot", has( MFUItems.GLOOMSTEEL_INGOT))
                 .save(recipeOutput);
 
-        // Gloomsteel smelting and blasting
         oreSmelting(recipeOutput, GLOOMSTEEL_SMELTABLES, RecipeCategory.MISC,
                  MFUItems.GLOOMSTEEL_INGOT.get(), 0.25F, 200, "gloomsteel");
         oreBlasting(recipeOutput, GLOOMSTEEL_SMELTABLES, RecipeCategory.MISC,
@@ -91,7 +86,6 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
         oreBlasting(recipeOutput, GLOOMSTEEL_RAW_BLOCK_SMELTABLES, RecipeCategory.MISC,
                  MFUBlocks.GLOOMSTEEL_BLOCK.get(), 0.5F, 150, "gloomsteel");
 
-        // Controller
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC,  MFUBlocks.CONTROLLER.get())
                 .pattern("GCG")
                 .pattern("IBI")
@@ -103,7 +97,6 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_gloomsteel_ingot", has( MFUItems.GLOOMSTEEL_INGOT))
                 .save(recipeOutput);
 
-        // Collector
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC,  MFUBlocks.COLLECTOR.get())
                 .pattern("GEG")
                 .pattern("PCP")
@@ -116,7 +109,6 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_ender_eye", has( Items.ENDER_EYE))
                 .save(recipeOutput);
 
-        // Kill Pad
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC,  MFUBlocks.DAMAGE_PAD.get(), 4)
                 .pattern("GSG")
                 .pattern("AQA")
@@ -128,7 +120,6 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_quartz", has( Items.QUARTZ))
                 .save(recipeOutput);
 
-        // Flow Pads (tiered progression)
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC,  MFUBlocks.FAST_FLOW_PAD.get(), 8)
                 .pattern("IGI")
                 .pattern("GQG")
@@ -162,7 +153,6 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_faster_flow_pad", has( MFUBlocks.FASTER_FLOW_PAD))
                 .save(recipeOutput);
 
-        // Pad Wrench
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS,  MFUItems.PAD_WRENCH.get())
                 .pattern("  G")
                 .pattern(" S ")
@@ -172,7 +162,6 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_gloomsteel_ingot", has( MFUItems.GLOOMSTEEL_INGOT))
                 .save(recipeOutput);
 
-        // Controller upgrade modules
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC,  MFUItems.SHARPNESS_MODULE.get())
                 .pattern("GSG")
                 .pattern("SIS")
@@ -246,7 +235,6 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_ender_eye", has( Items.ENDER_EYE))
                 .save(recipeOutput);
 
-        // Reset recipes (shapeless to clear data)
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC,  MFUBlocks.COLLECTOR.get())
                 .requires( MFUBlocks.COLLECTOR.get())
                 .unlockedBy("has_collector", has( MFUBlocks.COLLECTOR))
@@ -257,7 +245,6 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_void_filter", has( MFUItems.VOID_FILTER_MODULE))
                 .save(recipeOutput, "mobflowutilities:void_filter_reset");
 
-        // Decorative blocks
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC,  MFUBlocks.DARK_GLASS.get(), 8)
                 .pattern("GXG")
                 .pattern("XCX")
@@ -278,7 +265,6 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_glowstone", has( Items.GLOWSTONE))
                 .save(recipeOutput);
 
-        // Mob Catcher
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC,  MFUItems.MOB_CATCHER.get())
                 .pattern("LEL")
                 .pattern("EGE")
@@ -290,7 +276,6 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_lead", has( Items.LEAD))
                 .save(recipeOutput);
 
-        // Empty Gene Vial
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC,  MFUItems.EMPTY_GENE_VIAL.get())
                 .pattern(" X ")
                 .pattern("B B")
@@ -301,7 +286,6 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_glass_pane", has(Tags.Items.GLASS_PANES))
                 .save(recipeOutput);
 
-        // Gloomsteel tools
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS,  MFUItems.GLOOMSTEEL_SWORD.get())
                 .pattern(" G ")
                 .pattern(" G ")
@@ -347,7 +331,6 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_gloomsteel_ingot", has( MFUItems.GLOOMSTEEL_INGOT))
                 .save(recipeOutput);
 
-        // Gloomsteel Paxel
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS,  MFUItems.GLOOMSTEEL_PAXEL.get())
                 .pattern("ASP")
                 .pattern(" # ")
@@ -361,7 +344,6 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_gloomsteel_shovel", has( MFUItems.GLOOMSTEEL_SHOVEL))
                 .save(recipeOutput);
 
-        // Gloomsteel Hammer
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS,  MFUItems.GLOOMSTEEL_HAMMER.get())
                 .pattern("GSG")
                 .pattern(" S ")
@@ -371,7 +353,6 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_gloomsteel_block", has( MFUBlocks.GLOOMSTEEL_BLOCK.get()))
                 .save(recipeOutput);
 
-        // Gloomsteel armor
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT,  MFUItems.GLOOMSTEEL_HELMET.get())
                 .pattern("GGG")
                 .pattern("G G")
@@ -404,7 +385,6 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_gloomsteel_ingot", has( MFUItems.GLOOMSTEEL_INGOT))
                 .save(recipeOutput);
 
-        // Genetic recipe (custom recipe type - assuming this still exists)
         recipeOutput.accept(
                 ResourceLocation.fromNamespaceAndPath("mobflowutilities", "genetic_recipe"),
                 new GeneticRecipe("mfu_genetic"),
@@ -412,9 +392,6 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
         );
     }
 
-    /**
-     * Helper method for ore smelting recipes
-     */
     protected static void oreSmelting(RecipeOutput recipeOutput, List<ItemLike> ingredients,
                                       RecipeCategory category, ItemLike result,
                                       float experience, int cookingTime, String group) {
@@ -423,9 +400,6 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 ingredients, category, result, experience, cookingTime, group, "_from_smelting");
     }
 
-    /**
-     * Helper method for ore blasting recipes
-     */
     protected static void oreBlasting(RecipeOutput recipeOutput, List<ItemLike> ingredients,
                                       RecipeCategory category, ItemLike result,
                                       float experience, int cookingTime, String group) {

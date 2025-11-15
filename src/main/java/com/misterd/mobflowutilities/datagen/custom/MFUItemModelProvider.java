@@ -40,7 +40,6 @@ public class MFUItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        // Controller upgrade modules
         basicItem(MFUItems.BOA_MODULE.get());
         basicItem(MFUItems.FIRE_ASPECT_MODULE.get());
         basicItem(MFUItems.SHARPNESS_MODULE.get());
@@ -49,24 +48,19 @@ public class MFUItemModelProvider extends ItemModelProvider {
         basicItem(MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get());
         basicItem(MFUItems.VOID_FILTER_MODULE.get());
 
-        // Utility items
         basicItem(MFUItems.PAD_WRENCH.get());
 
-        // Gloomsteel materials
         basicItem(MFUItems.RAW_GLOOMSTEEL.get());
         basicItem(MFUItems.GLOOMSTEEL_INGOT.get());
         basicItem(MFUItems.GLOOMSTEEL_NUGGET.get());
 
-        // Spawn control items
         basicItem(MFUItems.GLOOM_SPORE.get());
         basicItem(MFUItems.GLIMMER_SPROUT.get());
 
-        // Gene vials and spawn egg crafting
         basicItem(MFUItems.EMPTY_GENE_VIAL.get());
         basicItem(MFUItems.GENE_SAMPLE_VIAL.get());
         basicItem(MFUItems.INCUBATION_CRYSTAL.get());
 
-        // Gloomsteel tools
         handheldItem(MFUItems.GLOOMSTEEL_SWORD);
         handheldItem(MFUItems.GLOOMSTEEL_PICKAXE);
         handheldItem(MFUItems.GLOOMSTEEL_AXE);
@@ -75,29 +69,21 @@ public class MFUItemModelProvider extends ItemModelProvider {
         handheldItem(MFUItems.GLOOMSTEEL_PAXEL);
         handheldItem(MFUItems.GLOOMSTEEL_HAMMER);
 
-        // Gloomsteel armor (with trims)
         trimmedArmorItem(MFUItems.GLOOMSTEEL_HELMET);
         trimmedArmorItem(MFUItems.GLOOMSTEEL_CHESTPLATE);
         trimmedArmorItem(MFUItems.GLOOMSTEEL_LEGGINGS);
         trimmedArmorItem(MFUItems.GLOOMSTEEL_BOOTS);
     }
 
-    /**
-     * Creates a handheld item model (for tools/weapons)
-     */
     private ItemModelBuilder handheldItem(DeferredItem<?> item) {
         return withExistingParent(item.getId().getPath(), ResourceLocation.parse("item/handheld"))
                 .texture("layer0", ResourceLocation.fromNamespaceAndPath(MobFlowUtilities.MODID, "item/" + item.getId().getPath()));
     }
 
-    /**
-     * Creates armor item models with trim support
-     */
     private void trimmedArmorItem(DeferredItem<ArmorItem> itemDeferredItem) {
         ArmorItem armorItem = itemDeferredItem.get();
 
         TRIM_MATERIALS.forEach((trimMaterial, trimValue) -> {
-            // Determine armor type string based on equipment slot
             String armorType = switch (armorItem.getEquipmentSlot()) {
                 case HEAD -> "helmet";
                 case CHEST -> "chestplate";
@@ -107,7 +93,7 @@ public class MFUItemModelProvider extends ItemModelProvider {
             };
 
             if (armorType.isEmpty()) {
-                return; // Skip if not a valid armor slot
+                return;
             }
 
             String armorItemPath = itemDeferredItem.getId().getPath();
@@ -118,16 +104,13 @@ public class MFUItemModelProvider extends ItemModelProvider {
             ResourceLocation trimResLoc = ResourceLocation.parse(trimPath);
             ResourceLocation trimNameResLoc = ResourceLocation.fromNamespaceAndPath(MobFlowUtilities.MODID, currentTrimName);
 
-            // Track the trim texture
             existingFileHelper.trackGenerated(trimResLoc, PackType.CLIENT_RESOURCES, ".png", "textures");
 
-            // Create the trim model
             getBuilder(currentTrimName)
                     .parent(new ModelFile.UncheckedModelFile("item/generated"))
                     .texture("layer0", MobFlowUtilities.MODID + ":item/" + armorItemPath)
                     .texture("layer1", trimResLoc);
 
-            // Create the base armor model with trim overrides
             withExistingParent(armorItemPath, mcLoc("item/generated"))
                     .override()
                     .model(new ModelFile.UncheckedModelFile(trimNameResLoc.getNamespace() + ":item/" + trimNameResLoc.getPath()))

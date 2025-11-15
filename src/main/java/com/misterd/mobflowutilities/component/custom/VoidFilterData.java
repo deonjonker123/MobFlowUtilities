@@ -9,7 +9,6 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 
 public record VoidFilterData(List<ItemStack> filterItems, boolean ignoreNBT, boolean ignoreDurability) {
 
-    // Clean codec compatible with NeoForged
     public static final Codec<VoidFilterData> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
                     Codec.list(ItemStack.CODEC)

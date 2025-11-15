@@ -38,7 +38,6 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import org.slf4j.Logger;
 
 import javax.annotation.Nullable;
-import java.util.Iterator;
 import java.util.List;
 
 public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
@@ -46,20 +45,18 @@ public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final int COLLECTION_INTERVAL = 5;
 
-    // Cache and state
     private AABB cachedCollectionArea;
     private boolean collectionAreaDirty = true;
     private int cachedPickupRange = -1;
     private boolean pickupRangeDirty = true;
     private int tickCounter = 0;
 
-    // Inventory
     public final ItemStackHandler moduleSlots = new ItemStackHandler(4) {
         @Override
         public int getSlotLimit(int slot) {
             return switch (slot) {
-                case 0 -> 8; // Module slot
-                case 1, 2, 3 -> 1; // Void filter slots
+                case 0 -> 8;
+                case 1, 2, 3 -> 1;
                 default -> 1;
             };
         }
@@ -150,11 +147,9 @@ public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
         }
     };
 
-    // XP collection
     private int storedXP = 0;
     private boolean xpCollectionEnabled = false;
 
-    // Collection area offsets
     private int downUpOffset = 0;
     private int northSouthOffset = 0;
     private int eastWestOffset = 0;
@@ -163,7 +158,6 @@ public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
         super(MFUBlockEntities.COLLECTOR_BE.get(), pos, blockState);
     }
 
-    // Capabilities
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(ItemHandler.BLOCK, MFUBlockEntities.COLLECTOR_BE.get(),
                 (blockEntity, direction) -> blockEntity instanceof CollectorBlockEntity collector
@@ -177,7 +171,6 @@ public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
         return outputInventory;
     }
 
-    // Load from item
     public void loadFromBlockItem(ItemStack stack) {
         CustomData customData = (CustomData) stack.get(DataComponents.CUSTOM_DATA);
         if (customData == null) return;
@@ -223,7 +216,6 @@ public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
         }
     }
 
-    // Offsets getters/setters
     public int getDownUpOffset() { return downUpOffset; }
     public void setDownUpOffset(int offset) { setOffset(() -> downUpOffset, offset, val -> downUpOffset = val); }
 
@@ -244,7 +236,6 @@ public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
         } catch (Exception ignored) {}
     }
 
-    // Pickup range
     public int getPickupRange() {
         if (pickupRangeDirty || cachedPickupRange == -1) {
             cachedPickupRange = 3 + moduleSlots.getStackInSlot(0).getCount();
@@ -253,7 +244,6 @@ public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
         return cachedPickupRange;
     }
 
-    // Caches
     private void invalidateCollectionAreaCache() { collectionAreaDirty = true; }
     private void invalidatePickupRangeCache() {
         pickupRangeDirty = true;

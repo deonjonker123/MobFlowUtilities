@@ -13,10 +13,8 @@ public class Config {
     private static final ModConfigSpec.Builder COMMON_BUILDER = new ModConfigSpec.Builder();
     private static ModConfigSpec COMMON_CONFIG;
 
-    // Gloom Spore Configuration
     private static ModConfigSpec.IntValue GLOOM_SPORE_CONVERSION_AREA;
 
-    // Dark Dirt Configuration
     private static ModConfigSpec.IntValue DARK_DIRT_CONVERSION_LIGHT_LEVEL;
     private static ModConfigSpec.IntValue DARK_DIRT_SPAWNING_LIGHT_LEVEL;
     private static ModConfigSpec.IntValue DARK_DIRT_MOBS_PER_AREA;
@@ -25,10 +23,8 @@ public class Config {
     private static ModConfigSpec.BooleanValue DARK_DIRT_PARTICLES_ENABLED;
     private static ModConfigSpec.IntValue DARK_DIRT_REVERSION_DELAY;
 
-    // Glimmer Sprout Configuration
     private static ModConfigSpec.IntValue GLIMMER_SPROUT_CONVERSION_AREA;
 
-    // Glimmer Grass Configuration
     private static ModConfigSpec.IntValue GLIMMER_GRASS_CONVERSION_LIGHT_LEVEL;
     private static ModConfigSpec.IntValue GLIMMER_GRASS_SPAWNING_LIGHT_LEVEL;
     private static ModConfigSpec.IntValue GLIMMER_GRASS_MOBS_PER_AREA;
@@ -211,12 +207,10 @@ public class Config {
         COMMON_BUILDER.pop();
     }
 
-    // Gloom Spore Getters
     public static int getGloomSporeConversionArea() {
         return GLOOM_SPORE_CONVERSION_AREA.get();
     }
 
-    // Dark Dirt Getters
     public static int getDarkDirtConversionLightLevel() {
         return DARK_DIRT_CONVERSION_LIGHT_LEVEL.get();
     }
@@ -245,12 +239,10 @@ public class Config {
         return DARK_DIRT_REVERSION_DELAY.get() * 20;
     }
 
-    // Glimmer Sprout Getters
     public static int getGlimmerSproutConversionArea() {
         return GLIMMER_SPROUT_CONVERSION_AREA.get();
     }
 
-    // Glimmer Grass Getters
     public static int getGlimmerGrassConversionLightLevel() {
         return GLIMMER_GRASS_CONVERSION_LIGHT_LEVEL.get();
     }
@@ -279,7 +271,6 @@ public class Config {
         return GLIMMER_GRASS_REVERSION_DELAY.get() * 20;
     }
 
-    // Validation
     private static void validateConfig() {
         if (getDarkDirtConversionLightLevel() < getDarkDirtSpawningLightLevel()) {
             LOGGER.warn(

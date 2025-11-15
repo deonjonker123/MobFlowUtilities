@@ -19,25 +19,13 @@ import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
-public class GeneticRecipe implements Recipe<CraftingInput> {
-    private final String group;
+public class GeneticRecipe extends ShapelessRecipe {
 
     public GeneticRecipe(String group) {
-        this.group = group;
+        super(group, CraftingBookCategory.MISC, new ItemStack(Items.EGG), createIngredients());
     }
 
-    @Override
-    public String getGroup() {
-        return this.group;
-    }
-
-    @Override
-    public ItemStack getResultItem(HolderLookup.Provider registries) {
-        return new ItemStack(Items.EGG);
-    }
-
-    @Override
-    public NonNullList<Ingredient> getIngredients() {
+    private static NonNullList<Ingredient> createIngredients() {
         NonNullList<Ingredient> ingredients = NonNullList.create();
         ingredients.add(Ingredient.of(MFUItems.GENE_SAMPLE_VIAL.get()));
         ingredients.add(Ingredient.of(MFUItems.INCUBATION_CRYSTAL.get()));
@@ -118,18 +106,8 @@ public class GeneticRecipe implements Recipe<CraftingInput> {
     }
 
     @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return width * height >= 3;
-    }
-
-    @Override
     public RecipeSerializer<?> getSerializer() {
         return MFURecipeSerializers.GENETIC_RECIPE.get();
-    }
-
-    @Override
-    public RecipeType<?> getType() {
-        return MFURecipeSerializers.GENETIC_RECIPE_TYPE.get();
     }
 
     @Override
@@ -140,7 +118,7 @@ public class GeneticRecipe implements Recipe<CraftingInput> {
     public static class Serializer implements RecipeSerializer<GeneticRecipe> {
         public static final MapCodec<GeneticRecipe> CODEC = RecordCodecBuilder.mapCodec((instance) ->
                 instance.group(
-                        Codec.STRING.optionalFieldOf("group", "").forGetter(GeneticRecipe::getGroup)
+                        Codec.STRING.optionalFieldOf("group", "").forGetter(ShapelessRecipe::getGroup)
                 ).apply(instance, GeneticRecipe::new)
         );
 
