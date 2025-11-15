@@ -2,23 +2,20 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "A": {
-      "item": "minecraft:diamond_axe"
-    },
     "G": {
       "item": "mobflowutilities:gloomsteel_ingot"
     },
-    "Q": {
-      "item": "minecraft:quartz_block"
+    "I": {
+      "item": "minecraft:iron_ingot"
     },
     "S": {
       "item": "minecraft:diamond_sword"
     }
   },
   "pattern": [
+    "IGI",
     "GSG",
-    "AQA",
-    "GSG"
+    "IGI"
   ],
   "result": {
     "count": 4,

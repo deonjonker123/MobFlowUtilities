@@ -1,8 +1,6 @@
 package com.misterd.mobflowutilities.block.custom;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.misterd.mobflowutilities.block.MFUBlocks;
 import com.misterd.mobflowutilities.config.Config;
@@ -20,53 +18,40 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import org.joml.Vector3f;
 
 public class GlimmerGrassBlock extends Block {
-    private static final Map<BlockPos, Long> reversionTimers = new HashMap();
 
     public GlimmerGrassBlock(Properties properties) {
         super(properties);
     }
 
+    @Override
     protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
         super.onPlace(state, level, pos, oldState, movedByPiston);
         if (!level.isClientSide()) {
             level.scheduleTick(pos, this, Config.getGlimmerGrassCheckInterval());
         }
-
     }
 
+    @Override
     protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         super.tick(state, level, pos, random);
-        int lightLevel;
-        if (Config.isGlimmerGrassRevertEnabled()) {
-            lightLevel = level.getMaxLocalRawBrightness(pos.above());
-            if (lightLevel < Config.getGlimmerGrassConversionLightLevel()) {
-                long currentTime = level.getGameTime();
-                if (!reversionTimers.containsKey(pos)) {
-                    reversionTimers.put(pos, currentTime + Config.getGlimmerGrassReversionDelayTicks());
-                } else if (currentTime >= reversionTimers.get(pos)) {
-                    level.setBlock(pos, Blocks.DIRT.defaultBlockState(), 3);
-                    reversionTimers.remove(pos);
-                    return;
-                }
-            } else {
-                reversionTimers.remove(pos);
-            }
-        }
 
-        lightLevel = level.getMaxLocalRawBrightness(pos.above());
-        if (lightLevel >= Config.getGlimmerGrassSpawningLightLevel()) {
+        // No reversion - Glimmer Grass never reverts
+
+        // Spawning: Only spawn when light level >= 7
+        int lightLevel = level.getMaxLocalRawBrightness(pos.above());
+        if (lightLevel >= 7) {
             this.attemptMobSpawning(level, pos, random);
         }
 
         level.scheduleTick(pos, this, Config.getGlimmerGrassCheckInterval());
     }
 
+    @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         super.animateTick(state, level, pos, random);
         if (Config.isGlimmerGrassParticlesEnabled() && random.nextInt(10) == 0) {
@@ -76,7 +61,6 @@ public class GlimmerGrassBlock extends Block {
             DustParticleOptions purpleDust = new DustParticleOptions(new Vector3f(0.6F, 0.2F, 0.8F), 1.0F);
             level.addParticle(purpleDust, x, y, z, 0.0D, 0.05D, 0.0D);
         }
-
     }
 
     private void attemptMobSpawning(ServerLevel level, BlockPos pos, RandomSource random) {
@@ -86,26 +70,28 @@ public class GlimmerGrassBlock extends Block {
         int maxX = centerX + 8;
         int minZ = centerZ - 8;
         int maxZ = centerZ + 8;
-        AABB spawnArea = new AABB(minX, (pos.getY() - 5), minZ, maxX, (pos.getY() + 5), maxZ);
+        AABB spawnArea = new AABB(minX, pos.getY() - 5, minZ, maxX, pos.getY() + 5, maxZ);
         long existingMobs = level.getEntitiesOfClass(Animal.class, spawnArea).size();
+
         if (existingMobs < Config.getGlimmerGrassMobsPerArea()) {
-            List<SpawnerData> passiveSpawns = (level.getBiome(pos).value()).getMobSettings().getMobs(MobCategory.CREATURE).unwrap();
+            List<SpawnerData> passiveSpawns = level.getBiome(pos).value().getMobSettings().getMobs(MobCategory.CREATURE).unwrap();
             if (passiveSpawns.isEmpty()) {
-                passiveSpawns = (level.getBiome(pos).value()).getMobSettings().getMobs(MobCategory.AMBIENT).unwrap();
+                passiveSpawns = level.getBiome(pos).value().getMobSettings().getMobs(MobCategory.AMBIENT).unwrap();
             }
 
-            int mobsToSpawn = Math.min(Config.getGlimmerGrassMobsPerArea() - (int)existingMobs, 3);
+            int mobsToSpawn = Math.min(Config.getGlimmerGrassMobsPerArea() - (int) existingMobs, 3);
 
-            for(int i = 0; i < mobsToSpawn; ++i) {
+            for (int i = 0; i < mobsToSpawn; i++) {
                 SpawnerData spawnerData = passiveSpawns.get(random.nextInt(passiveSpawns.size()));
                 EntityType<?> entityType = spawnerData.type;
                 BlockPos spawnPos = this.findSpawnPosition(level, minX, maxX, minZ, maxZ, pos.getY(), random);
+
                 if (spawnPos != null) {
                     try {
-                        Mob mob = (Mob)entityType.create(level);
+                        Mob mob = (Mob) entityType.create(level);
                         if (mob != null) {
                             mob.setPos(spawnPos.getX() + 0.5D, spawnPos.getY(), spawnPos.getZ() + 0.5D);
-                            mob.finalizeSpawn(level, level.getCurrentDifficultyAt(spawnPos), MobSpawnType.NATURAL, (SpawnGroupData)null);
+                            mob.finalizeSpawn(level, level.getCurrentDifficultyAt(spawnPos), MobSpawnType.NATURAL, null);
                             level.addFreshEntity(mob);
                         }
                     } catch (Exception e) {
@@ -113,39 +99,37 @@ public class GlimmerGrassBlock extends Block {
                     }
                 }
             }
-
         }
     }
 
     private BlockPos findSpawnPosition(ServerLevel level, int minX, int maxX, int minZ, int maxZ, int baseY, RandomSource random) {
-        for(int attempts = 0; attempts < 10; ++attempts) {
+        for (int attempts = 0; attempts < 10; attempts++) {
             int x = random.nextIntBetweenInclusive(minX, maxX);
             int z = random.nextIntBetweenInclusive(minZ, maxZ);
 
-            for(int yOffset = -2; yOffset <= 2; ++yOffset) {
+            for (int yOffset = -2; yOffset <= 2; yOffset++) {
                 BlockPos checkPos = new BlockPos(x, baseY + yOffset, z);
                 BlockPos abovePos = checkPos.above();
-                if (level.getBlockState(checkPos).getBlock() == this && (level.getBlockState(abovePos).isAir() || this.flowPadsAllowed(level.getBlockState(abovePos).getBlock())) && level.getBlockState(abovePos.above()).isAir() && level.getBlockState(checkPos).isFaceSturdy(level, checkPos, Direction.UP)) {
+
+                if (level.getBlockState(checkPos).getBlock() == this &&
+                        (level.getBlockState(abovePos).isAir() || this.flowPadsAllowed(level.getBlockState(abovePos).getBlock())) &&
+                        level.getBlockState(abovePos.above()).isAir() &&
+                        level.getBlockState(checkPos).isFaceSturdy(level, checkPos, Direction.UP)) {
+
+                    // Only spawn at light level >= 7
                     int lightLevel = level.getMaxLocalRawBrightness(abovePos);
-                    if (lightLevel >= Config.getGlimmerGrassSpawningLightLevel()) {
+                    if (lightLevel >= 7) {
                         return abovePos;
                     }
                 }
             }
         }
-
         return null;
     }
 
     private boolean flowPadsAllowed(Block block) {
-        return block == MFUBlocks.FAST_FLOW_PAD.get() || block == MFUBlocks.FASTER_FLOW_PAD.get() || block == MFUBlocks.FASTEST_FLOW_PAD.get();
-    }
-
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (state.getBlock() != newState.getBlock()) {
-            reversionTimers.remove(pos);
-        }
-
-        super.onRemove(state, level, pos, newState, movedByPiston);
+        return block == MFUBlocks.FAST_FLOW_PAD.get() ||
+                block == MFUBlocks.FASTER_FLOW_PAD.get() ||
+                block == MFUBlocks.FASTEST_FLOW_PAD.get();
     }
 }

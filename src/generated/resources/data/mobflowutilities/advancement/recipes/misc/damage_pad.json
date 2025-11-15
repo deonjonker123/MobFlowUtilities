@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_quartz": {
+    "has_diamond_sword": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:quartz"
+            "items": "minecraft:diamond_sword"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_quartz"
+      "has_diamond_sword"
     ]
   ],
   "rewards": {

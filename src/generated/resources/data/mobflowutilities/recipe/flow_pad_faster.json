@@ -2,26 +2,23 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "D": {
-      "item": "minecraft:gold_block"
-    },
     "F": {
       "item": "mobflowutilities:flow_pad_fast"
     },
     "G": {
-      "item": "mobflowutilities:gloomsteel_ingot"
+      "item": "minecraft:gold_ingot"
     },
-    "S": {
-      "tag": "c:stones"
+    "Q": {
+      "item": "minecraft:sugar"
     }
   },
   "pattern": [
-    "DGD",
     "GFG",
-    "SSS"
+    "FQF",
+    "GFG"
   ],
   "result": {
-    "count": 8,
+    "count": 4,
     "id": "mobflowutilities:flow_pad_faster"
   }
 }

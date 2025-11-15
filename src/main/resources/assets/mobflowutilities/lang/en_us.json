@@ -20,8 +20,8 @@
 
   "block.mobflowutilities.gloomsteel_stone_ore": "Gloomsteel Ore",
   "block.mobflowutilities.gloomsteel_deepslate_ore": "Deepslate Gloomsteel Ore",
-  "block.mobflowutilities.gloomsteel_nether_ore": "Nether Gloomsteel Ore",
-  "block.mobflowutilities.gloomsteel_end_ore": "End Gloomsteel Ore",
+  "block.mobflowutilities.gloomsteel_netherrack_ore": "Nether Gloomsteel Ore",
+  "block.mobflowutilities.gloomsteel_endstone_ore": "End Gloomsteel Ore",
   "block.mobflowutilities.gloomsteel_block": "Gloomsteel Block",
   "block.mobflowutilities.raw_gloomsteel_block": "Raw Gloomsteel Block",
 
@@ -43,6 +43,8 @@
 
   "item.mobflowutilities.pad_wrench": "Pad Wrench",
   "item.mobflowutilities.pad_wrench.subtitle": "Used to link Damage Pads with Controllers",
+
+  "item.mobflowutilities.mob_catcher": "Mob Catcher",
 
   "item.mobflowutilities.raw_gloomsteel": "Raw Gloomsteel",
   "item.mobflowutilities.gloomsteel_ingot": "Gloomsteel Ingot",
@@ -141,17 +143,6 @@
   "item.mobflowutilities.pad_wrench.tooltip.usage.pad": "Use on Pad: Link/Unlink",
 
   "fakeplayer.mobflowutilities.damage_pad": "Mob Flow Utilities Damage Pad",
-
-  "item.mobflowutilities.gloom_spore.invalid_block": "Cannot convert this block type",
-  "item.mobflowutilities.gloom_spore.too_bright": "Too bright! Light level %d > %d required",
-  "item.mobflowutilities.gloom_spore.no_conversion": "No blocks could be converted in this area",
-  "item.mobflowutilities.gloom_spore.area": "Conversion Area: %dx%d",
-  "item.mobflowutilities.gloom_spore.light_requirement": "Max Light Level: %d",
-  "item.mobflowutilities.glimmer_sprout.invalid_block": "Cannot convert this block type",
-  "item.mobflowutilities.glimmer_sprout.too_dark": "Too dark! Light level %d < %d required",
-  "item.mobflowutilities.glimmer_sprout.no_conversion": "No blocks could be converted in this area",
-  "item.mobflowutilities.glimmer_sprout.area": "Conversion Area: %dx%d",
-  "item.mobflowutilities.glimmer_sprout.light_requirement": "Min Light Level: %d",
 
   "item.mobflowutilities.mob_catcher.already_occupied": "Mob Catcher already contains a mob!",
   "item.mobflowutilities.mob_catcher.boss_immunity": "Boss mobs cannot be captured!",

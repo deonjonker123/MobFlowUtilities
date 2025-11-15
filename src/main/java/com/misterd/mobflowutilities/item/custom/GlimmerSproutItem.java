@@ -3,14 +3,12 @@ package com.misterd.mobflowutilities.item.custom;
 import com.misterd.mobflowutilities.block.MFUBlocks;
 import com.misterd.mobflowutilities.config.Config;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -32,24 +30,6 @@ public class GlimmerSproutItem extends Item {
             return InteractionResult.SUCCESS;
         }
 
-        if (!isConvertibleBlock(level.getBlockState(clickedPos))) {
-            player.displayClientMessage(
-                    Component.translatable("item.mobflowutilities.glimmer_sprout.invalid_block"),
-                    true
-            );
-            return InteractionResult.FAIL;
-        }
-
-        int lightLevel = level.getBrightness(LightLayer.BLOCK, clickedPos.above());
-        int requiredLight = Config.getGlimmerGrassConversionLightLevel();
-        if (lightLevel < requiredLight) {
-            player.displayClientMessage(
-                    Component.translatable("item.mobflowutilities.glimmer_sprout.too_dark", lightLevel, requiredLight),
-                    true
-            );
-            return InteractionResult.FAIL;
-        }
-
         int conversionArea = Config.getGlimmerSproutConversionArea();
         int halfArea = conversionArea / 2;
         int blocksConverted = 0;
@@ -59,25 +39,19 @@ public class GlimmerSproutItem extends Item {
                 BlockPos targetPos = clickedPos.offset(dx, 0, dz);
                 BlockState targetState = level.getBlockState(targetPos);
 
-                if (isConvertibleBlock(targetState)
-                        && level.getBrightness(LightLayer.BLOCK, targetPos.above()) >= requiredLight) {
+                if (isConvertibleBlock(targetState)) {
                     level.setBlock(targetPos, MFUBlocks.GLIMMER_GRASS.get().defaultBlockState(), 3);
                     blocksConverted++;
                 }
             }
         }
 
-        if (blocksConverted == 0) {
-            player.displayClientMessage(
-                    Component.translatable("item.mobflowutilities.glimmer_sprout.no_conversion"),
-                    true
-            );
-            return InteractionResult.FAIL;
+        if (blocksConverted > 0) {
+            stack.shrink(1);
+            return InteractionResult.SUCCESS;
         }
 
-        stack.shrink(1);
-
-        return InteractionResult.SUCCESS;
+        return InteractionResult.FAIL;
     }
 
     private boolean isConvertibleBlock(BlockState state) {

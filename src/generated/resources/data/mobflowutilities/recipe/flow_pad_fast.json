@@ -5,23 +5,20 @@
     "G": {
       "item": "mobflowutilities:gloomsteel_ingot"
     },
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
     "Q": {
-      "item": "minecraft:quartz_block"
+      "item": "minecraft:sugar"
     },
     "S": {
       "tag": "c:stones"
     }
   },
   "pattern": [
-    "IGI",
+    "SGS",
     "GQG",
-    "SSS"
+    "SGS"
   ],
   "result": {
-    "count": 8,
+    "count": 4,
     "id": "mobflowutilities:flow_pad_fast"
   }
 }

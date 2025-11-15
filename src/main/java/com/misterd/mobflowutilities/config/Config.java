@@ -15,23 +15,15 @@ public class Config {
 
     private static ModConfigSpec.IntValue GLOOM_SPORE_CONVERSION_AREA;
 
-    private static ModConfigSpec.IntValue DARK_DIRT_CONVERSION_LIGHT_LEVEL;
-    private static ModConfigSpec.IntValue DARK_DIRT_SPAWNING_LIGHT_LEVEL;
     private static ModConfigSpec.IntValue DARK_DIRT_MOBS_PER_AREA;
     private static ModConfigSpec.IntValue DARK_DIRT_CHECK_INTERVAL;
-    private static ModConfigSpec.BooleanValue DARK_DIRT_REVERT_ENABLED;
     private static ModConfigSpec.BooleanValue DARK_DIRT_PARTICLES_ENABLED;
-    private static ModConfigSpec.IntValue DARK_DIRT_REVERSION_DELAY;
 
     private static ModConfigSpec.IntValue GLIMMER_SPROUT_CONVERSION_AREA;
 
-    private static ModConfigSpec.IntValue GLIMMER_GRASS_CONVERSION_LIGHT_LEVEL;
-    private static ModConfigSpec.IntValue GLIMMER_GRASS_SPAWNING_LIGHT_LEVEL;
     private static ModConfigSpec.IntValue GLIMMER_GRASS_MOBS_PER_AREA;
     private static ModConfigSpec.IntValue GLIMMER_GRASS_CHECK_INTERVAL;
-    private static ModConfigSpec.BooleanValue GLIMMER_GRASS_REVERT_ENABLED;
     private static ModConfigSpec.BooleanValue GLIMMER_GRASS_PARTICLES_ENABLED;
-    private static ModConfigSpec.IntValue GLIMMER_GRASS_REVERSION_DELAY;
 
     static {
         buildCommonConfig();
@@ -68,22 +60,6 @@ public class Config {
         COMMON_BUILDER.comment("Dark Dirt - Configure spawning and behavior settings for Dark Dirt blocks")
                 .push("dark_dirt");
 
-        DARK_DIRT_CONVERSION_LIGHT_LEVEL = COMMON_BUILDER
-                .comment(
-                        "Maximum light level for conversion to Dark Dirt",
-                        "Gloom Spore will only convert dirt at or below this light level",
-                        "Default: 7"
-                )
-                .defineInRange("conversion_light_level", 7, 0, 15);
-
-        DARK_DIRT_SPAWNING_LIGHT_LEVEL = COMMON_BUILDER
-                .comment(
-                        "Maximum light level for mob spawning on Dark Dirt",
-                        "Dark Dirt will only spawn mobs at or below this light level",
-                        "Default: 2"
-                )
-                .defineInRange("spawning_light_level", 2, 0, 15);
-
         DARK_DIRT_MOBS_PER_AREA = COMMON_BUILDER
                 .comment(
                         "Number of mobs to spawn per 16x16 area",
@@ -101,14 +77,6 @@ public class Config {
                 )
                 .defineInRange("check_interval", 20, 5, 200);
 
-        DARK_DIRT_REVERT_ENABLED = COMMON_BUILDER
-                .comment(
-                        "Enable Dark Dirt reversion to normal dirt",
-                        "If true, Dark Dirt reverts to normal dirt in bright light",
-                        "Default: true"
-                )
-                .define("revert_enabled", true);
-
         DARK_DIRT_PARTICLES_ENABLED = COMMON_BUILDER
                 .comment(
                         "Enable Dark Dirt particle effects",
@@ -116,14 +84,6 @@ public class Config {
                         "Default: true"
                 )
                 .define("particles_enabled", true);
-
-        DARK_DIRT_REVERSION_DELAY = COMMON_BUILDER
-                .comment(
-                        "Reversion delay in seconds",
-                        "How long Dark Dirt waits in bright light before reverting to dirt",
-                        "Default: 10"
-                )
-                .defineInRange("reversion_delay_seconds", 10, 1, 60);
 
         COMMON_BUILDER.pop();
     }
@@ -147,22 +107,6 @@ public class Config {
         COMMON_BUILDER.comment("Glimmer Grass - Configure spawning and behavior settings for Glimmer Grass blocks")
                 .push("glimmer_grass");
 
-        GLIMMER_GRASS_CONVERSION_LIGHT_LEVEL = COMMON_BUILDER
-                .comment(
-                        "Minimum light level for conversion to Glimmer Grass",
-                        "Glimmer Sprout will only convert dirt at or above this light level",
-                        "Default: 7"
-                )
-                .defineInRange("conversion_light_level", 7, 1, 15);
-
-        GLIMMER_GRASS_SPAWNING_LIGHT_LEVEL = COMMON_BUILDER
-                .comment(
-                        "Minimum light level for mob spawning on Glimmer Grass",
-                        "Glimmer Grass will only spawn mobs at or above this light level",
-                        "Default: 7"
-                )
-                .defineInRange("spawning_light_level", 7, 1, 15);
-
         GLIMMER_GRASS_MOBS_PER_AREA = COMMON_BUILDER
                 .comment(
                         "Number of mobs to spawn per 16x16 area",
@@ -180,14 +124,6 @@ public class Config {
                 )
                 .defineInRange("check_interval", 20, 5, 200);
 
-        GLIMMER_GRASS_REVERT_ENABLED = COMMON_BUILDER
-                .comment(
-                        "Enable Glimmer Grass reversion to normal dirt",
-                        "If true, Glimmer Grass reverts to normal dirt in low light",
-                        "Default: true"
-                )
-                .define("revert_enabled", true);
-
         GLIMMER_GRASS_PARTICLES_ENABLED = COMMON_BUILDER
                 .comment(
                         "Enable Glimmer Grass particle effects",
@@ -196,27 +132,11 @@ public class Config {
                 )
                 .define("particles_enabled", true);
 
-        GLIMMER_GRASS_REVERSION_DELAY = COMMON_BUILDER
-                .comment(
-                        "Reversion delay in seconds",
-                        "How long Glimmer Grass waits in darkness before reverting to dirt",
-                        "Default: 10"
-                )
-                .defineInRange("reversion_delay_seconds", 10, 1, 60);
-
         COMMON_BUILDER.pop();
     }
 
     public static int getGloomSporeConversionArea() {
         return GLOOM_SPORE_CONVERSION_AREA.get();
-    }
-
-    public static int getDarkDirtConversionLightLevel() {
-        return DARK_DIRT_CONVERSION_LIGHT_LEVEL.get();
-    }
-
-    public static int getDarkDirtSpawningLightLevel() {
-        return DARK_DIRT_SPAWNING_LIGHT_LEVEL.get();
     }
 
     public static int getDarkDirtMobsPerArea() {
@@ -227,28 +147,12 @@ public class Config {
         return DARK_DIRT_CHECK_INTERVAL.get();
     }
 
-    public static boolean isDarkDirtRevertEnabled() {
-        return DARK_DIRT_REVERT_ENABLED.get();
-    }
-
     public static boolean isDarkDirtParticlesEnabled() {
         return DARK_DIRT_PARTICLES_ENABLED.get();
     }
 
-    public static int getDarkDirtReversionDelayTicks() {
-        return DARK_DIRT_REVERSION_DELAY.get() * 20;
-    }
-
     public static int getGlimmerSproutConversionArea() {
         return GLIMMER_SPROUT_CONVERSION_AREA.get();
-    }
-
-    public static int getGlimmerGrassConversionLightLevel() {
-        return GLIMMER_GRASS_CONVERSION_LIGHT_LEVEL.get();
-    }
-
-    public static int getGlimmerGrassSpawningLightLevel() {
-        return GLIMMER_GRASS_SPAWNING_LIGHT_LEVEL.get();
     }
 
     public static int getGlimmerGrassMobsPerArea() {
@@ -259,37 +163,11 @@ public class Config {
         return GLIMMER_GRASS_CHECK_INTERVAL.get();
     }
 
-    public static boolean isGlimmerGrassRevertEnabled() {
-        return GLIMMER_GRASS_REVERT_ENABLED.get();
-    }
-
     public static boolean isGlimmerGrassParticlesEnabled() {
         return GLIMMER_GRASS_PARTICLES_ENABLED.get();
     }
 
-    public static int getGlimmerGrassReversionDelayTicks() {
-        return GLIMMER_GRASS_REVERSION_DELAY.get() * 20;
-    }
-
     private static void validateConfig() {
-        if (getDarkDirtConversionLightLevel() < getDarkDirtSpawningLightLevel()) {
-            LOGGER.warn(
-                    "Dark Dirt conversion light level ({}) is lower than spawning light level ({}). " +
-                            "This may cause unexpected behavior.",
-                    getDarkDirtConversionLightLevel(),
-                    getDarkDirtSpawningLightLevel()
-            );
-        }
-
-        if (getGlimmerGrassConversionLightLevel() > getGlimmerGrassSpawningLightLevel()) {
-            LOGGER.warn(
-                    "Glimmer Grass conversion light level ({}) is higher than spawning light level ({}). " +
-                            "This may cause unexpected behavior.",
-                    getGlimmerGrassConversionLightLevel(),
-                    getGlimmerGrassSpawningLightLevel()
-            );
-        }
-
         if (getDarkDirtMobsPerArea() > 25) {
             LOGGER.warn(
                     "Dark Dirt mob spawn count ({}) is high and may impact server performance!",
@@ -333,22 +211,16 @@ public class Config {
         LOGGER.info("  Conversion Area: {}x{} blocks", getGloomSporeConversionArea(), getGloomSporeConversionArea());
 
         LOGGER.info("Dark Dirt Configuration:");
-        LOGGER.info("  Conversion Light Level: {} (max)", getDarkDirtConversionLightLevel());
-        LOGGER.info("  Spawning Light Level: {} (max)", getDarkDirtSpawningLightLevel());
         LOGGER.info("  Mobs per 16x16 Area: {}", getDarkDirtMobsPerArea());
         LOGGER.info("  Check Interval: {} ticks", getDarkDirtCheckInterval());
-        LOGGER.info("  Reversion Enabled: {}", isDarkDirtRevertEnabled());
         LOGGER.info("  Particles Enabled: {}", isDarkDirtParticlesEnabled());
 
         LOGGER.info("Glimmer Sprout Configuration:");
         LOGGER.info("  Conversion Area: {}x{} blocks", getGlimmerSproutConversionArea(), getGlimmerSproutConversionArea());
 
         LOGGER.info("Glimmer Grass Configuration:");
-        LOGGER.info("  Conversion Light Level: {} (min)", getGlimmerGrassConversionLightLevel());
-        LOGGER.info("  Spawning Light Level: {} (min)", getGlimmerGrassSpawningLightLevel());
         LOGGER.info("  Mobs per 16x16 Area: {}", getGlimmerGrassMobsPerArea());
         LOGGER.info("  Check Interval: {} ticks", getGlimmerGrassCheckInterval());
-        LOGGER.info("  Reversion Enabled: {}", isGlimmerGrassRevertEnabled());
         LOGGER.info("  Particles Enabled: {}", isGlimmerGrassParticlesEnabled());
     }
 }

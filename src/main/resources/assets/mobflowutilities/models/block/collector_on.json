@@ -2,9 +2,9 @@
   "parent": "minecraft:block/cube",
   "textures": {
     "north": "mobflowutilities:block/collector_front_on",
-    "south": "mobflowutilities:block/collector_front_on",
-    "east": "mobflowutilities:block/collector_front_on",
-    "west": "mobflowutilities:block/collector_front_on",
+    "south": "mobflowutilities:block/collector_side",
+    "east": "mobflowutilities:block/collector_side",
+    "west": "mobflowutilities:block/collector_side",
     "up": "mobflowutilities:block/collector_top",
     "down": "mobflowutilities:block/collector_bottom",
     "particle": "mobflowutilities:block/collector_front_on"

@@ -19,7 +19,6 @@ public class MFUBlockStateProvider extends BlockStateProvider {
         blockWithItem(MFUBlocks.RAW_GLOOMSTEEL_BLOCK);
 
         blockWithItem(MFUBlocks.GLOOMSTEEL_STONE_ORE);
-        blockWithItem(MFUBlocks.GLOOMSTEEL_DEEPSLATE_ORE);
         blockWithItem(MFUBlocks.GLOOMSTEEL_NETHERRACK_ORE);
         blockWithItem(MFUBlocks.GLOOMSTEEL_ENDSTONE_ORE);
 

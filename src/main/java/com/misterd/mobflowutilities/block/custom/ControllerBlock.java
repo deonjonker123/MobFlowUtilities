@@ -110,7 +110,7 @@ public class ControllerBlock extends BaseEntityBlock {
             if (data.selectedController() != null && data.selectedController().equals(controllerPos)) {
                 PadWrenchData newData = data.withSelectedController(null);
                 stack.set(MFUDataComponents.PAD_WRENCH_DATA.get(), newData);
-                player.displayClientMessage(Component.translatable("item.flowtech.pad_wrench.controller.cleared"), true);
+                player.displayClientMessage(Component.translatable("item.mobflowutilities.pad_wrench.controller.cleared"), true);
             }
         }
     }
@@ -119,7 +119,7 @@ public class ControllerBlock extends BaseEntityBlock {
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof ControllerBlockEntity controller && !level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
-            serverPlayer.openMenu(new SimpleMenuProvider(controller, Component.translatable("gui.flowtech.controller")), pos);
+            serverPlayer.openMenu(new SimpleMenuProvider(controller, Component.translatable("gui.mobflowutilities.controller")), pos);
             return ItemInteractionResult.SUCCESS;
         }
         return ItemInteractionResult.SUCCESS;

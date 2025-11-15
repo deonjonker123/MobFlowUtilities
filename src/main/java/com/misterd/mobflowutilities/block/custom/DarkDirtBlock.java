@@ -1,8 +1,6 @@
 package com.misterd.mobflowutilities.block.custom;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.misterd.mobflowutilities.block.MFUBlocks;
 import com.misterd.mobflowutilities.config.Config;
@@ -27,48 +25,40 @@ import net.minecraft.world.phys.AABB;
 import org.joml.Vector3f;
 
 public class DarkDirtBlock extends Block {
-    private static final Map<BlockPos, Long> reversionTimers = new HashMap();
 
     public DarkDirtBlock(Properties properties) {
         super(properties);
     }
 
+    @Override
     protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
         super.onPlace(state, level, pos, oldState, movedByPiston);
         if (!level.isClientSide()) {
             level.scheduleTick(pos, this, Config.getDarkDirtCheckInterval());
         }
-
     }
 
+    @Override
     protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         super.tick(state, level, pos, random);
-        int lightLevel;
-        if (Config.isDarkDirtRevertEnabled()) {
-            lightLevel = level.getMaxLocalRawBrightness(pos.above());
-            boolean inSunlight = level.canSeeSky(pos.above()) && level.isDay();
-            if (lightLevel <= Config.getDarkDirtConversionLightLevel() && !inSunlight) {
-                reversionTimers.remove(pos);
-            } else {
-                long currentTime = level.getGameTime();
-                if (!reversionTimers.containsKey(pos)) {
-                    reversionTimers.put(pos, currentTime + Config.getDarkDirtReversionDelayTicks());
-                } else if (currentTime >= reversionTimers.get(pos)) {
-                    level.setBlock(pos, Blocks.DIRT.defaultBlockState(), 3);
-                    reversionTimers.remove(pos);
-                    return;
-                }
-            }
+
+        // Reversion: Only revert if in direct sunlight
+        boolean inDirectSunlight = level.canSeeSky(pos.above()) && level.isDay();
+        if (inDirectSunlight) {
+            level.setBlock(pos, Blocks.DIRT.defaultBlockState(), 3);
+            return;
         }
 
-        lightLevel = level.getMaxLocalRawBrightness(pos.above());
-        if (lightLevel <= Config.getDarkDirtSpawningLightLevel()) {
+        // Spawning: Only spawn when light level == 0
+        int lightLevel = level.getMaxLocalRawBrightness(pos.above());
+        if (lightLevel == 0) {
             this.attemptMobSpawning(level, pos, random);
         }
 
         level.scheduleTick(pos, this, Config.getDarkDirtCheckInterval());
     }
 
+    @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         super.animateTick(state, level, pos, random);
         if (Config.isDarkDirtParticlesEnabled() && random.nextInt(10) == 0) {
@@ -78,74 +68,86 @@ public class DarkDirtBlock extends Block {
             DustParticleOptions grayDust = new DustParticleOptions(new Vector3f(0.3F, 0.3F, 0.3F), 1.0F);
             level.addParticle(grayDust, x, y, z, 0.0D, 0.05D, 0.0D);
         }
-
     }
 
     private void attemptMobSpawning(ServerLevel level, BlockPos pos, RandomSource random) {
-        int centerX = pos.getX();
-        int centerZ = pos.getZ();
-        int minX = centerX - 8;
-        int maxX = centerX + 8;
-        int minZ = centerZ - 8;
-        int maxZ = centerZ + 8;
-        AABB spawnArea = new AABB(minX, (pos.getY() - 5), minZ, maxX, (pos.getY() + 5), maxZ);
-        long existingMobs = level.getEntitiesOfClass(Monster.class, spawnArea).size();
-        if (existingMobs < Config.getDarkDirtMobsPerArea()) {
-            List<SpawnerData> hostileSpawns = (level.getBiome(pos).value()).getMobSettings().getMobs(MobCategory.MONSTER).unwrap();
-            if (!hostileSpawns.isEmpty()) {
-                int mobsToSpawn = Math.min(Config.getDarkDirtMobsPerArea() - (int)existingMobs, 3);
+        int radius = 8;
+        int searchRadius = radius * 2;
+        AABB searchBox = new AABB(
+                pos.getX() - radius, pos.getY() - 2, pos.getZ() - radius,
+                pos.getX() + radius, pos.getY() + 2, pos.getZ() + radius
+        );
+        List<Mob> nearbyMobs = level.getEntitiesOfClass(Mob.class, searchBox, mob -> mob.getType().getCategory() == MobCategory.MONSTER);
 
-                for(int i = 0; i < mobsToSpawn; ++i) {
-                    SpawnerData spawnerData = hostileSpawns.get(random.nextInt(hostileSpawns.size()));
-                    EntityType<?> entityType = spawnerData.type;
-                    BlockPos spawnPos = this.findSpawnPosition(level, minX, maxX, minZ, maxZ, pos.getY(), random);
-                    if (spawnPos != null && SpawnPlacements.checkSpawnRules(entityType, level, MobSpawnType.NATURAL, spawnPos, random)) {
-                        try {
-                            Mob mob = (Mob)entityType.create(level);
-                            if (mob != null) {
-                                mob.setPos(spawnPos.getX() + 0.5D, spawnPos.getY(), spawnPos.getZ() + 0.5D);
-                                mob.finalizeSpawn(level, level.getCurrentDifficultyAt(spawnPos), MobSpawnType.NATURAL, (SpawnGroupData)null);
-                                level.addFreshEntity(mob);
+        if (nearbyMobs.size() < Config.getDarkDirtMobsPerArea()) {
+            int minX = pos.getX() - searchRadius;
+            int maxX = pos.getX() + searchRadius;
+            int minZ = pos.getZ() - searchRadius;
+            int maxZ = pos.getZ() + searchRadius;
+            BlockPos spawnPos = this.findSpawnPosition(level, minX, maxX, minZ, maxZ, pos.getY(), random);
+
+            if (spawnPos != null) {
+                List<SpawnerData> spawners = level.getBiome(spawnPos).value().getMobSettings().getMobs(MobCategory.MONSTER).unwrap();
+
+                if (!spawners.isEmpty()) {
+                    int totalWeight = spawners.stream().mapToInt(data -> data.getWeight().asInt()).sum();
+                    int randomWeight = random.nextInt(totalWeight);
+                    int cumulativeWeight = 0;
+
+                    for (SpawnerData spawner : spawners) {
+                        cumulativeWeight += spawner.getWeight().asInt();
+                        if (randomWeight < cumulativeWeight) {
+                            EntityType<?> entityType = spawner.type;
+
+                            try {
+                                Mob mob = (Mob) entityType.create(level);
+                                if (mob != null) {
+                                    mob.moveTo(spawnPos.getX() + 0.5D, spawnPos.getY(), spawnPos.getZ() + 0.5D, random.nextFloat() * 360.0F, 0.0F);
+
+                                    if (mob instanceof Monster && SpawnPlacements.checkSpawnRules(entityType, level, MobSpawnType.NATURAL, spawnPos, random)) {
+                                        mob.finalizeSpawn(level, level.getCurrentDifficultyAt(spawnPos), MobSpawnType.NATURAL, (SpawnGroupData) null);
+                                        level.addFreshEntity(mob);
+                                    }
+                                }
+                            } catch (Exception e) {
+                                System.out.println("Failed to spawn mob: " + e.getMessage());
                             }
-                        } catch (Exception e) {
-                            System.out.println("Failed to spawn mob: " + e.getMessage());
+                            break;
                         }
                     }
                 }
-
             }
         }
     }
 
     private BlockPos findSpawnPosition(ServerLevel level, int minX, int maxX, int minZ, int maxZ, int baseY, RandomSource random) {
-        for(int attempts = 0; attempts < 10; ++attempts) {
+        for (int attempts = 0; attempts < 10; attempts++) {
             int x = random.nextIntBetweenInclusive(minX, maxX);
             int z = random.nextIntBetweenInclusive(minZ, maxZ);
 
-            for(int yOffset = -2; yOffset <= 2; ++yOffset) {
+            for (int yOffset = -2; yOffset <= 2; yOffset++) {
                 BlockPos checkPos = new BlockPos(x, baseY + yOffset, z);
                 BlockPos abovePos = checkPos.above();
-                if (level.getBlockState(checkPos).getBlock() == this && (level.getBlockState(abovePos).isAir() || this.flowPadsAllowed(level.getBlockState(abovePos).getBlock())) && level.getBlockState(abovePos.above()).isAir() && level.getBlockState(checkPos).isFaceSturdy(level, checkPos, Direction.UP)) {
+
+                if (level.getBlockState(checkPos).getBlock() == this &&
+                        (level.getBlockState(abovePos).isAir() || this.flowPadsAllowed(level.getBlockState(abovePos).getBlock())) &&
+                        level.getBlockState(abovePos.above()).isAir() &&
+                        level.getBlockState(checkPos).isFaceSturdy(level, checkPos, Direction.UP)) {
+
+                    // Only spawn at light level == 0
                     int lightLevel = level.getMaxLocalRawBrightness(abovePos);
-                    if (lightLevel <= Config.getDarkDirtSpawningLightLevel()) {
+                    if (lightLevel == 0) {
                         return abovePos;
                     }
                 }
             }
         }
-
         return null;
     }
 
     private boolean flowPadsAllowed(Block block) {
-        return block == MFUBlocks.FAST_FLOW_PAD.get() || block == MFUBlocks.FASTER_FLOW_PAD.get() || block == MFUBlocks.FASTEST_FLOW_PAD.get();
-    }
-
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (state.getBlock() != newState.getBlock()) {
-            reversionTimers.remove(pos);
-        }
-
-        super.onRemove(state, level, pos, newState, movedByPiston);
+        return block == MFUBlocks.FAST_FLOW_PAD.get() ||
+                block == MFUBlocks.FASTER_FLOW_PAD.get() ||
+                block == MFUBlocks.FASTEST_FLOW_PAD.get();
     }
 }

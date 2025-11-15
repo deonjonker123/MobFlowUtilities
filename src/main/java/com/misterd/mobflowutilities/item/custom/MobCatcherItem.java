@@ -161,7 +161,6 @@ public class MobCatcherItem extends Item {
     }
 
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable("item.mobflowutilities.mob_catcher.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
         if (this.hasCapturedMob(stack)) {
             CustomData customData = stack.get(DataComponents.CUSTOM_DATA);
             if (customData != null) {
