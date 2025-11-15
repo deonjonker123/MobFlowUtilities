@@ -6,6 +6,7 @@ import com.misterd.mobflowutilities.util.GeneticHelper;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -18,15 +19,25 @@ import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
-import java.security.Provider;
-
 public class GeneticRecipe implements Recipe<CraftingInput> {
+    private final String group;
 
     public GeneticRecipe(String group) {
-        super(group, CraftingBookCategory.MISC, new ItemStack(Items.EGG), createIngredients());
+        this.group = group;
     }
 
-    private static NonNullList<Ingredient> createIngredients() {
+    @Override
+    public String getGroup() {
+        return this.group;
+    }
+
+    @Override
+    public ItemStack getResultItem(HolderLookup.Provider registries) {
+        return new ItemStack(Items.EGG);
+    }
+
+    @Override
+    public NonNullList<Ingredient> getIngredients() {
         NonNullList<Ingredient> ingredients = NonNullList.create();
         ingredients.add(Ingredient.of(MFUItems.GENE_SAMPLE_VIAL.get()));
         ingredients.add(Ingredient.of(MFUItems.INCUBATION_CRYSTAL.get()));
@@ -34,6 +45,7 @@ public class GeneticRecipe implements Recipe<CraftingInput> {
         return ingredients;
     }
 
+    @Override
     public boolean matches(CraftingInput input, Level level) {
         boolean hasGeneSample = false;
         boolean hasPulseCore = false;
@@ -85,7 +97,8 @@ public class GeneticRecipe implements Recipe<CraftingInput> {
         }
     }
 
-    public ItemStack assemble(CraftingInput input, Provider registries) {
+    @Override
+    public ItemStack assemble(CraftingInput input, HolderLookup.Provider registries) {
         for(int i = 0; i < input.size(); ++i) {
             ItemStack stack = input.getItem(i);
             if (stack.getItem() == MFUItems.GENE_SAMPLE_VIAL.get()) {
@@ -104,24 +117,42 @@ public class GeneticRecipe implements Recipe<CraftingInput> {
         return ItemStack.EMPTY;
     }
 
+    @Override
+    public boolean canCraftInDimensions(int width, int height) {
+        return width * height >= 3;
+    }
+
+    @Override
     public RecipeSerializer<?> getSerializer() {
         return MFURecipeSerializers.GENETIC_RECIPE.get();
     }
 
+    @Override
+    public RecipeType<?> getType() {
+        return MFURecipeSerializers.GENETIC_RECIPE_TYPE.get();
+    }
+
+    @Override
     public boolean isSpecial() {
         return true;
     }
 
     public static class Serializer implements RecipeSerializer<GeneticRecipe> {
-        public static final MapCodec<GeneticRecipe> CODEC = RecordCodecBuilder.mapCodec((instance) -> {
-            return instance.group(Codec.STRING.optionalFieldOf("group", "").forGetter(ShapelessRecipe::getGroup)).apply(instance, GeneticRecipe::new);
-        });
-        public static final StreamCodec<RegistryFriendlyByteBuf, GeneticRecipe> STREAM_CODEC = StreamCodec.of(GeneticRecipe.Serializer::toNetwork, GeneticRecipe.Serializer::fromNetwork);
+        public static final MapCodec<GeneticRecipe> CODEC = RecordCodecBuilder.mapCodec((instance) ->
+                instance.group(
+                        Codec.STRING.optionalFieldOf("group", "").forGetter(GeneticRecipe::getGroup)
+                ).apply(instance, GeneticRecipe::new)
+        );
 
+        public static final StreamCodec<RegistryFriendlyByteBuf, GeneticRecipe> STREAM_CODEC =
+                StreamCodec.of(GeneticRecipe.Serializer::toNetwork, GeneticRecipe.Serializer::fromNetwork);
+
+        @Override
         public MapCodec<GeneticRecipe> codec() {
             return CODEC;
         }
 
+        @Override
         public StreamCodec<RegistryFriendlyByteBuf, GeneticRecipe> streamCodec() {
             return STREAM_CODEC;
         }
