@@ -60,7 +60,7 @@ public class MFUGlobalLootModifierProvider extends GlobalLootModifierProvider {
 
         for (String mob : passiveMobs) {
             addMobLoot("glimmer_sprout_from_" + mob.replace("entities/", ""),
-                    mob, MFUItems.GLIMMER_SPROUT, 0.05F);
+                    mob, MFUItems.GLIMMER_SPROUT, 0.005F);
         }
 
         // Friendly chests that contain Glimmer Sprouts (30% chance)
@@ -79,7 +79,7 @@ public class MFUGlobalLootModifierProvider extends GlobalLootModifierProvider {
                     chest, MFUItems.GLIMMER_SPROUT, 0.3F);
         }
 
-        // All common mobs drop Incubation Crystals (small% chance)
+        // All common mobs drop Incubation Crystals (Ultra rare)
         String[] allMobs = {
                 "entities/wither_skeleton", "entities/skeleton", "entities/zombie", "entities/creeper",
                 "entities/spider", "entities/cave_spider", "entities/enderman", "entities/stray",
@@ -126,36 +126,33 @@ public class MFUGlobalLootModifierProvider extends GlobalLootModifierProvider {
                 "chests/woodland_mansion"
         };
 
-        // Gloomsteel tools in chests (2% chance each)
+        // Gloomsteel tools in chests (30% chance each)
         for (String chest : treasureChests) {
             addChestLoot("gloomsteel_sword_from_" + chest.replace("chests/", ""),
-                    chest, MFUItems.GLOOMSTEEL_SWORD, 0.02F);
+                    chest, MFUItems.GLOOMSTEEL_SWORD, 0.3F);
             addChestLoot("gloomsteel_pickaxe_from_" + chest.replace("chests/", ""),
-                    chest, MFUItems.GLOOMSTEEL_PICKAXE, 0.02F);
+                    chest, MFUItems.GLOOMSTEEL_PICKAXE, 0.3F);
             addChestLoot("gloomsteel_axe_from_" + chest.replace("chests/", ""),
-                    chest, MFUItems.GLOOMSTEEL_AXE, 0.02F);
+                    chest, MFUItems.GLOOMSTEEL_AXE, 0.3F);
             addChestLoot("gloomsteel_shovel_from_" + chest.replace("chests/", ""),
-                    chest, MFUItems.GLOOMSTEEL_SHOVEL, 0.02F);
+                    chest, MFUItems.GLOOMSTEEL_SHOVEL, 0.3F);
             addChestLoot("gloomsteel_hoe_from_" + chest.replace("chests/", ""),
-                    chest, MFUItems.GLOOMSTEEL_HOE, 0.02F);
+                    chest, MFUItems.GLOOMSTEEL_HOE, 0.3F);
         }
 
-        // Gloomsteel armor in chests (1.5% chance each)
+        // Gloomsteel armor in chests (30% chance each)
         for (String chest : treasureChests) {
             addChestLoot("gloomsteel_helmet_from_" + chest.replace("chests/", ""),
-                    chest, MFUItems.GLOOMSTEEL_HELMET, 0.015F);
+                    chest, MFUItems.GLOOMSTEEL_HELMET, 0.3F);
             addChestLoot("gloomsteel_chestplate_from_" + chest.replace("chests/", ""),
-                    chest, MFUItems.GLOOMSTEEL_CHESTPLATE, 0.015F);
+                    chest, MFUItems.GLOOMSTEEL_CHESTPLATE, 0.3F);
             addChestLoot("gloomsteel_leggings_from_" + chest.replace("chests/", ""),
-                    chest, MFUItems.GLOOMSTEEL_LEGGINGS, 0.015F);
+                    chest, MFUItems.GLOOMSTEEL_LEGGINGS, 0.3F);
             addChestLoot("gloomsteel_boots_from_" + chest.replace("chests/", ""),
-                    chest, MFUItems.GLOOMSTEEL_BOOTS, 0.015F);
+                    chest, MFUItems.GLOOMSTEEL_BOOTS, 0.3F);
         }
     }
 
-    /**
-     * Helper method to add loot to mob drops with a chance
-     */
     private void addMobLoot(String name, String entityPath, net.neoforged.neoforge.registries.DeferredItem<?> item, float chance) {
         add(name, new AddItemModifier(
                 new LootItemCondition[] {
@@ -166,9 +163,6 @@ public class MFUGlobalLootModifierProvider extends GlobalLootModifierProvider {
         ));
     }
 
-    /**
-     * Helper method to add loot to chests with a chance
-     */
     private void addChestLoot(String name, String chestPath, net.neoforged.neoforge.registries.DeferredItem<?> item, float chance) {
         add(name, new AddItemModifier(
                 new LootItemCondition[] {
@@ -179,9 +173,6 @@ public class MFUGlobalLootModifierProvider extends GlobalLootModifierProvider {
         ));
     }
 
-    /**
-     * Helper method to add guaranteed loot to boss mobs
-     */
     private void addBossLoot(String name, String entityPath, net.neoforged.neoforge.registries.DeferredItem<?> item) {
         add(name, new AddItemModifier(
                 new LootItemCondition[] {

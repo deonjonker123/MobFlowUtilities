@@ -32,7 +32,6 @@ public class GloomSporeItem extends Item {
             return InteractionResult.SUCCESS;
         }
 
-        // Check if clicked block is convertible
         if (!isConvertibleBlock(level.getBlockState(clickedPos))) {
             player.displayClientMessage(
                     Component.translatable("item.mobflowutilities.gloom_spore.invalid_block"),
@@ -41,7 +40,6 @@ public class GloomSporeItem extends Item {
             return InteractionResult.FAIL;
         }
 
-        // Check light level
         int lightLevel = level.getBrightness(LightLayer.BLOCK, clickedPos.above());
         int maxLight = Config.getDarkDirtConversionLightLevel();
         if (lightLevel > maxLight) {
@@ -52,7 +50,6 @@ public class GloomSporeItem extends Item {
             return InteractionResult.FAIL;
         }
 
-        // Convert blocks in area
         int area = Config.getGloomSporeConversionArea();
         int half = area / 2;
         int blocksConverted = 0;
@@ -74,7 +71,6 @@ public class GloomSporeItem extends Item {
             }
         }
 
-        // Check if any blocks were converted
         if (blocksConverted == 0) {
             player.displayClientMessage(
                     Component.translatable("item.mobflowutilities.gloom_spore.no_conversion"),
@@ -83,12 +79,7 @@ public class GloomSporeItem extends Item {
             return InteractionResult.FAIL;
         }
 
-        // Consume the item
         stack.shrink(1);
-        player.displayClientMessage(
-                Component.translatable("item.mobflowutilities.gloom_spore.success", blocksConverted),
-                true
-        );
 
         return InteractionResult.SUCCESS;
     }

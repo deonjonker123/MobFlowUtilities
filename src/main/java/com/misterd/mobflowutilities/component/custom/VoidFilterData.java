@@ -29,7 +29,7 @@ public record VoidFilterData(List<ItemStack> filterItems, boolean ignoreNBT, boo
     public static final VoidFilterData DEFAULT = new VoidFilterData(createEmptyFilterList(), true, true);
 
     public VoidFilterData {
-        // compact constructor; no decomp artifacts needed
+
     }
 
     private static NonNullList<ItemStack> createEmptyFilterList() {
