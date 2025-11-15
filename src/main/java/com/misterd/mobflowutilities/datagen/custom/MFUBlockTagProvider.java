@@ -35,7 +35,9 @@ public class MFUBlockTagProvider extends BlockTagsProvider {
                 .add(MFUBlocks.GLOOMSTEEL_NETHERRACK_ORE.get())
                 .add(MFUBlocks.GLOOMSTEEL_ENDSTONE_ORE.get())
                 .add(MFUBlocks.RAW_GLOOMSTEEL_BLOCK.get())
-                .add(MFUBlocks.GLIMMER_LAMP.get())
+                .add(MFUBlocks.GLIMMER_LAMP.get());
+
+        tag(BlockTags.MINEABLE_WITH_SHOVEL)
                 .add(MFUBlocks.DARK_DIRT.get())
                 .add(MFUBlocks.GLIMMER_GRASS.get());
 
