@@ -101,7 +101,8 @@ public class MFUBlocks {
             () -> new CollectorBlock(BlockBehaviour.Properties.of()
                     .strength(2F)
                     .requiresCorrectToolForDrops()
-                    .sound(SoundType.STONE)));
+                    .sound(SoundType.STONE)
+                    .noLootTable()));
 
     public static final DeferredBlock<Block> CONTROLLER = registerBlock("controller",
             () -> new ControllerBlock(BlockBehaviour.Properties.of()
