@@ -254,12 +254,19 @@ public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     public void drops() {
-        SimpleContainer inv = new SimpleContainer(outputInventory.getSlots());
+        SimpleContainer outputInv = new SimpleContainer(outputInventory.getSlots());
         for (int i = 0; i < outputInventory.getSlots(); i++) {
-            inv.setItem(i, outputInventory.getStackInSlot(i));
+            outputInv.setItem(i, outputInventory.getStackInSlot(i));
             outputInventory.setStackInSlot(i, ItemStack.EMPTY);
         }
-        Containers.dropContents(level, worldPosition, inv);
+        Containers.dropContents(level, worldPosition, outputInv);
+
+        SimpleContainer moduleInv = new SimpleContainer(moduleSlots.getSlots());
+        for (int i = 0; i < moduleSlots.getSlots(); i++) {
+            moduleInv.setItem(i, moduleSlots.getStackInSlot(i));
+            moduleSlots.setStackInSlot(i, ItemStack.EMPTY);
+        }
+        Containers.dropContents(level, worldPosition, moduleInv);
     }
 
     @Override
