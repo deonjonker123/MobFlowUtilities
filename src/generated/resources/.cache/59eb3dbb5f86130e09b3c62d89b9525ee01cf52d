@@ -1,5 +1,4 @@
-// 1.21.1	2025-11-14T23:10:55.0393502	Loot Tables
-8777f3ae80c0b079b4db04c68f3bddef6d762da8 data/mobflowutilities/loot_table/blocks/collector.json
+// 1.21.1	2025-11-15T02:27:05.3126907	Loot Tables
 13dbc5088ba814c522f225d5f8c3782a2f05b20d data/mobflowutilities/loot_table/blocks/controller.json
 6ea5958c34622a011eaa9a02606b1f5e31dc9047 data/mobflowutilities/loot_table/blocks/damage_pad.json
 07c239206a6536bd10a4d0b4f1231d4c38d11168 data/mobflowutilities/loot_table/blocks/dark_dirt.json

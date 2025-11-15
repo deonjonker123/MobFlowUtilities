@@ -3,6 +3,7 @@ package com.misterd.mobflowutilities.event;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.misterd.mobflowutilities.MobFlowUtilities;
 import com.misterd.mobflowutilities.item.equipment.GloomsteelHammerItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -11,10 +12,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.EventBusSubscriber.Bus;
 import net.neoforged.neoforge.event.level.BlockEvent.BreakEvent;
 
-@EventBusSubscriber(modid = "flowtech", bus = Bus.GAME)
+@EventBusSubscriber(modid = MobFlowUtilities.MODID, bus = EventBusSubscriber.Bus.GAME)
 public class GloomsteelHammerEventHandler {
 
     private static final Set<BlockPos> HARVESTED_BLOCKS = new HashSet<>();

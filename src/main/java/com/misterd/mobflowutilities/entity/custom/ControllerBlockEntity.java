@@ -256,7 +256,7 @@ public class ControllerBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     public Component getDisplayName() {
-        return Component.translatable("menu.flowtech.controller");
+        return Component.translatable("menu.mobflowutilities.controller");
     }
 
     @Nullable

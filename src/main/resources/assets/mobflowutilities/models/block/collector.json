@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/cube",
   "textures": {
-    "north": "mobflowutilities:block/collector_front",
+    "north": "mobflowutilities:block/collector_front_off",
     "south": "mobflowutilities:block/collector_side",
     "east": "mobflowutilities:block/collector_side",
     "west": "mobflowutilities:block/collector_side",
