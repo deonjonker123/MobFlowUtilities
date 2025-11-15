@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "E": {
+      "item": "minecraft:ender_pearl"
+    },
+    "G": {
+      "item": "mobflowutilities:gloomsteel_block"
+    },
+    "L": {
+      "item": "minecraft:lead"
+    },
+    "Y": {
+      "item": "minecraft:ender_eye"
+    }
+  },
+  "pattern": [
+    "LEL",
+    "EGE",
+    "LYL"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mobflowutilities:mob_catcher"
+  }
+}

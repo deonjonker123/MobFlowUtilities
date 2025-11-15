@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:diamond_axe"
+    },
+    "G": {
+      "item": "mobflowutilities:gloomsteel_ingot"
+    },
+    "Q": {
+      "item": "minecraft:quartz_block"
+    },
+    "S": {
+      "item": "minecraft:diamond_sword"
+    }
+  },
+  "pattern": [
+    "GSG",
+    "AQA",
+    "GSG"
+  ],
+  "result": {
+    "count": 4,
+    "id": "mobflowutilities:damage_pad"
+  }
+}

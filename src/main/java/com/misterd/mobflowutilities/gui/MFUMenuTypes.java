@@ -1,0 +1,36 @@
+package com.misterd.mobflowutilities.gui;
+
+import com.misterd.mobflowutilities.gui.custom.CollectorMenu;
+import com.misterd.mobflowutilities.gui.custom.VoidFilterMenu;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
+import net.neoforged.neoforge.network.IContainerFactory;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
+
+public class MFUMenuTypes {
+    public static final DeferredRegister<MenuType<?>> MENUS;
+    public static final DeferredHolder<MenuType<?>, MenuType<CollectorMenu>> CONTROLLER_MENU;
+    public static final DeferredHolder<MenuType<?>, MenuType<CollectorMenu>> COLLECTOR_MENU;
+    public static final DeferredHolder<MenuType<?>, MenuType<VoidFilterMenu>> VOID_FILTER_MENU;
+
+    private static <T extends AbstractContainerMenu> DeferredHolder<MenuType<?>, MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory) {
+        return MENUS.register(name, () -> {
+            return IMenuTypeExtension.create(factory);
+        });
+    }
+
+    public static void register(IEventBus eventBus) {
+        MENUS.register(eventBus);
+    }
+
+    static {
+        MENUS = DeferredRegister.create(Registries.MENU, "mobflowutilities");
+        CONTROLLER_MENU = registerMenuType("controller_menu", CollectorMenu::new);
+        COLLECTOR_MENU = registerMenuType("collector_menu", CollectorMenu::new);
+        VOID_FILTER_MENU = registerMenuType("void_filter_menu", VoidFilterMenu::new);
+    }
+}

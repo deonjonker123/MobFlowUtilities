@@ -1,5 +1,6 @@
 package com.misterd.mobflowutilities.recipe;
 
+import com.misterd.mobflowutilities.MobFlowUtilities;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -10,13 +11,11 @@ import java.util.function.Supplier;
 
 public class MFURecipeSerializers {
 
-    private static final String MOD_ID = "mobflowutilities";
-
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS =
-            DeferredRegister.create(BuiltInRegistries.RECIPE_SERIALIZER, MOD_ID);
+            DeferredRegister.create(BuiltInRegistries.RECIPE_SERIALIZER, MobFlowUtilities.MODID);
 
     public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES =
-            DeferredRegister.create(BuiltInRegistries.RECIPE_TYPE, MOD_ID);
+            DeferredRegister.create(BuiltInRegistries.RECIPE_TYPE, MobFlowUtilities.MODID);
 
     // Genetic Recipe (for spawn egg crafting)
     public static final Supplier<RecipeSerializer<GeneticRecipe>> GENETIC_RECIPE =
@@ -26,7 +25,7 @@ public class MFURecipeSerializers {
             RECIPE_TYPES.register("genetic_recipe", () -> new RecipeType<>() {
                 @Override
                 public String toString() {
-                    return MOD_ID + ":genetic_recipe";
+                    return MobFlowUtilities.MODID + ":genetic_recipe";
                 }
             });
 

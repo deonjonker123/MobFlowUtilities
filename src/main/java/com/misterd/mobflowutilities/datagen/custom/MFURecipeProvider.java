@@ -433,34 +433,4 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 net.minecraft.world.item.crafting.BlastingRecipe::new,
                 ingredients, category, result, experience, cookingTime, group, "_from_blasting");
     }
-
-    /**
-     * Generic cooking recipe helper
-     */
-    protected static <T extends AbstractCookingRecipe> void oreCooking(
-            RecipeOutput recipeOutput,
-            RecipeSerializer<T> cookingSerializer,
-            AbstractCookingRecipe.Factory<T> factory,
-            List<ItemLike> ingredients,
-            RecipeCategory category,
-            ItemLike result,
-            float experience,
-            int cookingTime,
-            String group,
-            String recipeName) {
-
-        for (ItemLike ingredient : ingredients) {
-            SimpleCookingRecipeBuilder.generic(
-                            Ingredient.of(ingredient),
-                            category,
-                            result,
-                            experience,
-                            cookingTime,
-                            cookingSerializer,
-                            factory)
-                    .group(group)
-                    .unlockedBy(getHasName(ingredient), has(ingredient))
-                    .save(recipeOutput, "mobflowutilities:" + getItemName(result) + recipeName + "_" + getItemName(ingredient));
-        }
-    }
 }

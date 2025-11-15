@@ -51,7 +51,6 @@ public class MFUItemModelProvider extends ItemModelProvider {
 
         // Utility items
         basicItem(MFUItems.PAD_WRENCH.get());
-        basicItem(MFUItems.MOB_CATCHER.get());
 
         // Gloomsteel materials
         basicItem(MFUItems.RAW_GLOOMSTEEL.get());

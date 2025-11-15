@@ -1,6 +1,7 @@
 package com.misterd.mobflowutilities.block;
 
 import com.misterd.mobflowutilities.MobFlowUtilities;
+import com.misterd.mobflowutilities.block.custom.*;
 import com.misterd.mobflowutilities.item.MFUItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -23,31 +24,31 @@ public class MFUBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(MobFlowUtilities.MODID);
 
     public static final DeferredBlock<Block> FAST_FLOW_PAD = registerBlock("flow_pad_fast",
-            () -> new Block(BlockBehaviour.Properties.of()
+            () -> new FastFlowPadBlock(BlockBehaviour.Properties.of()
                     .strength(2F)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.DEEPSLATE)));
 
     public static final DeferredBlock<Block> FASTER_FLOW_PAD = registerBlock("flow_pad_faster",
-            () -> new Block(BlockBehaviour.Properties.of()
+            () -> new FasterFlowPadBlock(BlockBehaviour.Properties.of()
                     .strength(2F)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.DEEPSLATE)));
 
     public static final DeferredBlock<Block> FASTEST_FLOW_PAD = registerBlock("flow_pad_fastest",
-            () -> new Block(BlockBehaviour.Properties.of()
+            () -> new FastestFlowPadBlock(BlockBehaviour.Properties.of()
                     .strength(2F)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.DEEPSLATE)));
 
     public static final DeferredBlock<Block> DAMAGE_PAD = registerBlock("damage_pad",
-            () -> new Block(BlockBehaviour.Properties.of()
+            () -> new DamagePadBlock(BlockBehaviour.Properties.of()
                     .strength(2F)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.DEEPSLATE)));
 
     public static final DeferredBlock<Block> DARK_DIRT = registerBlock("dark_dirt",
-            () -> new Block(BlockBehaviour.Properties.of()
+            () -> new DarkDirtBlock(BlockBehaviour.Properties.of()
                     .strength(1F)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.GRASS))
@@ -59,7 +60,7 @@ public class MFUBlocks {
             });
 
     public static final DeferredBlock<Block> GLIMMER_GRASS = registerBlock("glimmer_grass",
-            () -> new Block(BlockBehaviour.Properties.of()
+            () -> new GlimmerGrassBlock(BlockBehaviour.Properties.of()
                     .strength(1F)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.GRASS))
@@ -97,13 +98,13 @@ public class MFUBlocks {
             });
 
     public static final DeferredBlock<Block> COLLECTOR = registerBlock("collector",
-            () -> new Block(BlockBehaviour.Properties.of()
+            () -> new CollectorBlock(BlockBehaviour.Properties.of()
                     .strength(2F)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.STONE)));
 
     public static final DeferredBlock<Block> CONTROLLER = registerBlock("controller",
-            () -> new Block(BlockBehaviour.Properties.of()
+            () -> new ControllerBlock(BlockBehaviour.Properties.of()
                     .strength(2F)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.STONE)));

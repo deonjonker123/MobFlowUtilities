@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "mobflowutilities:gloomsteel_ingot"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "Q": {
+      "item": "minecraft:quartz_block"
+    },
+    "S": {
+      "tag": "c:stones"
+    }
+  },
+  "pattern": [
+    "IGI",
+    "GQG",
+    "SSS"
+  ],
+  "result": {
+    "count": 8,
+    "id": "mobflowutilities:flow_pad_fast"
+  }
+}

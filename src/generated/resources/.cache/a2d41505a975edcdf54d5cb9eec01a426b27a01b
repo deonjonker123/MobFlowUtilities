@@ -1,0 +1,16 @@
+// 1.21.1	2025-11-14T23:10:55.0458502	Tags for minecraft:item mod id mobflowutilities
+d36c857ddf852297c99415ab1aa39fa4730fbe2e data/c/tags/item/ingots.json
+4042b51de4d6b4928250c127e1de7f3b16825273 data/c/tags/item/ores.json
+218f8c64caf7ceb37f604d8861d84a5305aee30d data/c/tags/item/raw_materials.json
+99d8ce71d74fb943c60a32d89bf99576e269a1b6 data/minecraft/tags/item/axes.json
+22bf3dcd04c7a97351f09611299ea16345790db2 data/minecraft/tags/item/hoes.json
+91f228c31d669939a49cae98d6481c76573af080 data/minecraft/tags/item/pickaxes.json
+21be68dd60b9f51e53621d0aa5929f6d376afbeb data/minecraft/tags/item/shovels.json
+774eabaa3015a40416664c08fcdbad2ad977cc4b data/minecraft/tags/item/swords.json
+0a2f8c52271b4b951ed067669baea1e14a11afb2 data/minecraft/tags/item/trimmable_armor.json
+d36c857ddf852297c99415ab1aa39fa4730fbe2e data/mobflowutilities/tags/item/ingots/gloomsteel.json
+b63117034de58b8408ec288f2bcc3fe6675175c9 data/mobflowutilities/tags/item/mobflowutilities_modules.json
+b3e0f340b209eef598937c94b091fd38811675fe data/mobflowutilities/tags/item/mobflowutilities_tools.json
+8bde03cc83d7b594fa2a72ece58c6e44f92da969 data/mobflowutilities/tags/item/nuggets/gloomsteel.json
+4042b51de4d6b4928250c127e1de7f3b16825273 data/mobflowutilities/tags/item/ores/gloomsteel.json
+218f8c64caf7ceb37f604d8861d84a5305aee30d data/mobflowutilities/tags/item/raw_materials/gloomsteel.json

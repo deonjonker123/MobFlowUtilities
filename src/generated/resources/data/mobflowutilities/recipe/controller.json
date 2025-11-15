@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:redstone_block"
+    },
+    "C": {
+      "item": "minecraft:comparator"
+    },
+    "G": {
+      "item": "mobflowutilities:gloomsteel_ingot"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "GCG",
+    "IBI",
+    "GCG"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mobflowutilities:controller"
+  }
+}

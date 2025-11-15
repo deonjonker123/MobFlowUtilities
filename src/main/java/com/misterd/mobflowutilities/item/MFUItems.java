@@ -1,5 +1,6 @@
 package com.misterd.mobflowutilities.item;
 
+import com.misterd.mobflowutilities.item.custom.*;
 import com.misterd.mobflowutilities.item.equipment.GloomsteelHammerItem;
 import com.misterd.mobflowutilities.item.equipment.GloomsteelPaxelItem;
 import com.misterd.mobflowutilities.item.equipment.MFUArmorMaterials;
@@ -68,32 +69,17 @@ public class MFUItems {
 
     // Gloomsteel materials
     public static final DeferredItem<Item> RAW_GLOOMSTEEL = ITEMS.register("raw_gloomsteel",
-            () -> new Item(new Item.Properties()) {
-                @Override
-                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-                    tooltipComponents.add(Component.translatable("item.mobflowutilities.raw_gloomsteel.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
-                }
-            });
+            () -> new Item(new Item.Properties()));
 
     public static final DeferredItem<Item> GLOOMSTEEL_INGOT = ITEMS.register("gloomsteel_ingot",
-            () -> new Item(new Item.Properties()) {
-                @Override
-                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-                    tooltipComponents.add(Component.translatable("item.mobflowutilities.gloomsteel_ingot.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
-                }
-            });
+            () -> new Item(new Item.Properties()));
 
     public static final DeferredItem<Item> GLOOMSTEEL_NUGGET = ITEMS.register("gloomsteel_nugget",
-            () -> new Item(new Item.Properties()) {
-                @Override
-                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-                    tooltipComponents.add(Component.translatable("item.mobflowutilities.gloomsteel_nugget.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
-                }
-            });
+            () -> new Item(new Item.Properties()));
 
     // Spawn control items
     public static final DeferredItem<Item> GLOOM_SPORE = ITEMS.register("gloom_spore",
-            () -> new Item(new Item.Properties()) {
+            () -> new GloomSporeItem(new Item.Properties()) {
                 @Override
                 public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
                     tooltipComponents.add(Component.translatable("item.mobflowutilities.gloom_spore.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
@@ -101,7 +87,7 @@ public class MFUItems {
             });
 
     public static final DeferredItem<Item> GLIMMER_SPROUT = ITEMS.register("glimmer_sprout",
-            () -> new Item(new Item.Properties()) {
+            () -> new GlimmerSproutItem(new Item.Properties()) {
                 @Override
                 public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
                     tooltipComponents.add(Component.translatable("item.mobflowutilities.glimmer_sprout.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
@@ -118,20 +104,20 @@ public class MFUItems {
             });
 
     public static final DeferredItem<Item> EMPTY_GENE_VIAL = ITEMS.register("empty_gene_vial",
-            () -> new Item(new Item.Properties().stacksTo(1)));
+            () -> new EmptyGeneVialItem(new Item.Properties().stacksTo(1)));
 
     public static final DeferredItem<Item> GENE_SAMPLE_VIAL = ITEMS.register("gene_sample_vial",
-            () -> new Item(new Item.Properties()));
+            () -> new GeneSampleVialItem(new Item.Properties()));
 
     // Utility items
     public static final DeferredItem<Item> MOB_CATCHER = ITEMS.register("mob_catcher",
-            () -> new Item(new Item.Properties().stacksTo(1)));
+            () -> new MobCatcherItem(new Item.Properties().stacksTo(1)));
 
     public static final DeferredItem<Item> VOID_FILTER_MODULE = ITEMS.register("void_filter_module",
-            () -> new Item(new Item.Properties().stacksTo(1)));
+            () -> new VoidFilterItem(new Item.Properties().stacksTo(1)));
 
     public static final DeferredItem<Item> PAD_WRENCH = ITEMS.register("pad_wrench",
-            () -> new Item(new Item.Properties()));
+            () -> new PadWrenchItem(new Item.Properties()));
 
     // Gloomsteel tools
     public static final DeferredItem<SwordItem> GLOOMSTEEL_SWORD = ITEMS.register("gloomsteel_sword",

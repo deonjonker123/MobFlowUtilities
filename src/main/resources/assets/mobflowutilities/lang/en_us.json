@@ -45,11 +45,8 @@
   "item.mobflowutilities.pad_wrench.subtitle": "Used to link Damage Pads with Controllers",
 
   "item.mobflowutilities.raw_gloomsteel": "Raw Gloomsteel",
-  "item.mobflowutilities.raw_gloomsteel.subtitle": "Unrefined Gloomsteel ore, smeltable into ingots",
   "item.mobflowutilities.gloomsteel_ingot": "Gloomsteel Ingot",
-  "item.mobflowutilities.gloomsteel_ingot.subtitle": "Refined Gloomsteel",
   "item.mobflowutilities.gloomsteel_nugget": "Gloomsteel Nugget",
-  "item.mobflowutilities.gloomsteel_nugget.subtitle": "Nine nuggets craft into one Gloomsteel Ingot",
 
   "item.mobflowutilities.gloom_spore": "Gloom Spore",
   "item.mobflowutilities.gloom_spore.subtitle": "Converts dirt-like blocks to Dark Dirt. Rare drop from hostile creatures and loot chests",

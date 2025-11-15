@@ -1,0 +1,9 @@
+// 1.21.1	2025-11-14T23:10:55.0383492	Tags for minecraft:block mod id mobflowutilities
+3cef8af1bbd371cc27cc77899ab2c6ec20faa282 data/minecraft/tags/block/mineable/pickaxe.json
+4042b51de4d6b4928250c127e1de7f3b16825273 data/minecraft/tags/block/needs_iron_tool.json
+5c486bfd351ce69637432f675d8dc16336d3ae2f data/mobflowutilities/tags/block/incorrect_for_gloomsteel_tool.json
+f0e9a005fe9088dacaca0c49b5ef41410a023daf data/mobflowutilities/tags/block/mobflowutilities_machines.json
+3de53d1f7af4401b4e8530c0d4bfe7b6b20b0849 data/mobflowutilities/tags/block/mobflowutilities_pads.json
+a249c46329a41538f49a564e1f14338aaf1be5a0 data/mobflowutilities/tags/block/needs_gloomsteel_tool.json
+4042b51de4d6b4928250c127e1de7f3b16825273 data/mobflowutilities/tags/block/ores/gloomsteel.json
+28d2032dd789a4309b53bc1b1c6aff5e0c660afc data/mobflowutilities/tags/block/raw_blocks/gloomsteel.json

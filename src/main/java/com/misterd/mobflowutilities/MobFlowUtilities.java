@@ -1,7 +1,20 @@
 package com.misterd.mobflowutilities;
 
 import com.misterd.mobflowutilities.block.MFUBlocks;
+import com.misterd.mobflowutilities.component.MFUDataComponents;
+import com.misterd.mobflowutilities.config.Config;
+import com.misterd.mobflowutilities.entity.MFUBlockEntities;
+import com.misterd.mobflowutilities.gui.MFUMenuTypes;
+import com.misterd.mobflowutilities.gui.custom.CollectorScreen;
+import com.misterd.mobflowutilities.gui.custom.VoidFilterScreen;
+import com.misterd.mobflowutilities.item.MFUCreativeTab;
 import com.misterd.mobflowutilities.item.MFUItems;
+import com.misterd.mobflowutilities.loot.MFULootModifiers;
+import com.misterd.mobflowutilities.network.MFUNetwork;
+import com.misterd.mobflowutilities.recipe.MFURecipeSerializers;
+import com.misterd.mobflowutilities.util.MFUItemProperties;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
@@ -52,6 +65,14 @@ public class MobFlowUtilities {
 
         MFUItems.register(modEventBus);
         MFUBlocks.register(modEventBus);
+        MFUCreativeTab.register(modEventBus);
+        MFULootModifiers.register(modEventBus);
+        MFURecipeSerializers.register(modEventBus);
+        MFUBlockEntities.register(modEventBus);
+        MFUMenuTypes.register(modEventBus);
+        MFUNetwork.register(modEventBus);
+        MFUDataComponents.register(modEventBus);
+        Config.register(modContainer);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
@@ -67,7 +88,10 @@ public class MobFlowUtilities {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-
+            event.enqueueWork(() -> {
+                ItemBlockRenderTypes.setRenderLayer(MFUBlocks.DARK_GLASS.get(), RenderType.translucent());
+            });
+            MFUItemProperties.addCustomItemProperties();
         }
 
         @SubscribeEvent
@@ -82,7 +106,9 @@ public class MobFlowUtilities {
 
         @SubscribeEvent
         public static void registerScreens(RegisterMenuScreensEvent event) {
-
+            event.register(MFUMenuTypes.COLLECTOR_MENU.get(), CollectorScreen::new);
+            event.register(MFUMenuTypes.VOID_FILTER_MENU.get(), VoidFilterScreen::new);
+            event.register(MFUMenuTypes.COLLECTOR_MENU.get(), CollectorScreen::new);
         }
     }
 }

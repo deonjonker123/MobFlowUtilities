@@ -26,7 +26,6 @@ public class MFULootTableProvider extends BlockLootSubProvider {
         // Standard block drops (drop themselves)
         dropSelf( MFUBlocks.GLOOMSTEEL_BLOCK.get());
         dropSelf( MFUBlocks.RAW_GLOOMSTEEL_BLOCK.get());
-        dropSelf( MFUBlocks.COLLECTOR.get());
         dropSelf( MFUBlocks.CONTROLLER.get());
         dropSelf( MFUBlocks.FAST_FLOW_PAD.get());
         dropSelf( MFUBlocks.FASTER_FLOW_PAD.get());

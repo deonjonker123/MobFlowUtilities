@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "item": "minecraft:diamond_block"
+    },
+    "F": {
+      "item": "mobflowutilities:flow_pad_faster"
+    },
+    "G": {
+      "item": "mobflowutilities:gloomsteel_block"
+    },
+    "S": {
+      "tag": "c:stones"
+    }
+  },
+  "pattern": [
+    "DGD",
+    "GFG",
+    "SSS"
+  ],
+  "result": {
+    "count": 8,
+    "id": "mobflowutilities:flow_pad_fastest"
+  }
+}
