@@ -1,5 +1,6 @@
 package com.misterd.mobflowutilities.event;
 
+import com.misterd.mobflowutilities.MobFlowUtilities;
 import com.misterd.mobflowutilities.component.MFUDataComponents;
 import com.misterd.mobflowutilities.item.MFUItems;
 import com.misterd.mobflowutilities.item.custom.EmptyGeneVialItem;
@@ -19,7 +20,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 
-@EventBusSubscriber
+@EventBusSubscriber(modid = MobFlowUtilities.MODID, bus = EventBusSubscriber.Bus.GAME)
 public class MobCatcherEventHandler {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
