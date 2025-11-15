@@ -117,6 +117,8 @@
   "tooltip.mobflowutilities.collector.xp_collection.disabled": "XP Collection: Disabled",
   "tooltip.mobflowutilities.collector.xp_display": "XP: %s",
 
+  "tooltip.mobflowutilities.collector.edit_filter": "Edit Filter",
+
   "item.mobflowutilities.pad_wrench.mode.add": "Add Mode",
   "item.mobflowutilities.pad_wrench.mode.remove": "Remove Mode",
   "item.mobflowutilities.pad_wrench.selection.single": "Single Selection",

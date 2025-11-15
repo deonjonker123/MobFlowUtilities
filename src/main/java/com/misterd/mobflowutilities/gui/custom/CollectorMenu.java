@@ -41,7 +41,7 @@ public class CollectorMenu extends AbstractContainerMenu {
         this.level = inv.player.level();
         this.addPlayerInventory(inv);
         this.addPlayerHotbar(inv);
-        this.addSlot(new CollectorMenu.ModuleSlot(this.blockEntity.moduleSlots, 0, 192, 36, MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get()));
+        this.addSlot(new CollectorMenu.ModuleSlot(this.blockEntity.moduleSlots, 0, 192, 41, MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get()));
         this.addSlot(new CollectorMenu.ModuleSlot(this.blockEntity.moduleSlots, 1, 174, 18, MFUItems.VOID_FILTER_MODULE.get()));
         this.addSlot(new CollectorMenu.ModuleSlot(this.blockEntity.moduleSlots, 2, 192, 18, MFUItems.VOID_FILTER_MODULE.get()));
         this.addSlot(new CollectorMenu.ModuleSlot(this.blockEntity.moduleSlots, 3, 210, 18, MFUItems.VOID_FILTER_MODULE.get()));

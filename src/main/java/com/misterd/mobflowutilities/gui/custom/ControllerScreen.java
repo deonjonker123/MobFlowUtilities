@@ -41,4 +41,27 @@ public class ControllerScreen extends AbstractContainerScreen<ControllerMenu> {
     protected void containerTick() {
         super.containerTick();
     }
+
+    @Override
+    protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+        // Custom color for your screen's title
+        guiGraphics.drawString(
+                this.font,
+                this.title,
+                this.titleLabelX,
+                this.titleLabelY,
+                0xF2F2F2,
+                false
+        );
+
+        // Custom color for the player's inventory label
+        guiGraphics.drawString(
+                this.font,
+                this.playerInventoryTitle,
+                this.inventoryLabelX,
+                this.inventoryLabelY,
+                0xF2F2F2,
+                false
+        );
+    }
 }

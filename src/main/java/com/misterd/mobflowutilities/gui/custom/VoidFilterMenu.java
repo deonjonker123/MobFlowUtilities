@@ -2,28 +2,53 @@ package com.misterd.mobflowutilities.gui.custom;
 
 import com.misterd.mobflowutilities.component.MFUDataComponents;
 import com.misterd.mobflowutilities.component.custom.VoidFilterData;
+import com.misterd.mobflowutilities.entity.custom.CollectorBlockEntity;
 import com.misterd.mobflowutilities.gui.MFUMenuTypes;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
+import javax.annotation.Nullable;
+
 public class VoidFilterMenu extends AbstractContainerMenu {
-    private final ItemStack filterItem;
+    private ItemStack filterItem;
     private final ItemStackHandler filterSlots;
     private boolean ignoreNBT;
     private boolean ignoreDurability;
 
+    // For in-place editing within collector
+    @Nullable
+    private final BlockPos collectorPos;
+    private final int collectorFilterSlotIndex;
+    @Nullable
+    private final Player player;
+
+    // Constructor for handheld filter (original behavior)
     public VoidFilterMenu(int containerId, Inventory playerInventory, ItemStack filterItem) {
+        this(containerId, playerInventory, filterItem, null, -1);
+    }
+
+    // Constructor for in-place collector filter editing
+    private VoidFilterMenu(int containerId, Inventory playerInventory, ItemStack filterItem,
+                           @Nullable BlockPos collectorPos, int filterSlotIndex) {
         super(MFUMenuTypes.VOID_FILTER_MENU.get(), containerId);
         this.ignoreNBT = true;
         this.ignoreDurability = true;
         this.filterItem = filterItem;
+        this.collectorPos = collectorPos;
+        this.collectorFilterSlotIndex = filterSlotIndex;
+        this.player = playerInventory.player;
+
         this.filterSlots = new ItemStackHandler(45) {
             protected void onContentsChanged(int slot) {
                 VoidFilterMenu.this.saveFilterData();
@@ -33,14 +58,73 @@ public class VoidFilterMenu extends AbstractContainerMenu {
                 return super.extractItem(slot, amount, simulate);
             }
         };
+
         this.loadFilterData();
         this.addFilterSlots();
         this.addPlayerInventory(playerInventory);
         this.addPlayerHotbar(playerInventory);
     }
 
+    // Client-side constructor from packet data
     public VoidFilterMenu(int containerId, Inventory playerInventory, FriendlyByteBuf extraData) {
-        this(containerId, playerInventory, playerInventory.player.getMainHandItem());
+        this(containerId, playerInventory, getFilterFromPacket(playerInventory, extraData),
+                getCollectorPosFromPacket(extraData), getFilterSlotFromPacket(extraData));
+    }
+
+    private static ItemStack getFilterFromPacket(Inventory playerInventory, FriendlyByteBuf extraData) {
+        if (extraData != null && extraData.readableBytes() >= 16) {
+            int readerIndex = extraData.readerIndex();
+            BlockPos collectorPos = extraData.readBlockPos();
+            int filterSlotIndex = extraData.readInt();
+            extraData.readerIndex(readerIndex);
+
+            BlockEntity be = playerInventory.player.level().getBlockEntity(collectorPos);
+            if (be instanceof CollectorBlockEntity collector) {
+                return collector.moduleSlots.getStackInSlot(filterSlotIndex);
+            }
+        }
+        return playerInventory.player.getMainHandItem();
+    }
+
+    @Nullable
+    private static BlockPos getCollectorPosFromPacket(FriendlyByteBuf extraData) {
+        if (extraData != null && extraData.readableBytes() >= 16) {
+            int readerIndex = extraData.readerIndex();
+            BlockPos pos = extraData.readBlockPos();
+            extraData.readerIndex(readerIndex);
+            return pos;
+        }
+        return null;
+    }
+
+    private static int getFilterSlotFromPacket(FriendlyByteBuf extraData) {
+        if (extraData != null && extraData.readableBytes() >= 16) {
+            int readerIndex = extraData.readerIndex();
+            extraData.readBlockPos();
+            int slot = extraData.readInt();
+            extraData.readerIndex(readerIndex);
+            return slot;
+        }
+        return -1;
+    }
+
+    public static MenuProvider createForCollectorFilter(Component title, BlockPos collectorPos, int filterSlotIndex) {
+        return new MenuProvider() {
+            @Override
+            public Component getDisplayName() {
+                return title;
+            }
+
+            @Override
+            public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
+                BlockEntity be = player.level().getBlockEntity(collectorPos);
+                if (be instanceof CollectorBlockEntity collector) {
+                    ItemStack filterStack = collector.moduleSlots.getStackInSlot(filterSlotIndex);
+                    return new VoidFilterMenu(containerId, playerInventory, filterStack, collectorPos, filterSlotIndex);
+                }
+                return null;
+            }
+        };
     }
 
     private void addFilterSlots() {
@@ -54,7 +138,6 @@ public class VoidFilterMenu extends AbstractContainerMenu {
                 ++slotIndex;
             }
         }
-
     }
 
     private void addPlayerInventory(Inventory playerInventory) {
@@ -65,7 +148,6 @@ public class VoidFilterMenu extends AbstractContainerMenu {
                 this.addSlot(new Slot(playerInventory, col + row * 9 + 9, x, y));
             }
         }
-
     }
 
     private void addPlayerHotbar(Inventory playerInventory) {
@@ -74,19 +156,42 @@ public class VoidFilterMenu extends AbstractContainerMenu {
             int y = 182;
             this.addSlot(new Slot(playerInventory, col, x, y));
         }
-
     }
 
     private void loadFilterData() {
-        VoidFilterData data = (VoidFilterData)this.filterItem.getOrDefault(MFUDataComponents.VOID_FILTER_DATA.get(), VoidFilterData.DEFAULT);
+        VoidFilterData data = this.filterItem.getOrDefault(
+                MFUDataComponents.VOID_FILTER_DATA.get(),
+                VoidFilterData.DEFAULT
+        );
         this.ignoreNBT = data.ignoreNBT();
         this.ignoreDurability = data.ignoreDurability();
         data.loadIntoHandler(this.filterSlots);
     }
 
     private void saveFilterData() {
-        VoidFilterData newData = VoidFilterData.fromHandler(this.filterSlots, this.ignoreNBT, this.ignoreDurability);
+        // Get fresh reference from collector if editing in-place
+        if (this.collectorPos != null && this.collectorFilterSlotIndex >= 0 && this.player != null) {
+            BlockEntity be = this.player.level().getBlockEntity(this.collectorPos);
+            if (be instanceof CollectorBlockEntity collector) {
+                // Get the actual ItemStack from the collector's inventory
+                this.filterItem = collector.moduleSlots.getStackInSlot(this.collectorFilterSlotIndex);
+            }
+        }
+
+        VoidFilterData newData = VoidFilterData.fromHandler(
+                this.filterSlots,
+                this.ignoreNBT,
+                this.ignoreDurability
+        );
         this.filterItem.set(MFUDataComponents.VOID_FILTER_DATA.get(), newData);
+
+        // Mark the collector as changed so it saves
+        if (this.collectorPos != null && this.player != null) {
+            BlockEntity be = this.player.level().getBlockEntity(this.collectorPos);
+            if (be instanceof CollectorBlockEntity collector) {
+                collector.setChanged();
+            }
+        }
     }
 
     public boolean isIgnoreNBT() {
@@ -114,13 +219,24 @@ public class VoidFilterMenu extends AbstractContainerMenu {
             } else {
                 filterSlot.setFilterItem(ItemStack.EMPTY);
             }
-
         } else {
             super.clicked(slotId, dragType, clickType, player);
         }
     }
 
+    @Override
+    public void removed(Player player) {
+        super.removed(player);
+        // Final save when menu closes
+        this.saveFilterData();
+    }
+
     public boolean stillValid(Player player) {
+        if (this.collectorPos != null) {
+            BlockEntity be = player.level().getBlockEntity(this.collectorPos);
+            return be instanceof CollectorBlockEntity &&
+                    player.distanceToSqr(collectorPos.getX() + 0.5, collectorPos.getY() + 0.5, collectorPos.getZ() + 0.5) <= 64.0;
+        }
         return player.getInventory().contains(this.filterItem);
     }
 
@@ -157,7 +273,6 @@ public class VoidFilterMenu extends AbstractContainerMenu {
             } else {
                 this.set(stack.copyWithCount(1));
             }
-
         }
     }
 }

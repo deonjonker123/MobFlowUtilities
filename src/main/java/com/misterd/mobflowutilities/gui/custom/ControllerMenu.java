@@ -39,11 +39,11 @@ public class ControllerMenu extends AbstractContainerMenu {
         this.level = inv.player.level();
         this.addPlayerInventory(inv);
         this.addPlayerHotbar(inv);
-        this.addSlot(new ControllerMenu.ModuleSlot(this.blockEntity.inventory, 0, 44, 18, MFUItems.SHARPNESS_MODULE.get()));
-        this.addSlot(new ControllerMenu.ModuleSlot(this.blockEntity.inventory, 1, 62, 18, MFUItems.FIRE_ASPECT_MODULE.get()));
+        this.addSlot(new ControllerMenu.ModuleSlot(this.blockEntity.inventory, 0, 8, 18, MFUItems.SHARPNESS_MODULE.get()));
+        this.addSlot(new ControllerMenu.ModuleSlot(this.blockEntity.inventory, 1, 44, 18, MFUItems.FIRE_ASPECT_MODULE.get()));
         this.addSlot(new ControllerMenu.ModuleSlot(this.blockEntity.inventory, 2, 80, 18, MFUItems.SMITE_MODULE.get()));
-        this.addSlot(new ControllerMenu.ModuleSlot(this.blockEntity.inventory, 3, 98, 18, MFUItems.BOA_MODULE.get()));
-        this.addSlot(new ControllerMenu.ModuleSlot(this.blockEntity.inventory, 4, 116, 18, MFUItems.LOOTING_MODULE.get()));
+        this.addSlot(new ControllerMenu.ModuleSlot(this.blockEntity.inventory, 3, 116, 18, MFUItems.BOA_MODULE.get()));
+        this.addSlot(new ControllerMenu.ModuleSlot(this.blockEntity.inventory, 4, 152, 18, MFUItems.LOOTING_MODULE.get()));
     }
 
     public ItemStack quickMoveStack(Player playerIn, int pIndex) {

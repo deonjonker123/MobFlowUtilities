@@ -10,8 +10,26 @@ public class MFUNetwork {
     }
 
     private static void registerPayloads(RegisterPayloadHandlersEvent event) {
-        PayloadRegistrar registrar = event.registrar("flowtech");
-        registrar.playToServer(ConfigPacket.TYPE, ConfigPacket.STREAM_CODEC, ConfigPacket::handle);
-        registrar.playToServer(CollectorXpPacket.TYPE, CollectorXpPacket.STREAM_CODEC, CollectorXpPacket::handle);
+        PayloadRegistrar registrar = event.registrar("mobflowutilities");
+
+        // Existing packets
+        registrar.playToServer(
+                ConfigPacket.TYPE,
+                ConfigPacket.STREAM_CODEC,
+                ConfigPacket::handle
+        );
+
+        registrar.playToServer(
+                CollectorXpPacket.TYPE,
+                CollectorXpPacket.STREAM_CODEC,
+                CollectorXpPacket::handle
+        );
+
+        // New filter editor packet
+        registrar.playToServer(
+                OpenFilterPacket.TYPE,
+                OpenFilterPacket.STREAM_CODEC,
+                OpenFilterPacket::handle
+        );
     }
 }

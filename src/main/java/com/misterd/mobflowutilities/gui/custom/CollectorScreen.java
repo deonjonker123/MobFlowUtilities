@@ -3,6 +3,7 @@ package com.misterd.mobflowutilities.gui.custom;
 import com.misterd.mobflowutilities.client.renderer.CollectorWireframeRenderer;
 import com.misterd.mobflowutilities.network.CollectorXpPacket;
 import com.misterd.mobflowutilities.network.ConfigPacket;
+import com.misterd.mobflowutilities.network.OpenFilterPacket;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;
@@ -30,6 +31,8 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
     private static final WidgetSprites WITHDRAW_ALL_XP_SPRITES = new WidgetSprites(ResourceLocation.fromNamespaceAndPath("mobflowutilities", "withdraw_all_xp_btn"), ResourceLocation.fromNamespaceAndPath("mobflowutilities", "withdraw_all_xp_btn"), ResourceLocation.fromNamespaceAndPath("mobflowutilities", "withdraw_all_xp_btn_hover"), ResourceLocation.fromNamespaceAndPath("mobflowutilities", "withdraw_all_xp_btn_hover"));
     private static final WidgetSprites DEPOSIT_ALL_XP_SPRITES = new WidgetSprites(ResourceLocation.fromNamespaceAndPath("mobflowutilities", "deposit_all_xp_btn"), ResourceLocation.fromNamespaceAndPath("mobflowutilities", "deposit_all_xp_btn"), ResourceLocation.fromNamespaceAndPath("mobflowutilities", "deposit_all_xp_btn_hover"), ResourceLocation.fromNamespaceAndPath("mobflowutilities", "deposit_all_xp_btn_hover"));
     private static final WidgetSprites RESET_OFFSET_SPRITES = new WidgetSprites(ResourceLocation.fromNamespaceAndPath("mobflowutilities", "collection_zone_offset_reset_btn"), ResourceLocation.fromNamespaceAndPath("mobflowutilities", "collection_zone_offset_reset_btn"), ResourceLocation.fromNamespaceAndPath("mobflowutilities", "collection_zone_offset_reset_btn_hover"), ResourceLocation.fromNamespaceAndPath("mobflowutilities", "collection_zone_offset_reset_btn_hover"));
+    private static final WidgetSprites EDIT_FILTER_SPRITES = new WidgetSprites(ResourceLocation.fromNamespaceAndPath("mobflowutilities", "edit_filter_btn"), ResourceLocation.fromNamespaceAndPath("mobflowutilities", "edit_filter_btn"), ResourceLocation.fromNamespaceAndPath("mobflowutilities", "edit_filter_btn_hover"), ResourceLocation.fromNamespaceAndPath("mobflowutilities", "edit_filter_btn_hover"));
+
     private EditBox xpInputField;
     private int downUpOffset = 0;
     private int northSouthOffset = 0;
@@ -56,7 +59,6 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
             this.xpCollectionEnabled = (this.menu).blockEntity.isXpCollectionEnabled();
             this.storedXP = (this.menu).blockEntity.getStoredXP();
         }
-
     }
 
     private int xpToLevel(int xp) {
@@ -104,7 +106,6 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
         super.init();
         int leftPos = (this.width - this.imageWidth) / 2;
         int topPos = (this.height - this.imageHeight) / 2;
-        this.titleLabelX = (this.imageWidth - this.font.width(this.title)) / 2;
         this.clearWidgets();
         this.xpInputField = new EditBox(this.font, leftPos + 9, topPos + 113, 39, 8, Component.translatable("gui.mobflowutilities.collector.xp_input_levels"));
         this.xpInputField.setMaxLength(4);
@@ -116,6 +117,7 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
         this.addOffsetButtons(leftPos, topPos);
         this.addWireframeButton(leftPos, topPos);
         this.addXpButtons(leftPos, topPos);
+        this.addFilterEditButtons(leftPos, topPos);
     }
 
     private void addOffsetButtons(int leftPos, int topPos) {
@@ -177,6 +179,50 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
         ImageButton depositAllButton = new ImageButton(leftPos + 82, topPos + 112, 10, 10, DEPOSIT_ALL_XP_SPRITES, button -> this.depositAllXP());
         depositAllButton.setTooltip(Tooltip.create(Component.translatable("tooltip.mobflowutilities.collector.xp.deposit_all")));
         this.addRenderableWidget(depositAllButton);
+    }
+
+    private void addFilterEditButtons(int leftPos, int topPos) {
+        // Filter slot 1 edit button (module slot index 1)
+        ImageButton editFilter1Button = new ImageButton(
+                leftPos + 177,
+                topPos + 5,
+                10,
+                10,
+                EDIT_FILTER_SPRITES,
+                button -> this.openFilterEditor(1)
+        );
+        editFilter1Button.setTooltip(Tooltip.create(Component.translatable("tooltip.mobflowutilities.collector.edit_filter")));
+        this.addRenderableWidget(editFilter1Button);
+
+        // Filter slot 2 edit button (module slot index 2)
+        ImageButton editFilter2Button = new ImageButton(
+                leftPos + 195,
+                topPos + 5,
+                10,
+                10,
+                EDIT_FILTER_SPRITES,
+                button -> this.openFilterEditor(2)
+        );
+        editFilter2Button.setTooltip(Tooltip.create(Component.translatable("tooltip.mobflowutilities.collector.edit_filter")));
+        this.addRenderableWidget(editFilter2Button);
+
+        // Filter slot 3 edit button (module slot index 3)
+        ImageButton editFilter3Button = new ImageButton(
+                leftPos + 213,
+                topPos + 5,
+                10,
+                10,
+                EDIT_FILTER_SPRITES,
+                button -> this.openFilterEditor(3)
+        );
+        editFilter3Button.setTooltip(Tooltip.create(Component.translatable("tooltip.mobflowutilities.collector.edit_filter")));
+        this.addRenderableWidget(editFilter3Button);
+    }
+
+    private void openFilterEditor(int filterSlotIndex) {
+        PacketDistributor.sendToServer(
+                new OpenFilterPacket(this.menu.blockEntity.getBlockPos(), filterSlotIndex)
+        );
     }
 
     private WidgetSprites createConditionalSprites(WidgetSprites baseSprites, Supplier<Boolean> isActive) {
@@ -461,5 +507,28 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
     protected void containerTick() {
         super.containerTick();
         this.syncFromBlockEntity();
+    }
+
+    @Override
+    protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+        // Custom color for your screen's title
+        guiGraphics.drawString(
+                this.font,
+                this.title,
+                this.titleLabelX,
+                this.titleLabelY,
+                0xF2F2F2,
+                false
+        );
+
+        // Custom color for the player's inventory label
+        guiGraphics.drawString(
+                this.font,
+                this.playerInventoryTitle,
+                this.inventoryLabelX,
+                this.inventoryLabelY,
+                0xF2F2F2,
+                false
+        );
     }
 }
