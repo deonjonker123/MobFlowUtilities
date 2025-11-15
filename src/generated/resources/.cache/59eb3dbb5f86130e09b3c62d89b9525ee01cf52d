@@ -1,12 +1,12 @@
-// 1.21.1	2025-11-15T02:27:05.3126907	Loot Tables
+// 1.21.1	2025-11-15T19:31:24.7609031	Loot Tables
 13dbc5088ba814c522f225d5f8c3782a2f05b20d data/mobflowutilities/loot_table/blocks/controller.json
 6ea5958c34622a011eaa9a02606b1f5e31dc9047 data/mobflowutilities/loot_table/blocks/damage_pad.json
-07c239206a6536bd10a4d0b4f1231d4c38d11168 data/mobflowutilities/loot_table/blocks/dark_dirt.json
+27e65fc0b86a42106eae7a766baf80b488c14d33 data/mobflowutilities/loot_table/blocks/dark_dirt.json
 8086395c87103342dbffc8b2bb447e498f765254 data/mobflowutilities/loot_table/blocks/dark_glass.json
 8c3fb16cad9c23dec15724b50b02b22f01854fc8 data/mobflowutilities/loot_table/blocks/flow_pad_fast.json
 d7bdf8cae9e45590cd118c7189fe53eee8af38dc data/mobflowutilities/loot_table/blocks/flow_pad_faster.json
 fa6eed641d20b84ef7fbecf2bbd075f7d7c20272 data/mobflowutilities/loot_table/blocks/flow_pad_fastest.json
-84722a28a29e05a57603c7ddf3ebc2b69d0a5710 data/mobflowutilities/loot_table/blocks/glimmer_grass.json
+db2622b6aa586c85106399df6c2f72a96cf0f370 data/mobflowutilities/loot_table/blocks/glimmer_grass.json
 6613b73ffa03d3e2d959e978204c183ee8ac1bc9 data/mobflowutilities/loot_table/blocks/glimmer_lamp.json
 f839f3f45e5f1de6f1e2cd5894fbd4ad30d3736e data/mobflowutilities/loot_table/blocks/gloomsteel_block.json
 5e69d92bba8eb7774c35eceb41f185e864f81630 data/mobflowutilities/loot_table/blocks/gloomsteel_deepslate_ore.json

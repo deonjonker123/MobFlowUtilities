@@ -50,16 +50,16 @@ public class MFULootTableProvider extends BlockLootSubProvider {
                         MFUItems.RAW_GLOOMSTEEL.get()));
 
         add(MFUBlocks.DARK_DIRT.get(),
-                block -> LootTable.lootTable()
-                        .withPool(LootPool.lootPool()
-                                .setRolls(ConstantValue.exactly(1.0F))
-                                .add(LootItem.lootTableItem(Items.DIRT))));
+                block -> createSilkTouchDispatchTable(
+                        MFUBlocks.DARK_DIRT.get(),
+                        applyExplosionDecay(block, LootItem.lootTableItem(Items.DIRT))
+                ));
 
         add(MFUBlocks.GLIMMER_GRASS.get(),
-                block -> LootTable.lootTable()
-                        .withPool(LootPool.lootPool()
-                                .setRolls(ConstantValue.exactly(1.0F))
-                                .add(LootItem.lootTableItem(Items.DIRT))));
+                block -> createSilkTouchDispatchTable(
+                        MFUBlocks.GLIMMER_GRASS.get(),
+                        applyExplosionDecay(block, LootItem.lootTableItem(Items.DIRT))
+                ));
     }
 
     @Override

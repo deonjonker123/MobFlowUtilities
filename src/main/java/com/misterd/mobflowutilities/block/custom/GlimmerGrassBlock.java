@@ -13,7 +13,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
@@ -55,8 +54,8 @@ public class GlimmerGrassBlock extends Block {
             double x = pos.getX() + random.nextDouble();
             double y = pos.getY() + 1.0D;
             double z = pos.getZ() + random.nextDouble();
-            DustParticleOptions purpleDust = new DustParticleOptions(new Vector3f(0.6F, 0.2F, 0.8F), 1.0F);
-            level.addParticle(purpleDust, x, y, z, 0.0D, 0.05D, 0.0D);
+            DustParticleOptions aquaDust = new DustParticleOptions(new Vector3f(0.0F, 1.0F, 0.8F), 1.0F);
+            level.addParticle(aquaDust, x, y, z, 0.0D, 0.05D, 0.0D);
         }
     }
 
