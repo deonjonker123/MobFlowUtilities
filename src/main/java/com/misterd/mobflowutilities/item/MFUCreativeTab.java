@@ -61,6 +61,7 @@ public class MFUCreativeTab {
                         output.accept(MFUItems.GLOOMSTEEL_SHOVEL);
                         output.accept(MFUItems.GLOOMSTEEL_PAXEL);
                         output.accept(MFUItems.GLOOMSTEEL_HAMMER);
+                        output.accept(MFUItems.GLOOMSTEEL_BOW);
                         output.accept(MFUItems.GLOOMSTEEL_HELMET);
                         output.accept(MFUItems.GLOOMSTEEL_CHESTPLATE);
                         output.accept(MFUItems.GLOOMSTEEL_LEGGINGS);

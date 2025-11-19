@@ -381,6 +381,15 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_gloomsteel_ingot", has( MFUItems.GLOOMSTEEL_INGOT))
                 .save(recipeOutput);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT,  MFUItems.GLOOMSTEEL_BOW.get())
+                .pattern(" GS")
+                .pattern("G S")
+                .pattern(" GS")
+                .define('G',  MFUItems.GLOOMSTEEL_INGOT.get())
+                .define('S',  Items.STRING)
+                .unlockedBy("has_gloomsteel_ingot", has( MFUItems.GLOOMSTEEL_INGOT))
+                .save(recipeOutput);
+
         recipeOutput.accept(
                 ResourceLocation.fromNamespaceAndPath("mobflowutilities", "genetic_recipe"),
                 new GeneticRecipe("mfu_genetic"),

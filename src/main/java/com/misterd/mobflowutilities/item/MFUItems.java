@@ -1,10 +1,7 @@
 package com.misterd.mobflowutilities.item;
 
 import com.misterd.mobflowutilities.item.custom.*;
-import com.misterd.mobflowutilities.item.equipment.GloomsteelHammerItem;
-import com.misterd.mobflowutilities.item.equipment.GloomsteelPaxelItem;
-import com.misterd.mobflowutilities.item.equipment.MFUArmorMaterials;
-import com.misterd.mobflowutilities.item.equipment.MFUToolTiers;
+import com.misterd.mobflowutilities.item.equipment.*;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
@@ -156,6 +153,10 @@ public class MFUItems {
     public static final DeferredItem<ArmorItem> GLOOMSTEEL_BOOTS = ITEMS.register("gloomsteel_boots",
             () -> new ArmorItem(MFUArmorMaterials.GLOOMSTEEL_ARMOR_MATERIAL, ArmorItem.Type.BOOTS,
                     new Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(27))));
+
+    public static final DeferredItem<Item> GLOOMSTEEL_BOW = ITEMS.register("gloomsteel_greatbow",
+            () -> new GloomsteelGreatbowItem(new Item.Properties()
+                    .durability(999)));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
