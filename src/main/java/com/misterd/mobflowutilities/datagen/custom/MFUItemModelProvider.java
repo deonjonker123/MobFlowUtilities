@@ -104,6 +104,9 @@ public class MFUItemModelProvider extends ItemModelProvider {
         buttonItem(MFUBlocks.GLIMMERWOOD_BUTTON, MFUBlocks.GLIMMERWOOD_PLANKS);
         fenceItem(MFUBlocks.GLIMMERWOOD_FENCE, MFUBlocks.GLIMMERWOOD_PLANKS);
         basicItem(MFUBlocks.GLIMMERWOOD_DOOR.asItem());
+
+        basicItem(MFUItems.UMBRAL_BERRIES.get());
+        basicItem(MFUItems.RADIANT_BERRIES.get());
     }
 
     private ItemModelBuilder handheldItem(DeferredItem<?> item) {

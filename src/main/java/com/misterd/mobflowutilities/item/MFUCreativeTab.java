@@ -64,6 +64,9 @@ public class MFUCreativeTab {
                         output.accept(MFUBlocks.GLIMMERSTEEL_NETHERRACK_ORE);
                         output.accept(MFUBlocks.GLIMMERSTEEL_ENDSTONE_ORE);
 
+                        output.accept(MFUItems.UMBRAL_BERRIES);
+                        output.accept(MFUItems.RADIANT_BERRIES);
+
                         output.accept(MFUBlocks.GLOOMWOOD_LOG);
                         output.accept(MFUBlocks.STRIPPED_GLOOMWOOD_LOG);
                         output.accept(MFUBlocks.GLOOMWOOD);

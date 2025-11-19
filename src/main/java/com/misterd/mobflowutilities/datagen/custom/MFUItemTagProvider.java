@@ -128,6 +128,10 @@ public class MFUItemTagProvider extends ItemTagsProvider {
                 .add(MFUItems.GLOOMSTEEL_HOE.get())
                 .add(MFUItems.GLIMMERSTEEL_HOE.get());
 
+        tag(ItemTags.FOX_FOOD)
+                .add(MFUItems.UMBRAL_BERRIES.get())
+                .add(MFUItems.RADIANT_BERRIES.get());
+
         tag(ItemTags.TRIMMABLE_ARMOR)
                 .add(MFUItems.GLIMMERSTEEL_HELMET.get())
                 .add(MFUItems.GLIMMERSTEEL_CHESTPLATE.get())

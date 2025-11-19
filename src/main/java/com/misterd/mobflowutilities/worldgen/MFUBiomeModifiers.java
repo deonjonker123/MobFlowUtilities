@@ -1,6 +1,7 @@
 package com.misterd.mobflowutilities.worldgen;
 
 import com.misterd.mobflowutilities.MobFlowUtilities;
+import com.misterd.mobflowutilities.block.custom.RadiantlBerryBushBlock;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
@@ -24,6 +25,9 @@ public class MFUBiomeModifiers {
 
     public static final ResourceKey<BiomeModifier> ADD_TREE_GLOOMWOOD = registerKey("add_tree_gloomwood");
     public static final ResourceKey<BiomeModifier> ADD_TREE_GLIMMERWOOD = registerKey("add_tree_glimmerwood");
+
+    public static final ResourceKey<BiomeModifier> ADD_UMBRAL_BERRY_BUSH = registerKey("add_umbral_berry_bush");
+    public static final ResourceKey<BiomeModifier> ADD_RADIANT_BERRY_BUSH = registerKey("add_radiant_berry_bush");
 
     public static void bootstrap(BootstrapContext<BiomeModifier> context) {
         HolderGetter<PlacedFeature> placedFeatures = context.lookup(Registries.PLACED_FEATURE);
@@ -88,12 +92,45 @@ public class MFUBiomeModifiers {
                                 biomes.getOrThrow(Biomes.BIRCH_FOREST),
                                 biomes.getOrThrow(Biomes.OLD_GROWTH_BIRCH_FOREST),
                                 biomes.getOrThrow(Biomes.SPARSE_JUNGLE),
-                                biomes.getOrThrow(Biomes.MANGROVE_SWAMP),
                                 biomes.getOrThrow(Biomes.MEADOW),
                                 biomes.getOrThrow(Biomes.PLAINS)
                         ),
                         HolderSet.direct(
                                 placedFeatures.getOrThrow(MFUPlacedFeatures.GLIMMERWOOD_PLACED_KEY)
+                        ),
+                        GenerationStep.Decoration.VEGETAL_DECORATION
+                )
+        );
+
+        context.register(ADD_UMBRAL_BERRY_BUSH,
+                new BiomeModifiers.AddFeaturesBiomeModifier(
+                        HolderSet.direct(
+                                biomes.getOrThrow(Biomes.DARK_FOREST),
+                                biomes.getOrThrow(Biomes.SWAMP),
+                                biomes.getOrThrow(Biomes.TAIGA),
+                                biomes.getOrThrow(Biomes.OLD_GROWTH_SPRUCE_TAIGA),
+                                biomes.getOrThrow(Biomes.OLD_GROWTH_PINE_TAIGA),
+                                biomes.getOrThrow(Biomes.WINDSWEPT_HILLS)
+                        ),
+                        HolderSet.direct(
+                                placedFeatures.getOrThrow(MFUPlacedFeatures.UMBRAL_BERRY_BUSH_PLACED)
+                        ),
+                        GenerationStep.Decoration.VEGETAL_DECORATION
+                )
+        );
+
+        context.register(ADD_RADIANT_BERRY_BUSH,
+                new BiomeModifiers.AddFeaturesBiomeModifier(
+                        HolderSet.direct(
+                                biomes.getOrThrow(Biomes.FOREST),
+                                biomes.getOrThrow(Biomes.FLOWER_FOREST),
+                                biomes.getOrThrow(Biomes.BIRCH_FOREST),
+                                biomes.getOrThrow(Biomes.OLD_GROWTH_BIRCH_FOREST),
+                                biomes.getOrThrow(Biomes.SPARSE_JUNGLE),
+                                biomes.getOrThrow(Biomes.MEADOW)
+                        ),
+                        HolderSet.direct(
+                                placedFeatures.getOrThrow(MFUPlacedFeatures.RADIANT_BERRY_BUSH_PLACED)
                         ),
                         GenerationStep.Decoration.VEGETAL_DECORATION
                 )

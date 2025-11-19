@@ -1,7 +1,9 @@
 package com.misterd.mobflowutilities.item;
 
+import com.misterd.mobflowutilities.block.MFUBlocks;
 import com.misterd.mobflowutilities.item.custom.*;
 import com.misterd.mobflowutilities.item.equipment.*;
+import com.misterd.mobflowutilities.util.MFUFoodProperties;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
@@ -215,6 +217,12 @@ public class MFUItems {
     public static final DeferredItem<Item> GLIMMERSTEEL_BOW = ITEMS.register("glimmersteel_greatbow",
             () -> new GlimmersteelGreatbowItem(new Item.Properties()
                     .durability(999)));
+
+    public static final DeferredItem<Item> UMBRAL_BERRIES = ITEMS.register("umbral_berries",
+            () -> new ItemNameBlockItem(MFUBlocks.UMBRAL_BERRY_BUSH.get(), new Item.Properties().food(MFUFoodProperties.UMBRAL_BERRY)));
+
+    public static final DeferredItem<Item> RADIANT_BERRIES = ITEMS.register("radiant_berries",
+            () -> new ItemNameBlockItem(MFUBlocks.RADIANT_BERRY_BUSH.get(), new Item.Properties().food(MFUFoodProperties.RADIANT_BERRY)));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

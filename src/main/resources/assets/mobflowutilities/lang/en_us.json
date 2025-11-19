@@ -1,6 +1,5 @@
 {
-  "creativetab.mobflowutilities.blocks": "Mob Flow Utilities Blocks",
-  "creativetab.mobflowutilities.items": "Mob Flow Utilities Items",
+  "creativetab.mobflowutilities": "Mob Flow Utilities",
 
   "block.mobflowutilities.flow_pad_fast": "Fast Flow Pad",
   "block.mobflowutilities.flow_pad_faster": "Faster Flow Pad",
@@ -64,6 +63,9 @@
   "block.mobflowutilities.gilmmerwood_fence_gate": "Glimmerwood Fence Gate",
   "block.mobflowutilities.glimmerwood_door": "Glimmerwood Door",
   "block.mobflowutilities.gilmmerwood_trapdoor": "Glimmerwood Trapdoor",
+
+  "block.mobflowutilities.umbral_berry_bush": "Umbral Berry Bush",
+  "block.mobflowutilities.radiant_berry_bush": "Radiant Berry Bush",
 
   "item.mobflowutilities.bane_of_arthropods_module": "Bane of Arthropods Module",
   "item.mobflowutilities.bane_of_arthropods_module.subtitle": "Deals increased damage to spiders, silverfish, and other arthropods",
@@ -134,6 +136,9 @@
   "item.mobflowutilities.glimmersteel_chestplate": "Glimmersteel Chestplate",
   "item.mobflowutilities.glimmersteel_leggings": "Glimmersteel Leggings",
   "item.mobflowutilities.glimmersteel_boots": "Glimmersteel Boots",
+
+  "item.mobflowutilities.umbral_berries": "Umbral Berries",
+  "item.mobflowutilities.radiant_berries": "Radiant Berries",
 
   "menu.mobflowutilities.collector": "Collector",
   "menu.mobflowutilities.controller": "Controller",

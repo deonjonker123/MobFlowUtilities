@@ -4,15 +4,18 @@ import com.misterd.mobflowutilities.MobFlowUtilities;
 import com.misterd.mobflowutilities.block.MFUBlocks;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SweetBerryBushBlock;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.featuresize.ThreeLayersFeatureSize;
 import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
@@ -38,6 +41,9 @@ public class MFUConfiguredFeatures {
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> GLOOMWOOD_KEY = registerKey("gloomwood");
     public static final ResourceKey<ConfiguredFeature<?, ?>> GLIMMERWOOD_KEY = registerKey("glimmerwood");
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> UMBRAL_BERRY_BUSH_KEY = registerKey("umbral_berry_bush");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> RADIANT_BERRY_BUSH_KEY = registerKey("radiant_berry_bush");
 
     public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         TagMatchTest stoneOreReplaceables = new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES);
@@ -88,6 +94,27 @@ public class MFUConfiguredFeatures {
 
                 new ThreeLayersFeatureSize(1, 1, 0, 1, 2, OptionalInt.empty())).ignoreVines().build()
         );
+
+        register(context, UMBRAL_BERRY_BUSH_KEY, Feature.RANDOM_PATCH,
+                FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK,
+                        new SimpleBlockConfiguration(BlockStateProvider.simple(MFUBlocks.UMBRAL_BERRY_BUSH.get()
+                                .defaultBlockState().setValue(SweetBerryBushBlock.AGE, 3))
+                        ), List.of(
+                                Blocks.DIRT,
+                                Blocks.PODZOL,
+                                Blocks.MYCELIUM,
+                                Blocks.GRASS_BLOCK,
+                                Blocks.MUD
+                        )));
+
+        register(context, RADIANT_BERRY_BUSH_KEY, Feature.RANDOM_PATCH,
+                FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK,
+                        new SimpleBlockConfiguration(BlockStateProvider.simple(MFUBlocks.RADIANT_BERRY_BUSH.get()
+                                .defaultBlockState().setValue(SweetBerryBushBlock.AGE, 3))
+                        ), List.of(
+                                Blocks.DIRT,
+                                Blocks.GRASS_BLOCK
+                        )));
     }
 
     public static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {

@@ -12,9 +12,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
-import net.minecraft.world.level.levelgen.placement.HeightRangePlacement;
-import net.minecraft.world.level.levelgen.placement.PlacedFeature;
-import net.minecraft.world.level.levelgen.placement.PlacementModifier;
+import net.minecraft.world.level.levelgen.placement.*;
 
 import java.util.List;
 
@@ -28,6 +26,9 @@ public class MFUPlacedFeatures {
 
     public static final ResourceKey<PlacedFeature> GLOOMWOOD_PLACED_KEY = registerKey("gloomwood_placed");
     public static final ResourceKey<PlacedFeature> GLIMMERWOOD_PLACED_KEY = registerKey("glimmerwood_placed");
+
+    public static final ResourceKey<PlacedFeature> UMBRAL_BERRY_BUSH_PLACED = registerKey("umbral_berry_bush_placed");
+    public static final ResourceKey<PlacedFeature> RADIANT_BERRY_BUSH_PLACED = registerKey("radiant_berry_bush_placed");
 
     public static void bootstrap(BootstrapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
@@ -57,6 +58,12 @@ public class MFUPlacedFeatures {
 
         register(context, GLIMMERWOOD_PLACED_KEY, configuredFeatures.getOrThrow(MFUConfiguredFeatures.GLIMMERWOOD_KEY),
                 VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.05F, 1), MFUBlocks.GLIMMERWOOD_SAPLING.get()));
+
+        register(context, UMBRAL_BERRY_BUSH_PLACED, configuredFeatures.getOrThrow(MFUConfiguredFeatures.UMBRAL_BERRY_BUSH_KEY),
+                List.of(RarityFilter.onAverageOnceEvery(64), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome()));
+
+        register(context, RADIANT_BERRY_BUSH_PLACED, configuredFeatures.getOrThrow(MFUConfiguredFeatures.RADIANT_BERRY_BUSH_KEY),
+                List.of(RarityFilter.onAverageOnceEvery(64), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome()));
     }
 
     private static ResourceKey<PlacedFeature> registerKey(String name) {
