@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column",
-  "textures": {
-    "end": "mobflowutilities:block/gloomwood_log",
-    "side": "mobflowutilities:block/gloomwood_log"
-  }
-}

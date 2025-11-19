@@ -151,7 +151,7 @@ public class MFUItems {
                     .attributes(PickaxeItem.createAttributes(MFUToolTiers.GLOOMSTEEL, 6F, -3f))));
 
     public static final DeferredItem<ArmorItem> GLOOMSTEEL_HELMET = ITEMS.register("gloomsteel_helmet",
-            () -> new ArmorItem(MFUArmorMaterials.GLOOMSTEEL_ARMOR_MATERIAL, ArmorItem.Type.HELMET,
+            () -> new MFUArmorItem(MFUArmorMaterials.GLOOMSTEEL_ARMOR_MATERIAL, ArmorItem.Type.HELMET,
                     new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(27))));
 
     public static final DeferredItem<ArmorItem> GLOOMSTEEL_CHESTPLATE = ITEMS.register("gloomsteel_chestplate",
@@ -199,7 +199,7 @@ public class MFUItems {
                     .attributes(PickaxeItem.createAttributes(MFUToolTiers.GLIMMERSTEEL, 6F, -3f))));
 
     public static final DeferredItem<ArmorItem> GLIMMERSTEEL_HELMET = ITEMS.register("glimmersteel_helmet",
-            () -> new ArmorItem(MFUArmorMaterials.GLIMMERSTEEL_ARMOR_MATERIAL, ArmorItem.Type.HELMET,
+            () -> new MFUArmorItem(MFUArmorMaterials.GLIMMERSTEEL_ARMOR_MATERIAL, ArmorItem.Type.HELMET,
                     new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(27))));
 
     public static final DeferredItem<ArmorItem> GLIMMERSTEEL_CHESTPLATE = ITEMS.register("glimmersteel_chestplate",

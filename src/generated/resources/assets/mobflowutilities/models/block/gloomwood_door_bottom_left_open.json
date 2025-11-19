@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/door_bottom_left_open",
-  "render_type": "minecraft:cutout",
-  "textures": {
-    "bottom": "mobflowutilities:block/gloomwood_door_bottom",
-    "top": "mobflowutilities:block/gloomwood_door_top"
-  }
-}

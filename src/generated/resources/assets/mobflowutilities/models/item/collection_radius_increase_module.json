@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "mobflowutilities:item/collection_radius_increase_module"
-  }
-}

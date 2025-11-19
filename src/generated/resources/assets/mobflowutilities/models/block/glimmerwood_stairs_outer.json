@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/outer_stairs",
-  "textures": {
-    "bottom": "mobflowutilities:block/glimmerwood_planks",
-    "side": "mobflowutilities:block/glimmerwood_planks",
-    "top": "mobflowutilities:block/glimmerwood_planks"
-  }
-}
