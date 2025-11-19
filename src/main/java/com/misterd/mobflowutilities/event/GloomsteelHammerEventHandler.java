@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.misterd.mobflowutilities.MobFlowUtilities;
-import com.misterd.mobflowutilities.item.equipment.GloomsteelHammerItem;
+import com.misterd.mobflowutilities.item.equipment.HammerItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -25,7 +25,7 @@ public class GloomsteelHammerEventHandler {
         ItemStack mainHandItem = player.getMainHandItem();
         Item item = mainHandItem.getItem();
 
-        if (!(item instanceof GloomsteelHammerItem hammer)) {
+        if (!(item instanceof HammerItem hammer)) {
             return;
         }
 
@@ -38,7 +38,7 @@ public class GloomsteelHammerEventHandler {
             return;
         }
 
-        for (BlockPos pos : GloomsteelHammerItem.getBlocksToBeDestroyed(1, initialBlockPos, serverPlayer)) {
+        for (BlockPos pos : HammerItem.getBlocksToBeDestroyed(1, initialBlockPos, serverPlayer)) {
             if (!pos.equals(initialBlockPos) && hammer.isCorrectToolForDrops(mainHandItem, event.getLevel().getBlockState(pos))) {
                 HARVESTED_BLOCKS.add(pos);
                 serverPlayer.gameMode.destroyBlock(pos);

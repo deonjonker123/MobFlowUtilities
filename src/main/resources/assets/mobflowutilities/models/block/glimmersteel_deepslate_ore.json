@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "north": "mobflowutilities:block/glimmersteel_deepslate_ore",
+    "south": "mobflowutilities:block/glimmersteel_deepslate_ore",
+    "east": "mobflowutilities:block/glimmersteel_deepslate_ore",
+    "west": "mobflowutilities:block/glimmersteel_deepslate_ore",
+    "up": "mobflowutilities:block/glimmersteel_deepslate_top_ore",
+    "down": "mobflowutilities:block/glimmersteel_deepslate_top_ore",
+    "particle": "mobflowutilities:block/glimmersteel_deepslate_ore"
+  }
+}

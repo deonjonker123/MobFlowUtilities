@@ -20,6 +20,7 @@ import java.util.function.Supplier;
 public class MFUArmorMaterials {
 
     public static final Holder<ArmorMaterial> GLOOMSTEEL_ARMOR_MATERIAL;
+    public static final Holder<ArmorMaterial> GLIMMERSTEEL_ARMOR_MATERIAL;
 
     static {
         GLOOMSTEEL_ARMOR_MATERIAL = register(
@@ -35,6 +36,23 @@ public class MFUArmorMaterials {
                 2.0F,
                 0.1F,
                 () -> MFUItems.GLOOMSTEEL_INGOT.get()
+        );
+    }
+
+    static {
+        GLIMMERSTEEL_ARMOR_MATERIAL = register(
+                "glimmersteel",
+                Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
+                    map.put(ArmorItem.Type.BOOTS, 3);
+                    map.put(ArmorItem.Type.LEGGINGS, 6);
+                    map.put(ArmorItem.Type.CHESTPLATE, 7);
+                    map.put(ArmorItem.Type.HELMET, 3);
+                    map.put(ArmorItem.Type.BODY, 11);
+                }),
+                16,
+                2.0F,
+                0.1F,
+                () -> MFUItems.GLIMMERSTEEL_INGOT.get()
         );
     }
 

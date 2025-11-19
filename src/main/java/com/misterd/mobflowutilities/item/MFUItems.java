@@ -66,10 +66,19 @@ public class MFUItems {
     public static final DeferredItem<Item> RAW_GLOOMSTEEL = ITEMS.register("raw_gloomsteel",
             () -> new Item(new Item.Properties()));
 
+    public static final DeferredItem<Item> RAW_GLIMMERSTEEL = ITEMS.register("raw_glimmersteel",
+            () -> new Item(new Item.Properties()));
+
     public static final DeferredItem<Item> GLOOMSTEEL_INGOT = ITEMS.register("gloomsteel_ingot",
             () -> new Item(new Item.Properties()));
 
+    public static final DeferredItem<Item> GLIMMERSTEEL_INGOT = ITEMS.register("glimmersteel_ingot",
+            () -> new Item(new Item.Properties()));
+
     public static final DeferredItem<Item> GLOOMSTEEL_NUGGET = ITEMS.register("gloomsteel_nugget",
+            () -> new Item(new Item.Properties()));
+
+    public static final DeferredItem<Item> GLIMMERSTEEL_NUGGET = ITEMS.register("glimmersteel_nugget",
             () -> new Item(new Item.Properties()));
 
     public static final DeferredItem<Item> GLOOM_SPORE = ITEMS.register("gloom_spore",
@@ -111,6 +120,7 @@ public class MFUItems {
     public static final DeferredItem<Item> PAD_WRENCH = ITEMS.register("pad_wrench",
             () -> new PadWrenchItem(new Item.Properties()));
 
+    // Gloomsteel items
     public static final DeferredItem<SwordItem> GLOOMSTEEL_SWORD = ITEMS.register("gloomsteel_sword",
             () -> new SwordItem(MFUToolTiers.GLOOMSTEEL,
                     new Item.Properties().attributes(SwordItem.createAttributes(MFUToolTiers.GLOOMSTEEL, 3, -2.4F))));
@@ -131,11 +141,11 @@ public class MFUItems {
             () -> new ShovelItem(MFUToolTiers.GLOOMSTEEL,
                     new Item.Properties().attributes(ShovelItem.createAttributes(MFUToolTiers.GLOOMSTEEL, 1.5F, -3.0F))));
 
-    public static final DeferredItem<GloomsteelPaxelItem> GLOOMSTEEL_PAXEL = ITEMS.register("gloomsteel_paxel",
-            () -> new GloomsteelPaxelItem(new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<PaxelItem> GLOOMSTEEL_PAXEL = ITEMS.register("gloomsteel_paxel",
+            () -> new PaxelItem(new Item.Properties().stacksTo(1)));
 
-    public static final DeferredItem<GloomsteelHammerItem> GLOOMSTEEL_HAMMER = ITEMS.register("gloomsteel_hammer",
-            () -> new GloomsteelHammerItem(MFUToolTiers.GLOOMSTEEL, new Item.Properties()
+    public static final DeferredItem<HammerItem> GLOOMSTEEL_HAMMER = ITEMS.register("gloomsteel_hammer",
+            () -> new HammerItem(MFUToolTiers.GLOOMSTEEL, new Item.Properties()
                     .attributes(PickaxeItem.createAttributes(MFUToolTiers.GLOOMSTEEL, 6F, -3f))));
 
     public static final DeferredItem<ArmorItem> GLOOMSTEEL_HELMET = ITEMS.register("gloomsteel_helmet",
@@ -156,6 +166,54 @@ public class MFUItems {
 
     public static final DeferredItem<Item> GLOOMSTEEL_BOW = ITEMS.register("gloomsteel_greatbow",
             () -> new GloomsteelGreatbowItem(new Item.Properties()
+                    .durability(999)));
+
+    // Gloomsteel items
+    public static final DeferredItem<SwordItem> GLIMMERSTEEL_SWORD = ITEMS.register("glimmersteel_sword",
+            () -> new SwordItem(MFUToolTiers.GLIMMERSTEEL,
+                    new Item.Properties().attributes(SwordItem.createAttributes(MFUToolTiers.GLIMMERSTEEL, 3, -2.4F))));
+
+    public static final DeferredItem<AxeItem> GLIMMERSTEEL_AXE = ITEMS.register("glimmersteel_axe",
+            () -> new AxeItem(MFUToolTiers.GLIMMERSTEEL,
+                    new Item.Properties().attributes(AxeItem.createAttributes(MFUToolTiers.GLIMMERSTEEL, 6.0F, -3.0F))));
+
+    public static final DeferredItem<PickaxeItem> GLIMMERSTEEL_PICKAXE = ITEMS.register("glimmersteel_pickaxe",
+            () -> new PickaxeItem(MFUToolTiers.GLIMMERSTEEL,
+                    new Item.Properties().attributes(PickaxeItem.createAttributes(MFUToolTiers.GLIMMERSTEEL, 1.0F, -2.8F))));
+
+    public static final DeferredItem<HoeItem> GLIMMERSTEEL_HOE = ITEMS.register("glimmersteel_hoe",
+            () -> new HoeItem(MFUToolTiers.GLIMMERSTEEL,
+                    new Item.Properties().attributes(HoeItem.createAttributes(MFUToolTiers.GLIMMERSTEEL, -2.0F, 0.0F))));
+
+    public static final DeferredItem<ShovelItem> GLIMMERSTEEL_SHOVEL = ITEMS.register("glimmersteel_shovel",
+            () -> new ShovelItem(MFUToolTiers.GLIMMERSTEEL,
+                    new Item.Properties().attributes(ShovelItem.createAttributes(MFUToolTiers.GLIMMERSTEEL, 1.5F, -3.0F))));
+
+    public static final DeferredItem<PaxelItem> GLIMMERSTEEL_PAXEL = ITEMS.register("glimmersteel_paxel",
+            () -> new PaxelItem(new Item.Properties().stacksTo(1)));
+
+    public static final DeferredItem<HammerItem> GLIMMERSTEEL_HAMMER = ITEMS.register("glimmersteel_hammer",
+            () -> new HammerItem(MFUToolTiers.GLIMMERSTEEL, new Item.Properties()
+                    .attributes(PickaxeItem.createAttributes(MFUToolTiers.GLIMMERSTEEL, 6F, -3f))));
+
+    public static final DeferredItem<ArmorItem> GLIMMERSTEEL_HELMET = ITEMS.register("glimmersteel_helmet",
+            () -> new ArmorItem(MFUArmorMaterials.GLIMMERSTEEL_ARMOR_MATERIAL, ArmorItem.Type.HELMET,
+                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(27))));
+
+    public static final DeferredItem<ArmorItem> GLIMMERSTEEL_CHESTPLATE = ITEMS.register("glimmersteel_chestplate",
+            () -> new ArmorItem(MFUArmorMaterials.GLIMMERSTEEL_ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE,
+                    new Item.Properties().durability(ArmorItem.Type.CHESTPLATE.getDurability(27))));
+
+    public static final DeferredItem<ArmorItem> GLIMMERSTEEL_LEGGINGS = ITEMS.register("glimmersteel_leggings",
+            () -> new ArmorItem(MFUArmorMaterials.GLIMMERSTEEL_ARMOR_MATERIAL, ArmorItem.Type.LEGGINGS,
+                    new Item.Properties().durability(ArmorItem.Type.LEGGINGS.getDurability(27))));
+
+    public static final DeferredItem<ArmorItem> GLIMMERSTEEL_BOOTS = ITEMS.register("glimmersteel_boots",
+            () -> new ArmorItem(MFUArmorMaterials.GLIMMERSTEEL_ARMOR_MATERIAL, ArmorItem.Type.BOOTS,
+                    new Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(27))));
+
+    public static final DeferredItem<Item> GLIMMERSTEEL_BOW = ITEMS.register("glimmersteel_greatbow",
+            () -> new GlimmersteelGreatbowItem(new Item.Properties()
                     .durability(999)));
 
     public static void register(IEventBus eventBus) {

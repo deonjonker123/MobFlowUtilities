@@ -20,6 +20,7 @@ public class MFUItemProperties {
         );
 
         customBow(MFUItems.GLOOMSTEEL_BOW.get());
+        customBow(MFUItems.GLIMMERSTEEL_BOW.get());
     }
 
     private static void customBow (Item item) {

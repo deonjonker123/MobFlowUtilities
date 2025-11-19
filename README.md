@@ -84,14 +84,16 @@ Gene sampling allows players to collect gene samples from creatures using Empty 
     -   Explosion immunity
 -   **Glimmer Lamp**: High-output decorative lighting
     -   Light level 15 with attractive design
+- **Glimmerwood & Gloomwood**
+  - Various wood blocks to choose from
 
-### Gloomsteel Material
+### Gloomsteel & Glimmersteel Material
 
 -   **Multi-Dimensional Ore**: Spawns in Overworld, Nether, and End dimensions
 -   **Complete Processing Chain**: Raw ore to ingots, nuggets, and storage blocks
 -   **Crafting Component**: Required material for all Mob Flow Utilities machinery
 
-### Gloomsteel Tools and Armor
+### Gloomsteel & Glimmersteel Tools and Armor
 
 -   Full suite of tools, including a paxel and hammer (3x3 mining).
 -   Full set of armor

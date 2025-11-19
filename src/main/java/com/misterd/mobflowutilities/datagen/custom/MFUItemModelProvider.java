@@ -1,6 +1,7 @@
 package com.misterd.mobflowutilities.datagen.custom;
 
 import com.misterd.mobflowutilities.MobFlowUtilities;
+import com.misterd.mobflowutilities.block.MFUBlocks;
 import com.misterd.mobflowutilities.item.MFUItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
@@ -9,10 +10,12 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.armortrim.TrimMaterials;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 
 import java.util.LinkedHashMap;
@@ -54,6 +57,10 @@ public class MFUItemModelProvider extends ItemModelProvider {
         basicItem(MFUItems.GLOOMSTEEL_INGOT.get());
         basicItem(MFUItems.GLOOMSTEEL_NUGGET.get());
 
+        basicItem(MFUItems.RAW_GLIMMERSTEEL.get());
+        basicItem(MFUItems.GLIMMERSTEEL_INGOT.get());
+        basicItem(MFUItems.GLIMMERSTEEL_NUGGET.get());
+
         basicItem(MFUItems.GLOOM_SPORE.get());
         basicItem(MFUItems.GLIMMER_SPROUT.get());
 
@@ -73,6 +80,30 @@ public class MFUItemModelProvider extends ItemModelProvider {
         trimmedArmorItem(MFUItems.GLOOMSTEEL_CHESTPLATE);
         trimmedArmorItem(MFUItems.GLOOMSTEEL_LEGGINGS);
         trimmedArmorItem(MFUItems.GLOOMSTEEL_BOOTS);
+
+        handheldItem(MFUItems.GLIMMERSTEEL_SWORD);
+        handheldItem(MFUItems.GLIMMERSTEEL_PICKAXE);
+        handheldItem(MFUItems.GLIMMERSTEEL_AXE);
+        handheldItem(MFUItems.GLIMMERSTEEL_SHOVEL);
+        handheldItem(MFUItems.GLIMMERSTEEL_HOE);
+        handheldItem(MFUItems.GLIMMERSTEEL_PAXEL);
+        handheldItem(MFUItems.GLIMMERSTEEL_HAMMER);
+
+        trimmedArmorItem(MFUItems.GLIMMERSTEEL_HELMET);
+        trimmedArmorItem(MFUItems.GLIMMERSTEEL_CHESTPLATE);
+        trimmedArmorItem(MFUItems.GLIMMERSTEEL_LEGGINGS);
+        trimmedArmorItem(MFUItems.GLIMMERSTEEL_BOOTS);
+
+        saplingItem(MFUBlocks.GLOOMWOOD_SAPLING);
+        saplingItem(MFUBlocks.GLIMMERWOOD_SAPLING);
+
+        buttonItem(MFUBlocks.GLOOMWOOD_BUTTON, MFUBlocks.GLOOMWOOD_PLANKS);
+        fenceItem(MFUBlocks.GLOOMWOOD_FENCE, MFUBlocks.GLOOMWOOD_PLANKS);
+        basicItem(MFUBlocks.GLOOMWOOD_DOOR.asItem());
+
+        buttonItem(MFUBlocks.GLIMMERWOOD_BUTTON, MFUBlocks.GLIMMERWOOD_PLANKS);
+        fenceItem(MFUBlocks.GLIMMERWOOD_FENCE, MFUBlocks.GLIMMERWOOD_PLANKS);
+        basicItem(MFUBlocks.GLIMMERWOOD_DOOR.asItem());
     }
 
     private ItemModelBuilder handheldItem(DeferredItem<?> item) {
@@ -118,5 +149,23 @@ public class MFUItemModelProvider extends ItemModelProvider {
                     .end()
                     .texture("layer0", ResourceLocation.fromNamespaceAndPath(MobFlowUtilities.MODID, "item/" + armorItemPath));
         });
+    }
+
+    private ItemModelBuilder saplingItem(DeferredBlock<Block> item) {
+        return withExistingParent(item.getId().getPath(),
+                ResourceLocation.parse("item/generated")).texture("layer0",
+                ResourceLocation.fromNamespaceAndPath(MobFlowUtilities.MODID,"block/" + item.getId().getPath()));
+    }
+
+    public void buttonItem(DeferredBlock<?> block, DeferredBlock<Block> baseBlock) {
+        this.withExistingParent(block.getId().getPath(), mcLoc("block/button_inventory"))
+                .texture("texture",  ResourceLocation.fromNamespaceAndPath(MobFlowUtilities.MODID,
+                        "block/" + baseBlock.getId().getPath()));
+    }
+
+    public void fenceItem(DeferredBlock<?> block, DeferredBlock<Block> baseBlock) {
+        this.withExistingParent(block.getId().getPath(), mcLoc("block/fence_inventory"))
+                .texture("texture",  ResourceLocation.fromNamespaceAndPath(MobFlowUtilities.MODID,
+                        "block/" + baseBlock.getId().getPath()));
     }
 }

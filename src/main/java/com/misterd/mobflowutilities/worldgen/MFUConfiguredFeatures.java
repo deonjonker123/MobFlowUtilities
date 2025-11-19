@@ -7,22 +7,37 @@ import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
+import net.minecraft.world.level.levelgen.feature.featuresize.ThreeLayersFeatureSize;
+import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
+import net.minecraft.world.level.levelgen.feature.foliageplacers.DarkOakFoliagePlacer;
+import net.minecraft.world.level.levelgen.feature.foliageplacers.FancyFoliagePlacer;
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
+import net.minecraft.world.level.levelgen.feature.trunkplacers.DarkOakTrunkPlacer;
+import net.minecraft.world.level.levelgen.feature.trunkplacers.FancyTrunkPlacer;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 
 import java.util.List;
+import java.util.OptionalInt;
 
 public class MFUConfiguredFeatures {
 
+    // Separated overworld ore keys
+    public static final ResourceKey<ConfiguredFeature<?, ?>> OVERWORLD_GLIMMERSTEEL_ORE_KEY = registerKey("overworld_glimmersteel_ore");
     public static final ResourceKey<ConfiguredFeature<?, ?>> OVERWORLD_GLOOMSTEEL_ORE_KEY = registerKey("overworld_gloomsteel_ore");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> OVERWORLD_GLOOMSTEEL_ORE_HIDDEN_KEY = registerKey("overworld_gloomsteel_ore_hidden");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> NETHER_GLOOMSTEEL_ORE_KEY = registerKey("nether_gloomsteel_ore");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> END_GLOOMSTEEL_ORE_KEY = registerKey("end_gloomsteel_ore");
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> NETHER_MFU_ORE_KEY = registerKey("nether_mfu_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> END_MFU_ORE_KEY = registerKey("end_mfu_ore");
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> GLOOMWOOD_KEY = registerKey("gloomwood");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> GLIMMERWOOD_KEY = registerKey("glimmerwood");
 
     public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         TagMatchTest stoneOreReplaceables = new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES);
@@ -30,21 +45,49 @@ public class MFUConfiguredFeatures {
         BlockMatchTest netherReplaceables = new BlockMatchTest(Blocks.NETHERRACK);
         BlockMatchTest endReplaceables = new BlockMatchTest(Blocks.END_STONE);
 
+        List<OreConfiguration.TargetBlockState> overworldGlimmersteelOres = List.of(
+                OreConfiguration.target(stoneOreReplaceables, MFUBlocks.GLIMMERSTEEL_STONE_ORE.get().defaultBlockState()),
+                OreConfiguration.target(deepslateOreReplaceables, MFUBlocks.GLIMMERSTEEL_DEEPSLATE_ORE.get().defaultBlockState())
+        );
+
         List<OreConfiguration.TargetBlockState> overworldGloomsteelOres = List.of(
                 OreConfiguration.target(stoneOreReplaceables, MFUBlocks.GLOOMSTEEL_STONE_ORE.get().defaultBlockState()),
                 OreConfiguration.target(deepslateOreReplaceables, MFUBlocks.GLOOMSTEEL_DEEPSLATE_ORE.get().defaultBlockState())
         );
 
-        OreConfiguration hiddenGloomsteelConfig = new OreConfiguration(overworldGloomsteelOres, 12, 0.9F);
-
-        register(context, OVERWORLD_GLOOMSTEEL_ORE_HIDDEN_KEY, Feature.ORE, hiddenGloomsteelConfig);
+        register(context, OVERWORLD_GLIMMERSTEEL_ORE_KEY, Feature.ORE, new OreConfiguration(overworldGlimmersteelOres, 12));
         register(context, OVERWORLD_GLOOMSTEEL_ORE_KEY, Feature.ORE, new OreConfiguration(overworldGloomsteelOres, 12));
 
-        register(context, NETHER_GLOOMSTEEL_ORE_KEY, Feature.ORE,
-                new OreConfiguration(netherReplaceables, MFUBlocks.GLOOMSTEEL_NETHERRACK_ORE.get().defaultBlockState(), 12));
+        List<OreConfiguration.TargetBlockState> netherOres = List.of(
+                OreConfiguration.target(netherReplaceables, MFUBlocks.GLOOMSTEEL_NETHERRACK_ORE.get().defaultBlockState()),
+                OreConfiguration.target(netherReplaceables, MFUBlocks.GLIMMERSTEEL_NETHERRACK_ORE.get().defaultBlockState())
+        );
+        register(context, NETHER_MFU_ORE_KEY, Feature.ORE, new OreConfiguration(netherOres, 12));
 
-        register(context, END_GLOOMSTEEL_ORE_KEY, Feature.ORE,
-                new OreConfiguration(endReplaceables, MFUBlocks.GLOOMSTEEL_ENDSTONE_ORE.get().defaultBlockState(), 12));
+        List<OreConfiguration.TargetBlockState> endOres = List.of(
+                OreConfiguration.target(endReplaceables, MFUBlocks.GLOOMSTEEL_ENDSTONE_ORE.get().defaultBlockState()),
+                OreConfiguration.target(endReplaceables, MFUBlocks.GLIMMERSTEEL_ENDSTONE_ORE.get().defaultBlockState())
+        );
+        register(context, END_MFU_ORE_KEY, Feature.ORE, new OreConfiguration(endOres, 12));
+
+        register(context, GLIMMERWOOD_KEY, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
+                BlockStateProvider.simple(MFUBlocks.GLIMMERWOOD_LOG.get()),
+                new FancyTrunkPlacer(3, 11, 0),
+
+                BlockStateProvider.simple(MFUBlocks.GLIMMERWOOD_LEAVES.get()),
+                new FancyFoliagePlacer(ConstantInt.of(2), ConstantInt.of(4), 4),
+
+                new TwoLayersFeatureSize(1, 0, 2)).build());
+
+        register(context, GLOOMWOOD_KEY, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
+                BlockStateProvider.simple(MFUBlocks.GLOOMWOOD_LOG.get()),
+                new DarkOakTrunkPlacer(6, 2, 1),
+
+                BlockStateProvider.simple(MFUBlocks.GLOOMWOOD_LEAVES.get()),
+                new DarkOakFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0)),
+
+                new ThreeLayersFeatureSize(1, 1, 0, 1, 2, OptionalInt.empty())).ignoreVines().build()
+        );
     }
 
     public static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {

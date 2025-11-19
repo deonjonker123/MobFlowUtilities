@@ -16,4 +16,13 @@ public class MFUToolTiers {
             18,
             () -> Ingredient.of(MFUItems.GLOOMSTEEL_INGOT)
     );
+
+    public static final Tier GLIMMERSTEEL = new SimpleTier(
+            MFUTags.Blocks.INCORRECT_FOR_GLIMMERSTEEL_TOOL,
+            999,
+            7.0F,
+            3.0F,
+            18,
+            () -> Ingredient.of(MFUItems.GLIMMERSTEEL_INGOT)
+    );
 }

@@ -1,0 +1,54 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_glimmersteel_axe": {
+      "conditions": {
+        "items": [
+          {
+            "items": "mobflowutilities:glimmersteel_axe"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_glimmersteel_pickaxe": {
+      "conditions": {
+        "items": [
+          {
+            "items": "mobflowutilities:glimmersteel_pickaxe"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_glimmersteel_shovel": {
+      "conditions": {
+        "items": [
+          {
+            "items": "mobflowutilities:glimmersteel_shovel"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "mobflowutilities:glimmersteel_paxel"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_glimmersteel_pickaxe",
+      "has_glimmersteel_axe",
+      "has_glimmersteel_shovel"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "mobflowutilities:glimmersteel_paxel"
+    ]
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "minecraft:stick"
+    },
+    "A": {
+      "item": "mobflowutilities:glimmersteel_axe"
+    },
+    "P": {
+      "item": "mobflowutilities:glimmersteel_pickaxe"
+    },
+    "S": {
+      "item": "mobflowutilities:glimmersteel_shovel"
+    }
+  },
+  "pattern": [
+    "ASP",
+    " # ",
+    " # "
+  ],
+  "result": {
+    "count": 1,
+    "id": "mobflowutilities:glimmersteel_paxel"
+  }
+}

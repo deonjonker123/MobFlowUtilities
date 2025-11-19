@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "mobflowutilities:raw_glimmersteel_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "mobflowutilities:raw_glimmersteel"
+  }
+}

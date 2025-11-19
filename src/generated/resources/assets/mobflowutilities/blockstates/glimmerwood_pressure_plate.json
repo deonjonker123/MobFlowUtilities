@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "mobflowutilities:block/glimmerwood_pressure_plate"
+    },
+    "powered=true": {
+      "model": "mobflowutilities:block/glimmerwood_pressure_plate_down"
+    }
+  }
+}

@@ -10,7 +10,7 @@ import net.neoforged.neoforge.client.event.ComputeFovModifierEvent;
 public class MFUClientEvents {
     @SubscribeEvent
     public static void onComputeFovModifierEvent(ComputeFovModifierEvent event) {
-        if(event.getPlayer().isUsingItem() && event.getPlayer().getUseItem().getItem() == MFUItems.GLOOMSTEEL_BOW.get()) {
+        if(event.getPlayer().isUsingItem() && (event.getPlayer().getUseItem().getItem() == MFUItems.GLOOMSTEEL_BOW.get()) || event.getPlayer().getUseItem().getItem() == MFUItems.GLIMMERSTEEL_BOW.get()) {
             float fovModifier = 1f;
             int ticksUsingItem = event.getPlayer().getTicksUsingItem();
             float deltaTicks = (float)ticksUsingItem / 20f;

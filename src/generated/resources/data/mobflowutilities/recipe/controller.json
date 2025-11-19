@@ -12,7 +12,7 @@
       "item": "mobflowutilities:gloomsteel_ingot"
     },
     "I": {
-      "item": "minecraft:iron_ingot"
+      "item": "mobflowutilities:glimmersteel_ingot"
     }
   },
   "pattern": [
