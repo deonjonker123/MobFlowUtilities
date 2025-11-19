@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "G": {
+      "item": "mobflowutilities:stripped_glimmerwood_log"
+    }
+  },
+  "pattern": [
+    "GG ",
+    "GG ",
+    "   "
+  ],
+  "result": {
+    "count": 4,
+    "id": "mobflowutilities:stripped_glimmerwood"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "group": "gloomwood",
+  "key": {
+    "#": {
+      "item": "mobflowutilities:gloomwood_planks"
+    }
+  },
+  "pattern": [
+    "##",
+    "##",
+    "##"
+  ],
+  "result": {
+    "count": 3,
+    "id": "mobflowutilities:gloomwood_door"
+  }
+}

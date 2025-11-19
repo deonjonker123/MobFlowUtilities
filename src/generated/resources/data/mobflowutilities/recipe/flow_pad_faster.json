@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "F": {
+      "item": "mobflowutilities:flow_pad_fast"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "Q": {
+      "item": "minecraft:sugar"
+    }
+  },
+  "pattern": [
+    "GFG",
+    "FQF",
+    "GFG"
+  ],
+  "result": {
+    "count": 4,
+    "id": "mobflowutilities:flow_pad_faster"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "mobflowutilities:glimmersteel_ingot"
+    },
+    "H": {
+      "item": "minecraft:hopper"
+    },
+    "O": {
+      "tag": "c:obsidians"
+    },
+    "P": {
+      "item": "minecraft:paper"
+    }
+  },
+  "pattern": [
+    "PPP",
+    "OHO",
+    "GOG"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mobflowutilities:void_filter_module"
+  }
+}

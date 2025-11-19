@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_raw_gloomsteel": {
+      "conditions": {
+        "items": [
+          {
+            "items": "mobflowutilities:raw_gloomsteel"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:gloomsteel_ingot_from_smelting_raw_gloomsteel"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_raw_gloomsteel"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:gloomsteel_ingot_from_smelting_raw_gloomsteel"
+    ]
+  }
+}

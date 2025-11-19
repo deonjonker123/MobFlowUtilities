@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "mobflowutilities:block/raw_glimmersteel_block"
+  }
+}

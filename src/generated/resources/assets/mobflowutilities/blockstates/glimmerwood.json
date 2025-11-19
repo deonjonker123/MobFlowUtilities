@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "mobflowutilities:block/glimmerwood_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "mobflowutilities:block/glimmerwood"
+    },
+    "axis=z": {
+      "model": "mobflowutilities:block/glimmerwood_horizontal",
+      "x": 90
+    }
+  }
+}

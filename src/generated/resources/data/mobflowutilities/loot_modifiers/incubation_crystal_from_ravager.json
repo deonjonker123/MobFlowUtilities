@@ -1,0 +1,10 @@
+{
+  "type": "mobflowutilities:add_item",
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:entities/ravager"
+    }
+  ],
+  "item": "mobflowutilities:incubation_crystal"
+}

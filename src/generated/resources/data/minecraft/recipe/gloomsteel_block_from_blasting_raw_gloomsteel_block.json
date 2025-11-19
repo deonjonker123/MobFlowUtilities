@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:blasting",
+  "category": "blocks",
+  "cookingtime": 150,
+  "experience": 0.5,
+  "group": "gloomsteel",
+  "ingredient": {
+    "item": "mobflowutilities:raw_gloomsteel_block"
+  },
+  "result": {
+    "count": 1,
+    "id": "mobflowutilities:gloomsteel_block"
+  }
+}

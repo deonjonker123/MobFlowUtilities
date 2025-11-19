@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "G": {
+      "item": "mobflowutilities:gloomsteel_block"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "GSG",
+    " S ",
+    " S "
+  ],
+  "result": {
+    "count": 1,
+    "id": "mobflowutilities:gloomsteel_hammer"
+  }
+}

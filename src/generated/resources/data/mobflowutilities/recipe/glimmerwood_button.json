@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "group": "glimmerwood",
+  "ingredients": [
+    {
+      "item": "mobflowutilities:glimmerwood_planks"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "mobflowutilities:glimmerwood_button"
+  }
+}

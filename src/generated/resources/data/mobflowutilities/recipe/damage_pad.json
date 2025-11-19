@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "mobflowutilities:gloomsteel_ingot"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "S": {
+      "item": "minecraft:diamond_sword"
+    }
+  },
+  "pattern": [
+    "IGI",
+    "GSG",
+    "IGI"
+  ],
+  "result": {
+    "count": 4,
+    "id": "mobflowutilities:damage_pad"
+  }
+}

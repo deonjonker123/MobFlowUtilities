@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "G": {
+      "item": "mobflowutilities:gloomsteel_ingot"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    " G ",
+    " SG",
+    "S  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "mobflowutilities:pad_wrench"
+  }
+}

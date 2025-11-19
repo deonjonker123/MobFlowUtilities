@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "mobflowutilities:block/stripped_glimmerwood_log",
+    "side": "mobflowutilities:block/stripped_glimmerwood_log"
+  }
+}

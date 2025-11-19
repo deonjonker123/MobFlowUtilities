@@ -1,0 +1,9 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#minecraft:is_overworld",
+  "features": [
+    "mobflowutilities:overworld_glimmersteel_ore_placed",
+    "mobflowutilities:overworld_gloomsteel_ore_placed"
+  ],
+  "step": "underground_ores"
+}

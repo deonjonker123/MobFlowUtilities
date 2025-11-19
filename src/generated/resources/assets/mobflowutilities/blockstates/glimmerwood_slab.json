@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "mobflowutilities:block/glimmerwood_slab"
+    },
+    "type=double": {
+      "model": "mobflowutilities:block/glimmerwood_planks"
+    },
+    "type=top": {
+      "model": "mobflowutilities:block/glimmerwood_slab_top"
+    }
+  }
+}

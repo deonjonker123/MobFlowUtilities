@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "item": "minecraft:diamond_block"
+    },
+    "G": {
+      "item": "mobflowutilities:glimmersteel_ingot"
+    },
+    "L": {
+      "item": "minecraft:lapis_block"
+    },
+    "X": {
+      "item": "minecraft:gold_block"
+    }
+  },
+  "pattern": [
+    "GLG",
+    "DXD",
+    "GLG"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mobflowutilities:looting_module"
+  }
+}

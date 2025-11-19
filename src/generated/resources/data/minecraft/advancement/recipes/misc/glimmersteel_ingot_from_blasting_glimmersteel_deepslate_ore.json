@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_glimmersteel_deepslate_ore": {
+      "conditions": {
+        "items": [
+          {
+            "items": "mobflowutilities:glimmersteel_deepslate_ore"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:glimmersteel_ingot_from_blasting_glimmersteel_deepslate_ore"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_glimmersteel_deepslate_ore"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:glimmersteel_ingot_from_blasting_glimmersteel_deepslate_ore"
+    ]
+  }
+}

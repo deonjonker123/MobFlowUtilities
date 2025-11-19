@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_raw_glimmersteel_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": "mobflowutilities:raw_glimmersteel_block"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:glimmersteel_block_from_smelting_raw_glimmersteel_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_raw_glimmersteel_block"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:glimmersteel_block_from_smelting_raw_glimmersteel_block"
+    ]
+  }
+}

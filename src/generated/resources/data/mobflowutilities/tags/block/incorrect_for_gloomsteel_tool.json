@@ -1,0 +1,8 @@
+{
+  "remove": [
+    "#mobflowutilities:needs_gloomsteel_tool"
+  ],
+  "values": [
+    "#minecraft:incorrect_for_diamond_tool"
+  ]
+}
