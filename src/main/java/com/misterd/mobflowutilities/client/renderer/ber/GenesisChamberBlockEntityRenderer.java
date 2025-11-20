@@ -16,6 +16,10 @@ import net.minecraft.world.entity.EntityType;
 
 public class GenesisChamberBlockEntityRenderer implements BlockEntityRenderer<GenesisChamberBlockEntity> {
 
+    private static final float CHAMBER_WIDTH = 0.75F;
+    private static final float CHAMBER_HEIGHT = 0.55F;
+    private static final float CHAMBER_DEPTH = 0.75F;
+
     public GenesisChamberBlockEntityRenderer(BlockEntityRendererProvider.Context context) {}
 
     public void render(GenesisChamberBlockEntity genesisChamberBlockEntity, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
@@ -55,12 +59,24 @@ public class GenesisChamberBlockEntityRenderer implements BlockEntityRenderer<Ge
     }
 
     private void prepareEntityPose(Entity entity, PoseStack poseStack) {
-        poseStack.translate(0.5, 0.4, 0.5);
+        poseStack.translate(0.5, 0.41, 0.5);
 
-        float scale = Math.min(0.7f / entity.getBbWidth(), 0.7f / entity.getBbHeight());
+        float entityWidth = entity.getBbWidth();
+        float entityHeight = entity.getBbHeight();
+        float entityDepth = entity.getBbWidth();
+
+        float paddingFactor = 0.8f;
+        float scaleX = (CHAMBER_WIDTH * paddingFactor) / entityWidth;
+        float scaleY = (CHAMBER_HEIGHT * paddingFactor) / entityHeight;
+        float scaleZ = (CHAMBER_DEPTH * paddingFactor) / entityDepth;
+
+        float scale = Math.min(Math.min(scaleX, scaleY), scaleZ);
+
+        scale = Math.min(scale, 0.6f);
+
         poseStack.scale(scale, scale, scale);
 
-        float rotation = (entity.tickCount % 360);
-        poseStack.mulPose(Axis.YP.rotationDegrees(rotation));
+        float rotation = (entity.tickCount + Minecraft.getInstance().getTimer().getGameTimeDeltaPartialTick(false)) * 2.0f;
+        poseStack.mulPose(Axis.YP.rotationDegrees(rotation % 360));
     }
 }

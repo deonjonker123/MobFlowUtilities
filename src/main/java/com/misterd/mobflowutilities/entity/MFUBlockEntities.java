@@ -60,6 +60,14 @@ public class MFUBlockEntities {
                     }
                     return null;
                 });
+
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, GENESIS_CHAMBER_BE.get(),
+                (blockEntity, direction) -> {
+                    if (blockEntity instanceof GenesisChamberBlockEntity genesisChamber) {
+                        return genesisChamber.getItemHandler(direction);
+                    }
+                    return null;
+                });
     }
 
     public static void register(IEventBus eventBus) {

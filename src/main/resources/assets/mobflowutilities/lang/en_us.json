@@ -17,7 +17,7 @@
   "block.mobflowutilities.glimmer_grass": "Glimmer Grass",
   "block.mobflowutilities.glimmer_grass.subtitle": "Spawns passive mobs at accelerated rates",
   "block.mobflowutilities.dark_glass": "Dark Glass",
-  "block.mobflowutilities.dark_glass.subtitle": "Blocks light without blocking vision",
+  "block.mobflowutilities.dark_glass.subtitle": "Blocks light",
   "block.mobflowutilities.glimmer_lamp": "Glimmer Lamp",
   "block.mobflowutilities.glimmer_lamp.subtitle": "Emits radiant light",
 
@@ -178,6 +178,7 @@
   "tooltip.mobflowutilities.collector.offset.reset_all": "Reset Offsets",
 
   "tooltip.mobflowutilities.collector.wireframe_toggle": "Show/Hide Collection Radius",
+  "tooltip.mobflowutilities.genesis_chamber.wireframe_toggle": "Show/Hide Spawn Radius",
 
   "tooltip.mobflowutilities.collector.xp.withdraw": "Withdraw levels from the Collector",
   "tooltip.mobflowutilities.collector.xp.deposit": "Deposit levels into the Collector",

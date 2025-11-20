@@ -24,6 +24,7 @@ public class Config {
     private static ModConfigSpec.IntValue GLIMMER_GRASS_MOBS_PER_AREA;
     private static ModConfigSpec.IntValue GLIMMER_GRASS_CHECK_INTERVAL;
     private static ModConfigSpec.BooleanValue GLIMMER_GRASS_PARTICLES_ENABLED;
+    private static ModConfigSpec.IntValue GENESIS_CHAMBER_SPAWN_CAP;
 
     static {
         buildCommonConfig();
@@ -39,6 +40,7 @@ public class Config {
         buildDarkDirtConfig();
         buildGlimmerSproutConfig();
         buildGlimmerGrassConfig();
+        buildGenesisChamberConfig();
     }
 
     private static void buildGloomSporeConfig() {
@@ -49,7 +51,7 @@ public class Config {
                 .comment(
                         "Conversion area size (blocks)",
                         "Area is square, centered on clicked block",
-                        "Default: 5 (converts 5x5 area)"
+                        "Converts a 5x5 area (default)"
                 )
                 .defineInRange("conversion_area", 5, 3, 15);
 
@@ -63,8 +65,7 @@ public class Config {
         DARK_DIRT_MOBS_PER_AREA = COMMON_BUILDER
                 .comment(
                         "Number of mobs to spawn per 16x16 area",
-                        "Higher numbers increase mob density but may impact performance",
-                        "Default: 12"
+                        "Higher numbers increase mob density but may impact performance"
                 )
                 .defineInRange("mobs_per_area", 12, 1, 50);
 
@@ -72,16 +73,14 @@ public class Config {
                 .comment(
                         "Mob spawning check interval (ticks)",
                         "How often Dark Dirt checks for spawning opportunities",
-                        "20 ticks = 1 second",
-                        "Default: 20"
+                        "20 ticks = 1 second"
                 )
                 .defineInRange("check_interval", 20, 5, 200);
 
         DARK_DIRT_PARTICLES_ENABLED = COMMON_BUILDER
                 .comment(
                         "Enable Dark Dirt particle effects",
-                        "If true, Dark Dirt shows gray particle effects",
-                        "Default: true"
+                        "If true, Dark Dirt shows gray particle effects"
                 )
                 .define("particles_enabled", true);
 
@@ -96,7 +95,7 @@ public class Config {
                 .comment(
                         "Conversion area size (blocks)",
                         "Area is square, centered on clicked block",
-                        "Default: 5 (converts 5x5 area)"
+                        "Converts a 5x5 area (default)"
                 )
                 .defineInRange("conversion_area", 5, 3, 15);
 
@@ -110,8 +109,7 @@ public class Config {
         GLIMMER_GRASS_MOBS_PER_AREA = COMMON_BUILDER
                 .comment(
                         "Number of mobs to spawn per 16x16 area",
-                        "Higher numbers increase mob density but may impact performance",
-                        "Default: 12"
+                        "Higher numbers increase mob density but may impact performance"
                 )
                 .defineInRange("mobs_per_area", 12, 1, 50);
 
@@ -119,18 +117,31 @@ public class Config {
                 .comment(
                         "Mob spawning check interval (ticks)",
                         "How often Glimmer Grass checks for spawning opportunities",
-                        "20 ticks = 1 second",
-                        "Default: 20"
+                        "20 ticks = 1 second"
                 )
                 .defineInRange("check_interval", 20, 5, 200);
 
         GLIMMER_GRASS_PARTICLES_ENABLED = COMMON_BUILDER
                 .comment(
                         "Enable Glimmer Grass particle effects",
-                        "If true, Glimmer Grass shows purple particle effects",
-                        "Default: true"
+                        "If true, Glimmer Grass shows purple particle effects"
                 )
                 .define("particles_enabled", true);
+
+        COMMON_BUILDER.pop();
+    }
+
+    private static void buildGenesisChamberConfig() {
+        COMMON_BUILDER.comment("Genesis Chamber - Configure spawning behavior for Genesis Chamber blocks")
+                .push("genesis_chamber");
+
+        GENESIS_CHAMBER_SPAWN_CAP = COMMON_BUILDER
+                .comment(
+                        "Maximum number of mobs allowed in Genesis Chamber spawn zone",
+                        "Genesis Chamber stops spawning when this limit is reached",
+                        "Higher numbers allow more mobs but may impact performance"
+                )
+                .defineInRange("spawn_cap", 12, 1, 100);
 
         COMMON_BUILDER.pop();
     }
@@ -167,6 +178,10 @@ public class Config {
         return GLIMMER_GRASS_PARTICLES_ENABLED.get();
     }
 
+    public static int getGenesisChamberSpawnCap() {
+        return GENESIS_CHAMBER_SPAWN_CAP.get();
+    }
+
     private static void validateConfig() {
         if (getDarkDirtMobsPerArea() > 25) {
             LOGGER.warn(
@@ -193,6 +208,13 @@ public class Config {
             LOGGER.warn(
                     "Glimmer Grass check interval ({} ticks) is very fast and may impact server performance!",
                     getGlimmerGrassCheckInterval()
+            );
+        }
+
+        if (getGenesisChamberSpawnCap() > 50) {
+            LOGGER.warn(
+                    "Genesis Chamber spawn cap ({}) is very high and may impact server performance!",
+                    getGenesisChamberSpawnCap()
             );
         }
     }
@@ -222,5 +244,8 @@ public class Config {
         LOGGER.info("  Mobs per 16x16 Area: {}", getGlimmerGrassMobsPerArea());
         LOGGER.info("  Check Interval: {} ticks", getGlimmerGrassCheckInterval());
         LOGGER.info("  Particles Enabled: {}", isGlimmerGrassParticlesEnabled());
+
+        LOGGER.info("Genesis Chamber Configuration:");
+        LOGGER.info("  Spawn Cap: {} mobs", getGenesisChamberSpawnCap());
     }
 }

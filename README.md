@@ -6,7 +6,7 @@ _Modular flow control for efficient mob farming_
 
 ## Automate Mobs
 
-Mob Flow Utilities is a modular automation mod focused on mob farm efficiency through directional flow control, centralized damage systems, and intelligent item collection. Clean design, minimal GUIs, and visual feedback.
+Mob Flow Utilities is a modular automation mod focused on mob farm efficiency through directional flow control, centralized damage systems, intelligent item collection, and automated mob spawning. Clean design, minimal GUIs, and visual feedback.
 
 ## Features
 
@@ -32,76 +32,96 @@ Mob Flow Utilities is a modular automation mod focused on mob farm efficiency th
 
 ### Collector Block
 
--   **Configurable Collection Zone**: Adjust pickup radius with Collection Radius Increase Modules
+-   **Configurable Collection Zone**: Adjust pickup radius with Radius Increase Modules
 -   **Zone Positioning**: Offset collection area in any direction
--   **XP Storage**: Collect and store experience orbs with level-based deposit/withdrawal
+-   **XP Storage**: Collect and store experience with level-based deposit/withdrawal
 -   **Void Filtering**: Automatically delete unwanted items with up to 3 configurable filter modules
 -   **Visual Zone Preview**: Wireframe overlay shows collection boundaries
+
+### Genesis Chamber
+
+-   **Automated Mob Spawning**: Spawn mobs from spawn eggs using fuel
+-   **Fuel System**: Uses vanilla furnace fuels (coal, lava buckets, etc.)
+-   **Configurable Spawn Zone**: 5x5 base area, expandable to 10x10 with Radius Increase Modules
+-   **Speed Control**: Base 200 tick spawn interval, reducible to 50 ticks with Speed Modules
+-   **Light Level Aware**: Respects vanilla spawning rules (hostiles in darkness, passives in light)
+-   **Spawn Cap**: Configurable mob limit per zone (default 12)
+-   **3-Axis Positioning**: Offset spawn zone in any direction with wireframe preview
+-   **Automation Ready**: Accepts fuel from hoppers/pipes automatically
 
 ### Pad Wrench
 
 -   **Operation Modes**: Add or Remove mode for linking/unlinking pads
 -   **Selection Types**: Single pad or area selection for bulk operations
 -   **Visual Feedback**: Wireframe highlights linked systems
--   **Detailed Tooltips**: Current mode, target controller, and selection status
--   **Area Operations**: Box selection for linking multiple pads at once
 
 ### Mob Spawn Control
 
 -   **Gloom Spores**: Rare drops from hostile mobs that transform dirt into Dark Dirt
-    -   2 uses per spore, converts 5x5 area
-    -   Only works in low light conditions
-    -   1% drop from hostile mobs, guaranteed from boss mobs
+    -   Converts 5x5 area
+    -   Only spawns mobs in low light conditions
 -   **Dark Dirt**: Accelerated hostile mob spawning blocks
     -   Spawns up to 12 hostile mobs per area
     -   Functions in darkness, ignores player proximity
-    -   Reverts to dirt in bright light
+    -   Reverts to dirt in direct sunlight
 -   **Glimmer Sprouts**: Rare drops from passive mobs that transform dirt into Glimmer Grass
-    -   2 uses per sprout, converts 5x5 area
-    -   Only works in bright light conditions
-    -   1% drop from passive mobs, guaranteed from boss mobs
+    -   Converts 5x5 area
 -   **Glimmer Grass**: Accelerated passive mob spawning blocks
     -   Spawns up to 12 passive mobs per area
     -   Functions in bright light, ignores player proximity
-    -   Reverts to dirt in darkness
 
 ### Gene Sampling
 
 -   **Empty Gene Vial**: Used to collect genetic material from mobs
 -   **Gene Sample Vial**: Contains collected gene samples that can be used for crafting spawn eggs
--   **Incubation Crystal**: Rare drop from bosses used for crafting spawn eggs
+-   **Incubation Crystal**: Boss mob drop only, used for crafting spawn eggs
 
-Gene sampling allows players to collect gene samples from creatures using Empty Gene Vials, then combine the resulting Gene Sample Vials with Incubation Crystals and Emeralds to craft spawn eggs.
+Gene sampling allows players to collect gene samples from creatures using Empty Gene Vials, then combine the resulting Gene Sample Vials with Incubation Crystals and Emeralds to craft spawn eggs for use in the Genesis Chamber.
 
 ### Utility Tools
 
 -   **Mob Catcher**: Capture and release any non-boss mob
-    -   Boss mob immunity
+
+### Custom Wood Types
+
+-   **Gloomwood**: Dark-themed wood
+    -   Full set of wood variants: logs, stripped logs, planks, stairs, slabs, fences, doors, trapdoors, buttons, and pressure plates
+    -   Gloomwood saplings for renewable farming
+-   **Glimmerwood**: Light-themed wood
+    -   Full set of wood variants: logs, stripped logs, planks, stairs, slabs, fences, doors, trapdoors, buttons, and pressure plates
+    -   Glimmerwood saplings for renewable farming
+
+### Berry Bushes
+
+-   **Umbral Berry Bush**: Found in dark biomes, produces Umbral Berries
+    -   Gives some not-so-nice effects when eaten
+-   **Radiant Berry Bush**: Found in light biomes, produces Radiant Berries
+    -   Gives some pretty-goo effects when eaten
 
 ### Decorative Blocks
 
 -   **Dark Glass**: Blocks light transmission while maintaining transparency
-    -   Explosion immunity
 -   **Glimmer Lamp**: High-output decorative lighting
-    -   Light level 15 with attractive design
-- **Glimmerwood & Gloomwood**
-  - Various wood blocks to choose from
 
-### Gloomsteel & Glimmersteel Material
+### Gloomsteel & Glimmersteel Materials
 
--   **Multi-Dimensional Ore**: Spawns in Overworld, Nether, and End dimensions
--   **Complete Processing Chain**: Raw ore to ingots, nuggets, and storage blocks
--   **Crafting Component**: Required material for all Mob Flow Utilities machinery
+-   **Multi-Dimensional Ore**: Spawns in Overworld (stone/deepslate), Nether, and End dimensions
+-   **Full Tool Suite**: Sword, Pickaxe, Axe, Shovel, Hoe
+-   **Special Tools**: Paxel (pickaxe + axe + shovel combo) and Hammer (3x3 mining)
+-   **Complete Armor Set**: Helmet, Chestplate, Leggings, Boots (with some effects when wearing the complete set)
+-   **Diamond-tier stats** with unique aesthetic
 
-### Gloomsteel & Glimmersteel Tools and Armor
+### Configuration
 
--   Full suite of tools, including a paxel and hammer (3x3 mining).
--   Full set of armor
+-   **Flexible Settings**: Adjust spawn rates, mob caps, particle effects, and more
+-   **Genesis Chamber Spawn Cap**: Configurable per-zone mob limit (default 12, range 1-100)
+-   **Dark Dirt/Glimmer Grass**: Adjust spawn rates and check intervals
+-   **Conversion Areas**: Configure Gloom Spore and Glimmer Sprout conversion radius
 
 ### Credit
 
 Some textures used in this mod were adapted from  **"Unused Minecraft Textures" by Malcolm Riley**  ([GitHub Repository](https://github.com/malcolmriley/unused-textures))  
-Licensed under the  [Creative Commons Attribution 4.0 International License](https://www.curseforge.com/linkout?remoteUrl=https%253a%252f%252fcreativecommons.org%252flicenses%252fby%252f4.0%252f).
+Licensed under the  [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/).
 
 Modifications were made to some of the original assets.
 

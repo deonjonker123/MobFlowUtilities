@@ -73,6 +73,7 @@ public class MobFlowUtilities {
         public static void onClientSetup(FMLClientSetupEvent event) {
             event.enqueueWork(() -> {
                 ItemBlockRenderTypes.setRenderLayer(MFUBlocks.DARK_GLASS.get(), RenderType.translucent());
+                ItemBlockRenderTypes.setRenderLayer(MFUBlocks.GENESIS_CHAMBER.get(), RenderType.translucent());
             });
             MFUItemProperties.addCustomItemProperties();
         }

@@ -6,7 +6,6 @@ import com.misterd.mobflowutilities.gui.MFUMenuTypes;
 import com.misterd.mobflowutilities.item.MFUItems;
 import com.misterd.mobflowutilities.util.MFUTags;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -112,7 +111,7 @@ public class GenesisChamberMenu extends AbstractContainerMenu {
 
         @Override
         public int getMaxStackSize(ItemStack stack) {
-            return 10;
+            return 5;
         }
     }
 

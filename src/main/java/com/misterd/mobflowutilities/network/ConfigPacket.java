@@ -3,6 +3,7 @@ package com.misterd.mobflowutilities.network;
 import java.util.Optional;
 
 import com.misterd.mobflowutilities.entity.custom.CollectorBlockEntity;
+import com.misterd.mobflowutilities.entity.custom.GenesisChamberBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -54,6 +55,7 @@ public record ConfigPacket(
 
             switch (packet.target()) {
                 case COLLECTOR_BLOCK -> handleCollectorConfig(packet, serverPlayer);
+                case GENESIS_CHAMBER_BLOCK -> handleGenesisChamberConfig(packet, serverPlayer);
             }
         });
     }
@@ -80,8 +82,30 @@ public record ConfigPacket(
         level.sendBlockUpdated(pos, level.getBlockState(pos), level.getBlockState(pos), 3);
     }
 
+    private static void handleGenesisChamberConfig(ConfigPacket packet, ServerPlayer player) {
+        BlockPos pos = packet.pos();
+        if (pos == null) return;
+
+        ServerLevel level = player.serverLevel();
+
+        if (player.distanceToSqr(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) > 64.0) return;
+
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (!(blockEntity instanceof GenesisChamberBlockEntity genesisChamber)) return;
+
+        switch (packet.configType()) {
+            case GENESIS_CHAMBER_DOWN_UP_OFFSET -> genesisChamber.setDownUpOffset(packet.intValue());
+            case GENESIS_CHAMBER_NORTH_SOUTH_OFFSET -> genesisChamber.setNorthSouthOffset(packet.intValue());
+            case GENESIS_CHAMBER_EAST_WEST_OFFSET -> genesisChamber.setEastWestOffset(packet.intValue());
+            default -> {}
+        }
+
+        level.sendBlockUpdated(pos, level.getBlockState(pos), level.getBlockState(pos), 3);
+    }
+
     public enum ConfigTarget {
-        COLLECTOR_BLOCK;
+        COLLECTOR_BLOCK,
+        GENESIS_CHAMBER_BLOCK;
 
         public static final StreamCodec<FriendlyByteBuf, ConfigTarget> STREAM_CODEC = StreamCodec.of(
                 (buf, target) -> buf.writeEnum(target),
@@ -99,7 +123,11 @@ public record ConfigPacket(
         COLLECTOR_FRONT_SIDE,
         COLLECTOR_WEST_SIDE,
         COLLECTOR_BOTTOM_SIDE,
-        COLLECTOR_BACK_SIDE;
+        COLLECTOR_BACK_SIDE,
+
+        GENESIS_CHAMBER_DOWN_UP_OFFSET,
+        GENESIS_CHAMBER_NORTH_SOUTH_OFFSET,
+        GENESIS_CHAMBER_EAST_WEST_OFFSET;
 
         public static final StreamCodec<FriendlyByteBuf, ConfigType> STREAM_CODEC = StreamCodec.of(
                 (buf, type) -> buf.writeEnum(type),
