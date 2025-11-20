@@ -18,14 +18,10 @@ public class MFUArmorItem  extends ArmorItem {
     private static final Map<Holder<ArmorMaterial>, List<MobEffectInstance>> MATERIAL_TO_EFFECT_MAP =
             (new ImmutableMap.Builder<Holder<ArmorMaterial>, List<MobEffectInstance>>())
                     .put(MFUArmorMaterials.GLOOMSTEEL_ARMOR_MATERIAL,
-                            List.of(new MobEffectInstance(MobEffects.SATURATION, 200, 1, false, false),
-                                    new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 200, 1, false, false),
-                                    new MobEffectInstance(MobEffects.JUMP, 200, 1, false, false)))
+                            List.of(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 200, 1, false, false)))
 
                     .put(MFUArmorMaterials.GLIMMERSTEEL_ARMOR_MATERIAL,
-                            List.of(new MobEffectInstance(MobEffects.NIGHT_VISION, 200, 1, false, false),
-                                    new MobEffectInstance(MobEffects.REGENERATION, 200, 1, false, false),
-                                    new MobEffectInstance(MobEffects.JUMP, 200, 1, false, false)))
+                            List.of(new MobEffectInstance(MobEffects.REGENERATION, 200, 1, false, false)))
                     .build();
 
     public MFUArmorItem(Holder<ArmorMaterial> material, Type type, Properties properties) {
