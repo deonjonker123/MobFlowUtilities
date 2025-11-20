@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "facing=north": {
       "model": "mobflowutilities:block/genesis_chamber"
+    },
+    "facing=south": {
+      "model": "mobflowutilities:block/genesis_chamber",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "mobflowutilities:block/genesis_chamber",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "mobflowutilities:block/genesis_chamber",
+      "y": 270
     }
   }
 }

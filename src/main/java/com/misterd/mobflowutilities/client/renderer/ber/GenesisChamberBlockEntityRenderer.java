@@ -2,41 +2,65 @@ package com.misterd.mobflowutilities.client.renderer.ber;
 
 import com.misterd.mobflowutilities.entity.custom.GenesisChamberBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 
 public class GenesisChamberBlockEntityRenderer implements BlockEntityRenderer<GenesisChamberBlockEntity> {
 
     public GenesisChamberBlockEntityRenderer(BlockEntityRendererProvider.Context context) {}
 
-    @Override
-    public void render(GenesisChamberBlockEntity blockEntity, float partialTick, PoseStack poseStack,
-                       MultiBufferSource pBufferSource, int pPackedLight, int pPackedOverlay) {
-        ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
-        ItemStack stack = blockEntity.inventory.getStackInSlot(0);
+    public void render(GenesisChamberBlockEntity genesisChamberBlockEntity, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
+
+        ItemStack eggStack = genesisChamberBlockEntity.inventory.getStackInSlot(0);
+        if (!(eggStack.getItem() instanceof SpawnEggItem spawnEgg)) {
+            return;
+        }
+
+        EntityType<?> type = spawnEgg.getType(eggStack);
+        if (type == null) return;
+
+        Entity entity = genesisChamberBlockEntity.getOrCreateRenderedEntity(type);
+        if (entity == null) return;
+
+        tickEntity(genesisChamberBlockEntity, entity);
 
         poseStack.pushPose();
-        poseStack.translate(0.5f, 1.15f, 0.5f);
-        poseStack.scale(0.5f, 0.5f, 0.5f);
+        prepareEntityPose(entity, poseStack);
 
-        itemRenderer.renderStatic(stack, ItemDisplayContext.FIXED, getLightLevel(blockEntity.getLevel(),
-                blockEntity.getBlockPos()), OverlayTexture.NO_OVERLAY, poseStack, pBufferSource, blockEntity.getLevel(), 1);
+        EntityRenderDispatcher dispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
+        dispatcher.getRenderer(entity).render(entity, 0, partialTicks, poseStack, buffer, combinedLight);
+
         poseStack.popPose();
     }
 
-    private int getLightLevel(Level level, BlockPos pos) {
-        int blockLight = level.getBrightness(LightLayer.BLOCK, pos);
-        int skyLight = level.getBrightness(LightLayer.SKY, pos);
-        return LightTexture.pack(blockLight, skyLight);
+    private void tickEntity(GenesisChamberBlockEntity genesisChamberBlockEntity, Entity entity) {
+        entity.tickCount = (int) genesisChamberBlockEntity.getLevel().getGameTime();
+
+        if (entity instanceof LivingEntity living) {
+            if (living.tickCount % 2 == 0) {
+                living.tick();
+            }
+        } else {
+            entity.tick();
+        }
+    }
+
+    private void prepareEntityPose(Entity entity, PoseStack poseStack) {
+        poseStack.translate(0.5, 0.4, 0.5);
+
+        float scale = Math.min(0.7f / entity.getBbWidth(), 0.7f / entity.getBbHeight());
+        poseStack.scale(scale, scale, scale);
+
+        float rotation = (entity.tickCount % 360);
+        poseStack.mulPose(Axis.YP.rotationDegrees(rotation));
     }
 }
