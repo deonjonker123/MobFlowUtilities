@@ -57,11 +57,11 @@ public class MFUItems {
                 }
             });
 
-    public static final DeferredItem<Item> COLLECTION_RADIUS_INCREASE_MODULE = ITEMS.register("collection_radius_increase_module",
+    public static final DeferredItem<Item> COLLECTION_RADIUS_INCREASE_MODULE = ITEMS.register("radius_increase_module",
             () -> new Item(new Item.Properties()) {
                 @Override
                 public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-                    tooltipComponents.add(Component.translatable("item.mobflowutilities.collection_radius_increase_module.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
+                    tooltipComponents.add(Component.translatable("item.mobflowutilities.radius_increase_module.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
                 }
             });
 

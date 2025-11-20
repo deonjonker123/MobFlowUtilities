@@ -1,4 +1,4 @@
-// 1.21.1	2025-11-20T01:49:14.9751261	Tags for minecraft:item mod id mobflowutilities
+// 1.21.1	2025-11-20T15:26:17.9904098	Tags for minecraft:item mod id mobflowutilities
 26eda05107f5ac4c0d6df6b1d6f8d58e4654b0ea data/c/tags/item/ingots.json
 0044f80be21c4d0efc03b7f88188a3bc4528287b data/c/tags/item/ores.json
 3d9c86239a10e54111740499abd9af95eee1866d data/c/tags/item/raw_materials.json
@@ -23,7 +23,7 @@ adebb9747583e3107f37b532deea2e1f583ef041 data/mobflowutilities/tags/item/glimmer
 a7a7e12a609d9edebfa6fab7fa96205272cd6a07 data/mobflowutilities/tags/item/gloomwood_logs.json
 f2386b14e71ea0c85fff2c9586d6b60b2701d910 data/mobflowutilities/tags/item/gloomwood_logs_for_wood.json
 26eda05107f5ac4c0d6df6b1d6f8d58e4654b0ea data/mobflowutilities/tags/item/ingots/mfu.json
-b63117034de58b8408ec288f2bcc3fe6675175c9 data/mobflowutilities/tags/item/mobflowutilities_modules.json
+150aeaab2c59aacf471df45cbbdbf1cd23597b35 data/mobflowutilities/tags/item/mobflowutilities_modules.json
 b3e0f340b209eef598937c94b091fd38811675fe data/mobflowutilities/tags/item/mobflowutilities_tools.json
 e5e2018c83f2d65bd61841b81a6861d0c1498402 data/mobflowutilities/tags/item/nuggets/mfu.json
 0044f80be21c4d0efc03b7f88188a3bc4528287b data/mobflowutilities/tags/item/ores/mfu.json

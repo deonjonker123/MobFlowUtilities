@@ -13,7 +13,7 @@ public class MFUFoodProperties {
 
     public static final FoodProperties RADIANT_BERRY = new FoodProperties.Builder().nutrition(3)
             .saturationModifier(0.4f).fast()
-            .effect(() -> new MobEffectInstance(MobEffects.ABSORPTION, 60, 0), 0.3f)
+            .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 60, 0), 0.3f)
             .effect(() -> new MobEffectInstance(MobEffects.NIGHT_VISION, 200, 0), 0.5f)
             .build();
 }

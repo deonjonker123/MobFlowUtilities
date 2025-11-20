@@ -1,6 +1,5 @@
-// 1.21.1	2025-11-20T01:49:14.9741312	Item Models: mobflowutilities
+// 1.21.1	2025-11-20T15:26:17.9864066	Item Models: mobflowutilities
 79b2ee0a8e3013fe016bb424df89fdd0cc6ba20e assets/mobflowutilities/models/item/bane_of_arthropods_module.json
-2cbebc1ee3479723e4aaca767ad6c97c1dc5ad22 assets/mobflowutilities/models/item/collection_radius_increase_module.json
 5dd9dd7e3f84273175a8d3f7f7374c605b575c53 assets/mobflowutilities/models/item/empty_gene_vial.json
 4a33d042030d0cfe315bf97871f8b4c8debbff51 assets/mobflowutilities/models/item/fire_aspect_module.json
 05e0e16a25bffdacd9da46f491abc77eb95255e0 assets/mobflowutilities/models/item/gene_sample_vial.json
@@ -124,6 +123,7 @@ b5395c299a5a5cbfc856f23e292ac2023a5f2896 assets/mobflowutilities/models/item/glo
 7c2974c5b4cb5e6cd4bf2fabc3e825021a9ca207 assets/mobflowutilities/models/item/looting_module.json
 c35fe90b5198a9b0a79cf54bd5a60fe9f09fbb14 assets/mobflowutilities/models/item/pad_wrench.json
 4a525399d5ffd1f6ddeb646860d2354cbd7c3e0c assets/mobflowutilities/models/item/radiant_berries.json
+42a86027c7db9649a37f27697405b72dbd6b877a assets/mobflowutilities/models/item/radius_increase_module.json
 dd5c8fe45af193b1819f566b0fdbacdab698f28d assets/mobflowutilities/models/item/raw_glimmersteel.json
 e28a3fba57ab93e3ada8fca1b4de1b1db8bbf1df assets/mobflowutilities/models/item/raw_gloomsteel.json
 6363c7310e9ebbcdccded62b3abe73b087ab5f4c assets/mobflowutilities/models/item/sharpness_module.json

@@ -78,8 +78,8 @@
   "item.mobflowutilities.looting_module": "Looting Module",
   "item.mobflowutilities.looting_module.subtitle": "Improves drop quantity and rare loot chance from mobs",
 
-  "item.mobflowutilities.collection_radius_increase_module": "Collection Radius Increase Module",
-  "item.mobflowutilities.collection_radius_increase_module.subtitle": "Extends the pickup range of Collectors",
+  "item.mobflowutilities.radius_increase_module": "Radius Increase Module",
+  "item.mobflowutilities.radius_increase_module.subtitle": "Extends the pickup range of Collectors and spawn radius of the Genesis Chamber",
   "item.mobflowutilities.void_filter_module": "Void Filter Module",
   "item.mobflowutilities.void_filter_module.subtitle": "Destroys filtered items collected by Collectors",
 

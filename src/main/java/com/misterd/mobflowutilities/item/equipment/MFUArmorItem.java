@@ -23,7 +23,7 @@ public class MFUArmorItem  extends ArmorItem {
                                     new MobEffectInstance(MobEffects.JUMP, 200, 1, false, false)))
 
                     .put(MFUArmorMaterials.GLIMMERSTEEL_ARMOR_MATERIAL,
-                            List.of(new MobEffectInstance(MobEffects.GLOWING, 200, 1, false, false),
+                            List.of(new MobEffectInstance(MobEffects.NIGHT_VISION, 200, 1, false, false),
                                     new MobEffectInstance(MobEffects.REGENERATION, 200, 1, false, false),
                                     new MobEffectInstance(MobEffects.JUMP, 200, 1, false, false)))
                     .build();

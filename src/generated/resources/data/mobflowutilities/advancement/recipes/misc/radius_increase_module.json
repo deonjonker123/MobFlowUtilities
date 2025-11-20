@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "mobflowutilities:collection_radius_increase_module"
+        "recipe": "mobflowutilities:radius_increase_module"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "mobflowutilities:collection_radius_increase_module"
+      "mobflowutilities:radius_increase_module"
     ]
   }
 }

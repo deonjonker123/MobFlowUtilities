@@ -5,7 +5,7 @@
     "mobflowutilities:sharpness_module",
     "mobflowutilities:smite_module",
     "mobflowutilities:looting_module",
-    "mobflowutilities:collection_radius_increase_module",
+    "mobflowutilities:radius_increase_module",
     "mobflowutilities:void_filter_module"
   ]
 }
