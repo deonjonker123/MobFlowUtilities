@@ -101,9 +101,6 @@ public class MFUBlockStateProvider extends BlockStateProvider {
         blockItem(MFUBlocks.GLIMMERWOOD_PRESSURE_PLATE);
         blockItem(MFUBlocks.GLIMMERWOOD_FENCE_GATE);
         blockItem(MFUBlocks.GLIMMERWOOD_TRAPDOOR, "_bottom");
-
-        makeUmbralBerryBush(((SweetBerryBushBlock) MFUBlocks.UMBRAL_BERRY_BUSH.get()), "umbral_berry_bush_stage", "umbral_berry_bush_stage");
-        makeRadiantBerryBush(((SweetBerryBushBlock) MFUBlocks.RADIANT_BERRY_BUSH.get()), "radiant_berry_bush_stage", "radiant_berry_bush_stage");
     }
 
     private void blockWithItem(DeferredBlock<?> deferredBlock) {
@@ -127,33 +124,5 @@ public class MFUBlockStateProvider extends BlockStateProvider {
     private void saplingBlock(DeferredBlock<Block> blockRegistryObject) {
         simpleBlock(blockRegistryObject.get(),
                 models().cross(BuiltInRegistries.BLOCK.getKey(blockRegistryObject.get()).getPath(), blockTexture(blockRegistryObject.get())).renderType("cutout"));
-    }
-
-    public void makeUmbralBerryBush(SweetBerryBushBlock block, String modelName, String textureName) {
-        Function<BlockState, ConfiguredModel[]> function = state -> umbralStates(state, modelName, textureName);
-
-        getVariantBuilder(block).forAllStates(function);
-    }
-
-    private ConfiguredModel[] umbralStates(BlockState state, String modelName, String textureName) {
-        ConfiguredModel[] models = new ConfiguredModel[1];
-        models[0] = new ConfiguredModel(models().cross(modelName + state.getValue(UmbralBerryBushBlock.AGE),
-                ResourceLocation.fromNamespaceAndPath(MobFlowUtilities.MODID, "block/" + textureName + state.getValue(UmbralBerryBushBlock.AGE))).renderType("cutout"));
-
-        return models;
-    }
-
-    public void makeRadiantBerryBush(SweetBerryBushBlock block, String modelName, String textureName) {
-        Function<BlockState, ConfiguredModel[]> function = state -> radiantStages(state, modelName, textureName);
-
-        getVariantBuilder(block).forAllStates(function);
-    }
-
-    private ConfiguredModel[] radiantStages(BlockState state, String modelName, String textureName) {
-        ConfiguredModel[] models = new ConfiguredModel[1];
-        models[0] = new ConfiguredModel(models().cross(modelName + state.getValue(RadiantlBerryBushBlock.AGE),
-                ResourceLocation.fromNamespaceAndPath(MobFlowUtilities.MODID, "block/" + textureName + state.getValue(RadiantlBerryBushBlock.AGE))).renderType("cutout"));
-
-        return models;
     }
 }

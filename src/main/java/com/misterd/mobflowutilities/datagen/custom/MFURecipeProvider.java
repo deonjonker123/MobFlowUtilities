@@ -173,10 +173,10 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUBlocks.GENESIS_CHAMBER.get())
-                .pattern("GHG")
-                .pattern("PSP")
-                .pattern("GHG")
-                .define('G', MFUItems.GLIMMERSTEEL_INGOT.get())
+                .pattern("GSG")
+                .pattern("PHP")
+                .pattern("GSG")
+                .define('G', MFUBlocks.GLIMMERSTEEL_BLOCK.get())
                 .define('P', Items.DIAMOND_BLOCK)
                 .define('H', Items.PISTON)
                 .define('S', Items.OBSIDIAN)

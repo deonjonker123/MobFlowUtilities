@@ -67,7 +67,7 @@ public class MFUItemModelProvider extends ItemModelProvider {
 
         basicItem(MFUItems.EMPTY_GENE_VIAL.get());
         basicItem(MFUItems.GENE_SAMPLE_VIAL.get());
-        basicItem(MFUItems.INCUBATION_CRYSTAL.get());
+        basicItem(MFUItems.INCUBATION_ORB.get());
 
         handheldItem(MFUItems.GLOOMSTEEL_SWORD);
         handheldItem(MFUItems.GLOOMSTEEL_PICKAXE);

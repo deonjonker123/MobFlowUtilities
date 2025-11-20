@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "mobflowutilities:item/incubation_crystal"
+    "layer0": "mobflowutilities:item/incubation_orb"
   }
 }

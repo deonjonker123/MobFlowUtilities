@@ -340,12 +340,6 @@ public class MFUBlocks {
     public static final DeferredBlock<TrapDoorBlock> GLIMMERWOOD_TRAPDOOR = registerBlock("gilmmerwood_trapdoor",
             () -> new TrapDoorBlock(BlockSetType.BIRCH, BlockBehaviour.Properties.of().strength(2f).requiresCorrectToolForDrops().noOcclusion()));
 
-    public static final DeferredBlock<Block> UMBRAL_BERRY_BUSH = BLOCKS.register("umbral_berry_bush",
-            () -> new UmbralBerryBushBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SWEET_BERRY_BUSH)));
-
-    public static final DeferredBlock<Block> RADIANT_BERRY_BUSH = BLOCKS.register("radiant_berry_bush",
-            () -> new RadiantlBerryBushBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SWEET_BERRY_BUSH)));
-
     public static final DeferredBlock<Block> GENESIS_CHAMBER = registerBlock("genesis_chamber",
             () -> new GenesisChamberBlock(BlockBehaviour.Properties.of()
                     .strength(2.0F)

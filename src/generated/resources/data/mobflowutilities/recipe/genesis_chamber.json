@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "G": {
-      "item": "mobflowutilities:glimmersteel_ingot"
+      "item": "mobflowutilities:glimmersteel_block"
     },
     "H": {
       "item": "minecraft:piston"
@@ -16,9 +16,9 @@
     }
   },
   "pattern": [
-    "GHG",
-    "PSP",
-    "GHG"
+    "GSG",
+    "PHP",
+    "GSG"
   ],
   "result": {
     "count": 1,

@@ -67,9 +67,6 @@
   "block.mobflowutilities.glimmerwood_door": "Glimmerwood Door",
   "block.mobflowutilities.gilmmerwood_trapdoor": "Glimmerwood Trapdoor",
 
-  "block.mobflowutilities.umbral_berry_bush": "Umbral Berry Bush",
-  "block.mobflowutilities.radiant_berry_bush": "Radiant Berry Bush",
-
   "item.mobflowutilities.bane_of_arthropods_module": "Bane of Arthropods Module",
   "item.mobflowutilities.bane_of_arthropods_module.subtitle": "Deals increased damage to spiders, silverfish, and other arthropods",
   "item.mobflowutilities.fire_aspect_module": "Fire Aspect Module",
@@ -107,8 +104,8 @@
   "item.mobflowutilities.glimmer_sprout": "Glimmer Sprout",
   "item.mobflowutilities.glimmer_sprout.subtitle": "Converts dirt-like blocks to Glimmer Grass. Rare drop from passive creatures and loot chests",
 
-  "item.mobflowutilities.incubation_crystal": "Incubation Crystal",
-  "item.mobflowutilities.incubation_crystal.subtitle": "Crafting component for spawn eggs. Drops from bosses",
+  "item.mobflowutilities.incubation_orb": "Incubation Orb",
+  "item.mobflowutilities.incubation_orb.subtitle": "Crafting component for spawn eggs. Drops from bosses",
 
   "item.mobflowutilities.empty_gene_vial": "Empty Gene Vial",
 

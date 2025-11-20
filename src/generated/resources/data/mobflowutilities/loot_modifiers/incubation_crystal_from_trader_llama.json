@@ -10,5 +10,5 @@
       "condition": "minecraft:random_chance"
     }
   ],
-  "item": "mobflowutilities:incubation_crystal"
+  "item": "mobflowutilities:incubation_orb"
 }

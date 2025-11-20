@@ -1,6 +1,5 @@
 package com.misterd.mobflowutilities.item;
 
-import com.misterd.mobflowutilities.block.MFUBlocks;
 import com.misterd.mobflowutilities.item.custom.*;
 import com.misterd.mobflowutilities.item.equipment.*;
 import com.misterd.mobflowutilities.util.MFUFoodProperties;
@@ -107,11 +106,11 @@ public class MFUItems {
                 }
             });
 
-    public static final DeferredItem<Item> INCUBATION_CRYSTAL = ITEMS.register("incubation_crystal",
+    public static final DeferredItem<Item> INCUBATION_ORB = ITEMS.register("incubation_orb",
             () -> new Item(new Item.Properties()) {
                 @Override
                 public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-                    tooltipComponents.add(Component.translatable("item.mobflowutilities.incubation_crystal.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
+                    tooltipComponents.add(Component.translatable("item.mobflowutilities.incubation_orb.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
                 }
             });
 
@@ -227,10 +226,10 @@ public class MFUItems {
                     .durability(999)));
 
     public static final DeferredItem<Item> UMBRAL_BERRIES = ITEMS.register("umbral_berries",
-            () -> new ItemNameBlockItem(MFUBlocks.UMBRAL_BERRY_BUSH.get(), new Item.Properties().food(MFUFoodProperties.UMBRAL_BERRY)));
+            () -> new Item(new Item.Properties().food(MFUFoodProperties.UMBRAL_BERRY)));
 
     public static final DeferredItem<Item> RADIANT_BERRIES = ITEMS.register("radiant_berries",
-            () -> new ItemNameBlockItem(MFUBlocks.RADIANT_BERRY_BUSH.get(), new Item.Properties().food(MFUFoodProperties.RADIANT_BERRY)));
+            () -> new Item(new Item.Properties().food(MFUFoodProperties.RADIANT_BERRY)));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

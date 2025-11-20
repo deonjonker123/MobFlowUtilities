@@ -90,7 +90,7 @@ public class MFUGlobalLootModifierProvider extends GlobalLootModifierProvider {
 
         for (String mob : allMobs) {
             addMobLoot("incubation_crystal_from_" + mob.replace("entities/", ""),
-                    mob, MFUItems.INCUBATION_CRYSTAL, 0.0001F);
+                    mob, MFUItems.INCUBATION_ORB, 0.0001F);
         }
 
         addBossLoot("glimmer_sprout_from_ender_dragon", "entities/ender_dragon", MFUItems.GLIMMER_SPROUT);
@@ -100,11 +100,11 @@ public class MFUGlobalLootModifierProvider extends GlobalLootModifierProvider {
         addBossLoot("gloom_spore_from_wither", "entities/wither", MFUItems.GLOOM_SPORE);
         addBossLoot("gloom_spore_from_ravager", "entities/ravager", MFUItems.GLOOM_SPORE);
 
-        addBossLoot("incubation_crystal_from_ender_dragon", "entities/ender_dragon", MFUItems.INCUBATION_CRYSTAL);
-        addBossLoot("incubation_crystal_from_elder_guardian", "entities/elder_guardian", MFUItems.INCUBATION_CRYSTAL);
-        addBossLoot("incubation_crystal_from_warden", "entities/warden", MFUItems.INCUBATION_CRYSTAL);
-        addBossLoot("incubation_crystal_from_wither", "entities/wither", MFUItems.INCUBATION_CRYSTAL);
-        addBossLoot("incubation_crystal_from_ravager", "entities/ravager", MFUItems.INCUBATION_CRYSTAL);
+        addBossLoot("incubation_crystal_from_ender_dragon", "entities/ender_dragon", MFUItems.INCUBATION_ORB);
+        addBossLoot("incubation_crystal_from_elder_guardian", "entities/elder_guardian", MFUItems.INCUBATION_ORB);
+        addBossLoot("incubation_crystal_from_warden", "entities/warden", MFUItems.INCUBATION_ORB);
+        addBossLoot("incubation_crystal_from_wither", "entities/wither", MFUItems.INCUBATION_ORB);
+        addBossLoot("incubation_crystal_from_ravager", "entities/ravager", MFUItems.INCUBATION_ORB);
 
         String[] treasureChests = {
                 "chests/village/village_armorer", "chests/village/village_mason",

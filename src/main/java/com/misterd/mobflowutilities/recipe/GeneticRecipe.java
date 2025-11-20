@@ -28,7 +28,7 @@ public class GeneticRecipe extends ShapelessRecipe {
     private static NonNullList<Ingredient> createIngredients() {
         NonNullList<Ingredient> ingredients = NonNullList.create();
         ingredients.add(Ingredient.of(MFUItems.GENE_SAMPLE_VIAL.get()));
-        ingredients.add(Ingredient.of(MFUItems.INCUBATION_CRYSTAL.get()));
+        ingredients.add(Ingredient.of(MFUItems.INCUBATION_ORB.get()));
         ingredients.add(Ingredient.of(Items.EMERALD));
         return ingredients;
     }
@@ -56,7 +56,7 @@ public class GeneticRecipe extends ShapelessRecipe {
                     }
 
                     hasGeneSample = true;
-                } else if (stack.getItem() == MFUItems.INCUBATION_CRYSTAL.get()) {
+                } else if (stack.getItem() == MFUItems.INCUBATION_ORB.get()) {
                     if (hasPulseCore) {
                         return false;
                     }
