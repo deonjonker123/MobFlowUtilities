@@ -102,13 +102,13 @@ public class DarkDirtBlock extends Block {
                                 if (mob != null) {
                                     mob.moveTo(spawnPos.getX() + 0.5D, spawnPos.getY(), spawnPos.getZ() + 0.5D, random.nextFloat() * 360.0F, 0.0F);
 
-                                    if (mob instanceof Monster && SpawnPlacements.checkSpawnRules(entityType, level, MobSpawnType.NATURAL, spawnPos, random)) {
-                                        mob.finalizeSpawn(level, level.getCurrentDifficultyAt(spawnPos), MobSpawnType.NATURAL, (SpawnGroupData) null);
+                                    if (SpawnPlacements.checkSpawnRules(entityType, level, MobSpawnType.NATURAL, spawnPos, random)) {
+                                        mob.finalizeSpawn(level, level.getCurrentDifficultyAt(spawnPos), MobSpawnType.NATURAL, null);
                                         level.addFreshEntity(mob);
                                     }
                                 }
                             } catch (Exception e) {
-                                System.out.println("Failed to spawn mob: " + e.getMessage());
+                                e.printStackTrace();
                             }
                             break;
                         }

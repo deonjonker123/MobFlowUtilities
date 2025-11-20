@@ -305,6 +305,16 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_ender_eye", has( Items.ENDER_EYE))
                 .save(recipeOutput);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC,  MFUItems.SPEED_MODULE.get())
+                .pattern("#L#")
+                .pattern("LDL")
+                .pattern("#L#")
+                .define('L',  MFUBlocks.GLIMMERSTEEL_BLOCK.get())
+                .define('D',  Items.DIAMOND_BLOCK)
+                .define('#',  Items.OBSIDIAN)
+                .unlockedBy("has_diamond", has( Items.DIAMOND))
+                .save(recipeOutput);
+
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC,  MFUBlocks.COLLECTOR.get())
                 .requires( MFUBlocks.COLLECTOR.get())
                 .unlockedBy("has_collector", has( MFUBlocks.COLLECTOR))
