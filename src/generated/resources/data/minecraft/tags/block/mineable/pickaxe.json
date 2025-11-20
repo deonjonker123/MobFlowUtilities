@@ -6,6 +6,7 @@
     "mobflowutilities:flow_pad_fastest",
     "mobflowutilities:controller",
     "mobflowutilities:collector",
+    "mobflowutilities:genesis_chamber",
     "mobflowutilities:gloomsteel_block",
     "mobflowutilities:gloomsteel_stone_ore",
     "mobflowutilities:gloomsteel_deepslate_ore",

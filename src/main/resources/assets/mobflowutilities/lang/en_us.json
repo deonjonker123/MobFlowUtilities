@@ -9,6 +9,9 @@
   "block.mobflowutilities.collector": "Collector",
   "block.mobflowutilities.controller": "Controller",
 
+  "block.mobflowutilities.genesis_chamber": "Genesis Chamber",
+  "block.mobflowutilities.genesis_chamber.subtitle": "Spawns mobs in a 5x5 area around it",
+
   "block.mobflowutilities.dark_dirt": "Dark Dirt",
   "block.mobflowutilities.dark_dirt.subtitle": "Spawns hostile mobs at accelerated rates",
   "block.mobflowutilities.glimmer_grass": "Glimmer Grass",
@@ -82,6 +85,8 @@
   "item.mobflowutilities.radius_increase_module.subtitle": "Extends the pickup range of Collectors and spawn radius of the Genesis Chamber",
   "item.mobflowutilities.void_filter_module": "Void Filter Module",
   "item.mobflowutilities.void_filter_module.subtitle": "Destroys filtered items collected by Collectors",
+  "item.mobflowutilities.speed_module": "Speed Module",
+  "item.mobflowutilities.speed_module.subtitle": "Increases spawn rates of the Genesis Chamber",
 
   "item.mobflowutilities.pad_wrench": "Pad Wrench",
   "item.mobflowutilities.pad_wrench.subtitle": "Used to link Damage Pads with Controllers",
@@ -145,6 +150,7 @@
 
   "gui.mobflowutilities.collector": "Collector",
   "gui.mobflowutilities.controller": "Controller",
+  "gui.mobflowutilities.genesis_chamber": "Genesis Chamber",
   "gui.mobflowutilities.controller.remove": "Remove",
   "gui.mobflowutilities.collector.xp_input_levels": "Levels",
   "gui.mobflowutilities.void_filter": "Void Filter",

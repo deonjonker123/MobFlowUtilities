@@ -8,6 +8,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -187,5 +188,12 @@ public class MFUItemTagProvider extends ItemTagsProvider {
         tag(ItemTags.WOODEN_TRAPDOORS)
                 .add(MFUBlocks.GLOOMWOOD_TRAPDOOR.asItem())
                 .add(MFUBlocks.GLIMMERWOOD_TRAPDOOR.asItem());
+
+        tag(MFUTags.Items.GENESIS_CHAMBER_FUELS)
+                .add(Items.COAL)
+                .add(Items.CHARCOAL)
+                .add(Items.COAL_BLOCK)
+                .add(Items.BLAZE_ROD)
+                .add(Items.LAVA_BUCKET);
     }
 }

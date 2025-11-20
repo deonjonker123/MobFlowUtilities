@@ -346,6 +346,19 @@ public class MFUBlocks {
     public static final DeferredBlock<Block> RADIANT_BERRY_BUSH = BLOCKS.register("radiant_berry_bush",
             () -> new RadiantlBerryBushBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SWEET_BERRY_BUSH)));
 
+    public static final DeferredBlock<Block> GENESIS_CHAMBER = registerBlock("genesis_chamber",
+            () -> new GenesisChamberBlock(BlockBehaviour.Properties.of()
+                    .strength(2.0F)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.STONE)
+                    .noOcclusion())
+            {
+                @Override
+                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("block.mobflowutilities.genesis_chamber.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
+                }
+            });
+
     private static <T extends Block> DeferredBlock<T> registerBlock (String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn);

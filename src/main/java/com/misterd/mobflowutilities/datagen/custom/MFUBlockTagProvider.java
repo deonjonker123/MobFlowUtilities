@@ -31,6 +31,7 @@ public class MFUBlockTagProvider extends BlockTagsProvider {
 
                 .add(MFUBlocks.CONTROLLER.get())
                 .add(MFUBlocks.COLLECTOR.get())
+                .add(MFUBlocks.GENESIS_CHAMBER.get())
 
                 .add(MFUBlocks.GLOOMSTEEL_BLOCK.get())
                 .add(MFUBlocks.GLOOMSTEEL_STONE_ORE.get())
@@ -104,7 +105,8 @@ public class MFUBlockTagProvider extends BlockTagsProvider {
 
         tag(MFUTags.Blocks.MOBFLOWUTILITIES_MACHINES)
                 .add(MFUBlocks.CONTROLLER.get())
-                .add(MFUBlocks.COLLECTOR.get());
+                .add(MFUBlocks.COLLECTOR.get())
+                .add(MFUBlocks.GENESIS_CHAMBER.get());
 
         tag(MFUTags.Blocks.RAW_BLOCKS_MFU)
                 .add(MFUBlocks.RAW_GLOOMSTEEL_BLOCK.get())

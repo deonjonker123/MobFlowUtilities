@@ -1,14 +1,13 @@
 package com.misterd.mobflowutilities;
 
 import com.misterd.mobflowutilities.block.MFUBlocks;
+import com.misterd.mobflowutilities.client.renderer.ber.GenesisChamberBlockEntityRenderer;
 import com.misterd.mobflowutilities.component.MFUDataComponents;
 import com.misterd.mobflowutilities.config.Config;
 import com.misterd.mobflowutilities.entity.MFUBlockEntities;
+import com.misterd.mobflowutilities.entity.custom.GenesisChamberBlockEntity;
 import com.misterd.mobflowutilities.gui.MFUMenuTypes;
-import com.misterd.mobflowutilities.gui.custom.CollectorScreen;
-import com.misterd.mobflowutilities.gui.custom.ControllerMenu;
-import com.misterd.mobflowutilities.gui.custom.ControllerScreen;
-import com.misterd.mobflowutilities.gui.custom.VoidFilterScreen;
+import com.misterd.mobflowutilities.gui.custom.*;
 import com.misterd.mobflowutilities.item.MFUCreativeTab;
 import com.misterd.mobflowutilities.item.MFUItems;
 import com.misterd.mobflowutilities.loot.MFULootModifiers;
@@ -85,7 +84,7 @@ public class MobFlowUtilities {
 
         @SubscribeEvent
         public static void registerBER(EntityRenderersEvent.RegisterRenderers event) {
-
+            event.registerBlockEntityRenderer(MFUBlockEntities.GENESIS_CHAMBER_BE.get(), GenesisChamberBlockEntityRenderer::new);
         }
 
         @SubscribeEvent
@@ -93,6 +92,7 @@ public class MobFlowUtilities {
             event.register(MFUMenuTypes.COLLECTOR_MENU.get(), CollectorScreen::new);
             event.register(MFUMenuTypes.VOID_FILTER_MENU.get(), VoidFilterScreen::new);
             event.register(MFUMenuTypes.CONTROLLER_MENU.get(), ControllerScreen::new);
+            event.register(MFUMenuTypes.GENESIS_CHAMBER_MENU.get(), GenesisChamberScreen::new);
         }
     }
 }

@@ -1,4 +1,4 @@
-// 1.21.1	2025-11-20T15:26:17.9904098	Tags for minecraft:item mod id mobflowutilities
+// 1.21.1	2025-11-20T17:19:19.8231427	Tags for minecraft:item mod id mobflowutilities
 26eda05107f5ac4c0d6df6b1d6f8d58e4654b0ea data/c/tags/item/ingots.json
 0044f80be21c4d0efc03b7f88188a3bc4528287b data/c/tags/item/ores.json
 3d9c86239a10e54111740499abd9af95eee1866d data/c/tags/item/raw_materials.json
@@ -18,6 +18,7 @@ b372d04b6eadb04729cc84f7f5a31e8d8d70ca58 data/minecraft/tags/item/wooden_fences.
 c49376a0d29bce6417b75767c57b8125381105dc data/minecraft/tags/item/wooden_slabs.json
 543ed702c024305500493a2a558d0eb01de5d9d4 data/minecraft/tags/item/wooden_stairs.json
 c165bab7b1fa03839ba28bb6bdf175a07b602ffa data/minecraft/tags/item/wooden_trapdoors.json
+f1ab6116f631caaa4488d41f8a895179660770e1 data/mobflowutilities/tags/item/genesis_chamber_fuels.json
 d784ea33437c9771a99f3e3db65f328018205f87 data/mobflowutilities/tags/item/glimmerwood_logs.json
 adebb9747583e3107f37b532deea2e1f583ef041 data/mobflowutilities/tags/item/glimmerwood_logs_for_wood.json
 a7a7e12a609d9edebfa6fab7fa96205272cd6a07 data/mobflowutilities/tags/item/gloomwood_logs.json

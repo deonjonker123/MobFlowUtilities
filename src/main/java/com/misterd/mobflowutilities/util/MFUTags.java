@@ -35,6 +35,7 @@ public class MFUTags {
         public static final TagKey<Item> GLIMMERWOOD_LOGS_FOR_WOOD = createTag("glimmerwood_logs_for_wood");
         public static final TagKey<Item> MOBFLOWUTILITIES_TOOLS = createTag("mobflowutilities_tools");
         public static final TagKey<Item> MOBFLOWUTILITIES_MODULES = createTag("mobflowutilities_modules");
+        public static final TagKey<Item> GENESIS_CHAMBER_FUELS = createTag("genesis_chamber_fuels");
 
         private static TagKey<Item> createTag(String name) {
             return ItemTags.create(ResourceLocation.fromNamespaceAndPath("mobflowutilities", name));

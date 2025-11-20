@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "mobflowutilities:glimmersteel_ingot"
+    },
+    "H": {
+      "item": "minecraft:piston"
+    },
+    "P": {
+      "item": "minecraft:diamond_block"
+    },
+    "S": {
+      "item": "minecraft:obsidian"
+    }
+  },
+  "pattern": [
+    "GHG",
+    "PSP",
+    "GHG"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mobflowutilities:genesis_chamber"
+  }
+}

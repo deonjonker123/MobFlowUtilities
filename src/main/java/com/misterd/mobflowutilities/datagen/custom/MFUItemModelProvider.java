@@ -50,6 +50,7 @@ public class MFUItemModelProvider extends ItemModelProvider {
         basicItem(MFUItems.LOOTING_MODULE.get());
         basicItem(MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get());
         basicItem(MFUItems.VOID_FILTER_MODULE.get());
+        basicItem(MFUItems.SPEED_MODULE.get());
 
         basicItem(MFUItems.PAD_WRENCH.get());
 

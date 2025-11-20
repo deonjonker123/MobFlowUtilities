@@ -3,10 +3,7 @@ package com.misterd.mobflowutilities.entity;
 import com.misterd.mobflowutilities.block.MFUBlocks;
 import java.util.function.Supplier;
 
-import com.misterd.mobflowutilities.entity.custom.CollectorBlockEntity;
-import com.misterd.mobflowutilities.entity.custom.ControllerBlockEntity;
-import com.misterd.mobflowutilities.entity.custom.DamagePadBlockEntity;
-import com.misterd.mobflowutilities.entity.custom.FlowPadBlockEntity;
+import com.misterd.mobflowutilities.entity.custom.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -41,6 +38,11 @@ public class MFUBlockEntities {
                             MFUBlocks.FAST_FLOW_PAD.get(),
                             MFUBlocks.FASTER_FLOW_PAD.get(),
                             MFUBlocks.FASTEST_FLOW_PAD.get()).build(null));
+
+    public static final Supplier<BlockEntityType<GenesisChamberBlockEntity>> GENESIS_CHAMBER_BE =
+            BLOCK_ENTITIES.register("genesis_chamber_be",
+                    () -> BlockEntityType.Builder.of(GenesisChamberBlockEntity::new,
+                            MFUBlocks.GENESIS_CHAMBER.get()).build(null));
 
     private static void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, COLLECTOR_BE.get(),

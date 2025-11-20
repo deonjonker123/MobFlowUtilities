@@ -1,4 +1,4 @@
-// 1.21.1	2025-11-20T15:26:17.9864066	Item Models: mobflowutilities
+// 1.21.1	2025-11-20T15:54:28.7103099	Item Models: mobflowutilities
 79b2ee0a8e3013fe016bb424df89fdd0cc6ba20e assets/mobflowutilities/models/item/bane_of_arthropods_module.json
 5dd9dd7e3f84273175a8d3f7f7374c605b575c53 assets/mobflowutilities/models/item/empty_gene_vial.json
 4a33d042030d0cfe315bf97871f8b4c8debbff51 assets/mobflowutilities/models/item/fire_aspect_module.json
@@ -128,5 +128,6 @@ dd5c8fe45af193b1819f566b0fdbacdab698f28d assets/mobflowutilities/models/item/raw
 e28a3fba57ab93e3ada8fca1b4de1b1db8bbf1df assets/mobflowutilities/models/item/raw_gloomsteel.json
 6363c7310e9ebbcdccded62b3abe73b087ab5f4c assets/mobflowutilities/models/item/sharpness_module.json
 8193fc3823cbd4d8a245df9f48555b65e8f13ac4 assets/mobflowutilities/models/item/smite_module.json
+205a3c4ed32fd33b4710fccd096148155f58f736 assets/mobflowutilities/models/item/speed_module.json
 636591eb2723f87ab3c7b45c0934c603a5202c09 assets/mobflowutilities/models/item/umbral_berries.json
 c2c68641b474cd824a5757316a72d9335c23d7e2 assets/mobflowutilities/models/item/void_filter_module.json

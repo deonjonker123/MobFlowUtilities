@@ -65,6 +65,14 @@ public class MFUItems {
                 }
             });
 
+    public static final DeferredItem<Item> SPEED_MODULE = ITEMS.register("speed_module",
+            () -> new Item(new Item.Properties()) {
+                @Override
+                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("item.mobflowutilities.speed_module.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
+                }
+            });
+
     public static final DeferredItem<Item> RAW_GLOOMSTEEL = ITEMS.register("raw_gloomsteel",
             () -> new Item(new Item.Properties()));
 

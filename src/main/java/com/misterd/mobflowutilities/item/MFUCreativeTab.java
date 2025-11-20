@@ -32,6 +32,7 @@ public class MFUCreativeTab {
 
                         output.accept(MFUBlocks.COLLECTOR);
                         output.accept(MFUBlocks.CONTROLLER);
+                        output.accept(MFUBlocks.GENESIS_CHAMBER);
 
                         output.accept(MFUItems.PAD_WRENCH);
 
@@ -42,6 +43,7 @@ public class MFUCreativeTab {
                         output.accept(MFUItems.SMITE_MODULE);
                         output.accept(MFUItems.COLLECTION_RADIUS_INCREASE_MODULE);
                         output.accept(MFUItems.VOID_FILTER_MODULE);
+                        output.accept(MFUItems.SPEED_MODULE);
 
                         output.accept(MFUItems.GLOOM_SPORE);
                         output.accept(MFUItems.GLIMMER_SPROUT);

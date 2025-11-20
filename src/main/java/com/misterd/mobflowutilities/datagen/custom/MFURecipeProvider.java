@@ -169,7 +169,18 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('H',  Items.HOPPER)
                 .define('C', Tags.Items.CHESTS)
                 .define('E',  Items.ENDER_EYE)
-                .unlockedBy("has_ender_eye", has( Items.ENDER_EYE))
+                .unlockedBy("has_glimmersteel_ingot", has( MFUItems.GLIMMERSTEEL_INGOT))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUBlocks.GENESIS_CHAMBER.get())
+                .pattern("GHG")
+                .pattern("PSP")
+                .pattern("GHG")
+                .define('G', MFUItems.GLIMMERSTEEL_INGOT.get())
+                .define('P', Items.DIAMOND_BLOCK)
+                .define('H', Items.PISTON)
+                .define('S', Items.OBSIDIAN)
+                .unlockedBy("has_glimmersteel_ingot", has( MFUItems.GLIMMERSTEEL_INGOT))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC,  MFUBlocks.DAMAGE_PAD.get(), 4)

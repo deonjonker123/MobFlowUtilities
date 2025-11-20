@@ -39,6 +39,8 @@ public class MFULootTableProvider extends BlockLootSubProvider {
         dropSelf( MFUBlocks.RAW_GLIMMERSTEEL_BLOCK.get());
 
         dropSelf( MFUBlocks.CONTROLLER.get());
+        dropSelf( MFUBlocks.GENESIS_CHAMBER.get());
+
         dropSelf( MFUBlocks.FAST_FLOW_PAD.get());
         dropSelf( MFUBlocks.FASTER_FLOW_PAD.get());
         dropSelf( MFUBlocks.FASTEST_FLOW_PAD.get());
