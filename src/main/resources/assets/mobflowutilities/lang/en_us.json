@@ -10,7 +10,7 @@
   "block.mobflowutilities.controller": "Controller",
 
   "block.mobflowutilities.genesis_chamber": "Genesis Chamber",
-  "block.mobflowutilities.genesis_chamber.subtitle": "Spawns mobs in a 5x5 area around it",
+  "block.mobflowutilities.genesis_chamber.subtitle": "Spawns mobs in a 5x5 area around it. Requires fuel to run",
 
   "block.mobflowutilities.dark_dirt": "Dark Dirt",
   "block.mobflowutilities.dark_dirt.subtitle": "Spawns hostile mobs at accelerated rates",
@@ -192,7 +192,7 @@
   "item.mobflowutilities.pad_wrench.selection.single": "Single Selection",
   "item.mobflowutilities.pad_wrench.selection.multi": "Multi-Selection",
   "item.mobflowutilities.pad_wrench.controller.selected": "Selected mobflowutilities Controller at %d, %d, %d",
-  "item.mobflowutilities.pad_wrench.error.no_controller": "No controller selected! Right-click a mobflowutilities Controller first.",
+  "item.mobflowutilities.pad_wrench.error.no_controller": "No controller selected! Right-click a Controller first.",
   "item.mobflowutilities.pad_wrench.pad.linked": "Linked Attack Pad to controller",
   "item.mobflowutilities.pad_wrench.pad.unlinked": "Unlinked Attack Pad from controller",
   "item.mobflowutilities.pad_wrench.multi.start": "Started multi-selection at %d, %d, %d",
