@@ -167,5 +167,9 @@ public class MFUBlockTagProvider extends BlockTagsProvider {
         tag(BlockTags.WOODEN_TRAPDOORS)
                 .add(MFUBlocks.GLOOMWOOD_TRAPDOOR.get())
                 .add(MFUBlocks.GLIMMERWOOD_TRAPDOOR.get());
+
+        tag(BlockTags.LEAVES)
+                .add(MFUBlocks.GLOOMWOOD_LEAVES.get())
+                .add(MFUBlocks.GLIMMERWOOD_LEAVES.get());
     }
 }
