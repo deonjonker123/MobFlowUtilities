@@ -86,17 +86,15 @@ Gene sampling allows players to collect gene samples from creatures using Empty 
 
 -   **Gloomwood**: Dark-themed wood
     -   Full set of wood variants: logs, stripped logs, planks, stairs, slabs, fences, doors, trapdoors, buttons, and pressure plates
-    -   Gloomwood saplings for renewable farming
 -   **Glimmerwood**: Light-themed wood
     -   Full set of wood variants: logs, stripped logs, planks, stairs, slabs, fences, doors, trapdoors, buttons, and pressure plates
-    -   Glimmerwood saplings for renewable farming
 
 ### Berry Bushes
 
 -   **Umbral Berry Bush**: Found in dark biomes, produces Umbral Berries
     -   Gives some not-so-nice effects when eaten
 -   **Radiant Berry Bush**: Found in light biomes, produces Radiant Berries
-    -   Gives some pretty-goo effects when eaten
+    -   Gives some pretty-good effects when eaten
 
 ### Decorative Blocks
 
@@ -105,16 +103,16 @@ Gene sampling allows players to collect gene samples from creatures using Empty 
 
 ### Gloomsteel & Glimmersteel Materials
 
--   **Multi-Dimensional Ore**: Spawns in Overworld (stone/deepslate), Nether, and End dimensions
--   **Full Tool Suite**: Sword, Pickaxe, Axe, Shovel, Hoe
--   **Special Tools**: Paxel (pickaxe + axe + shovel combo) and Hammer (3x3 mining)
--   **Complete Armor Set**: Helmet, Chestplate, Leggings, Boots (with some effects when wearing the complete set)
--   **Diamond-tier stats** with unique aesthetic
+-   **Multi-Dimensional Ore**: Spawns in Overworld, Nether, and End
+-   **Full Tool Suites**
+-   **Special Tools**: Paxel and Hammer (3x3 mining)
+-   **Complete Armor Sets**
+-   **Diamond-tier stats**
 
 ### Configuration
 
 -   **Flexible Settings**: Adjust spawn rates, mob caps, particle effects, and more
--   **Genesis Chamber Spawn Cap**: Configurable per-zone mob limit (default 12, range 1-100)
+-   **Genesis Chamber Spawn Cap**: Configurable per-zone mob limit
 -   **Dark Dirt/Glimmer Grass**: Adjust spawn rates and check intervals
 -   **Conversion Areas**: Configure Gloom Spore and Glimmer Sprout conversion radius
 
