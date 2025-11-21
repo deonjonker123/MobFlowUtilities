@@ -9,10 +9,10 @@
       "item": "minecraft:comparator"
     },
     "G": {
-      "item": "mobflowutilities:gloomsteel_ingot"
+      "tag": "mobflowutilities:ingots/mfu"
     },
     "I": {
-      "item": "mobflowutilities:glimmersteel_ingot"
+      "item": "minecraft:gold_ingot"
     }
   },
   "pattern": [

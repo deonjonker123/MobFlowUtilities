@@ -6,7 +6,7 @@
       "item": "minecraft:fermented_spider_eye"
     },
     "G": {
-      "item": "mobflowutilities:gloomsteel_ingot"
+      "tag": "mobflowutilities:ingots/mfu"
     },
     "S": {
       "item": "minecraft:spider_eye"

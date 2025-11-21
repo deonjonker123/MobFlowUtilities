@@ -129,7 +129,7 @@ public class GenesisChamberScreen extends AbstractContainerScreen<GenesisChamber
         this.addRenderableWidget(ewIncreaseButton);
 
         ImageButton resetOffsetButton = new ImageButton(
-                leftPos + 136, topPos + 73, 12, 12,
+                leftPos + 136, topPos + 76, 12, 12,
                 RESET_OFFSET_SPRITES,
                 button -> this.resetAllOffsets()
         );
@@ -139,7 +139,7 @@ public class GenesisChamberScreen extends AbstractContainerScreen<GenesisChamber
 
     private void addWireframeButton(int leftPos, int topPos) {
         ImageButton wireframeButton = new ImageButton(
-                leftPos + 56, topPos + 74, 10, 10,
+                leftPos + 153, topPos + 77, 10, 10,
                 this.createConditionalSprites(TOGGLE_WIREFRAME_SPRITES, () -> this.showWireframe),
                 button -> this.toggleWireframe()
         );

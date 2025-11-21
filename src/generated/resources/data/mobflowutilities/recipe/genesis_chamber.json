@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "G": {
-      "item": "mobflowutilities:glimmersteel_block"
+      "tag": "mobflowutilities:mobflowutilities_blocks"
     },
     "H": {
       "item": "minecraft:piston"

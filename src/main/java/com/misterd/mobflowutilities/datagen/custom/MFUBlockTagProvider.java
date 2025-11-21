@@ -127,6 +127,12 @@ public class MFUBlockTagProvider extends BlockTagsProvider {
                 .remove(MFUTags.Blocks.NEEDS_GLOOMSTEEL_TOOL)
                 .remove(MFUTags.Blocks.NEEDS_GLIMMERSTEEL_TOOL);
 
+        tag(BlockTags.LOGS)
+                .add(MFUBlocks.GLOOMWOOD_LOG.get())
+                .add(MFUBlocks.GLOOMWOOD.get())
+                .add(MFUBlocks.GLIMMERWOOD_LOG.get())
+                .add(MFUBlocks.GLIMMERWOOD.get());
+
         tag(BlockTags.LOGS_THAT_BURN)
                 .add(MFUBlocks.GLOOMWOOD_LOG.get())
                 .add(MFUBlocks.STRIPPED_GLOOMWOOD_LOG.get())

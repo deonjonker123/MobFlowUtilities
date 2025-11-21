@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "G": {
-      "item": "mobflowutilities:glimmersteel_ingot"
+      "tag": "mobflowutilities:ingots/mfu"
     },
     "H": {
       "item": "minecraft:hopper"

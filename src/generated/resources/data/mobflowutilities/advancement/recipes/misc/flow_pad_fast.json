@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_gloomsteel": {
+    "has_sugar": {
       "conditions": {
         "items": [
           {
-            "items": "mobflowutilities:gloomsteel_ingot"
+            "items": "minecraft:sugar"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_gloomsteel"
+      "has_sugar"
     ]
   ],
   "rewards": {

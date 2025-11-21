@@ -9,13 +9,13 @@
       "item": "minecraft:diamond_block"
     },
     "L": {
-      "item": "mobflowutilities:glimmersteel_block"
+      "tag": "mobflowutilities:mobflowutilities_blocks"
     }
   },
   "pattern": [
-    "#L#",
-    "LDL",
-    "#L#"
+    "L#L",
+    "#D#",
+    "L#L"
   ],
   "result": {
     "count": 1,

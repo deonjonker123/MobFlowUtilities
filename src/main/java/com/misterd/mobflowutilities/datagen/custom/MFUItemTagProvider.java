@@ -100,6 +100,11 @@ public class MFUItemTagProvider extends ItemTagsProvider {
                 .add(MFUItems.PAD_WRENCH.get())
                 .add(MFUItems.MOB_CATCHER.get());
 
+
+        tag(MFUTags.Items.MOBFLOWUTILITIES_BLOCKS)
+                .add(MFUBlocks.GLOOMSTEEL_BLOCK.asItem())
+                .add(MFUBlocks.GLIMMERSTEEL_BLOCK.asItem());
+
         tag(ItemTags.SWORDS)
                 .add(MFUItems.GLOOMSTEEL_SWORD.get())
                 .add(MFUItems.GLIMMERSTEEL_SWORD.get());

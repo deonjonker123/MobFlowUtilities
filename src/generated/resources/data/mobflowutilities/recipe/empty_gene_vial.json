@@ -6,7 +6,7 @@
       "tag": "c:glass_panes"
     },
     "G": {
-      "item": "mobflowutilities:gloomsteel_ingot"
+      "tag": "mobflowutilities:ingots/mfu"
     },
     "X": {
       "tag": "minecraft:wooden_buttons"

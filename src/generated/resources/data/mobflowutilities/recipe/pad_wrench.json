@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
     "G": {
-      "item": "mobflowutilities:gloomsteel_ingot"
+      "tag": "mobflowutilities:ingots/mfu"
     },
     "S": {
       "item": "minecraft:stick"
