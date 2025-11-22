@@ -69,7 +69,10 @@ public class MFUBlockTagProvider extends BlockTagsProvider {
                 .add(MFUBlocks.GLIMMERWOOD_FENCE.get())
                 .add(MFUBlocks.GLIMMERWOOD_FENCE_GATE.get())
                 .add(MFUBlocks.GLIMMERWOOD_DOOR.get())
-                .add(MFUBlocks.GLIMMERWOOD_TRAPDOOR.get());
+                .add(MFUBlocks.GLIMMERWOOD_TRAPDOOR.get())
+
+                .add(MFUBlocks.GLOOMWOOD_BARREL.get())
+                .add(MFUBlocks.GLIMMERWOOD_BARREL.get());
 
         tag(BlockTags.MINEABLE_WITH_SHOVEL)
                 .add(MFUBlocks.DARK_DIRT.get())

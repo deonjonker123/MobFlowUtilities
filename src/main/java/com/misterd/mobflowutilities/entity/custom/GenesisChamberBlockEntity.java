@@ -53,6 +53,8 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
     private int maxBurnTime = 0;
     private int spawnTimer = 0;
 
+    private boolean requiresRedstone = false;
+
     public final ItemStackHandler inventory = new ItemStackHandler(4) {
         @Override
         public int getSlotLimit(int slot) {
@@ -131,6 +133,7 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
         tag.putInt("burnTime", burnTime);
         tag.putInt("maxBurnTime", maxBurnTime);
         tag.putInt("spawnTimer", spawnTimer);
+        tag.putBoolean("requiresRedstone", requiresRedstone);
     }
 
     @Override
@@ -143,6 +146,7 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
         burnTime = tag.getInt("burnTime");
         maxBurnTime = tag.getInt("maxBurnTime");
         spawnTimer = tag.getInt("spawnTimer");
+        requiresRedstone = tag.getBoolean("requiresRedstone");
     }
 
     @Override
@@ -216,6 +220,18 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
         setChanged();
     }
 
+    public boolean getRequiresRedstone() {
+        return requiresRedstone;
+    }
+
+    public void setRequiresRedstone(boolean requiresRedstone) {
+        this.requiresRedstone = requiresRedstone;
+        setChanged();
+        if (level != null && !level.isClientSide()) {
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+        }
+    }
+
     public int getBurnTime() {
         return burnTime;
     }
@@ -231,6 +247,14 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
         boolean changed = false;
 
         boolean zoneIsFull = isSpawnZoneFull();
+
+        if (requiresRedstone && !level.hasNeighborSignal(worldPosition)) {
+            if (changed) {
+                setChanged();
+                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+            }
+            return;
+        }
 
         if (burnTime > 0 && !zoneIsFull) {
             burnTime--;

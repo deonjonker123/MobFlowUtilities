@@ -30,31 +30,31 @@ public class MFUBlocks {
 
     public static final DeferredBlock<Block> FAST_FLOW_PAD = registerBlock("flow_pad_fast",
             () -> new FastFlowPadBlock(BlockBehaviour.Properties.of()
-                    .strength(2F)
+                    .strength(3F, 6F)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.DEEPSLATE)));
 
     public static final DeferredBlock<Block> FASTER_FLOW_PAD = registerBlock("flow_pad_faster",
             () -> new FasterFlowPadBlock(BlockBehaviour.Properties.of()
-                    .strength(2F)
+                    .strength(3F, 6F)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.DEEPSLATE)));
 
     public static final DeferredBlock<Block> FASTEST_FLOW_PAD = registerBlock("flow_pad_fastest",
             () -> new FastestFlowPadBlock(BlockBehaviour.Properties.of()
-                    .strength(2F)
+                    .strength(3F, 6F)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.DEEPSLATE)));
 
     public static final DeferredBlock<Block> DAMAGE_PAD = registerBlock("damage_pad",
             () -> new DamagePadBlock(BlockBehaviour.Properties.of()
-                    .strength(2F)
+                    .strength(3F, 6F)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.DEEPSLATE)));
 
     public static final DeferredBlock<Block> DARK_DIRT = registerBlock("dark_dirt",
             () -> new DarkDirtBlock(BlockBehaviour.Properties.of()
-                    .strength(1F)
+                    .strength(1.5F, 6F)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.GRASS))
             {
@@ -66,7 +66,7 @@ public class MFUBlocks {
 
     public static final DeferredBlock<Block> GLIMMER_GRASS = registerBlock("glimmer_grass",
             () -> new GlimmerGrassBlock(BlockBehaviour.Properties.of()
-                    .strength(1F)
+                    .strength(1.5F, 6F)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.GRASS))
             {
@@ -91,7 +91,7 @@ public class MFUBlocks {
 
     public static final DeferredBlock<Block> GLIMMER_LAMP = registerBlock("glimmer_lamp",
             () -> new Block(BlockBehaviour.Properties.of()
-                    .strength(2.0F)
+                    .strength(2.0F, 3.0F)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.GLASS)
                     .lightLevel((state) -> 15))
@@ -104,14 +104,14 @@ public class MFUBlocks {
 
     public static final DeferredBlock<Block> COLLECTOR = registerBlock("collector",
             () -> new CollectorBlock(BlockBehaviour.Properties.of()
-                    .strength(2F)
+                    .strength(3F, 6F)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.STONE)
                     .noLootTable()));
 
     public static final DeferredBlock<Block> CONTROLLER = registerBlock("controller",
             () -> new ControllerBlock(BlockBehaviour.Properties.of()
-                    .strength(2F)
+                    .strength(3F, 6F)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.STONE)));
 
@@ -300,45 +300,45 @@ public class MFUBlocks {
     //non-block blocks
     public static final DeferredBlock<StairBlock> GLOOMWOOD_STAIRS = registerBlock("gloomwood_stairs",
             () -> new StairBlock(MFUBlocks.GLOOMWOOD_PLANKS.get().defaultBlockState(),
-                    BlockBehaviour.Properties.of().strength(2f).requiresCorrectToolForDrops()));
+                    BlockBehaviour.Properties.of().strength(2.0F, 3.0F).requiresCorrectToolForDrops()));
     public static final DeferredBlock<StairBlock> GLIMMERWOOD_STAIRS = registerBlock("glimmerwood_stairs",
             () -> new StairBlock(MFUBlocks.GLIMMERWOOD_PLANKS.get().defaultBlockState(),
-                    BlockBehaviour.Properties.of().strength(2f).requiresCorrectToolForDrops()));
+                    BlockBehaviour.Properties.of().strength(2.0F, 3.0F).requiresCorrectToolForDrops()));
 
     public static final DeferredBlock<SlabBlock> GLOOMWOOD_SLAB = registerBlock("gloomwood_slab",
-            () -> new SlabBlock(BlockBehaviour.Properties.of().strength(2f).requiresCorrectToolForDrops()));
+            () -> new SlabBlock(BlockBehaviour.Properties.of().strength(2.0F, 3.0F).requiresCorrectToolForDrops()));
     public static final DeferredBlock<SlabBlock> GLIMMERWOOD_SLAB = registerBlock("glimmerwood_slab",
-            () -> new SlabBlock(BlockBehaviour.Properties.of().strength(2f).requiresCorrectToolForDrops()));
+            () -> new SlabBlock(BlockBehaviour.Properties.of().strength(2.0F, 3.0F).requiresCorrectToolForDrops()));
 
     public static final DeferredBlock<PressurePlateBlock> GLOOMWOOD_PRESSURE_PLATE = registerBlock("gloomwood_pressure_plate",
-            () -> new PressurePlateBlock(BlockSetType.BIRCH, BlockBehaviour.Properties.of().strength(2f).requiresCorrectToolForDrops()));
+            () -> new PressurePlateBlock(BlockSetType.BIRCH, BlockBehaviour.Properties.of().strength(2.0F, 3.0F).requiresCorrectToolForDrops()));
     public static final DeferredBlock<PressurePlateBlock> GLIMMERWOOD_PRESSURE_PLATE = registerBlock("glimmerwood_pressure_plate",
-            () -> new PressurePlateBlock(BlockSetType.BIRCH, BlockBehaviour.Properties.of().strength(2f).requiresCorrectToolForDrops()));
+            () -> new PressurePlateBlock(BlockSetType.BIRCH, BlockBehaviour.Properties.of().strength(2.0F, 3.0F).requiresCorrectToolForDrops()));
 
     public static final DeferredBlock<ButtonBlock> GLOOMWOOD_BUTTON = registerBlock("gloomwood_button",
-            () -> new ButtonBlock(BlockSetType.BIRCH, 20, BlockBehaviour.Properties.of().strength(2f).requiresCorrectToolForDrops().noCollission()));
+            () -> new ButtonBlock(BlockSetType.BIRCH, 20, BlockBehaviour.Properties.of().strength(2.0F, 3.0F).requiresCorrectToolForDrops().noCollission()));
     public static final DeferredBlock<ButtonBlock> GLIMMERWOOD_BUTTON = registerBlock("glimmerwood_button",
-            () -> new ButtonBlock(BlockSetType.BIRCH, 20, BlockBehaviour.Properties.of().strength(2f).requiresCorrectToolForDrops().noCollission()));
+            () -> new ButtonBlock(BlockSetType.BIRCH, 20, BlockBehaviour.Properties.of().strength(2.0F, 3.0F).requiresCorrectToolForDrops().noCollission()));
 
     public static final DeferredBlock<FenceBlock> GLOOMWOOD_FENCE = registerBlock("gloomwood_fence",
-            () -> new FenceBlock(BlockBehaviour.Properties.of().strength(2f).requiresCorrectToolForDrops()));
+            () -> new FenceBlock(BlockBehaviour.Properties.of().strength(2.0F, 3.0F).requiresCorrectToolForDrops()));
     public static final DeferredBlock<FenceBlock> GLIMMERWOOD_FENCE = registerBlock("glimmerwood_fence",
-            () -> new FenceBlock(BlockBehaviour.Properties.of().strength(2f).requiresCorrectToolForDrops()));
+            () -> new FenceBlock(BlockBehaviour.Properties.of().strength(2.0F, 3.0F).requiresCorrectToolForDrops()));
 
     public static final DeferredBlock<FenceGateBlock> GLOOMWOOD_FENCE_GATE = registerBlock("gloomwood_fence_gate",
-            () -> new FenceGateBlock(WoodType.BIRCH, BlockBehaviour.Properties.of().strength(2f).requiresCorrectToolForDrops()));
+            () -> new FenceGateBlock(WoodType.BIRCH, BlockBehaviour.Properties.of().strength(2.0F, 3.0F).requiresCorrectToolForDrops()));
     public static final DeferredBlock<FenceGateBlock> GLIMMERWOOD_FENCE_GATE = registerBlock("gilmmerwood_fence_gate",
-            () -> new FenceGateBlock(WoodType.BIRCH, BlockBehaviour.Properties.of().strength(2f).requiresCorrectToolForDrops()));
+            () -> new FenceGateBlock(WoodType.BIRCH, BlockBehaviour.Properties.of().strength(2.0F, 3.0F).requiresCorrectToolForDrops()));
 
     public static final DeferredBlock<DoorBlock> GLOOMWOOD_DOOR = registerBlock("gloomwood_door",
-            () -> new DoorBlock(BlockSetType.BIRCH, BlockBehaviour.Properties.of().strength(2f).requiresCorrectToolForDrops().noOcclusion()));
+            () -> new DoorBlock(BlockSetType.BIRCH, BlockBehaviour.Properties.of().strength(2.0F, 3.0F).requiresCorrectToolForDrops().noOcclusion()));
     public static final DeferredBlock<DoorBlock> GLIMMERWOOD_DOOR = registerBlock("glimmerwood_door",
-            () -> new DoorBlock(BlockSetType.BIRCH, BlockBehaviour.Properties.of().strength(2f).requiresCorrectToolForDrops().noOcclusion()));
+            () -> new DoorBlock(BlockSetType.BIRCH, BlockBehaviour.Properties.of().strength(2.0F, 3.0F).requiresCorrectToolForDrops().noOcclusion()));
 
     public static final DeferredBlock<TrapDoorBlock> GLOOMWOOD_TRAPDOOR = registerBlock("gloomwood_trapdoor",
-            () -> new TrapDoorBlock(BlockSetType.BIRCH, BlockBehaviour.Properties.of().strength(2f).requiresCorrectToolForDrops().noOcclusion()));
+            () -> new TrapDoorBlock(BlockSetType.BIRCH, BlockBehaviour.Properties.of().strength(2.0F, 3.0F).requiresCorrectToolForDrops().noOcclusion()));
     public static final DeferredBlock<TrapDoorBlock> GLIMMERWOOD_TRAPDOOR = registerBlock("gilmmerwood_trapdoor",
-            () -> new TrapDoorBlock(BlockSetType.BIRCH, BlockBehaviour.Properties.of().strength(2f).requiresCorrectToolForDrops().noOcclusion()));
+            () -> new TrapDoorBlock(BlockSetType.BIRCH, BlockBehaviour.Properties.of().strength(2.0F, 3.0F).requiresCorrectToolForDrops().noOcclusion()));
 
     public static final DeferredBlock<Block> GENESIS_CHAMBER = registerBlock("genesis_chamber",
             () -> new GenesisChamberBlock(BlockBehaviour.Properties.of()
@@ -352,6 +352,16 @@ public class MFUBlocks {
                     tooltipComponents.add(Component.translatable("block.mobflowutilities.genesis_chamber.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
                 }
             });
+
+    public static final DeferredBlock<Block> GLOOMWOOD_BARREL = registerBlock("gloomwood_barrel",
+            () -> new MFUBarrelBlock(BlockBehaviour.Properties.of()
+                    .strength(2F)
+                    .sound(SoundType.WOOD)));
+
+    public static final DeferredBlock<Block> GLIMMERWOOD_BARREL = registerBlock("glimmerwood_barrel",
+            () -> new MFUBarrelBlock(BlockBehaviour.Properties.of()
+                    .strength(2F)
+                    .sound(SoundType.WOOD)));
 
     private static <T extends Block> DeferredBlock<T> registerBlock (String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);

@@ -180,7 +180,27 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('P', Items.DIAMOND_BLOCK)
                 .define('H', Items.PISTON)
                 .define('S', Items.OBSIDIAN)
-                .unlockedBy("has_glimmersteel_ingot", has( MFUItems.GLIMMERSTEEL_INGOT))
+                .unlockedBy("has_diamond", has(Items.DIAMOND))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUBlocks.GLOOMWOOD_BARREL.get())
+                .pattern("PSP")
+                .pattern("P#P")
+                .pattern("PSP")
+                .define('#', MFUBlocks.GLOOMSTEEL_BLOCK)
+                .define('P', MFUBlocks.GLOOMWOOD_PLANKS)
+                .define('S', MFUBlocks.GLOOMWOOD_SLAB)
+                .unlockedBy("has_gloomwood_planks", has(MFUBlocks.GLOOMWOOD_PLANKS))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUBlocks.GLIMMERWOOD_BARREL.get())
+                .pattern("PSP")
+                .pattern("P#P")
+                .pattern("PSP")
+                .define('#', MFUBlocks.GLIMMERSTEEL_BLOCK)
+                .define('P', MFUBlocks.GLIMMERWOOD_PLANKS)
+                .define('S', MFUBlocks.GLIMMERWOOD_SLAB)
+                .unlockedBy("has_glimmerwood_planks", has(MFUBlocks.GLIMMERWOOD_PLANKS))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC,  MFUBlocks.DAMAGE_PAD.get(), 4)

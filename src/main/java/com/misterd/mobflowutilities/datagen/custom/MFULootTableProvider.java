@@ -51,6 +51,7 @@ public class MFULootTableProvider extends BlockLootSubProvider {
         dropSelf( MFUBlocks.STRIPPED_GLIMMERWOOD_LOG.get());
         dropSelf( MFUBlocks.GLIMMERWOOD_PLANKS.get());
         dropSelf( MFUBlocks.GLIMMERWOOD_SAPLING.get());
+        dropSelf( MFUBlocks.GLIMMERWOOD_BARREL.get());
 
         dropSelf( MFUBlocks.GLOOMWOOD.get());
         dropSelf( MFUBlocks.GLOOMWOOD_LOG.get());
@@ -58,6 +59,7 @@ public class MFULootTableProvider extends BlockLootSubProvider {
         dropSelf( MFUBlocks.STRIPPED_GLOOMWOOD_LOG.get());
         dropSelf( MFUBlocks.GLOOMWOOD_PLANKS.get());
         dropSelf( MFUBlocks.GLOOMWOOD_SAPLING.get());
+        dropSelf( MFUBlocks.GLOOMWOOD_BARREL.get());
 
         dropSelf(MFUBlocks.GLOOMWOOD_STAIRS.get());
         add (MFUBlocks.GLOOMWOOD_SLAB.get(), block -> createSlabItemTable(MFUBlocks.GLOOMWOOD_SLAB.get()));

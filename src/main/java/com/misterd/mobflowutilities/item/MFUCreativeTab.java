@@ -24,15 +24,18 @@ public class MFUCreativeTab {
                         output.accept(MFUBlocks.FASTEST_FLOW_PAD);
                         output.accept(MFUBlocks.DAMAGE_PAD);
 
+                        output.accept(MFUBlocks.COLLECTOR);
+                        output.accept(MFUBlocks.CONTROLLER);
+                        output.accept(MFUBlocks.GENESIS_CHAMBER);
+
+                        output.accept(MFUBlocks.GLOOMWOOD_BARREL);
+                        output.accept(MFUBlocks.GLIMMERWOOD_BARREL);
+
                         output.accept(MFUBlocks.DARK_DIRT);
                         output.accept(MFUBlocks.GLIMMER_GRASS);
 
                         output.accept(MFUBlocks.DARK_GLASS);
                         output.accept(MFUBlocks.GLIMMER_LAMP);
-
-                        output.accept(MFUBlocks.COLLECTOR);
-                        output.accept(MFUBlocks.CONTROLLER);
-                        output.accept(MFUBlocks.GENESIS_CHAMBER);
 
                         output.accept(MFUItems.PAD_WRENCH);
 

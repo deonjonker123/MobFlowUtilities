@@ -97,8 +97,11 @@ public record ConfigPacket(
             case GENESIS_CHAMBER_DOWN_UP_OFFSET -> genesisChamber.setDownUpOffset(packet.intValue());
             case GENESIS_CHAMBER_NORTH_SOUTH_OFFSET -> genesisChamber.setNorthSouthOffset(packet.intValue());
             case GENESIS_CHAMBER_EAST_WEST_OFFSET -> genesisChamber.setEastWestOffset(packet.intValue());
+            case GENESIS_CHAMBER_REDSTONE_MODE -> genesisChamber.setRequiresRedstone(packet.boolValue());
             default -> {}
         }
+
+        level.sendBlockUpdated(pos, level.getBlockState(pos), level.getBlockState(pos), 3);
 
         level.sendBlockUpdated(pos, level.getBlockState(pos), level.getBlockState(pos), 3);
     }
@@ -127,7 +130,8 @@ public record ConfigPacket(
 
         GENESIS_CHAMBER_DOWN_UP_OFFSET,
         GENESIS_CHAMBER_NORTH_SOUTH_OFFSET,
-        GENESIS_CHAMBER_EAST_WEST_OFFSET;
+        GENESIS_CHAMBER_EAST_WEST_OFFSET,
+        GENESIS_CHAMBER_REDSTONE_MODE;
 
         public static final StreamCodec<FriendlyByteBuf, ConfigType> STREAM_CODEC = StreamCodec.of(
                 (buf, type) -> buf.writeEnum(type),

@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "north": "mobflowutilities:block/gloomwood_barrel_side",
+    "south": "mobflowutilities:block/gloomwood_barrel_side",
+    "east": "mobflowutilities:block/gloomwood_barrel_side",
+    "west": "mobflowutilities:block/gloomwood_barrel_side",
+    "up": "mobflowutilities:block/gloomwood_barrel_top",
+    "down": "mobflowutilities:block/gloomwood_barrel_bottom",
+    "particle": "mobflowutilities:block/gloomwood_barrel_side"
+  }
+}

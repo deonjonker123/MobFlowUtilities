@@ -1,8 +1,8 @@
-// 1.21.1	2025-11-21T19:25:38.6742229	Tags for minecraft:block mod id mobflowutilities
+// 1.21.1	2025-11-22T02:10:30.152102	Tags for minecraft:block mod id mobflowutilities
 7cf99ed6c38b7272ffff0a26ca78e828513a517d data/minecraft/tags/block/leaves.json
 cecefa796ed82d55a202a7f2e0c4389d0c0db503 data/minecraft/tags/block/logs.json
 2c8424c57b619184ff4013070fd6048e3f466647 data/minecraft/tags/block/logs_that_burn.json
-85e1ce9da442a134e1599b8ffce39ea40c7f7101 data/minecraft/tags/block/mineable/axe.json
+63a1c7133c79382e3ea67d984c6f2eae297b8435 data/minecraft/tags/block/mineable/axe.json
 7c4e106640437c59c93c2303d0443c32295aaad4 data/minecraft/tags/block/mineable/pickaxe.json
 57a9844f994b8e8749bd986b7f8228cacf2f698a data/minecraft/tags/block/mineable/shovel.json
 0044f80be21c4d0efc03b7f88188a3bc4528287b data/minecraft/tags/block/needs_iron_tool.json

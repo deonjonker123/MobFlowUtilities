@@ -59,6 +59,7 @@ public class GenesisChamberScreen extends AbstractContainerScreen<GenesisChamber
     private int northSouthOffset = 0;
     private int eastWestOffset = 0;
     private boolean showWireframe = false;
+    private boolean requiresRedstone = false;
 
     public GenesisChamberScreen(GenesisChamberMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
@@ -236,7 +237,30 @@ public class GenesisChamberScreen extends AbstractContainerScreen<GenesisChamber
             this.northSouthOffset = this.menu.blockEntity.getNorthSouthOffset();
             this.eastWestOffset = this.menu.blockEntity.getEastWestOffset();
             this.showWireframe = GenesisChamberWireframeRenderer.isWireframeActive(this.menu.blockEntity.getBlockPos());
+            this.requiresRedstone = this.menu.blockEntity.getRequiresRedstone();
         }
+    }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        int x = (this.width - this.imageWidth) / 2;
+        int y = (this.height - this.imageHeight) / 2;
+
+        if (mouseX >= x + 55 && mouseX <= x + 67 && mouseY >= y + 73 && mouseY <= y + 85) {
+            this.requiresRedstone = !this.requiresRedstone;
+            PacketDistributor.sendToServer(
+                    new ConfigPacket(
+                            ConfigPacket.ConfigTarget.GENESIS_CHAMBER_BLOCK,
+                            this.menu.blockEntity.getBlockPos(),
+                            ConfigPacket.ConfigType.GENESIS_CHAMBER_REDSTONE_MODE,
+                            0,
+                            this.requiresRedstone
+                    )
+            );
+            return true;
+        }
+
+        return super.mouseClicked(mouseX, mouseY, button);
     }
 
     @Override
@@ -252,6 +276,7 @@ public class GenesisChamberScreen extends AbstractContainerScreen<GenesisChamber
 
         renderBurnProgress(guiGraphics, x, y);
         renderMobPreview(guiGraphics, x, y, mouseX, mouseY);
+        renderRedstoneToggle(guiGraphics, x, y);
     }
 
     private void renderBurnProgress(GuiGraphics guiGraphics, int x, int y) {
@@ -306,11 +331,32 @@ public class GenesisChamberScreen extends AbstractContainerScreen<GenesisChamber
         }
     }
 
+    private void renderRedstoneToggle(GuiGraphics guiGraphics, int x, int y) {
+        ResourceLocation sprite = this.requiresRedstone
+                ? ResourceLocation.fromNamespaceAndPath("mobflowutilities", "redstone_required_btn")
+                : ResourceLocation.fromNamespaceAndPath("mobflowutilities", "no_redstone_required_btn");
+
+        guiGraphics.blitSprite(sprite, x + 55, y + 73, 12, 12);
+    }
+
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         this.syncFromBlockEntity();
         super.render(guiGraphics, mouseX, mouseY, partialTick);
         this.renderTooltip(guiGraphics, mouseX, mouseY);
+        this.renderCustomTooltips(guiGraphics, mouseX, mouseY);
+    }
+
+    private void renderCustomTooltips(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+        int x = (this.width - this.imageWidth) / 2;
+        int y = (this.height - this.imageHeight) / 2;
+
+        if (mouseX >= x + 55 && mouseX <= x + 67 && mouseY >= y + 73 && mouseY <= y + 85) {
+            Component tooltipText = this.requiresRedstone
+                    ? Component.translatable("tooltip.mobflowutilities.genesis_chamber.redstone_required")
+                    : Component.translatable("tooltip.mobflowutilities.genesis_chamber.no_redstone_required");
+            guiGraphics.renderTooltip(this.font, tooltipText, mouseX, mouseY);
+        }
     }
 
     @Override

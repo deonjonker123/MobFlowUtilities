@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "mobflowutilities:glimmersteel_block"
+    },
+    "P": {
+      "item": "mobflowutilities:glimmerwood_planks"
+    },
+    "S": {
+      "item": "mobflowutilities:glimmerwood_slab"
+    }
+  },
+  "pattern": [
+    "PSP",
+    "P#P",
+    "PSP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mobflowutilities:glimmerwood_barrel"
+  }
+}

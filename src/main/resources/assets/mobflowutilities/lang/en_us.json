@@ -50,6 +50,7 @@
   "block.mobflowutilities.gloomwood_fence_gate": "Gloomwood Fence Gate",
   "block.mobflowutilities.gloomwood_door": "Gloomwood Door",
   "block.mobflowutilities.gloomwood_trapdoor": "Gloomwood Trapdoor",
+  "block.mobflowutilities.gloomwood_barrel": "Gloomwood Barrel",
 
   "block.mobflowutilities.glimmerwood_sapling": "Glimmerwood Sapling",
   "block.mobflowutilities.glimmerwood_log": "Glimmerwood Log",
@@ -66,6 +67,7 @@
   "block.mobflowutilities.gilmmerwood_fence_gate": "Glimmerwood Fence Gate",
   "block.mobflowutilities.glimmerwood_door": "Glimmerwood Door",
   "block.mobflowutilities.gilmmerwood_trapdoor": "Glimmerwood Trapdoor",
+  "block.mobflowutilities.glimmerwood_barrel": "Glimmerwood Barrel",
 
   "item.mobflowutilities.bane_of_arthropods_module": "Bane of Arthropods Module",
   "item.mobflowutilities.bane_of_arthropods_module.subtitle": "Deals increased damage to spiders, silverfish, and other arthropods",
@@ -151,6 +153,9 @@
   "gui.mobflowutilities.controller.remove": "Remove",
   "gui.mobflowutilities.collector.xp_input_levels": "Levels",
   "gui.mobflowutilities.void_filter": "Void Filter",
+  "gui.mobflowutilities.gloomwood_barrel": "Gloomwood Barrel",
+  "gui.mobflowutilities.glimmerwood_barrel": "Glimmerwood Barrel",
+  "gui.mobflowutilities.barrel": "MFU Barrel",
 
   "gui.mobflowutilities.collector.offset.down_up": "D/U Offset",
   "gui.mobflowutilities.collector.offset.north_south": "N/S Offset",
@@ -176,13 +181,15 @@
 
   "tooltip.mobflowutilities.collector.wireframe_toggle": "Show/Hide Collection Radius",
   "tooltip.mobflowutilities.genesis_chamber.wireframe_toggle": "Show/Hide Spawn Radius",
+  "tooltip.mobflowutilities.genesis_chamber.redstone_required": "Disable Redstone Control",
+  "tooltip.mobflowutilities.genesis_chamber.no_redstone_required": "Enable Redstone Control",
 
   "tooltip.mobflowutilities.collector.xp.withdraw": "Withdraw levels from the Collector",
   "tooltip.mobflowutilities.collector.xp.deposit": "Deposit levels into the Collector",
   "tooltip.mobflowutilities.collector.xp.withdraw_all": "Withdraw all stored XP from the Collector",
   "tooltip.mobflowutilities.collector.xp.deposit_all": "Deposit all your XP into the Collector",
-  "tooltip.mobflowutilities.collector.xp_collection.enabled": "XP Collection: Enabled",
-  "tooltip.mobflowutilities.collector.xp_collection.disabled": "XP Collection: Disabled",
+  "tooltip.mobflowutilities.collector.xp_collection.enabled": "Disable XP Collection",
+  "tooltip.mobflowutilities.collector.xp_collection.disabled": "Enable XP Collection",
   "tooltip.mobflowutilities.collector.xp_display": "XP: %s",
 
   "tooltip.mobflowutilities.collector.edit_filter": "Edit Filter",

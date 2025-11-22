@@ -1,9 +1,6 @@
 package com.misterd.mobflowutilities.gui;
 
-import com.misterd.mobflowutilities.gui.custom.CollectorMenu;
-import com.misterd.mobflowutilities.gui.custom.ControllerMenu;
-import com.misterd.mobflowutilities.gui.custom.GenesisChamberMenu;
-import com.misterd.mobflowutilities.gui.custom.VoidFilterMenu;
+import com.misterd.mobflowutilities.gui.custom.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
@@ -20,6 +17,7 @@ public class MFUMenuTypes {
     public static final DeferredHolder<MenuType<?>, MenuType<ControllerMenu>> CONTROLLER_MENU = registerMenuType("controller_menu", ControllerMenu::new);
     public static final DeferredHolder<MenuType<?>, MenuType<VoidFilterMenu>> VOID_FILTER_MENU = registerMenuType("void_filter_menu", VoidFilterMenu::new);
     public static final DeferredHolder<MenuType<?>, MenuType<GenesisChamberMenu>> GENESIS_CHAMBER_MENU = registerMenuType("genesis_chamber_menu", GenesisChamberMenu::new);
+    public static final DeferredHolder<MenuType<?>, MenuType<MFUBarrelMenu>> MFU_BARREL_MENU = registerMenuType("mfu_barrel_menu", MFUBarrelMenu::new);
 
     private static <T extends AbstractContainerMenu> DeferredHolder<MenuType<?>, MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory) {
         return MENUS.register(name, () -> IMenuTypeExtension.create(factory));
