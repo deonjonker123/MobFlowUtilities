@@ -85,14 +85,7 @@ Gene sampling allows players to collect gene samples from creatures using Empty 
 ### Custom Wood Types
 
 -   **Gloomwood**: Dark-themed wood and **Glimmerwood**: Light-themed
-    -   Full set of wood variants: logs, stripped logs, planks, stairs, slabs, fences, doors, trapdoors, buttons, and pressure plates, barrels
-
-### Berry Bushes
-
--   **Umbral Berry Bush**: Found in dark biomes, produces Umbral Berries
-    -   Gives some not-so-nice effects when eaten
--   **Radiant Berry Bush**: Found in light biomes, produces Radiant Berries
-    -   Gives some pretty-good effects when eaten
+    -   Full set of wood variants: logs, stripped logs, planks, stairs, slabs, fences, doors, trapdoors, buttons, pressure plates, barrels, and berries
 
 ### Decorative Blocks
 
