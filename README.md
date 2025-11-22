@@ -84,10 +84,8 @@ Gene sampling allows players to collect gene samples from creatures using Empty 
 
 ### Custom Wood Types
 
--   **Gloomwood**: Dark-themed wood
-    -   Full set of wood variants: logs, stripped logs, planks, stairs, slabs, fences, doors, trapdoors, buttons, and pressure plates
--   **Glimmerwood**: Light-themed wood
-    -   Full set of wood variants: logs, stripped logs, planks, stairs, slabs, fences, doors, trapdoors, buttons, and pressure plates
+-   **Gloomwood**: Dark-themed wood and **Glimmerwood**: Light-themed
+    -   Full set of wood variants: logs, stripped logs, planks, stairs, slabs, fences, doors, trapdoors, buttons, and pressure plates, barrels
 
 ### Berry Bushes
 
