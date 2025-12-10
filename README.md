@@ -113,12 +113,3 @@ Some textures used in this mod were adapted from  **"Unused Minecraft Textures" 
 Licensed under the  [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/).
 
 Modifications were made to some of the original assets.
-
-## License
-
-All rights reserved. This mod is protected by copyright and may not be redistributed or modified without explicit permission.
-
-**Permitted Uses:**
-
--   Inclusion in modpacks (public or private)
--   Content creation (videos, streams, reviews, etc.)

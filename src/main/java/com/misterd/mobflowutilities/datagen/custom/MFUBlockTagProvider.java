@@ -180,5 +180,8 @@ public class MFUBlockTagProvider extends BlockTagsProvider {
         tag(BlockTags.LEAVES)
                 .add(MFUBlocks.GLOOMWOOD_LEAVES.get())
                 .add(MFUBlocks.GLIMMERWOOD_LEAVES.get());
+
+        tag(BlockTags.WITHER_IMMUNE)
+                .add(MFUBlocks.DARK_GLASS.get());
     }
 }
