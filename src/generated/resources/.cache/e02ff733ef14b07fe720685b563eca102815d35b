@@ -1,6 +1,9 @@
-// 1.21.1	2025-12-22T15:14:24.2479501	Item Models: mobflowutilities
+// 1.21.1	2025-12-22T17:53:07.5055904	Item Models: mobflowutilities
 79b2ee0a8e3013fe016bb424df89fdd0cc6ba20e assets/mobflowutilities/models/item/bane_of_arthropods_module.json
 5dd9dd7e3f84273175a8d3f7f7374c605b575c53 assets/mobflowutilities/models/item/empty_gene_vial.json
+9cf3315bb1c040c242accb695824843f24095db4 assets/mobflowutilities/models/item/fan_distance_increase_module.json
+4d1734ab3f40d6f1f3fd4f3b1a3a6f4e70cd76e9 assets/mobflowutilities/models/item/fan_height_increase_module.json
+5713326951437f14747e7a0a94a1f8cecae6c46e assets/mobflowutilities/models/item/fan_width_increase_module.json
 4a33d042030d0cfe315bf97871f8b4c8debbff51 assets/mobflowutilities/models/item/fire_aspect_module.json
 05e0e16a25bffdacd9da46f491abc77eb95255e0 assets/mobflowutilities/models/item/gene_sample_vial.json
 b578d4708f4f4dcac39935ed45a4fb920d97a159 assets/mobflowutilities/models/item/glimmer_sprout.json

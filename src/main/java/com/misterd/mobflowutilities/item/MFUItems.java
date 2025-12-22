@@ -70,6 +70,30 @@ public class MFUItems {
                 }
             });
 
+    public static final DeferredItem<Item> FAN_WIDTH_INCREASE_MODULE = ITEMS.register("fan_width_increase_module",
+            () -> new Item(new Item.Properties()) {
+                @Override
+                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("item.mobflowutilities.fan_width_increase_module.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
+                }
+            });
+
+    public static final DeferredItem<Item> FAN_HEIGHT_INCREASE_MODULE = ITEMS.register("fan_height_increase_module",
+            () -> new Item(new Item.Properties()) {
+                @Override
+                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("item.mobflowutilities.fan_height_increase_module.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
+                }
+            });
+
+    public static final DeferredItem<Item> FAN_DISTANCE_INCREASE_MODULE = ITEMS.register("fan_distance_increase_module",
+            () -> new Item(new Item.Properties()) {
+                @Override
+                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("item.mobflowutilities.fan_distance_increase_module.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
+                }
+            });
+
     public static final DeferredItem<Item> GLOOM_SPORE = ITEMS.register("gloom_spore",
             () -> new GloomSporeItem(new Item.Properties()) {
                 @Override

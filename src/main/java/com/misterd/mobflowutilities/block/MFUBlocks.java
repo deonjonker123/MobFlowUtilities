@@ -102,6 +102,19 @@ public class MFUBlocks {
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.STONE)));
 
+    public static final DeferredBlock<Block> FAN = registerBlock("fan",
+            () -> new FanBlock(BlockBehaviour.Properties.of()
+                    .strength(3F, 6F)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.STONE))
+            {
+                @Override
+                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("block.mobflowutilities.fan.subtitle_line1").withStyle(ChatFormatting.LIGHT_PURPLE));
+                    tooltipComponents.add(Component.translatable("block.mobflowutilities.fan.subtitle_line2").withStyle(ChatFormatting.LIGHT_PURPLE));
+                }
+            });
+
     public static final DeferredBlock<Block> GENESIS_CHAMBER = registerBlock("genesis_chamber",
             () -> new GenesisChamberBlock(BlockBehaviour.Properties.of()
                     .strength(2.0F)

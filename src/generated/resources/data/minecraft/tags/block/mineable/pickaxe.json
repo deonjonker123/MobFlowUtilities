@@ -7,6 +7,7 @@
     "mobflowutilities:controller",
     "mobflowutilities:collector",
     "mobflowutilities:genesis_chamber",
+    "mobflowutilities:fan",
     "mobflowutilities:dark_glass",
     "mobflowutilities:glimmer_lamp"
   ]

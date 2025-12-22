@@ -8,6 +8,9 @@
 
   "block.mobflowutilities.collector": "Collector",
   "block.mobflowutilities.controller": "Controller",
+  "block.mobflowutilities.fan": "Fan",
+  "block.mobflowutilities.fan.subtitle_line1": "Pushes mobs in the facing direction",
+  "block.mobflowutilities.fan.subtitle_line2": "Can be upgraded with fan upgrades",
 
   "block.mobflowutilities.genesis_chamber": "Genesis Chamber",
   "block.mobflowutilities.genesis_chamber.subtitle": "Spawns mobs in a 5x5 area around it. Requires fuel to run",
@@ -38,6 +41,13 @@
   "item.mobflowutilities.void_filter_module.subtitle": "Destroys filtered items collected by Collectors",
   "item.mobflowutilities.speed_module": "Speed Module",
   "item.mobflowutilities.speed_module.subtitle": "Increases spawn rates of the Genesis Chamber",
+
+  "item.mobflowutilities.fan_width_increase_module": "Fan Width Increase Module",
+  "item.mobflowutilities.fan_width_increase_module.subtitle": "Increases the Fan's effective blowing width",
+  "item.mobflowutilities.fan_height_increase_module": "Fan Height Increase Module",
+  "item.mobflowutilities.fan_height_increase_module.subtitle": "Increases the Fan's effective blowing height",
+  "item.mobflowutilities.fan_distance_increase_module": "Fan Distance Increase Module",
+  "item.mobflowutilities.fan_distance_increase_module.subtitle": "Increases the Fan's effective blowing distance",
 
   "item.mobflowutilities.pad_wrench": "Pad Wrench",
   "item.mobflowutilities.pad_wrench.subtitle": "Used to link Damage Pads with Controllers",
@@ -155,5 +165,10 @@
 
   "item.mobflowutilities.gene_sample_vial.contains": "Gene Sample: %s",
   "item.mobflowutilities.gene_sample_vial.empty": "Empty - No Gene Sample detected",
-  "item.mobflowutilities.gene_sample_vial.usage": "Craft with Incubation Crystal + Emerald to create spawn egg"
+  "item.mobflowutilities.gene_sample_vial.usage": "Craft with Incubation Crystal + Emerald to create spawn egg",
+
+  "menu.mobflowutilities.fan": "Fan",
+  "gui.mobflowutilities.fan": "Fan",
+
+  "tooltip.mobflowutilities.fan.wireframe_toggle": "Show/Hide Push Zone"
 }

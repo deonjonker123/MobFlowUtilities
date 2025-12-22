@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "north": "mobflowutilities:block/fan_front",
+    "south": "mobflowutilities:block/fan_side",
+    "east": "mobflowutilities:block/fan_side",
+    "west": "mobflowutilities:block/fan_side",
+    "up": "mobflowutilities:block/fan_top",
+    "down": "mobflowutilities:block/fan_bottom",
+    "particle": "mobflowutilities:block/fan_front"
+  }
+}

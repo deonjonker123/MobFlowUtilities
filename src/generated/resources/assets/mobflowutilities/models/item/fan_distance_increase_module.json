@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "mobflowutilities:item/fan_distance_increase_module"
+  }
+}

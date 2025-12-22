@@ -93,6 +93,7 @@ public class MobFlowUtilities {
             event.register(MFUMenuTypes.VOID_FILTER_MENU.get(), VoidFilterScreen::new);
             event.register(MFUMenuTypes.CONTROLLER_MENU.get(), ControllerScreen::new);
             event.register(MFUMenuTypes.GENESIS_CHAMBER_MENU.get(), GenesisChamberScreen::new);
+            event.register(MFUMenuTypes.FAN_MENU.get(), FanScreen::new);
         }
     }
 }

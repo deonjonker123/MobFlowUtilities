@@ -31,6 +31,16 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_redstone", has(Items.REDSTONE))
                 .save(recipeOutput);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUBlocks.FAN.get())
+                .pattern("GPG")
+                .pattern("PCP")
+                .pattern("GPG")
+                .define('G', Tags.Items.STONES)
+                .define('P', Items.IRON_INGOT)
+                .define('C', Items.PISTON)
+                .unlockedBy("has_piston", has(Items.PISTON))
+                .save(recipeOutput);
+
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUBlocks.COLLECTOR.get())
                 .pattern("GEG")
                 .pattern("PCP")
@@ -184,6 +194,33 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('D', Items.DIAMOND_BLOCK)
                 .define('#', Items.OBSIDIAN)
                 .unlockedBy("has_diamond", has(Items.DIAMOND))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUItems.FAN_WIDTH_INCREASE_MODULE.get())
+                .pattern("G G")
+                .pattern("SSS")
+                .pattern("G G")
+                .define('G', Items.IRON_INGOT)
+                .define('S', Items.FEATHER)
+                .unlockedBy("has_feather", has(Items.FEATHER))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUItems.FAN_HEIGHT_INCREASE_MODULE.get())
+                .pattern("GSG")
+                .pattern(" S ")
+                .pattern("GSG")
+                .define('G', Items.IRON_INGOT)
+                .define('S', Items.FEATHER)
+                .unlockedBy("has_feather", has(Items.FEATHER))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUItems.FAN_DISTANCE_INCREASE_MODULE.get())
+                .pattern("GSG")
+                .pattern("S S")
+                .pattern("GSG")
+                .define('G', Items.IRON_INGOT)
+                .define('S', Items.FEATHER)
+                .unlockedBy("has_feather", has(Items.FEATHER))
                 .save(recipeOutput);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, MFUBlocks.COLLECTOR.get())

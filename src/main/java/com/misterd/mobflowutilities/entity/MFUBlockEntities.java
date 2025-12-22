@@ -27,6 +27,11 @@ public class MFUBlockEntities {
                     () -> BlockEntityType.Builder.of(CollectorBlockEntity::new,
                             MFUBlocks.COLLECTOR.get()).build(null));
 
+    public static final Supplier<BlockEntityType<FanBlockEntity>> FAN_BE =
+            BLOCK_ENTITIES.register("fan_be",
+                    () -> BlockEntityType.Builder.of(FanBlockEntity::new,
+                            MFUBlocks.FAN.get()).build(null));
+
     public static final Supplier<BlockEntityType<DamagePadBlockEntity>> DAMAGE_PAD_BE =
             BLOCK_ENTITIES.register("damage_pad_be",
                     () -> BlockEntityType.Builder.of(DamagePadBlockEntity::new,

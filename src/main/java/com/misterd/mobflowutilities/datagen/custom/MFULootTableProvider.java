@@ -21,6 +21,7 @@ public class MFULootTableProvider extends BlockLootSubProvider {
     protected void generate() {
         dropSelf( MFUBlocks.CONTROLLER.get());
         dropSelf( MFUBlocks.GENESIS_CHAMBER.get());
+        dropSelf( MFUBlocks.FAN.get());
 
         dropSelf( MFUBlocks.FAST_FLOW_PAD.get());
         dropSelf( MFUBlocks.FASTER_FLOW_PAD.get());

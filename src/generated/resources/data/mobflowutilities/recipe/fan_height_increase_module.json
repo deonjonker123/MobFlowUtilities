@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "minecraft:iron_ingot"
+    },
+    "S": {
+      "item": "minecraft:feather"
+    }
+  },
+  "pattern": [
+    "GSG",
+    " S ",
+    "GSG"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mobflowutilities:fan_height_increase_module"
+  }
+}
