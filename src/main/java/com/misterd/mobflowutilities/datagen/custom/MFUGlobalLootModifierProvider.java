@@ -116,49 +116,6 @@ public class MFUGlobalLootModifierProvider extends GlobalLootModifierProvider {
                 "chests/stronghold_library", "chests/pillager_outpost", "chests/nether_bridge",
                 "chests/woodland_mansion"
         };
-
-        for (String chest : treasureChests) {
-            addChestLoot("gloomsteel_sword_from_" + chest.replace("chests/", ""),
-                    chest, MFUItems.GLOOMSTEEL_SWORD, 0.3F);
-            addChestLoot("gloomsteel_pickaxe_from_" + chest.replace("chests/", ""),
-                    chest, MFUItems.GLOOMSTEEL_PICKAXE, 0.3F);
-            addChestLoot("gloomsteel_axe_from_" + chest.replace("chests/", ""),
-                    chest, MFUItems.GLOOMSTEEL_AXE, 0.3F);
-            addChestLoot("gloomsteel_shovel_from_" + chest.replace("chests/", ""),
-                    chest, MFUItems.GLOOMSTEEL_SHOVEL, 0.3F);
-            addChestLoot("gloomsteel_hoe_from_" + chest.replace("chests/", ""),
-                    chest, MFUItems.GLOOMSTEEL_HOE, 0.3F);
-            addChestLoot("gloomsteel_helmet_from_" + chest.replace("chests/", ""),
-                    chest, MFUItems.GLOOMSTEEL_HELMET, 0.3F);
-            addChestLoot("gloomsteel_chestplate_from_" + chest.replace("chests/", ""),
-                    chest, MFUItems.GLOOMSTEEL_CHESTPLATE, 0.3F);
-            addChestLoot("gloomsteel_leggings_from_" + chest.replace("chests/", ""),
-                    chest, MFUItems.GLOOMSTEEL_LEGGINGS, 0.3F);
-            addChestLoot("gloomsteel_boots_from_" + chest.replace("chests/", ""),
-                    chest, MFUItems.GLOOMSTEEL_BOOTS, 0.3F);
-            addChestLoot("umbral_berries_from_" + chest.replace("chests/", ""),
-                    chest, MFUItems.UMBRAL_BERRIES, 0.2F);
-            addChestLoot("glimmersteel_sword_from_" + chest.replace("chests/", ""),
-                    chest, MFUItems.GLIMMERSTEEL_SWORD, 0.3F);
-            addChestLoot("glimmersteel_pickaxe_from_" + chest.replace("chests/", ""),
-                    chest, MFUItems.GLIMMERSTEEL_PICKAXE, 0.3F);
-            addChestLoot("glimmersteel_axe_from_" + chest.replace("chests/", ""),
-                    chest, MFUItems.GLIMMERSTEEL_AXE, 0.3F);
-            addChestLoot("glimmersteel_shovel_from_" + chest.replace("chests/", ""),
-                    chest, MFUItems.GLIMMERSTEEL_SHOVEL, 0.3F);
-            addChestLoot("glimmersteel_hoe_from_" + chest.replace("chests/", ""),
-                    chest, MFUItems.GLIMMERSTEEL_HOE, 0.3F);
-            addChestLoot("glimmersteel_helmet_from_" + chest.replace("chests/", ""),
-                    chest, MFUItems.GLIMMERSTEEL_HELMET, 0.3F);
-            addChestLoot("glimmersteel_chestplate_from_" + chest.replace("chests/", ""),
-                    chest, MFUItems.GLIMMERSTEEL_CHESTPLATE, 0.3F);
-            addChestLoot("glimmersteel_leggings_from_" + chest.replace("chests/", ""),
-                    chest, MFUItems.GLIMMERSTEEL_LEGGINGS, 0.3F);
-            addChestLoot("glimmersteel_boots_from_" + chest.replace("chests/", ""),
-                    chest, MFUItems.GLIMMERSTEEL_BOOTS, 0.3F);
-            addChestLoot("radiant_berries_from_" + chest.replace("chests/", ""),
-                    chest, MFUItems.RADIANT_BERRIES, 0.2F);
-        }
     }
 
     private void addMobLoot(String name, String entityPath, net.neoforged.neoforge.registries.DeferredItem<?> item, float chance) {

@@ -6,7 +6,7 @@
       "item": "minecraft:diamond_block"
     },
     "G": {
-      "tag": "mobflowutilities:ingots/mfu"
+      "item": "minecraft:iron_ingot"
     },
     "L": {
       "item": "minecraft:lapis_block"

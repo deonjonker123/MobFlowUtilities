@@ -1,24 +1,6 @@
-// 1.21.1	2025-12-10T22:44:15.3679475	Tags for minecraft:block mod id mobflowutilities
-7cf99ed6c38b7272ffff0a26ca78e828513a517d data/minecraft/tags/block/leaves.json
-cecefa796ed82d55a202a7f2e0c4389d0c0db503 data/minecraft/tags/block/logs.json
-2c8424c57b619184ff4013070fd6048e3f466647 data/minecraft/tags/block/logs_that_burn.json
-63a1c7133c79382e3ea67d984c6f2eae297b8435 data/minecraft/tags/block/mineable/axe.json
-7c4e106640437c59c93c2303d0443c32295aaad4 data/minecraft/tags/block/mineable/pickaxe.json
+// 1.21.1	2025-12-22T15:14:24.2454612	Tags for minecraft:block mod id mobflowutilities
+e594a3c3ff35be53a14430d5dba5976ec4b34772 data/minecraft/tags/block/mineable/pickaxe.json
 57a9844f994b8e8749bd986b7f8228cacf2f698a data/minecraft/tags/block/mineable/shovel.json
-0044f80be21c4d0efc03b7f88188a3bc4528287b data/minecraft/tags/block/needs_iron_tool.json
 35a6e4fb5dcb80e01b2b3a69eb4835eff08441fc data/minecraft/tags/block/wither_immune.json
-414949e2f1fc6d9f7ed8c95a0da652ab210b48ad data/minecraft/tags/block/wooden_buttons.json
-3367c08f76ddc87b957a5b928f64edc32541751a data/minecraft/tags/block/wooden_doors.json
-b372d04b6eadb04729cc84f7f5a31e8d8d70ca58 data/minecraft/tags/block/wooden_fences.json
-3d9b7afa12656a165abf0e58b371ab3ca65b5d70 data/minecraft/tags/block/wooden_pressure_plates.json
-c49376a0d29bce6417b75767c57b8125381105dc data/minecraft/tags/block/wooden_slabs.json
-543ed702c024305500493a2a558d0eb01de5d9d4 data/minecraft/tags/block/wooden_stairs.json
-c165bab7b1fa03839ba28bb6bdf175a07b602ffa data/minecraft/tags/block/wooden_trapdoors.json
-28c59622ebb63716cdbe636c15b57a58949c9588 data/mobflowutilities/tags/block/incorrect_for_glimmersteel_tool.json
-5c486bfd351ce69637432f675d8dc16336d3ae2f data/mobflowutilities/tags/block/incorrect_for_gloomsteel_tool.json
 f1eb1cae0809b74e6673efcd247c5ebf37321063 data/mobflowutilities/tags/block/mobflowutilities_machines.json
 3de53d1f7af4401b4e8530c0d4bfe7b6b20b0849 data/mobflowutilities/tags/block/mobflowutilities_pads.json
-a249c46329a41538f49a564e1f14338aaf1be5a0 data/mobflowutilities/tags/block/needs_glimmersteel_tool.json
-a249c46329a41538f49a564e1f14338aaf1be5a0 data/mobflowutilities/tags/block/needs_gloomsteel_tool.json
-0044f80be21c4d0efc03b7f88188a3bc4528287b data/mobflowutilities/tags/block/ores/mfu.json
-8f859bc6559383450cc01989782ad08920e15156 data/mobflowutilities/tags/block/raw_blocks/mfu.json

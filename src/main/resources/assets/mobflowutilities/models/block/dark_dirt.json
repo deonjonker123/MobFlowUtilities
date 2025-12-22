@@ -6,7 +6,7 @@
     "east": "mobflowutilities:block/dark_dirt_sides",
     "west": "mobflowutilities:block/dark_dirt_sides",
     "up": "mobflowutilities:block/dark_dirt_top",
-    "down": "mobflowutilities:block/grass_bottom",
+    "down": "mobflowutilities:block/dirt_bottom",
     "particle": "mobflowutilities:block/dark_dirt_top"
   }
 }

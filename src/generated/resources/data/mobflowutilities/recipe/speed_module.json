@@ -9,7 +9,7 @@
       "item": "minecraft:diamond_block"
     },
     "L": {
-      "tag": "mobflowutilities:mobflowutilities_blocks"
+      "item": "minecraft:iron_block"
     }
   },
   "pattern": [

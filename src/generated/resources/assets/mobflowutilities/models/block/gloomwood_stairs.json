@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/stairs",
-  "textures": {
-    "bottom": "mobflowutilities:block/gloomwood_planks",
-    "side": "mobflowutilities:block/gloomwood_planks",
-    "top": "mobflowutilities:block/gloomwood_planks"
-  }
-}

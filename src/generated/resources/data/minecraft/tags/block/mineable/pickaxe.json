@@ -7,18 +7,6 @@
     "mobflowutilities:controller",
     "mobflowutilities:collector",
     "mobflowutilities:genesis_chamber",
-    "mobflowutilities:gloomsteel_block",
-    "mobflowutilities:gloomsteel_stone_ore",
-    "mobflowutilities:gloomsteel_deepslate_ore",
-    "mobflowutilities:gloomsteel_netherrack_ore",
-    "mobflowutilities:gloomsteel_endstone_ore",
-    "mobflowutilities:raw_gloomsteel_block",
-    "mobflowutilities:glimmersteel_block",
-    "mobflowutilities:glimmersteel_stone_ore",
-    "mobflowutilities:glimmersteel_deepslate_ore",
-    "mobflowutilities:glimmersteel_netherrack_ore",
-    "mobflowutilities:glimmersteel_endstone_ore",
-    "mobflowutilities:raw_glimmersteel_block",
     "mobflowutilities:dark_glass",
     "mobflowutilities:glimmer_lamp"
   ]

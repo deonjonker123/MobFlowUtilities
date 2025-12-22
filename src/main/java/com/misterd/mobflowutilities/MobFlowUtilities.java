@@ -5,7 +5,6 @@ import com.misterd.mobflowutilities.client.renderer.ber.GenesisChamberBlockEntit
 import com.misterd.mobflowutilities.component.MFUDataComponents;
 import com.misterd.mobflowutilities.config.Config;
 import com.misterd.mobflowutilities.entity.MFUBlockEntities;
-import com.misterd.mobflowutilities.entity.custom.GenesisChamberBlockEntity;
 import com.misterd.mobflowutilities.gui.MFUMenuTypes;
 import com.misterd.mobflowutilities.gui.custom.*;
 import com.misterd.mobflowutilities.item.MFUCreativeTab;
@@ -94,7 +93,6 @@ public class MobFlowUtilities {
             event.register(MFUMenuTypes.VOID_FILTER_MENU.get(), VoidFilterScreen::new);
             event.register(MFUMenuTypes.CONTROLLER_MENU.get(), ControllerScreen::new);
             event.register(MFUMenuTypes.GENESIS_CHAMBER_MENU.get(), GenesisChamberScreen::new);
-            event.register(MFUMenuTypes.MFU_BARREL_MENU.get(), MFUBarrelScreen::new);
         }
     }
 }

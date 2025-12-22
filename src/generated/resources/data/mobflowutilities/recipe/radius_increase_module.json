@@ -6,7 +6,7 @@
       "item": "minecraft:ender_eye"
     },
     "G": {
-      "tag": "mobflowutilities:ingots/mfu"
+      "item": "minecraft:iron_ingot"
     },
     "R": {
       "item": "minecraft:observer"

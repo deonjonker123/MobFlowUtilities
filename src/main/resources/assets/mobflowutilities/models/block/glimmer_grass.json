@@ -6,7 +6,7 @@
     "east": "mobflowutilities:block/glimmer_grass_sides",
     "west": "mobflowutilities:block/glimmer_grass_sides",
     "up": "mobflowutilities:block/glimmer_grass_top",
-    "down": "mobflowutilities:block/grass_bottom",
+    "down": "mobflowutilities:block/dirt_bottom",
     "particle": "mobflowutilities:block/glimmer_grass_top"
   }
 }

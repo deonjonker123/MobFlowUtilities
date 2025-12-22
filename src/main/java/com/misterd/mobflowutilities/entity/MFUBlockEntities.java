@@ -3,7 +3,6 @@ package com.misterd.mobflowutilities.entity;
 import com.misterd.mobflowutilities.block.MFUBlocks;
 import java.util.function.Supplier;
 
-import com.misterd.mobflowutilities.block.custom.MFUBarrelBlock;
 import com.misterd.mobflowutilities.entity.custom.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
@@ -45,12 +44,6 @@ public class MFUBlockEntities {
                     () -> BlockEntityType.Builder.of(GenesisChamberBlockEntity::new,
                             MFUBlocks.GENESIS_CHAMBER.get()).build(null));
 
-    public static final Supplier<BlockEntityType<MFUBarrelBlockEntity>> MFU_BARREL_BE =
-            BLOCK_ENTITIES.register("mfu_barrel_be",
-                    () -> BlockEntityType.Builder.of(MFUBarrelBlockEntity::new,
-                            MFUBlocks.GLOOMWOOD_BARREL.get(),
-                            MFUBlocks.GLIMMERWOOD_BARREL.get()).build(null));
-
     private static void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, COLLECTOR_BE.get(),
                 (blockEntity, direction) -> {
@@ -72,14 +65,6 @@ public class MFUBlockEntities {
                 (blockEntity, direction) -> {
                     if (blockEntity instanceof GenesisChamberBlockEntity genesisChamber) {
                         return genesisChamber.getItemHandler(direction);
-                    }
-                    return null;
-                });
-
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, MFU_BARREL_BE.get(),
-                (blockEntity, direction) -> {
-                    if (blockEntity instanceof MFUBarrelBlockEntity barrel) {
-                        return barrel.inventory;
                     }
                     return null;
                 });

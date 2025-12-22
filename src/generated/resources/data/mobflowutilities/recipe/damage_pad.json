@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "G": {
-      "tag": "mobflowutilities:ingots/mfu"
+      "item": "minecraft:diamond"
     },
     "I": {
       "item": "minecraft:iron_ingot"

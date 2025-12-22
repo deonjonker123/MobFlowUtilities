@@ -21,54 +21,6 @@
   "block.mobflowutilities.glimmer_lamp": "Glimmer Lamp",
   "block.mobflowutilities.glimmer_lamp.subtitle": "Emits radiant light",
 
-  "block.mobflowutilities.gloomsteel_stone_ore": "Gloomsteel Ore",
-  "block.mobflowutilities.gloomsteel_deepslate_ore": "Deepslate Gloomsteel Ore",
-  "block.mobflowutilities.gloomsteel_netherrack_ore": "Nether Gloomsteel Ore",
-  "block.mobflowutilities.gloomsteel_endstone_ore": "End Gloomsteel Ore",
-  "block.mobflowutilities.gloomsteel_block": "Gloomsteel Block",
-  "block.mobflowutilities.raw_gloomsteel_block": "Raw Gloomsteel Block",
-
-  "block.mobflowutilities.glimmersteel_stone_ore": "Glimmersteel Ore",
-  "block.mobflowutilities.glimmersteel_deepslate_ore": "Deepslate Glimmersteel Ore",
-  "block.mobflowutilities.glimmersteel_netherrack_ore": "Nether Glimmersteel Ore",
-  "block.mobflowutilities.glimmersteel_endstone_ore": "End Glimmersteel Ore",
-  "block.mobflowutilities.glimmersteel_block": "Glimmersteel Block",
-  "block.mobflowutilities.raw_glimmersteel_block": "Raw Glimmersteel Block",
-
-  "block.mobflowutilities.gloomwood_sapling": "Gloomwood Sapling",
-  "block.mobflowutilities.gloomwood_log": "Gloomwood Log",
-  "block.mobflowutilities.stripped_gloomwood_log": "Stripped Gloomwood Log",
-  "block.mobflowutilities.gloomwood": "Gloomwood",
-  "block.mobflowutilities.stripped_gloomwood": "Stripped Gloomwood",
-  "block.mobflowutilities.gloomwood_leaves": "Gloomwood Leaves",
-  "block.mobflowutilities.gloomwood_planks": "Gloomwood Planks",
-  "block.mobflowutilities.gloomwood_stairs": "Gloomwood Stairs",
-  "block.mobflowutilities.gloomwood_slab": "Gloomwood Slab",
-  "block.mobflowutilities.gloomwood_pressure_plate": "Gloomwood Pressure Plate",
-  "block.mobflowutilities.gloomwood_button": "Gloomwood Button",
-  "block.mobflowutilities.gloomwood_fence": "Gloomwood Fence",
-  "block.mobflowutilities.gloomwood_fence_gate": "Gloomwood Fence Gate",
-  "block.mobflowutilities.gloomwood_door": "Gloomwood Door",
-  "block.mobflowutilities.gloomwood_trapdoor": "Gloomwood Trapdoor",
-  "block.mobflowutilities.gloomwood_barrel": "Gloomwood Barrel",
-
-  "block.mobflowutilities.glimmerwood_sapling": "Glimmerwood Sapling",
-  "block.mobflowutilities.glimmerwood_log": "Glimmerwood Log",
-  "block.mobflowutilities.stripped_glimmerwood_log": "Stripped Glimmerwood Log",
-  "block.mobflowutilities.glimmerwood": "Glimmerwood",
-  "block.mobflowutilities.stripped_glimmerwood": "Stripped Glimmerwood",
-  "block.mobflowutilities.glimmerwood_leaves": "Glimmerwood Leaves",
-  "block.mobflowutilities.glimmerwood_planks": "Glimmerwood Planks",
-  "block.mobflowutilities.glimmerwood_stairs": "Glimmerwood Stairs",
-  "block.mobflowutilities.glimmerwood_slab": "Glimmerwood Slab",
-  "block.mobflowutilities.glimmerwood_pressure_plate": "Glimmerwood Pressure Plate",
-  "block.mobflowutilities.glimmerwood_button": "Glimmerwood Button",
-  "block.mobflowutilities.glimmerwood_fence": "Glimmerwood Fence",
-  "block.mobflowutilities.gilmmerwood_fence_gate": "Glimmerwood Fence Gate",
-  "block.mobflowutilities.glimmerwood_door": "Glimmerwood Door",
-  "block.mobflowutilities.gilmmerwood_trapdoor": "Glimmerwood Trapdoor",
-  "block.mobflowutilities.glimmerwood_barrel": "Glimmerwood Barrel",
-
   "item.mobflowutilities.bane_of_arthropods_module": "Bane of Arthropods Module",
   "item.mobflowutilities.bane_of_arthropods_module.subtitle": "Deals increased damage to spiders, silverfish, and other arthropods",
   "item.mobflowutilities.fire_aspect_module": "Fire Aspect Module",
@@ -92,14 +44,6 @@
 
   "item.mobflowutilities.mob_catcher": "Mob Catcher",
 
-  "item.mobflowutilities.raw_gloomsteel": "Raw Gloomsteel",
-  "item.mobflowutilities.gloomsteel_ingot": "Gloomsteel Ingot",
-  "item.mobflowutilities.gloomsteel_nugget": "Gloomsteel Nugget",
-
-  "item.mobflowutilities.raw_glimmersteel": "Raw Glimmersteel",
-  "item.mobflowutilities.glimmersteel_ingot": "Glimmersteel Ingot",
-  "item.mobflowutilities.glimmersteel_nugget": "Glimmersteel Nugget",
-
   "item.mobflowutilities.gloom_spore": "Gloom Spore",
   "item.mobflowutilities.gloom_spore.subtitle": "Converts dirt-like blocks to Dark Dirt. Rare drop from hostile creatures and loot chests",
 
@@ -113,37 +57,6 @@
 
   "item.mobflowutilities.gene_sample_vial": "Gene Sample Vial",
 
-  "item.mobflowutilities.gloomsteel_sword": "Gloomsteel Sword",
-  "item.mobflowutilities.gloomsteel_pickaxe": "Gloomsteel Pickaxe",
-  "item.mobflowutilities.gloomsteel_axe": "Gloomsteel Axe",
-  "item.mobflowutilities.gloomsteel_shovel": "Gloomsteel Shovel",
-  "item.mobflowutilities.gloomsteel_hoe": "Gloomsteel Hoe",
-  "item.mobflowutilities.gloomsteel_paxel": "Gloomsteel Paxel",
-  "item.mobflowutilities.gloomsteel_hammer": "Gloomsteel Hammer",
-  "item.mobflowutilities.gloomsteel_greatbow": "Gloomsteel Greatbow",
-
-  "item.mobflowutilities.gloomsteel_helmet": "Gloomsteel Helmet",
-  "item.mobflowutilities.gloomsteel_chestplate": "Gloomsteel Chestplate",
-  "item.mobflowutilities.gloomsteel_leggings": "Gloomsteel Leggings",
-  "item.mobflowutilities.gloomsteel_boots": "Gloomsteel Boots",
-
-  "item.mobflowutilities.glimmersteel_sword": "Glimmersteel Sword",
-  "item.mobflowutilities.glimmersteel_pickaxe": "Glimmersteel Pickaxe",
-  "item.mobflowutilities.glimmersteel_axe": "Glimmersteel Axe",
-  "item.mobflowutilities.glimmersteel_shovel": "Glimmersteel Shovel",
-  "item.mobflowutilities.glimmersteel_hoe": "Glimmersteel Hoe",
-  "item.mobflowutilities.glimmersteel_paxel": "Glimmersteel Paxel",
-  "item.mobflowutilities.glimmersteel_hammer": "Glimmersteel Hammer",
-  "item.mobflowutilities.glimmersteel_greatbow": "Glimmersteel Greatbow",
-
-  "item.mobflowutilities.glimmersteel_helmet": "Glimmersteel Helmet",
-  "item.mobflowutilities.glimmersteel_chestplate": "Glimmersteel Chestplate",
-  "item.mobflowutilities.glimmersteel_leggings": "Glimmersteel Leggings",
-  "item.mobflowutilities.glimmersteel_boots": "Glimmersteel Boots",
-
-  "item.mobflowutilities.umbral_berries": "Umbral Berries",
-  "item.mobflowutilities.radiant_berries": "Radiant Berries",
-
   "menu.mobflowutilities.collector": "Collector",
   "menu.mobflowutilities.controller": "Controller",
 
@@ -153,9 +66,6 @@
   "gui.mobflowutilities.controller.remove": "Remove",
   "gui.mobflowutilities.collector.xp_input_levels": "Levels",
   "gui.mobflowutilities.void_filter": "Void Filter",
-  "gui.mobflowutilities.gloomwood_barrel": "Gloomwood Barrel",
-  "gui.mobflowutilities.glimmerwood_barrel": "Glimmerwood Barrel",
-  "gui.mobflowutilities.barrel": "MFU Barrel",
 
   "gui.mobflowutilities.collector.offset.down_up": "D/U Offset",
   "gui.mobflowutilities.collector.offset.north_south": "N/S Offset",
