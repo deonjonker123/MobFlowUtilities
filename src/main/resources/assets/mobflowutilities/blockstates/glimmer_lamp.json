@@ -1,7 +1,10 @@
 {
   "variants": {
-    "": {
+    "lit=false": {
       "model": "mobflowutilities:block/glimmer_lamp"
+    },
+    "lit=true": {
+      "model": "mobflowutilities:block/glimmer_lamp_lit"
     }
   }
 }

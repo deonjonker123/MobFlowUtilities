@@ -352,7 +352,7 @@ public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     @Override
-    public Component getDisplayName() { return Component.translatable("menu.flowtech.collector"); }
+    public Component getDisplayName() { return Component.translatable("menu.mobflowutilities.collector"); }
 
     @Nullable
     @Override

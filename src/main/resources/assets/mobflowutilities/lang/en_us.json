@@ -19,7 +19,7 @@
   "block.mobflowutilities.dark_glass": "Dark Glass",
   "block.mobflowutilities.dark_glass.subtitle": "Blocks light. Wither Immune",
   "block.mobflowutilities.glimmer_lamp": "Glimmer Lamp",
-  "block.mobflowutilities.glimmer_lamp.subtitle": "Emits radiant light",
+  "block.mobflowutilities.glimmer_lamp.subtitle": "Emits light when powered with redstone",
 
   "item.mobflowutilities.bane_of_arthropods_module": "Bane of Arthropods Module",
   "item.mobflowutilities.bane_of_arthropods_module.subtitle": "Deals increased damage to spiders, silverfish, and other arthropods",

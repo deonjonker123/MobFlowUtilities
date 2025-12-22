@@ -83,16 +83,11 @@ public class MFUBlocks {
             });
 
     public static final DeferredBlock<Block> GLIMMER_LAMP = registerBlock("glimmer_lamp",
-            () -> new Block(BlockBehaviour.Properties.of()
+            () -> new GlimmerLampBlock(BlockBehaviour.Properties.of()
                     .strength(2.0F, 3.0F)
                     .requiresCorrectToolForDrops()
-                    .sound(SoundType.GLASS))
-            {
-                @Override
-                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-                    tooltipComponents.add(Component.translatable("block.mobflowutilities.glimmer_lamp.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
-                }
-            });
+                    .sound(SoundType.GLASS)
+                    .lightLevel(state -> state.getValue(GlimmerLampBlock.LIT) ? 15 : 0)));
 
     public static final DeferredBlock<Block> COLLECTOR = registerBlock("collector",
             () -> new CollectorBlock(BlockBehaviour.Properties.of()
