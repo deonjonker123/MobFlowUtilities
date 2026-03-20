@@ -102,8 +102,6 @@ public record ConfigPacket(
         }
 
         level.sendBlockUpdated(pos, level.getBlockState(pos), level.getBlockState(pos), 3);
-
-        level.sendBlockUpdated(pos, level.getBlockState(pos), level.getBlockState(pos), 3);
     }
 
     public enum ConfigTarget {

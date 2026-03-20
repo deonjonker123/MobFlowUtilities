@@ -118,7 +118,7 @@
   "item.mobflowutilities.pad_wrench.mode.remove": "Remove Mode",
   "item.mobflowutilities.pad_wrench.selection.single": "Single Selection",
   "item.mobflowutilities.pad_wrench.selection.multi": "Multi-Selection",
-  "item.mobflowutilities.pad_wrench.controller.selected": "Selected mobflowutilities Controller at %d, %d, %d",
+  "item.mobflowutilities.pad_wrench.controller.selected": "Selected Controller at %d, %d, %d",
   "item.mobflowutilities.pad_wrench.error.no_controller": "No controller selected! Right-click a Controller first.",
   "item.mobflowutilities.pad_wrench.pad.linked": "Linked Attack Pad to controller",
   "item.mobflowutilities.pad_wrench.pad.unlinked": "Unlinked Attack Pad from controller",

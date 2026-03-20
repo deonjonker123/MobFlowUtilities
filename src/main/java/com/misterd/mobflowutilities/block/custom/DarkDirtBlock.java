@@ -1,5 +1,6 @@
 package com.misterd.mobflowutilities.block.custom;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.misterd.mobflowutilities.block.MFUBlocks;
@@ -85,7 +86,15 @@ public class DarkDirtBlock extends Block {
             BlockPos spawnPos = this.findSpawnPosition(level, minX, maxX, minZ, maxZ, pos.getY(), random);
 
             if (spawnPos != null) {
-                List<SpawnerData> spawners = level.getBiome(spawnPos).value().getMobSettings().getMobs(MobCategory.MONSTER).unwrap();
+                List<SpawnerData> biomeSpawners = level.getBiome(spawnPos).value().getMobSettings().getMobs(MobCategory.MONSTER).unwrap();
+
+                // Build the candidate list from the biome, then inject slimes if the
+                // biome doesn't already include them so they can spawn anywhere.
+                List<SpawnerData> spawners = new ArrayList<>(biomeSpawners);
+                boolean hasSlime = spawners.stream().anyMatch(s -> s.type == EntityType.SLIME);
+                if (!hasSlime) {
+                    spawners.add(new SpawnerData(EntityType.SLIME, 10, 1, 3));
+                }
 
                 if (!spawners.isEmpty()) {
                     int totalWeight = spawners.stream().mapToInt(data -> data.getWeight().asInt()).sum();
@@ -102,7 +111,8 @@ public class DarkDirtBlock extends Block {
                                 if (mob != null) {
                                     mob.moveTo(spawnPos.getX() + 0.5D, spawnPos.getY(), spawnPos.getZ() + 0.5D, random.nextFloat() * 360.0F, 0.0F);
 
-                                    if (SpawnPlacements.checkSpawnRules(entityType, level, MobSpawnType.NATURAL, spawnPos, random)) {
+                                    if (SpawnPlacements.checkSpawnRules(entityType, level, MobSpawnType.NATURAL, spawnPos, random)
+                                            || entityType == EntityType.SLIME) {
                                         mob.finalizeSpawn(level, level.getCurrentDifficultyAt(spawnPos), MobSpawnType.NATURAL, null);
                                         level.addFreshEntity(mob);
                                     }
