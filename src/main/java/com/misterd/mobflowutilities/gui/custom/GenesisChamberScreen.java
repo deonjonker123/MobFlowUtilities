@@ -361,6 +361,7 @@ public class GenesisChamberScreen extends AbstractContainerScreen<GenesisChamber
 
     @Override
     protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+        super.renderLabels(guiGraphics, mouseX, mouseY);
         this.renderOffsetValues(guiGraphics, mouseX, mouseY);
     }
 

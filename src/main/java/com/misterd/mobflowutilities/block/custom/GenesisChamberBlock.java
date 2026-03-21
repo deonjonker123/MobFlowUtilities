@@ -26,9 +26,32 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 public class GenesisChamberBlock extends BaseEntityBlock {
+    public static final VoxelShape SHAPE = Shapes.or(
+            Block.box(0, 0, 0,  16, 1,  16),
+            Block.box(1, 1, 1,  15, 4,  15),
+            Block.box(0, 4, 0,  16, 5,  16),
+            Block.box(3, 5, 3,  13, 6,   13),
+            Block.box(4, 6, 4,  12, 6.5, 12),
+            Block.box(0,  5, 15, 1,  15, 16),
+            Block.box(0,  5, 0,  1,  15, 1),
+            Block.box(15, 5, 0,  16, 15, 1),
+            Block.box(15, 5, 15, 16, 15, 16),
+            Block.box(0,  15, 0,  16, 16, 1),
+            Block.box(0,  15, 15, 16, 16, 16),
+            Block.box(0,  15, 1,  1,  16, 15),
+            Block.box(15, 15, 1,  16, 16, 15),
+            Block.box(1,  5, 0.5,  15, 15, 1),
+            Block.box(1,  5, 15,   15, 15, 15.5),
+            Block.box(0.5, 5, 1,   1,  15, 15),
+            Block.box(15, 5, 1,    15.5, 15, 15),
+            Block.box(1,  15, 1,   15, 15.5, 15)
+    );
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final MapCodec<GenesisChamberBlock> CODEC = simpleCodec(GenesisChamberBlock::new);
 
@@ -40,6 +63,11 @@ public class GenesisChamberBlock extends BaseEntityBlock {
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
+    }
+
+    @Override
+    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return SHAPE;
     }
 
     @Override
