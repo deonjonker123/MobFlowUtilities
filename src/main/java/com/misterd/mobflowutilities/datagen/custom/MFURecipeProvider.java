@@ -154,6 +154,7 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_spider_eye", has(Items.SPIDER_EYE))
                 .save(recipeOutput);
 
+        //Update Recipe
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUItems.LOOTING_MODULE.get())
                 .pattern("GLG")
                 .pattern("DXD")
@@ -186,6 +187,7 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_ender_eye", has(Items.ENDER_EYE))
                 .save(recipeOutput);
 
+        //Update recipe
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUItems.SPEED_MODULE.get())
                 .pattern("L#L")
                 .pattern("#D#")
