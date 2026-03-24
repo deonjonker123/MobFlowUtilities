@@ -3,19 +3,19 @@
   "category": "misc",
   "key": {
     "G": {
-      "item": "minecraft:diamond"
+      "item": "minecraft:redstone"
     },
     "I": {
       "item": "minecraft:iron_ingot"
     },
     "S": {
-      "item": "minecraft:diamond_sword"
+      "item": "minecraft:iron_sword"
     }
   },
   "pattern": [
-    "IGI",
-    "GSG",
-    "IGI"
+    "ISI",
+    "SGS",
+    "ISI"
   ],
   "result": {
     "count": 4,

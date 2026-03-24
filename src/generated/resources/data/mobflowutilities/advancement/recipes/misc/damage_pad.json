@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_diamond_sword": {
+    "has_iron_sword": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:diamond_sword"
+            "items": "minecraft:iron_sword"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_diamond_sword"
+      "has_iron_sword"
     ]
   ],
   "rewards": {

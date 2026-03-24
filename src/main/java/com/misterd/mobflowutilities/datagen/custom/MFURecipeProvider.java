@@ -65,13 +65,13 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUBlocks.DAMAGE_PAD.get(), 4)
-                .pattern("IGI")
-                .pattern("GSG")
-                .pattern("IGI")
-                .define('G', Items.DIAMOND)
-                .define('S', Items.DIAMOND_SWORD)
+                .pattern("ISI")
+                .pattern("SGS")
+                .pattern("ISI")
+                .define('G', Items.REDSTONE)
+                .define('S', Items.IRON_SWORD)
                 .define('I', Items.IRON_INGOT)
-                .unlockedBy("has_diamond_sword", has(Items.DIAMOND_SWORD))
+                .unlockedBy("has_iron_sword", has(Items.IRON_SWORD))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUBlocks.FAST_FLOW_PAD.get(), 4)
