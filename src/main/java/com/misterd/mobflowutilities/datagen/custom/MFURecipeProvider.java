@@ -154,15 +154,14 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_spider_eye", has(Items.SPIDER_EYE))
                 .save(recipeOutput);
 
-        //Update Recipe
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUItems.LOOTING_MODULE.get())
                 .pattern("GLG")
                 .pattern("DXD")
                 .pattern("GLG")
                 .define('G', Items.IRON_INGOT)
-                .define('L', Items.LAPIS_BLOCK)
-                .define('D', Items.DIAMOND_BLOCK)
-                .define('X', Items.GOLD_BLOCK)
+                .define('L', Items.LAPIS_LAZULI)
+                .define('D', Items.DIAMOND)
+                .define('X', Items.GOLD_INGOT)
                 .unlockedBy("has_gold_ingot", has(Items.GOLD_INGOT))
                 .save(recipeOutput);
 
@@ -187,14 +186,13 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_ender_eye", has(Items.ENDER_EYE))
                 .save(recipeOutput);
 
-        //Update recipe
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUItems.SPEED_MODULE.get())
-                .pattern("L#L")
-                .pattern("#D#")
-                .pattern("L#L")
-                .define('L', Items.IRON_BLOCK)
-                .define('D', Items.DIAMOND_BLOCK)
-                .define('#', Items.OBSIDIAN)
+                .pattern("#L#")
+                .pattern("LDL")
+                .pattern("#L#")
+                .define('L', Items.IRON_INGOT)
+                .define('D', Items.DIAMOND)
+                .define('#', Items.SUGAR)
                 .unlockedBy("has_diamond", has(Items.DIAMOND))
                 .save(recipeOutput);
 

@@ -3,19 +3,19 @@
   "category": "misc",
   "key": {
     "#": {
-      "item": "minecraft:obsidian"
+      "item": "minecraft:sugar"
     },
     "D": {
-      "item": "minecraft:diamond_block"
+      "item": "minecraft:diamond"
     },
     "L": {
-      "item": "minecraft:iron_block"
+      "item": "minecraft:iron_ingot"
     }
   },
   "pattern": [
-    "L#L",
-    "#D#",
-    "L#L"
+    "#L#",
+    "LDL",
+    "#L#"
   ],
   "result": {
     "count": 1,

@@ -299,19 +299,10 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
         return eggStack.getItem() instanceof SpawnEggItem;
     }
 
-    /*
-
-    private int getSpawnInterval() {
-        ItemStack speedModules = inventory.getStackInSlot(2);
-        int moduleCount = Math.min(10, speedModules.getCount());
-        return Math.max(5, 200 - (moduleCount * 20));
-    }
-
-    */
     private int getSpawnInterval() {
         ItemStack speedModules = inventory.getStackInSlot(2);
         int moduleCount = Math.min(5, speedModules.getCount());
-        return Math.max(50, 200 - (moduleCount * 30));
+        return Math.max(5, 100 - (moduleCount * 20));
     }
 
     private int getSpawnRadius() {
