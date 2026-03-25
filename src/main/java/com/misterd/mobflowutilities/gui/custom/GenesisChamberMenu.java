@@ -112,7 +112,7 @@ public class GenesisChamberMenu extends AbstractContainerMenu {
         // Update max module count
         @Override
         public int getMaxStackSize(ItemStack stack) {
-            return 5;
+            return 10;
         }
     }
 
