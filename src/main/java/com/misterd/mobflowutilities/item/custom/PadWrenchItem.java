@@ -1,6 +1,5 @@
 package com.misterd.mobflowutilities.item.custom;
 
-import java.util.List;
 import java.util.function.Consumer;
 
 import com.misterd.mobflowutilities.block.custom.ControllerBlock;
@@ -79,8 +78,8 @@ public class PadWrenchItem extends Item {
         stack.set(MFUDataComponents.PAD_WRENCH_DATA.get(), newData);
 
         Component message = newMode == PadWrenchData.OperationMode.ADD
-                ? Component.translatable("item.mobflowutilities.pad_wrench.mode.add").withStyle(ChatFormatting.DARK_GREEN)
-                : Component.translatable("item.mobflowutilities.pad_wrench.mode.remove").withStyle(ChatFormatting.DARK_RED);
+                ? Component.translatable("item.mobflowutilities.pad_wrench.mode.add").withStyle(ChatFormatting.GREEN)
+                : Component.translatable("item.mobflowutilities.pad_wrench.mode.remove").withStyle(ChatFormatting.GOLD);
         player.sendOverlayMessage(message);
     }
 
@@ -93,8 +92,8 @@ public class PadWrenchItem extends Item {
         stack.set(MFUDataComponents.PAD_WRENCH_DATA.get(), newData);
 
         Component message = newMode == PadWrenchData.SelectionMode.SINGLE
-                ? Component.translatable("item.mobflowutilities.pad_wrench.selection.single").withStyle(ChatFormatting.DARK_AQUA)
-                : Component.translatable("item.mobflowutilities.pad_wrench.selection.multi").withStyle(ChatFormatting.GOLD);
+                ? Component.translatable("item.mobflowutilities.pad_wrench.selection.single").withStyle(ChatFormatting.AQUA)
+                : Component.translatable("item.mobflowutilities.pad_wrench.selection.multi").withStyle(ChatFormatting.RED);
         player.sendOverlayMessage(message);
     }
 
@@ -106,7 +105,7 @@ public class PadWrenchItem extends Item {
         Component message = Component.translatable(
                 "item.mobflowutilities.pad_wrench.controller.selected",
                 controllerPos.getX(), controllerPos.getY(), controllerPos.getZ()
-        );
+        ).withStyle(ChatFormatting.GOLD);
         player.sendOverlayMessage(message);
     }
 
@@ -114,7 +113,7 @@ public class PadWrenchItem extends Item {
         PadWrenchData data = stack.getOrDefault(MFUDataComponents.PAD_WRENCH_DATA.get(), PadWrenchData.DEFAULT);
 
         if (data.selectedController() == null) {
-            Component message = Component.translatable("item.mobflowutilities.pad_wrench.error.no_controller");
+            Component message = Component.translatable("item.mobflowutilities.pad_wrench.error.no_controller").withStyle(ChatFormatting.RED);
             player.sendOverlayMessage(message);
             return;
         }
@@ -132,7 +131,7 @@ public class PadWrenchItem extends Item {
                 controller.addPad(padPos);
             }
 
-            Component message = Component.translatable("item.mobflowutilities.pad_wrench.pad.linked");
+            Component message = Component.translatable("item.mobflowutilities.pad_wrench.pad.linked").withStyle(ChatFormatting.GREEN);
             player.sendOverlayMessage(message);
         } else {
             BlockPos oldControllerPos = padEntity.getControllerPos();
@@ -145,7 +144,7 @@ public class PadWrenchItem extends Item {
                 }
             }
 
-            Component message = Component.translatable("item.mobflowutilities.pad_wrench.pad.unlinked");
+            Component message = Component.translatable("item.mobflowutilities.pad_wrench.pad.unlinked").withStyle(ChatFormatting.RED);
             player.sendOverlayMessage(message);
         }
     }
@@ -160,7 +159,7 @@ public class PadWrenchItem extends Item {
         if (data.firstMultiPos() == null) {
             PadWrenchData newData = data.withFirstMultiPos(padPos);
             stack.set(MFUDataComponents.PAD_WRENCH_DATA.get(), newData);
-            Component message = Component.translatable("item.mobflowutilities.pad_wrench.multi.start", padPos.getX(), padPos.getY(), padPos.getZ());
+            Component message = Component.translatable("item.mobflowutilities.pad_wrench.multi.start", padPos.getX(), padPos.getY(), padPos.getZ()).withStyle(ChatFormatting.GOLD);
             player.sendOverlayMessage(message);
         } else {
             processMultiSelection(level, data.firstMultiPos(), padPos, stack, player);
@@ -173,7 +172,7 @@ public class PadWrenchItem extends Item {
         PadWrenchData data = stack.getOrDefault(MFUDataComponents.PAD_WRENCH_DATA.get(), PadWrenchData.DEFAULT);
 
         if (data.selectedController() == null && data.operationMode() == PadWrenchData.OperationMode.ADD) {
-            Component message = Component.translatable("item.mobflowutilities.pad_wrench.error.no_controller");
+            Component message = Component.translatable("item.mobflowutilities.pad_wrench.error.no_controller").withStyle(ChatFormatting.RED);
             player.sendOverlayMessage(message);
             return;
         }
