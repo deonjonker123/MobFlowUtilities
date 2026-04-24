@@ -96,7 +96,7 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
         this.xpInputField.setMaxLength(4);
         this.xpInputField.setValue("0");
         this.xpInputField.setBordered(false);
-        this.xpInputField.setTextColor(16777215);
+        this.xpInputField.setTextColor(0xFF30a324);
         this.xpInputField.setTooltip(Tooltip.create(Component.translatable("tooltip.mobflowutilities.collector.xp_input_levels")));
         this.addRenderableWidget(this.xpInputField);
         this.addOffsetButtons(leftPos, topPos);
