@@ -81,7 +81,7 @@ public class PadWrenchItem extends Item {
         Component message = newMode == PadWrenchData.OperationMode.ADD
                 ? Component.translatable("item.mobflowutilities.pad_wrench.mode.add")
                 : Component.translatable("item.mobflowutilities.pad_wrench.mode.remove");
-        player.sendSystemMessage(message);
+        player.sendOverlayMessage(message);
     }
 
     private void toggleSelectionMode(ItemStack stack, Player player) {
@@ -95,7 +95,7 @@ public class PadWrenchItem extends Item {
         Component message = newMode == PadWrenchData.SelectionMode.SINGLE
                 ? Component.translatable("item.mobflowutilities.pad_wrench.selection.single")
                 : Component.translatable("item.mobflowutilities.pad_wrench.selection.multi");
-        player.sendSystemMessage(message);
+        player.sendOverlayMessage(message);
     }
 
     private void selectController(ItemStack stack, BlockPos controllerPos, Player player) {
@@ -107,7 +107,7 @@ public class PadWrenchItem extends Item {
                 "item.mobflowutilities.pad_wrench.controller.selected",
                 controllerPos.getX(), controllerPos.getY(), controllerPos.getZ()
         );
-        player.sendSystemMessage(message);
+        player.sendOverlayMessage(message);
     }
 
     private void handleSinglePadAction(Level level, BlockPos padPos, ItemStack stack, Player player) {
@@ -115,7 +115,7 @@ public class PadWrenchItem extends Item {
 
         if (data.selectedController() == null) {
             Component message = Component.translatable("item.mobflowutilities.pad_wrench.error.no_controller");
-            player.sendSystemMessage(message);
+            player.sendOverlayMessage(message);
             return;
         }
 
@@ -133,7 +133,7 @@ public class PadWrenchItem extends Item {
             }
 
             Component message = Component.translatable("item.mobflowutilities.pad_wrench.pad.linked");
-            player.sendSystemMessage(message);
+            player.sendOverlayMessage(message);
         } else {
             BlockPos oldControllerPos = padEntity.getControllerPos();
             padEntity.clearControllerPos();
@@ -146,7 +146,7 @@ public class PadWrenchItem extends Item {
             }
 
             Component message = Component.translatable("item.mobflowutilities.pad_wrench.pad.unlinked");
-            player.sendSystemMessage(message);
+            player.sendOverlayMessage(message);
         }
     }
 
@@ -161,7 +161,7 @@ public class PadWrenchItem extends Item {
             PadWrenchData newData = data.withFirstMultiPos(padPos);
             stack.set(MFUDataComponents.PAD_WRENCH_DATA.get(), newData);
             Component message = Component.translatable("item.mobflowutilities.pad_wrench.multi.start", padPos.getX(), padPos.getY(), padPos.getZ());
-            player.sendSystemMessage(message);
+            player.sendOverlayMessage(message);
         } else {
             processMultiSelection(level, data.firstMultiPos(), padPos, stack, player);
             PadWrenchData newData = data.withFirstMultiPos(null);
@@ -174,7 +174,7 @@ public class PadWrenchItem extends Item {
 
         if (data.selectedController() == null && data.operationMode() == PadWrenchData.OperationMode.ADD) {
             Component message = Component.translatable("item.mobflowutilities.pad_wrench.error.no_controller");
-            player.sendSystemMessage(message);
+            player.sendOverlayMessage(message);
             return;
         }
 
@@ -230,7 +230,7 @@ public class PadWrenchItem extends Item {
                 ? Component.translatable("item.mobflowutilities.pad_wrench.multi.linked", processedCount)
                 : Component.translatable("item.mobflowutilities.pad_wrench.multi.unlinked", processedCount);
 
-        player.sendSystemMessage(message);
+        player.sendOverlayMessage(message);
     }
 
     @Override

@@ -87,19 +87,59 @@ public class CollectorMenu extends AbstractContainerMenu {
         Item item = stack.getItem();
 
         if (item == MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get()) {
-            if (!blockEntity.getStack(SLOT_MODULE_RADIUS).isEmpty()) return false;
-            insertSingle(stack, SLOT_MODULE_RADIUS);
-            return true;
+            ItemStack existing = blockEntity.getStack(SLOT_MODULE_RADIUS);
+            int space = 8 - existing.getCount();
+            if (space <= 0) return false;
+            int toInsert = Math.min(space, stack.getCount());
+            try (Transaction tx = Transaction.openRoot()) {
+                int inserted = blockEntity.inventory.insert(SLOT_MODULE_RADIUS, ItemResource.of(stack), toInsert, tx);
+                if (inserted == 0) return false;
+                tx.commit();
+                stack.shrink(inserted);
+                return true;
+            }
         }
 
         if (item == MFUItems.VOID_FILTER_MODULE.get()) {
             for (int slot = SLOT_MODULE_VOID_1; slot <= SLOT_MODULE_VOID_3; slot++) {
                 if (blockEntity.getStack(slot).isEmpty()) {
-                    insertSingle(stack, slot);
-                    return true;
+                    try (Transaction tx = Transaction.openRoot()) {
+                        int inserted = blockEntity.inventory.insert(slot, ItemResource.of(stack), 1, tx);
+                        if (inserted == 0) continue;
+                        tx.commit();
+                        stack.shrink(inserted);
+                        return true;
+                    }
                 }
             }
             return false;
+        }
+
+        for (int slot = MODULE_SLOT_COUNT; slot < MODULE_SLOT_COUNT + OUTPUT_SLOT_COUNT; slot++) {
+            ItemStack existing = blockEntity.getStack(slot);
+            if (!existing.isEmpty() && ItemStack.isSameItemSameComponents(existing, stack)) {
+                int space = existing.getMaxStackSize() - existing.getCount();
+                if (space <= 0) continue;
+                int toInsert = Math.min(space, stack.getCount());
+                try (Transaction tx = Transaction.openRoot()) {
+                    int inserted = blockEntity.inventory.insert(slot, ItemResource.of(stack), toInsert, tx);
+                    if (inserted == 0) continue;
+                    tx.commit();
+                    stack.shrink(inserted);
+                    if (stack.isEmpty()) return true;
+                }
+            }
+        }
+        for (int slot = MODULE_SLOT_COUNT; slot < MODULE_SLOT_COUNT + OUTPUT_SLOT_COUNT; slot++) {
+            if (blockEntity.getStack(slot).isEmpty()) {
+                try (Transaction tx = Transaction.openRoot()) {
+                    int inserted = blockEntity.inventory.insert(slot, ItemResource.of(stack), stack.getCount(), tx);
+                    if (inserted == 0) continue;
+                    tx.commit();
+                    stack.shrink(inserted);
+                    if (stack.isEmpty()) return true;
+                }
+            }
         }
 
         return false;
@@ -148,9 +188,14 @@ public class CollectorMenu extends AbstractContainerMenu {
         }
 
         @Override
+        public boolean hasItem() {
+            return !be.getStack(index).isEmpty();
+        }
+
+        @Override
         public void set(ItemStack stack) {
+            ItemStack existing = be.getStack(index);
             try (Transaction tx = Transaction.openRoot()) {
-                ItemStack existing = be.getStack(index);
                 if (!existing.isEmpty())
                     be.inventory.extract(index, ItemResource.of(existing), existing.getCount(), tx);
                 if (!stack.isEmpty())
@@ -161,9 +206,18 @@ public class CollectorMenu extends AbstractContainerMenu {
         }
 
         @Override
+        public void setChanged() {
+            be.setChanged();
+        }
+
+        @Override
         public boolean mayPlace(ItemStack stack) {
-            if (allowedItem == null) return false;
-            return stack.getItem() == allowedItem;
+            return be.inventory.isValid(index, ItemResource.of(stack));
+        }
+
+        @Override
+        public boolean mayPickup(Player player) {
+            return !be.getStack(index).isEmpty();
         }
 
         @Override

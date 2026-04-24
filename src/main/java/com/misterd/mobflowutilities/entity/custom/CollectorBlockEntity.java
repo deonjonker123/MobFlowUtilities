@@ -5,6 +5,7 @@ import com.misterd.mobflowutilities.component.MFUDataComponents;
 import com.misterd.mobflowutilities.component.custom.VoidFilterData;
 import com.misterd.mobflowutilities.entity.MFUBlockEntities;
 import com.misterd.mobflowutilities.gui.custom.CollectorMenu;
+import com.misterd.mobflowutilities.item.MFUItems;
 import com.misterd.mobflowutilities.item.custom.VoidFilterItem;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
@@ -31,12 +32,15 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
+import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 import org.slf4j.Logger;
 
 import javax.annotation.Nullable;
+import javax.swing.plaf.basic.BasicComboBoxUI;
 
 public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
 
@@ -62,7 +66,9 @@ public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
         @Override
         public boolean isValid(int index, ItemResource resource) {
             if (resource.isEmpty()) return false;
-            if (index < MODULE_COUNT) return false;
+            if (index == SLOT_RADIUS) return resource.toStack().getItem() == MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get();
+            if (index == SLOT_VOID_1 || index == SLOT_VOID_2 || index == SLOT_VOID_3)
+                return resource.toStack().getItem() == MFUItems.VOID_FILTER_MODULE.get();
             return true;
         }
 
@@ -101,7 +107,32 @@ public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
 
     @Nullable
     public ItemStacksResourceHandler getItemHandler(@Nullable Direction direction) {
-        return inventory;
+        return new ItemStacksResourceHandler(OUTPUT_COUNT) {
+            @Override
+            public long getCapacityAsLong(int index, ItemResource resource) {
+                return inventory.getCapacityAsLong(MODULE_COUNT + index, resource);
+            }
+
+            @Override
+            public boolean isValid(int index, ItemResource resource) {
+                return inventory.isValid(MODULE_COUNT + index, resource);
+            }
+
+            @Override
+            public ItemResource getResource(int index) {
+                return inventory.getResource(MODULE_COUNT + index);
+            }
+
+            @Override
+            public int insert(int slot, ItemResource resource, int maxAmount, TransactionContext tx) {
+               return 0;
+            }
+
+            @Override
+            public int extract(int slot, ItemResource resource, int maxAmount, TransactionContext tx) {
+                return inventory.extract(MODULE_COUNT + slot, resource, maxAmount, tx);
+            }
+        };
     }
 
     @Override
@@ -225,6 +256,11 @@ public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
             CollectorBlock.updateXpCollectionState(level, worldPosition, xpCollectionEnabled);
 
         setChangedAndUpdate();
+    }
+
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        drops();
     }
 
     public void drops() {

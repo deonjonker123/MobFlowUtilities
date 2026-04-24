@@ -35,7 +35,7 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
     private static final WidgetSprites EDIT_FILTER_SPRITES = new WidgetSprites(Identifier.fromNamespaceAndPath("mobflowutilities", "edit_filter_btn"), Identifier.fromNamespaceAndPath("mobflowutilities", "edit_filter_btn"), Identifier.fromNamespaceAndPath("mobflowutilities", "edit_filter_btn_hover"), Identifier.fromNamespaceAndPath("mobflowutilities", "edit_filter_btn_hover"));
 
     private static final int GUI_W = 234;
-    private static final int GUI_H = 224;
+    private static final int GUI_H = 244;
 
     private EditBox xpInputField;
     private int downUpOffset = 0;
@@ -287,16 +287,16 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
 
         pose.pushMatrix();
         pose.scale(scale, scale);
-        graphics.text(this.font, (this.downUpOffset >= 0 ? "+" : "") + this.downUpOffset, (int) ((x + 194) / scale), (int) ((y + 71) / scale), 0, false);
-        graphics.text(this.font, (this.northSouthOffset >= 0 ? "+" : "") + this.northSouthOffset, (int) ((x + 194) / scale), (int) ((y + 93) / scale), 0, false);
-        graphics.text(this.font, (this.eastWestOffset >= 0 ? "+" : "") + this.eastWestOffset, (int) ((x + 194) / scale), (int) ((y + 115) / scale), 0, false);
+        graphics.text(this.font, (this.downUpOffset >= 0 ? "+" : "") + this.downUpOffset, (int) ((x + 194) / scale), (int) ((y + 71) / scale), 0xFF000000, false);
+        graphics.text(this.font, (this.northSouthOffset >= 0 ? "+" : "") + this.northSouthOffset, (int) ((x + 194) / scale), (int) ((y + 93) / scale), 0xFF000000, false);
+        graphics.text(this.font, (this.eastWestOffset >= 0 ? "+" : "") + this.eastWestOffset, (int) ((x + 194) / scale), (int) ((y + 115) / scale), 0xFF000000, false);
         pose.popMatrix();
 
         pose.pushMatrix();
         pose.scale(scale, scale);
-        graphics.text(this.font, Component.translatable("gui.mobflowutilities.collector.offset.down_up").getString(), (int) ((x + 182) / scale), (int) ((y + 60) / scale), 0, false);
-        graphics.text(this.font, Component.translatable("gui.mobflowutilities.collector.offset.north_south").getString(), (int) ((x + 182) / scale), (int) ((y + 82) / scale), 0, false);
-        graphics.text(this.font, Component.translatable("gui.mobflowutilities.collector.offset.east_west").getString(), (int) ((x + 182) / scale), (int) ((y + 104) / scale), 0, false);
+        graphics.text(this.font, Component.translatable("gui.mobflowutilities.collector.offset.down_up").getString(), (int) ((x + 182) / scale), (int) ((y + 60) / scale), 0xFF000000, false);
+        graphics.text(this.font, Component.translatable("gui.mobflowutilities.collector.offset.north_south").getString(), (int) ((x + 182) / scale), (int) ((y + 82) / scale), 0xFF000000, false);
+        graphics.text(this.font, Component.translatable("gui.mobflowutilities.collector.offset.east_west").getString(), (int) ((x + 182) / scale), (int) ((y + 104) / scale), 0xFF000000, false);
         pose.popMatrix();
     }
 
@@ -313,7 +313,7 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
         pose.scale(scale, scale);
         int storedLevels = this.xpToLevel(this.storedXP);
         String xpDisplayText = String.format(Component.translatable("gui.mobflowutilities.collector.xp_levels_stored").getString(), storedLevels);
-        graphics.text(this.font, xpDisplayText, (int) ((x + 12) / scale), (int) ((y + 132) / scale), 2338116, false);
+        graphics.text(this.font, xpDisplayText, (int) ((x + 12) / scale), (int) ((y + 132) / scale), 0xFF30a324, false);
         pose.popMatrix();
     }
 

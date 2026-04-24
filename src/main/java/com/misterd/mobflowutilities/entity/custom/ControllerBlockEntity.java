@@ -23,6 +23,7 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -181,13 +182,18 @@ public class ControllerBlockEntity extends BlockEntity implements MenuProvider {
         for (int i = 0; i < SLOT_COUNT; i++) {
             ItemStack existing = getStack(i);
             if (!existing.isEmpty()) {
-                try (var tx = net.neoforged.neoforge.transfer.transaction.Transaction.openRoot()) {
+                try (var tx = Transaction.openRoot()) {
                     inventory.extract(i, ItemResource.of(existing), existing.getCount(), tx);
                     tx.commit();
                 }
             }
         }
         setChanged();
+    }
+
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        drops();
     }
 
     public void drops() {

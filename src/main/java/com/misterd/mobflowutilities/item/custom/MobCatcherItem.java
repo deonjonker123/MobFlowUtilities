@@ -50,19 +50,19 @@ public class MobCatcherItem extends Item {
         if (player.level().isClientSide()) return InteractionResult.SUCCESS;
         if (!player.isShiftKeyDown()) return InteractionResult.PASS;
         if (hasCapturedMob(stack)) {
-            player.sendSystemMessage(Component.translatable("item.mobflowutilities.mob_catcher.already_occupied"));
+            player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.already_occupied"));
             return InteractionResult.FAIL;
         }
         if (isBossMob(target)) {
-            player.sendSystemMessage(Component.translatable("item.mobflowutilities.mob_catcher.boss_immunity"));
+            player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.boss_immunity"));
             return InteractionResult.FAIL;
         }
         if (target instanceof Player) {
-            player.sendSystemMessage(Component.translatable("item.mobflowutilities.mob_catcher.player_immunity"));
+            player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.player_immunity"));
             return InteractionResult.FAIL;
         }
         if (captureMob(stack, target, player)) {
-            player.sendSystemMessage(Component.translatable("item.mobflowutilities.mob_catcher.captured", target.getDisplayName().getString()));
+            player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.captured", target.getDisplayName().getString()));
             player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.2F);
             return InteractionResult.SUCCESS;
         }
@@ -79,24 +79,24 @@ public class MobCatcherItem extends Item {
         if (level.isClientSide() || player == null) return InteractionResult.SUCCESS;
         if (!player.isShiftKeyDown()) return InteractionResult.PASS;
         if (!hasCapturedMob(stack)) {
-            player.sendSystemMessage(Component.translatable("item.mobflowutilities.mob_catcher.empty"));
+            player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.empty"));
             return InteractionResult.FAIL;
         }
 
         BlockState state = level.getBlockState(pos);
         if (!state.isSolidRender()) {
-            player.sendSystemMessage(Component.translatable("item.mobflowutilities.mob_catcher.invalid_surface"));
+            player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.invalid_surface"));
             return InteractionResult.FAIL;
         }
 
         BlockPos spawnPos = pos.above();
         if (!level.getBlockState(spawnPos).isAir() || !level.getBlockState(spawnPos.above()).isAir()) {
-            player.sendSystemMessage(Component.translatable("item.mobflowutilities.mob_catcher.no_space"));
+            player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.no_space"));
             return InteractionResult.FAIL;
         }
 
         if (releaseMob(stack, (ServerLevel) level, spawnPos, player)) {
-            player.sendSystemMessage(Component.translatable("item.mobflowutilities.mob_catcher.released"));
+            player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.released"));
             level.playSound(null, spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 0.8F);
             return InteractionResult.SUCCESS;
         }
@@ -131,7 +131,7 @@ public class MobCatcherItem extends Item {
             target.discard();
             return true;
         } catch (Exception e) {
-            player.sendSystemMessage(Component.translatable("item.mobflowutilities.mob_catcher.capture_failed"));
+            player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.capture_failed"));
             return false;
         }
     }
@@ -162,7 +162,7 @@ public class MobCatcherItem extends Item {
             stack.remove(DataComponents.CUSTOM_DATA);
             return true;
         } catch (Exception e) {
-            player.sendSystemMessage(Component.translatable("item.mobflowutilities.mob_catcher.release_failed"));
+            player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.release_failed"));
             return false;
         }
     }

@@ -160,6 +160,11 @@ public class FanBlockEntity extends BlockEntity implements MenuProvider {
         cachedHeight = null;
     }
 
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        dropContents();
+    }
+
     public void dropContents() {
         if (level == null) return;
         SimpleContainer container = new SimpleContainer(SLOT_COUNT);

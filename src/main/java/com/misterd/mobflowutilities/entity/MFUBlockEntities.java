@@ -56,14 +56,6 @@ public class MFUBlockEntities {
                     return null;
                 });
 
-        event.registerBlockEntity(Capabilities.Item.BLOCK, CONTROLLER_BE.get(),
-                (blockEntity, direction) -> {
-                    if (blockEntity instanceof ControllerBlockEntity controller) {
-                        return controller.inventory;
-                    }
-                    return null;
-                });
-
         event.registerBlockEntity(Capabilities.Item.BLOCK, GENESIS_CHAMBER_BE.get(),
                 (blockEntity, direction) -> {
                     if (blockEntity instanceof GenesisChamberBlockEntity genesisChamber) {

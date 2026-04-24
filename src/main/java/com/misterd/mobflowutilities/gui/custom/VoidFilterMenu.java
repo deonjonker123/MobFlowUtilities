@@ -16,6 +16,8 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 
 import javax.annotation.Nullable;
 
@@ -150,20 +152,35 @@ public class VoidFilterMenu extends AbstractContainerMenu {
     }
 
     private void saveFilterData() {
+        VoidFilterData newData = VoidFilterData.fromHandler(filterSlots, ignoreNBT, ignoreDurability);
+
         if (collectorPos != null && collectorFilterSlotIndex >= 0 && player != null) {
             BlockEntity be = player.level().getBlockEntity(collectorPos);
-            if (be instanceof CollectorBlockEntity collector)
-                filterItem = collector.moduleSlots.getStackInSlot(collectorFilterSlotIndex);
+            if (be instanceof CollectorBlockEntity collector) {
+                int slot = collectorFilterSlotIndex;
+                ItemResource existing = collector.inventory.getResource(slot);
+                if (!existing.isEmpty()) {
+                    ItemStack updated = existing.toStack();
+                    updated.set(MFUDataComponents.VOID_FILTER_DATA.get(), newData);
+                    ItemResource updatedResource = ItemResource.of(updated);
+
+                    try (var tx = Transaction.openRoot()) {
+                        collector.inventory.extract(slot, existing, 1, tx);
+                        collector.inventory.insert(slot, updatedResource, 1, tx);
+                        tx.commit();
+                    }
+                    collector.setChanged();
+                    if (!player.level().isClientSide()) {
+                        player.level().sendBlockUpdated(collectorPos,
+                                player.level().getBlockState(collectorPos),
+                                player.level().getBlockState(collectorPos), 3);
+                    }
+                }
+            }
+            return;
         }
 
-        VoidFilterData newData = VoidFilterData.fromHandler(filterSlots, ignoreNBT, ignoreDurability);
         filterItem.set(MFUDataComponents.VOID_FILTER_DATA.get(), newData);
-
-        if (collectorPos != null && player != null) {
-            BlockEntity be = player.level().getBlockEntity(collectorPos);
-            if (be instanceof CollectorBlockEntity collector)
-                collector.setChanged();
-        }
     }
 
     public boolean isIgnoreNBT() {

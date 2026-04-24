@@ -213,6 +213,11 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
         return entity;
     }
 
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        drops();
+    }
+
     public void drops() {
         SimpleContainer inv = new SimpleContainer(SLOT_COUNT);
         for (int i = 0; i < SLOT_COUNT; i++) inv.setItem(i, getStack(i));

@@ -97,7 +97,7 @@ public class MFUItems {
             });
 
     public static final DeferredItem<Item> GLOOM_SPORE = ITEMS.registerItem("gloom_spore",
-            props -> new Item(props) {
+            props -> new GloomSporeItem(props) {
                 @Override
                 public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> adder, TooltipFlag flag) {
                     adder.accept(Component.translatable("item.mobflowutilities.gloom_spore.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
@@ -105,7 +105,7 @@ public class MFUItems {
             });
 
     public static final DeferredItem<Item> GLIMMER_SPROUT = ITEMS.registerItem("glimmer_sprout",
-            props -> new Item(props) {
+            props -> new GlimmerSproutItem(props) {
                 @Override
                 public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> adder, TooltipFlag flag) {
                     adder.accept(Component.translatable("item.mobflowutilities.glimmer_sprout.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));

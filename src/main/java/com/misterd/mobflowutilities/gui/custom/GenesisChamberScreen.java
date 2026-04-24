@@ -254,12 +254,16 @@ public class GenesisChamberScreen extends AbstractContainerScreen<GenesisChamber
         float scale = 0.7F;
         pose.pushMatrix();
         pose.scale(scale, scale);
-        graphics.text(this.font, (this.downUpOffset >= 0 ? "+" : "") + this.downUpOffset, (int) (137 / scale), (int) (20 / scale), 0, false);
-        graphics.text(this.font, (this.northSouthOffset >= 0 ? "+" : "") + this.northSouthOffset, (int) (137 / scale), (int) (42 / scale), 0, false);
-        graphics.text(this.font, (this.eastWestOffset >= 0 ? "+" : "") + this.eastWestOffset, (int) (137 / scale), (int) (64 / scale), 0, false);
-        graphics.text(this.font, Component.translatable("gui.mobflowutilities.collector.offset.down_up").getString(), (int) (124 / scale), (int) (10 / scale), 0, false);
-        graphics.text(this.font, Component.translatable("gui.mobflowutilities.collector.offset.north_south").getString(), (int) (124 / scale), (int) (32 / scale), 0, false);
-        graphics.text(this.font, Component.translatable("gui.mobflowutilities.collector.offset.east_west").getString(), (int) (124 / scale), (int) (54 / scale), 0, false);
+
+        int x = (int)(this.leftPos / scale);
+        int y = (int)(this.topPos / scale);
+
+        graphics.text(this.font, (this.downUpOffset >= 0 ? "+" : "") + this.downUpOffset,   x + (int)(137 / scale), y + (int)(20 / scale), 0xFF000000, false);
+        graphics.text(this.font, (this.northSouthOffset >= 0 ? "+" : "") + this.northSouthOffset, x + (int)(137 / scale), y + (int)(42 / scale), 0xFF000000, false);
+        graphics.text(this.font, (this.eastWestOffset >= 0 ? "+" : "") + this.eastWestOffset,   x + (int)(137 / scale), y + (int)(64 / scale), 0xFF000000, false);
+        graphics.text(this.font, Component.translatable("gui.mobflowutilities.collector.offset.down_up").getString(),    x + (int)(124 / scale), y + (int)(10 / scale), 0xFF000000, false);
+        graphics.text(this.font, Component.translatable("gui.mobflowutilities.collector.offset.north_south").getString(), x + (int)(124 / scale), y + (int)(32 / scale), 0xFF000000, false);
+        graphics.text(this.font, Component.translatable("gui.mobflowutilities.collector.offset.east_west").getString(),  x + (int)(124 / scale), y + (int)(54 / scale), 0xFF000000, false);
         pose.popMatrix();
     }
 

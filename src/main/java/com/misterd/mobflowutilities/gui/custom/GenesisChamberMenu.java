@@ -22,14 +22,14 @@ import net.neoforged.neoforge.transfer.transaction.Transaction;
 
 public class GenesisChamberMenu extends AbstractContainerMenu {
 
-    private static final int PLAYER_SLOTS    = 36;
-    private static final int SLOT_EGG        = 0;
-    private static final int SLOT_FUEL       = 1;
-    private static final int SLOT_MODULE_1   = 2;
-    private static final int SLOT_MODULE_2   = 3;
-    private static final int TE_SLOT_COUNT   = 4;
-    private static final int TE_FIRST_SLOT   = PLAYER_SLOTS;
-    private static final int TE_LAST_SLOT    = TE_FIRST_SLOT + TE_SLOT_COUNT;
+    private static final int PLAYER_SLOTS = 36;
+    private static final int SLOT_EGG = 0;
+    private static final int SLOT_FUEL = 1;
+    private static final int SLOT_MODULE_1 = 2;
+    private static final int SLOT_MODULE_2 = 3;
+    private static final int TE_SLOT_COUNT = 4;
+    private static final int TE_FIRST_SLOT = PLAYER_SLOTS;
+    private static final int TE_LAST_SLOT = TE_FIRST_SLOT + TE_SLOT_COUNT;
 
     public final GenesisChamberBlockEntity blockEntity;
     private final Level level;
@@ -49,9 +49,9 @@ public class GenesisChamberMenu extends AbstractContainerMenu {
     }
 
     private void addBlockEntitySlots() {
-        addSlot(new EggSlot(blockEntity,    SLOT_EGG,      80, 23));
-        addSlot(new FuelSlot(blockEntity,   SLOT_FUEL,     80, 71));
-        addSlot(new ChamberSlot(blockEntity, SLOT_MODULE_1,  8, 71, MFUItems.SPEED_MODULE.get()));
+        addSlot(new EggSlot(blockEntity, SLOT_EGG, 80, 23));
+        addSlot(new FuelSlot(blockEntity, SLOT_FUEL, 80, 71));
+        addSlot(new ChamberSlot(blockEntity, SLOT_MODULE_1, 8, 71, MFUItems.SPEED_MODULE.get()));
         addSlot(new ChamberSlot(blockEntity, SLOT_MODULE_2, 26, 71, MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get()));
     }
 
@@ -88,19 +88,11 @@ public class GenesisChamberMenu extends AbstractContainerMenu {
         if (stack.is(MFUTags.Items.GENESIS_CHAMBER_FUELS))
             return insertIntoSlot(stack, SLOT_FUEL);
 
-        if (item == MFUItems.SPEED_MODULE.get() || item == MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get()) {
-            for (int slot = SLOT_MODULE_1; slot <= SLOT_MODULE_2; slot++) {
-                if (blockEntity.getStack(slot).isEmpty() && blockEntity.getStack(slot).getItem() == item) {
-                    return insertIntoSlot(stack, slot);
-                }
-            }
-            for (int slot = SLOT_MODULE_1; slot <= SLOT_MODULE_2; slot++) {
-                if (blockEntity.getStack(slot).isEmpty()) {
-                    return insertSingle(stack, slot);
-                }
-            }
-            return false;
-        }
+        if (item == MFUItems.SPEED_MODULE.get())
+            return insertIntoSlot(stack, SLOT_MODULE_1);
+
+        if (item == MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get())
+            return insertIntoSlot(stack, SLOT_MODULE_2);
 
         return false;
     }
@@ -146,8 +138,6 @@ public class GenesisChamberMenu extends AbstractContainerMenu {
         for (int i = 0; i < 9; i++)
             addSlot(new Slot(inv, i, 8 + i * 18, 163));
     }
-
-    // --- Slot implementations ---
 
     private static class ChamberSlot extends Slot {
         private final GenesisChamberBlockEntity be;

@@ -115,14 +115,13 @@ public class PadWrenchWireframeRenderer {
         for (WireframeBox box : boxes) {
             ShapeRenderer.renderShape(
                     poseStack, buffer,
-                    Shapes.create(box.aabb().move(-camPos.x(), -camPos.y(), -camPos.z())),
+                    Shapes.create(box.aabb()),
                     0.0, 0.0, 0.0,
                     box.color(),
                     lineWidth
             );
         }
         bufferSource.endLastBatch();
-
         poseStack.popPose();
     }
 

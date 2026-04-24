@@ -15,6 +15,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -41,8 +42,9 @@ public class DarkDirtBlock extends Block {
     protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         super.tick(state, level, pos, random);
 
-        boolean inDirectSunlight = level.canSeeSky(pos.above()) && level.getOverworldClockTime() < 13000;
-        if (inDirectSunlight) {
+        boolean isDaytime = level.dimensionType().hasSkyLight() && level.isBrightOutside();
+        boolean isExposed = level.canSeeSky(pos.above());
+        if (isDaytime && isExposed) {
             level.setBlock(pos, Blocks.DIRT.defaultBlockState(), 3);
             return;
         }

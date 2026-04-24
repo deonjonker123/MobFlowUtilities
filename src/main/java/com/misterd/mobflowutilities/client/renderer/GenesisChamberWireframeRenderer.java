@@ -76,7 +76,6 @@ public class GenesisChamberWireframeRenderer {
         if (mc.player == null) return;
 
         Vec3 camPos = mc.gameRenderer.getMainCamera().position();
-
         PoseStack poseStack = event.getPoseStack();
         poseStack.pushPose();
         poseStack.translate(-camPos.x(), -camPos.y(), -camPos.z());
@@ -85,13 +84,12 @@ public class GenesisChamberWireframeRenderer {
         VertexConsumer buffer = bufferSource.getBuffer(RenderTypes.lines());
         ShapeRenderer.renderShape(
                 poseStack, buffer,
-                Shapes.create(zone.move(-camPos.x(), -camPos.y(), -camPos.z())),
+                Shapes.create(zone),
                 0.0, 0.0, 0.0,
                 ARGB.colorFromFloat(0.8f, 0.8f, 0.4f, 1.0f),
                 mc.gameRenderer.getGameRenderState().windowRenderState.appropriateLineWidth
         );
         bufferSource.endLastBatch();
-
         poseStack.popPose();
     }
 

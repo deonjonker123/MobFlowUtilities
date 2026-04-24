@@ -88,8 +88,13 @@ public class ControllerMenu extends AbstractContainerMenu {
     }
 
     private boolean insertSingle(ItemStack stack, int slot) {
+        ItemStack existing = blockEntity.getStack(slot);
+        int limit = 10;
+        int space = limit - existing.getCount();
+        if (space <= 0) return false;
+        int toInsert = Math.min(space, stack.getCount());
         try (Transaction tx = Transaction.openRoot()) {
-            int inserted = blockEntity.inventory.insert(slot, ItemResource.of(stack), stack.getCount(), tx);
+            int inserted = blockEntity.inventory.insert(slot, ItemResource.of(stack), toInsert, tx);
             if (inserted == 0) return false;
             tx.commit();
             stack.shrink(inserted);
