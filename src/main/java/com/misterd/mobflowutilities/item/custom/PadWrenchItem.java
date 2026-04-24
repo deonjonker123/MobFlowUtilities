@@ -79,8 +79,8 @@ public class PadWrenchItem extends Item {
         stack.set(MFUDataComponents.PAD_WRENCH_DATA.get(), newData);
 
         Component message = newMode == PadWrenchData.OperationMode.ADD
-                ? Component.translatable("item.mobflowutilities.pad_wrench.mode.add")
-                : Component.translatable("item.mobflowutilities.pad_wrench.mode.remove");
+                ? Component.translatable("item.mobflowutilities.pad_wrench.mode.add").withStyle(ChatFormatting.DARK_GREEN)
+                : Component.translatable("item.mobflowutilities.pad_wrench.mode.remove").withStyle(ChatFormatting.DARK_RED);
         player.sendOverlayMessage(message);
     }
 
@@ -93,8 +93,8 @@ public class PadWrenchItem extends Item {
         stack.set(MFUDataComponents.PAD_WRENCH_DATA.get(), newData);
 
         Component message = newMode == PadWrenchData.SelectionMode.SINGLE
-                ? Component.translatable("item.mobflowutilities.pad_wrench.selection.single")
-                : Component.translatable("item.mobflowutilities.pad_wrench.selection.multi");
+                ? Component.translatable("item.mobflowutilities.pad_wrench.selection.single").withStyle(ChatFormatting.DARK_AQUA)
+                : Component.translatable("item.mobflowutilities.pad_wrench.selection.multi").withStyle(ChatFormatting.GOLD);
         player.sendOverlayMessage(message);
     }
 
