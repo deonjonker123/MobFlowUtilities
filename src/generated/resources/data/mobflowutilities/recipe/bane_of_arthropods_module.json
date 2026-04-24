@@ -2,18 +2,10 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "E": {
-      "item": "minecraft:fermented_spider_eye"
-    },
-    "G": {
-      "item": "minecraft:iron_ingot"
-    },
-    "S": {
-      "item": "minecraft:spider_eye"
-    },
-    "T": {
-      "item": "minecraft:string"
-    }
+    "E": "minecraft:fermented_spider_eye",
+    "G": "minecraft:iron_ingot",
+    "S": "minecraft:spider_eye",
+    "T": "minecraft:string"
   },
   "pattern": [
     "GEG",
@@ -21,7 +13,6 @@
     "GEG"
   ],
   "result": {
-    "count": 1,
     "id": "mobflowutilities:bane_of_arthropods_module"
   }
 }

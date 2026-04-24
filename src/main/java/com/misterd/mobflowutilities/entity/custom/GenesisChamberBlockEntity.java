@@ -1,6 +1,5 @@
 package com.misterd.mobflowutilities.entity.custom;
 
-import com.misterd.mobflowutilities.block.MFUBlocks;
 import com.misterd.mobflowutilities.config.Config;
 import com.misterd.mobflowutilities.entity.MFUBlockEntities;
 import com.misterd.mobflowutilities.gui.custom.GenesisChamberMenu;
@@ -14,36 +13,76 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpawnEggItem;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LightLayer;
-import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
+import net.neoforged.neoforge.transfer.transaction.TransactionContext;
+import net.neoforged.neoforge.transfer.ResourceHandler;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvider {
+
+    private static final int SLOT_EGG = 0;
+    private static final int SLOT_FUEL = 1;
+    private static final int SLOT_MODULE_1 = 2;
+    private static final int SLOT_MODULE_2 = 3;
+    private static final int SLOT_COUNT = 4;
+
     public Entity cachedEntity = null;
+
+    public final ItemStacksResourceHandler inventory = new ItemStacksResourceHandler(SLOT_COUNT) {
+        @Override
+        public long getCapacityAsLong(int index, ItemResource resource) {
+            return switch (index) {
+                case SLOT_EGG -> 1;
+                default -> resource.toStack().getMaxStackSize();
+            };
+        }
+
+        @Override
+        public boolean isValid(int index, ItemResource resource) {
+            if (resource.isEmpty()) return false;
+            ItemStack stack = resource.toStack();
+            return switch (index) {
+                case SLOT_EGG -> stack.getItem() instanceof SpawnEggItem;
+                case SLOT_FUEL -> stack.is(MFUTags.Items.GENESIS_CHAMBER_FUELS);
+                case SLOT_MODULE_1, SLOT_MODULE_2 ->
+                        stack.getItem() == MFUItems.SPEED_MODULE.get() || stack.getItem() == MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get();
+                default -> false;
+            };
+        }
+
+        @Override
+        protected void onContentsChanged(int index, ItemStack previousContents) {
+            setChanged();
+            if (level != null && !level.isClientSide())
+                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+        }
+    };
 
     private int downUpOffset = 0;
     private int northSouthOffset = 0;
@@ -55,98 +94,56 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
 
     private boolean requiresRedstone = false;
 
-    public final ItemStackHandler inventory = new ItemStackHandler(4) {
-        @Override
-        public int getSlotLimit(int slot) {
-            if (slot == 0) {
-                return 1;
-            }
-            return super.getSlotLimit(slot);
-        }
-
-        @Override
-        protected void onContentsChanged(int slot) {
-            setChanged();
-            if (!level.isClientSide()) {
-                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
-            }
-        }
-    };
-
-    public IItemHandler getItemHandler(@Nullable Direction direction) {
-        return new IItemHandler() {
-            @Override
-            public int getSlots() {
-                return 1;
-            }
-
-            @Override
-            public ItemStack getStackInSlot(int slot) {
-                return inventory.getStackInSlot(1);
-            }
-
-            @Override
-            public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-                if (!stack.is(MFUTags.Items.GENESIS_CHAMBER_FUELS)) {
-                    return stack;
-                }
-                return inventory.insertItem(1, stack, simulate);
-            }
-
-            @Override
-            public ItemStack extractItem(int slot, int amount, boolean simulate) {
-                return ItemStack.EMPTY;
-            }
-
-            @Override
-            public int getSlotLimit(int slot) {
-                return inventory.getSlotLimit(1);
-            }
-
-            @Override
-            public boolean isItemValid(int slot, ItemStack stack) {
-                return stack.is(MFUTags.Items.GENESIS_CHAMBER_FUELS);
-            }
-        };
-    }
-
     public GenesisChamberBlockEntity(BlockPos pos, BlockState blockState) {
         super(MFUBlockEntities.GENESIS_CHAMBER_BE.get(), pos, blockState);
     }
 
-    public void drops() {
-        SimpleContainer inv = new SimpleContainer(inventory.getSlots());
-        for(int i = 0; i < inventory.getSlots(); i++) {
-            inv.setItem(i, inventory.getStackInSlot(i));
-        }
-
-        Containers.dropContents(this.level, this.worldPosition, inv);
+    public ItemStack getStack(int slot) {
+        ItemResource res = inventory.getResource(slot);
+        if (res.isEmpty()) return ItemStack.EMPTY;
+        return res.toStack(inventory.getAmountAsInt(slot));
     }
 
-    @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.put("inventory", inventory.serializeNBT(registries));
-        tag.putInt("downUpOffset", downUpOffset);
-        tag.putInt("northSouthOffset", northSouthOffset);
-        tag.putInt("eastWestOffset", eastWestOffset);
-        tag.putInt("burnTime", burnTime);
-        tag.putInt("maxBurnTime", maxBurnTime);
-        tag.putInt("spawnTimer", spawnTimer);
-        tag.putBoolean("requiresRedstone", requiresRedstone);
+    public ResourceHandler<ItemResource> getItemHandler(@Nullable Direction direction) {
+        return new ResourceHandler<>() {
+            @Override public int size() { return 1; }
+
+            @Override
+            public ItemResource getResource(int index) {
+                return inventory.getResource(SLOT_FUEL);
+            }
+
+            @Override
+            public long getAmountAsLong(int index) {
+                return inventory.getAmountAsLong(SLOT_FUEL);
+            }
+
+            @Override
+            public long getCapacityAsLong(int index, ItemResource resource) {
+                return inventory.getCapacityAsLong(SLOT_FUEL, resource);
+            }
+
+            @Override
+            public boolean isValid(int index, ItemResource resource) {
+                return !resource.isEmpty() && resource.toStack().is(MFUTags.Items.GENESIS_CHAMBER_FUELS);
+            }
+
+            @Override
+            public int insert(int index, ItemResource resource, int amount, TransactionContext tx) {
+                if (!isValid(index, resource)) return 0;
+                return inventory.insert(SLOT_FUEL, resource, amount, tx);
+            }
+
+            @Override
+            public int extract(int index, ItemResource resource, int amount, TransactionContext tx) {
+                return 0;
+            }
+        };
     }
 
-    @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        inventory.deserializeNBT(registries, tag.getCompound("inventory"));
-        downUpOffset = tag.getInt("downUpOffset");
-        northSouthOffset = tag.getInt("northSouthOffset");
-        eastWestOffset = tag.getInt("eastWestOffset");
-        burnTime = tag.getInt("burnTime");
-        maxBurnTime = tag.getInt("maxBurnTime");
-        spawnTimer = tag.getInt("spawnTimer");
-        requiresRedstone = tag.getBoolean("requiresRedstone");
+    public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(Capabilities.Item.BLOCK, MFUBlockEntities.GENESIS_CHAMBER_BE.get(),
+                (be, dir) -> be instanceof GenesisChamberBlockEntity gc ? gc.getItemHandler(dir) : null);
     }
 
     @Override
@@ -156,80 +153,32 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
 
     @Nullable
     @Override
-    public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        return new GenesisChamberMenu(i, inventory, this);
-    }
-
-    public Entity getOrCreateRenderedEntity(EntityType<?> type) {
-        if (cachedEntity != null && cachedEntity.getType() == type) {
-            return cachedEntity;
-        }
-
-        Level level = getLevel();
-        if (level == null) return null;
-
-        Entity entity = type.create(level);
-        if (entity == null) return null;
-
-        entity.noPhysics = true;
-        if (entity instanceof Mob mobEntity) {
-            mobEntity.setNoAi(true);
-        }
-
-        entity.invulnerableTime = Integer.MAX_VALUE;
-
-        this.cachedEntity = entity;
-        return entity;
-    }
-
-    @Nullable
-    @Override
-    public Packet<ClientGamePacketListener> getUpdatePacket() {
-        return ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider pRegistries) {
-        return saveWithoutMetadata(pRegistries);
+    public AbstractContainerMenu createMenu(int id, Inventory inv, Player player) {
+        return new GenesisChamberMenu(id, inv, this);
     }
 
     public int getDownUpOffset() {
         return downUpOffset;
     }
 
-    public void setDownUpOffset(int offset) {
-        this.downUpOffset = Math.max(-10, Math.min(10, offset));
-        setChanged();
-    }
-
     public int getNorthSouthOffset() {
         return northSouthOffset;
-    }
-
-    public void setNorthSouthOffset(int offset) {
-        this.northSouthOffset = Math.max(-10, Math.min(10, offset));
-        setChanged();
     }
 
     public int getEastWestOffset() {
         return eastWestOffset;
     }
 
-    public void setEastWestOffset(int offset) {
-        this.eastWestOffset = Math.max(-10, Math.min(10, offset));
-        setChanged();
+    public void setDownUpOffset(int v) {
+        downUpOffset = Math.max(-10, Math.min(10, v)); setChanged();
     }
 
-    public boolean getRequiresRedstone() {
-        return requiresRedstone;
+    public void setNorthSouthOffset(int v) {
+        northSouthOffset = Math.max(-10, Math.min(10, v)); setChanged();
     }
 
-    public void setRequiresRedstone(boolean requiresRedstone) {
-        this.requiresRedstone = requiresRedstone;
-        setChanged();
-        if (level != null && !level.isClientSide()) {
-            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
-        }
+    public void setEastWestOffset(int v) {
+        eastWestOffset = Math.max(-10, Math.min(10, v)); setChanged();
     }
 
     public int getBurnTime() {
@@ -240,12 +189,40 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
         return maxBurnTime;
     }
 
+    public boolean getRequiresRedstone() {
+        return requiresRedstone;
+    }
+
+    public void setRequiresRedstone(boolean value) {
+        requiresRedstone = value;
+        setChanged();
+        if (level != null && !level.isClientSide())
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+    }
+
+    public Entity getOrCreateRenderedEntity(EntityType<?> type) {
+        if (cachedEntity != null && cachedEntity.getType() == type) return cachedEntity;
+        Level lvl = getLevel();
+        if (lvl == null) return null;
+        Entity entity = type.create(lvl, EntitySpawnReason.NATURAL);
+        if (entity == null) return null;
+        entity.noPhysics = true;
+        if (entity instanceof Mob mob) mob.setNoAi(true);
+        entity.invulnerableTime = Integer.MAX_VALUE;
+        cachedEntity = entity;
+        return entity;
+    }
+
+    public void drops() {
+        SimpleContainer inv = new SimpleContainer(SLOT_COUNT);
+        for (int i = 0; i < SLOT_COUNT; i++) inv.setItem(i, getStack(i));
+        Containers.dropContents(level, worldPosition, inv);
+    }
+
     public void tick() {
         if (level == null || level.isClientSide()) return;
 
-        boolean wasLit = burnTime > 0;
         boolean changed = false;
-
         boolean zoneIsFull = isSpawnZoneFull();
 
         if (requiresRedstone && !level.hasNeighborSignal(worldPosition)) {
@@ -256,19 +233,19 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
             return;
         }
 
-        if (burnTime > 0 && !zoneIsFull) {
-            burnTime--;
-            changed = true;
-        }
+        if (burnTime > 0 && !zoneIsFull) { burnTime--; changed = true; }
 
         if (burnTime <= 0 && canOperate() && !zoneIsFull) {
-            ItemStack fuelStack = inventory.getStackInSlot(1);
-            if (!fuelStack.isEmpty()) {
-                int fuelValue = getBurnDuration(fuelStack);
+            ItemStack fuel = getStack(SLOT_FUEL);
+            if (!fuel.isEmpty()) {
+                int fuelValue = getBurnDuration(fuel);
                 if (fuelValue > 0) {
                     burnTime = fuelValue;
                     maxBurnTime = fuelValue;
-                    fuelStack.shrink(1);
+                    try (Transaction tx = Transaction.openRoot()) {
+                        inventory.extract(SLOT_FUEL, ItemResource.of(fuel), 1, tx);
+                        tx.commit();
+                    }
                     changed = true;
                 }
             }
@@ -276,13 +253,8 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
 
         if (burnTime > 0 && canOperate() && !zoneIsFull) {
             spawnTimer++;
-
-            int spawnInterval = getSpawnInterval();
-            if (spawnTimer >= spawnInterval) {
-                if (attemptSpawn()) {
-                    spawnTimer = 0;
-                    changed = true;
-                }
+            if (spawnTimer >= getSpawnInterval()) {
+                if (attemptSpawn()) { spawnTimer = 0; changed = true; }
             }
         } else {
             spawnTimer = 0;
@@ -295,151 +267,130 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
     }
 
     private boolean canOperate() {
-        ItemStack eggStack = inventory.getStackInSlot(0);
-        return eggStack.getItem() instanceof SpawnEggItem;
+        return getStack(SLOT_EGG).getItem() instanceof SpawnEggItem;
     }
 
     private int getSpawnInterval() {
-        ItemStack speedModules = inventory.getStackInSlot(2);
-        int moduleCount = Math.min(10, speedModules.getCount());
-        return Math.max(5, 200 - (moduleCount * 20));
+        int modules = Math.min(10, inventory.getAmountAsInt(SLOT_MODULE_1));
+        return Math.max(5, 200 - (modules * 20));
     }
 
     private int getSpawnRadius() {
-        ItemStack radiusModules = inventory.getStackInSlot(3);
-        int moduleCount = Math.min(5, radiusModules.getCount());
-        return 2 + moduleCount;
+        int modules = Math.min(5, inventory.getAmountAsInt(SLOT_MODULE_2));
+        return 2 + modules;
     }
 
     private boolean attemptSpawn() {
-        ItemStack eggStack = inventory.getStackInSlot(0);
-        if (!(eggStack.getItem() instanceof SpawnEggItem spawnEgg)) {
-            return false;
-        }
+        ServerLevel serverLevel = (ServerLevel) level;
+        ItemStack egg = getStack(SLOT_EGG);
+        if (!(egg.getItem() instanceof SpawnEggItem spawnEgg)) return false;
+        EntityType<?> type = spawnEgg.getType(egg);
+        if (type == null) return false;
 
-        EntityType<?> entityType = spawnEgg.getType(eggStack);
-        if (entityType == null) return false;
+        List<BlockPos> valid = getValidSpawnPositions();
+        if (valid.isEmpty()) return false;
 
-        List<BlockPos> validPositions = getValidSpawnPositions();
-        if (validPositions.isEmpty()) {
-            return false;
-        }
+        BlockPos spawnPos = valid.get(serverLevel.getRandom().nextInt(valid.size()));
+        if (!isValidLightLevel(spawnPos, type)) return false;
 
-        BlockPos spawnPos = validPositions.get(level.random.nextInt(validPositions.size()));
-
-        if (!isValidLightLevel(spawnPos, entityType)) {
-            return false;
-        }
-
-        Entity entity = entityType.create(level);
+        Entity entity = type.create(serverLevel, EntitySpawnReason.NATURAL);
         if (entity == null) return false;
 
-        entity.moveTo(spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5,
-                level.random.nextFloat() * 360.0F, 0.0F);
+        entity.snapTo(spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5, serverLevel.getRandom().nextFloat() * 360.0F, 0.0F);
 
-        if (entity instanceof Mob mob) {
-            mob.finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(spawnPos),
-                    MobSpawnType.SPAWNER, null);
-        }
+        if (entity instanceof Mob mob)
+            mob.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(spawnPos), EntitySpawnReason.SPAWNER, null);
 
-        return level.addFreshEntity(entity);
+        return serverLevel.addFreshEntity(entity);
     }
 
     private List<BlockPos> getValidSpawnPositions() {
         List<BlockPos> positions = new ArrayList<>();
         int radius = getSpawnRadius();
-        BlockPos chamberPos = getBlockPos();
+        BlockPos origin = getBlockPos();
 
         for (int x = -radius; x <= radius; x++) {
             for (int z = -radius; z <= radius; z++) {
                 if (x == 0 && z == 0) continue;
-
-                BlockPos checkPos = chamberPos.offset(
-                        x + eastWestOffset,
-                        downUpOffset,
-                        z + northSouthOffset
-                );
-
-                if (isValidSpawnPosition(checkPos)) {
-                    positions.add(checkPos);
-                }
+                BlockPos pos = origin.offset(x + eastWestOffset, downUpOffset, z + northSouthOffset);
+                if (isValidSpawnPosition(pos)) positions.add(pos);
             }
         }
-
         return positions;
     }
 
     private boolean isValidSpawnPosition(BlockPos pos) {
-        BlockState spawnState = level.getBlockState(pos);
-        BlockState aboveState = level.getBlockState(pos.above());
-
-        boolean hasSpace = (spawnState.isAir() || spawnState.canBeReplaced()) &&
-                (aboveState.isAir() || aboveState.canBeReplaced());
-
-        return hasSpace;
+        BlockState ground = level.getBlockState(pos);
+        BlockState above  = level.getBlockState(pos.above());
+        return (ground.isAir() || ground.canBeReplaced()) &&
+                (above.isAir()  || above.canBeReplaced());
     }
 
-    private boolean isFlowPad(BlockState state) {
-        return state.is(MFUBlocks.FAST_FLOW_PAD.get()) ||
-                state.is(MFUBlocks.FASTER_FLOW_PAD.get()) ||
-                state.is(MFUBlocks.FASTEST_FLOW_PAD.get());
-    }
-
-    private boolean isValidLightLevel(BlockPos pos, EntityType<?> entityType) {
-        int lightLevel = level.getMaxLocalRawBrightness(pos);
-
-        Entity testEntity = entityType.create(level);
-        if (testEntity instanceof Mob mob) {
-            boolean isFriendly = mob.getType().getCategory().isFriendly();
-
-            testEntity.discard();
-
-            if (isFriendly) {
-                return lightLevel >= 9;
-            } else {
-                return lightLevel <= 7;
-            }
+    private boolean isValidLightLevel(BlockPos pos, EntityType<?> type) {
+        int light = level.getMaxLocalRawBrightness(pos);
+        Entity test = type.create(level, EntitySpawnReason.NATURAL);
+        if (test instanceof Mob mob) {
+            boolean friendly = mob.getType().getCategory().isFriendly();
+            test.discard();
+            return friendly ? light >= 9 : light <= 7;
         }
-
-        if (testEntity != null) {
-            testEntity.discard();
-        }
+        if (test != null) test.discard();
         return true;
     }
 
     private int getBurnDuration(ItemStack stack) {
-        if (stack.isEmpty()) return 0;
-
-        if (!stack.is(MFUTags.Items.GENESIS_CHAMBER_FUELS)) return 0;
-
-        return stack.getBurnTime(RecipeType.SMELTING);
+        if (stack.isEmpty() || !stack.is(MFUTags.Items.GENESIS_CHAMBER_FUELS)) return 0;
+        return stack.getBurnTime(null, ((ServerLevel) level).fuelValues());
     }
 
     private boolean isSpawnZoneFull() {
-        AABB spawnZone = getSpawnZoneAABB();
-        List<Mob> mobsInZone = level.getEntitiesOfClass(Mob.class, spawnZone);
-        return mobsInZone.size() >= Config.getGenesisChamberSpawnCap();
+        List<Mob> mobs = level.getEntitiesOfClass(Mob.class, getSpawnZoneAABB());
+        return mobs.size() >= Config.getGenesisChamberSpawnCap();
     }
 
     private AABB getSpawnZoneAABB() {
         BlockPos pos = getBlockPos();
-        int radius = getSpawnRadius();
-
+        int r = getSpawnRadius();
         return new AABB(
-                pos.getX() - radius + eastWestOffset,
-                pos.getY() + downUpOffset,
-                pos.getZ() - radius + northSouthOffset,
-                pos.getX() + radius + 1 + eastWestOffset,
-                pos.getY() + 2 + downUpOffset,
-                pos.getZ() + radius + 1 + northSouthOffset
+                pos.getX() - r + eastWestOffset, pos.getY() + downUpOffset, pos.getZ() - r + northSouthOffset,
+                pos.getX() + r + 1 + eastWestOffset, pos.getY() + 2 + downUpOffset, pos.getZ() + r + 1 + northSouthOffset
         );
     }
 
-    public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, MFUBlockEntities.GENESIS_CHAMBER_BE.get(),
-                (blockEntity, direction) -> blockEntity instanceof GenesisChamberBlockEntity genesisChamberBlockEntity
-                        ? genesisChamberBlockEntity.getItemHandler(direction)
-                        : null
-        );
+    @Override
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        inventory.serialize(output);
+        output.putInt("downUpOffset", downUpOffset);
+        output.putInt("northSouthOffset", northSouthOffset);
+        output.putInt("eastWestOffset", eastWestOffset);
+        output.putInt("burnTime", burnTime);
+        output.putInt("maxBurnTime", maxBurnTime);
+        output.putInt("spawnTimer", spawnTimer);
+        output.putBoolean("requiresRedstone", requiresRedstone);
+    }
+
+    @Override
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        inventory.deserialize(input);
+        downUpOffset = input.getIntOr("downUpOffset", 0);
+        northSouthOffset = input.getIntOr("northSouthOffset", 0);
+        eastWestOffset = input.getIntOr("eastWestOffset", 0);
+        burnTime = input.getIntOr("burnTime", 0);
+        maxBurnTime = input.getIntOr("maxBurnTime", 0);
+        spawnTimer = input.getIntOr("spawnTimer", 0);
+        requiresRedstone = input.getBooleanOr("requiresRedstone", false);
+    }
+
+    @Nullable
+    @Override
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
     }
 }

@@ -9,7 +9,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -25,7 +25,7 @@ public record ConfigPacket(
 ) implements CustomPacketPayload {
 
     public static final Type<ConfigPacket> TYPE = new Type<>(
-            ResourceLocation.fromNamespaceAndPath("mobflowutilities", "mod_config")
+            Identifier.fromNamespaceAndPath("mobflowutilities", "mod_config")
     );
 
     public static final StreamCodec<FriendlyByteBuf, ConfigPacket> STREAM_CODEC;
@@ -64,7 +64,7 @@ public record ConfigPacket(
         BlockPos pos = packet.pos();
         if (pos == null) return;
 
-        ServerLevel level = player.serverLevel();
+        ServerLevel level = player.level();
 
         if (player.distanceToSqr(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) > 64.0) return;
 
@@ -86,7 +86,7 @@ public record ConfigPacket(
         BlockPos pos = packet.pos();
         if (pos == null) return;
 
-        ServerLevel level = player.serverLevel();
+        ServerLevel level = player.level();
 
         if (player.distanceToSqr(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) > 64.0) return;
 

@@ -10,5 +10,6 @@
       "condition": "minecraft:random_chance"
     }
   ],
-  "item": "mobflowutilities:incubation_orb"
+  "item": "mobflowutilities:incubation_orb",
+  "priority": 0
 }

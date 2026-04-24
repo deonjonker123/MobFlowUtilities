@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "G": {
-      "item": "minecraft:iron_ingot"
-    },
-    "S": {
-      "item": "minecraft:glowstone"
-    },
-    "X": {
-      "tag": "c:glass_blocks"
-    }
+    "G": "minecraft:iron_ingot",
+    "S": "minecraft:glowstone",
+    "X": "#c:glass_blocks"
   },
   "pattern": [
     "GXG",

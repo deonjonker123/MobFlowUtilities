@@ -6,5 +6,6 @@
       "loot_table_id": "minecraft:entities/ravager"
     }
   ],
-  "item": "mobflowutilities:gloom_spore"
+  "item": "mobflowutilities:gloom_spore",
+  "priority": 0
 }

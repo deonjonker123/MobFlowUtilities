@@ -12,9 +12,6 @@ import com.misterd.mobflowutilities.item.MFUItems;
 import com.misterd.mobflowutilities.loot.MFULootModifiers;
 import com.misterd.mobflowutilities.network.MFUNetwork;
 import com.misterd.mobflowutilities.recipe.MFURecipeSerializers;
-import com.misterd.mobflowutilities.util.MFUItemProperties;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
@@ -66,15 +63,11 @@ public class MobFlowUtilities {
 
     }
 
-    @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    @EventBusSubscriber(modid = MODID, value = Dist.CLIENT)
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-            event.enqueueWork(() -> {
-                ItemBlockRenderTypes.setRenderLayer(MFUBlocks.DARK_GLASS.get(), RenderType.translucent());
-                ItemBlockRenderTypes.setRenderLayer(MFUBlocks.GENESIS_CHAMBER.get(), RenderType.translucent());
-            });
-            MFUItemProperties.addCustomItemProperties();
+
         }
 
         @SubscribeEvent

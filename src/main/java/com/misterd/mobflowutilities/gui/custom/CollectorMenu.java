@@ -5,6 +5,7 @@ import com.misterd.mobflowutilities.entity.custom.CollectorBlockEntity;
 import com.misterd.mobflowutilities.gui.MFUMenuTypes;
 import com.misterd.mobflowutilities.item.MFUItems;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -14,22 +15,25 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.SlotItemHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 
 public class CollectorMenu extends AbstractContainerMenu {
+
+    private static final int PLAYER_SLOTS = 36;
+    private static final int SLOT_MODULE_RADIUS = 0;
+    private static final int SLOT_MODULE_VOID_1 = 1;
+    private static final int SLOT_MODULE_VOID_2 = 2;
+    private static final int SLOT_MODULE_VOID_3 = 3;
+    private static final int MODULE_SLOT_COUNT = 4;
+    private static final int OUTPUT_SLOT_COUNT = 45;
+    private static final int TE_SLOT_COUNT = MODULE_SLOT_COUNT + OUTPUT_SLOT_COUNT;
+    private static final int TE_FIRST_SLOT = PLAYER_SLOTS;
+    private static final int TE_LAST_SLOT = TE_FIRST_SLOT + TE_SLOT_COUNT;
+    private static final int OUTPUT_FIRST_SLOT = TE_FIRST_SLOT + MODULE_SLOT_COUNT;
+
     public final CollectorBlockEntity blockEntity;
     private final Level level;
-    private static final int HOTBAR_SLOT_COUNT = 9;
-    private static final int PLAYER_INVENTORY_ROW_COUNT = 3;
-    private static final int PLAYER_INVENTORY_COLUMN_COUNT = 9;
-    private static final int PLAYER_INVENTORY_SLOT_COUNT = 27;
-    private static final int VANILLA_SLOT_COUNT = 36;
-    private static final int VANILLA_FIRST_SLOT_INDEX = 0;
-    private static final int MODULE_SLOTS_FIRST_INDEX = 36;
-    private static final int MODULE_SLOTS_COUNT = 4;
-    private static final int OUTPUT_SLOTS_FIRST_INDEX = 40;
-    private static final int OUTPUT_SLOTS_COUNT = 45;
 
     public CollectorMenu(int containerId, Inventory inv, FriendlyByteBuf extraData) {
         this(containerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()));
@@ -37,122 +41,151 @@ public class CollectorMenu extends AbstractContainerMenu {
 
     public CollectorMenu(int containerId, Inventory inv, BlockEntity blockEntity) {
         super(MFUMenuTypes.COLLECTOR_MENU.get(), containerId);
-        this.blockEntity = (CollectorBlockEntity)blockEntity;
+        this.blockEntity = (CollectorBlockEntity) blockEntity;
         this.level = inv.player.level();
-        this.addPlayerInventory(inv);
-        this.addPlayerHotbar(inv);
-        this.addSlot(new CollectorMenu.ModuleSlot(this.blockEntity.moduleSlots, 0, 192, 41, MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get()));
-        this.addSlot(new CollectorMenu.ModuleSlot(this.blockEntity.moduleSlots, 1, 174, 18, MFUItems.VOID_FILTER_MODULE.get()));
-        this.addSlot(new CollectorMenu.ModuleSlot(this.blockEntity.moduleSlots, 2, 192, 18, MFUItems.VOID_FILTER_MODULE.get()));
-        this.addSlot(new CollectorMenu.ModuleSlot(this.blockEntity.moduleSlots, 3, 210, 18, MFUItems.VOID_FILTER_MODULE.get()));
-        int slotIndex = 0;
 
-        for(int row = 0; row < 5; ++row) {
-            for(int col = 0; col < 9; ++col) {
-                int x = 8 + col * 18;
-                int y = 18 + row * 18;
-                this.addSlot(new CollectorMenu.OutputSlot(this.blockEntity.outputInventory, slotIndex, x, y, this.blockEntity));
-                ++slotIndex;
-            }
-        }
-
+        addPlayerInventory(inv);
+        addPlayerHotbar(inv);
+        addBlockEntitySlots();
     }
 
-    public ItemStack quickMoveStack(Player player, int slotIndex) {
-        Slot sourceSlot = this.slots.get(slotIndex);
-        if (sourceSlot != null && sourceSlot.hasItem()) {
-            ItemStack sourceStack = sourceSlot.getItem();
-            ItemStack copyOfSourceStack = sourceStack.copy();
-            if (slotIndex < 36) {
-                if (!this.isValidModule(sourceStack)) {
-                    return ItemStack.EMPTY;
-                }
+    private void addBlockEntitySlots() {
+        addSlot(new CollectorSlot(blockEntity, SLOT_MODULE_RADIUS, 192, 41, MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get()));
+        addSlot(new CollectorSlot(blockEntity, SLOT_MODULE_VOID_1, 174, 18, MFUItems.VOID_FILTER_MODULE.get()));
+        addSlot(new CollectorSlot(blockEntity, SLOT_MODULE_VOID_2, 192, 18, MFUItems.VOID_FILTER_MODULE.get()));
+        addSlot(new CollectorSlot(blockEntity, SLOT_MODULE_VOID_3, 210, 18, MFUItems.VOID_FILTER_MODULE.get()));
 
-                if (!this.moveItemStackTo(sourceStack, 36, 40, false)) {
-                    return ItemStack.EMPTY;
-                }
-            } else if (slotIndex < 40) {
-                if (!this.moveItemStackTo(sourceStack, 0, 36, false)) {
-                    return ItemStack.EMPTY;
-                }
-            } else {
-                if (slotIndex >= 85) {
-                    return ItemStack.EMPTY;
-                }
+        int idx = MODULE_SLOT_COUNT;
+        for (int row = 0; row < 5; row++)
+            for (int col = 0; col < 9; col++)
+                addSlot(new CollectorSlot(blockEntity, idx++, 8 + col * 18, 18 + row * 18, null));
+    }
 
-                if (!this.moveItemStackTo(sourceStack, 0, 36, false)) {
-                    return ItemStack.EMPTY;
-                }
-            }
+    @Override
+    public ItemStack quickMoveStack(Player player, int index) {
+        Slot source = slots.get(index);
+        if (source == null || !source.hasItem()) return ItemStack.EMPTY;
 
-            if (sourceStack.getCount() == 0) {
-                sourceSlot.set(ItemStack.EMPTY);
-            } else {
-                sourceSlot.setChanged();
-            }
+        ItemStack stack = source.getItem();
+        ItemStack copy  = stack.copy();
 
-            sourceSlot.onTake(player, sourceStack);
-            return copyOfSourceStack;
+        if (index < PLAYER_SLOTS) {
+            if (!moveToBlockEntity(stack)) return ItemStack.EMPTY;
         } else {
-            return ItemStack.EMPTY;
+            if (index >= TE_LAST_SLOT) return ItemStack.EMPTY;
+            if (!moveItemStackTo(stack, 0, PLAYER_SLOTS, false)) return ItemStack.EMPTY;
         }
+
+        if (stack.isEmpty()) source.set(ItemStack.EMPTY);
+        else source.setChanged();
+
+        source.onTake(player, stack);
+        return copy;
     }
 
-    private boolean isValidModule(ItemStack stack) {
-        return stack.getItem() == MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get() || stack.getItem() == MFUItems.VOID_FILTER_MODULE.get();
+    private boolean moveToBlockEntity(ItemStack stack) {
+        Item item = stack.getItem();
+
+        if (item == MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get()) {
+            if (!blockEntity.getStack(SLOT_MODULE_RADIUS).isEmpty()) return false;
+            insertSingle(stack, SLOT_MODULE_RADIUS);
+            return true;
+        }
+
+        if (item == MFUItems.VOID_FILTER_MODULE.get()) {
+            for (int slot = SLOT_MODULE_VOID_1; slot <= SLOT_MODULE_VOID_3; slot++) {
+                if (blockEntity.getStack(slot).isEmpty()) {
+                    insertSingle(stack, slot);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        return false;
     }
 
+    private void insertSingle(ItemStack stack, int slot) {
+        try (Transaction tx = Transaction.openRoot()) {
+            blockEntity.inventory.insert(slot, ItemResource.of(stack), 1, tx);
+            tx.commit();
+        }
+        stack.shrink(1);
+    }
+
+    @Override
     public boolean stillValid(Player player) {
-        return stillValid(ContainerLevelAccess.create(this.level, this.blockEntity.getBlockPos()), player, MFUBlocks.COLLECTOR.get());
+        return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()),
+                player, MFUBlocks.COLLECTOR.get());
     }
 
-    private void addPlayerInventory(Inventory playerInventory) {
-        for(int i = 0; i < 3; ++i) {
-            for(int l = 0; l < 9; ++l) {
-                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 37 + l * 18, 159 + i * 18));
+    private void addPlayerInventory(Inventory inv) {
+        for (int row = 0; row < 3; row++)
+            for (int col = 0; col < 9; col++)
+                addSlot(new Slot(inv, col + row * 9 + 9, 37 + col * 18, 159 + row * 18));
+    }
+
+    private void addPlayerHotbar(Inventory inv) {
+        for (int i = 0; i < 9; i++)
+            addSlot(new Slot(inv, i, 37 + i * 18, 218));
+    }
+
+    private static class CollectorSlot extends Slot {
+        private final CollectorBlockEntity be;
+        private final int index;
+        private final Item allowedItem;
+
+        CollectorSlot(CollectorBlockEntity be, int index, int x, int y, Item allowedItem) {
+            super(new SimpleContainer(be.inventory.size()), index, x, y);
+            this.be = be;
+            this.index = index;
+            this.allowedItem = allowedItem;
+        }
+
+        @Override
+        public ItemStack getItem() {
+            return be.getStack(index);
+        }
+
+        @Override
+        public void set(ItemStack stack) {
+            try (Transaction tx = Transaction.openRoot()) {
+                ItemStack existing = be.getStack(index);
+                if (!existing.isEmpty())
+                    be.inventory.extract(index, ItemResource.of(existing), existing.getCount(), tx);
+                if (!stack.isEmpty())
+                    be.inventory.insert(index, ItemResource.of(stack), stack.getCount(), tx);
+                tx.commit();
+            }
+            setChanged();
+        }
+
+        @Override
+        public boolean mayPlace(ItemStack stack) {
+            if (allowedItem == null) return false;
+            return stack.getItem() == allowedItem;
+        }
+
+        @Override
+        public ItemStack remove(int amount) {
+            ItemStack existing = getItem();
+            if (existing.isEmpty()) return ItemStack.EMPTY;
+            int toExtract = Math.min(amount, existing.getCount());
+            try (Transaction tx = Transaction.openRoot()) {
+                int extracted = be.inventory.extract(index, ItemResource.of(existing), toExtract, tx);
+                tx.commit();
+                return new ItemStack(existing.getItem(), extracted);
             }
         }
 
-    }
-
-    private void addPlayerHotbar(Inventory playerInventory) {
-        for(int i = 0; i < 9; ++i) {
-            this.addSlot(new Slot(playerInventory, i, 37 + i * 18, 218));
-        }
-
-    }
-
-    private static class ModuleSlot extends SlotItemHandler {
-        private final Item allowedModule;
-
-        public ModuleSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition, Item allowedModule) {
-            super(itemHandler, index, xPosition, yPosition);
-            this.allowedModule = allowedModule;
-        }
-
-        public boolean mayPlace(ItemStack stack) {
-            return stack.getItem() == this.allowedModule;
-        }
-    }
-
-    public static class OutputSlot extends SlotItemHandler {
-        private final CollectorBlockEntity collector;
-
-        public OutputSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition, CollectorBlockEntity collector) {
-            super(itemHandler, index, xPosition, yPosition);
-            this.collector = collector;
-        }
-
+        @Override
         public int getMaxStackSize() {
-            return this.getItemHandler().getSlotLimit(this.getSlotIndex());
+            return (int) be.inventory.getCapacityAsLong(index, be.inventory.getResource(index));
         }
 
+        @Override
         public int getMaxStackSize(ItemStack stack) {
-            return this.getItemHandler().getSlotLimit(this.getSlotIndex());
-        }
-
-        public boolean mayPlace(ItemStack stack) {
-            return false;
+            return (int) be.inventory.getCapacityAsLong(index, ItemResource.of(stack));
         }
     }
 }

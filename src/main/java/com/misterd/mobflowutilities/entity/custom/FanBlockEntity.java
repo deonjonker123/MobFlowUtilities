@@ -5,7 +5,7 @@ import com.misterd.mobflowutilities.entity.MFUBlockEntities;
 import com.misterd.mobflowutilities.gui.custom.FanMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
@@ -18,34 +18,47 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import org.jetbrains.annotations.Nullable;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class FanBlockEntity extends BlockEntity implements MenuProvider {
 
-    public final ItemStackHandler inventory = new ItemStackHandler(3) {
+    private static final int SLOT_WIDTH = 0;
+    private static final int SLOT_HEIGHT = 1;
+    private static final int SLOT_DISTANCE = 2;
+    private static final int SLOT_COUNT = 3;
+
+    public final ItemStacksResourceHandler inventory = new ItemStacksResourceHandler(SLOT_COUNT) {
         @Override
-        public int getSlotLimit(int slot) {
-            return switch (slot) {
-                case 0, 1 -> 4;
-                case 2 -> 10;
+        public long getCapacityAsLong(int index, ItemResource resource) {
+            return switch (index) {
+                case SLOT_WIDTH, SLOT_HEIGHT -> 4;
+                case SLOT_DISTANCE -> 10;
                 default -> 1;
             };
         }
 
         @Override
-        protected void onContentsChanged(int slot) {
+        public boolean isValid(int index, ItemResource resource) {
+            return !resource.isEmpty();
+        }
+
+        @Override
+        protected void onContentsChanged(int index, ItemStack previousContents) {
             setChanged();
-            if (level != null && !level.isClientSide()) {
+            if (level != null && !level.isClientSide())
                 level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
-            }
             invalidateCaches();
         }
     };
@@ -59,30 +72,30 @@ public class FanBlockEntity extends BlockEntity implements MenuProvider {
         super(MFUBlockEntities.FAN_BE.get(), pos, state);
     }
 
-    public void tick() {
-        if (this.level == null) return;
+    public ItemStack getStack(int slot) {
+        ItemResource res = inventory.getResource(slot);
+        if (res.isEmpty()) return ItemStack.EMPTY;
+        return res.toStack(inventory.getAmountAsInt(slot));
+    }
 
-        if (!this.level.isClientSide && getBlockState().getValue(FanBlock.POWERED)) {
-            pushEntities(this.level);
-        }
+    public void tick() {
+        if (level == null || level.isClientSide()) return;
+        if (getBlockState().getValue(FanBlock.POWERED)) pushEntities(level);
     }
 
     public int getDistance() {
-        if (cachedDistance != null) return cachedDistance;
-        int modules = inventory.getStackInSlot(2).getCount();
-        cachedDistance = Math.min(4 + modules, 15);
+        if (cachedDistance == null)
+            cachedDistance = Math.min(4 + inventory.getAmountAsInt(SLOT_DISTANCE), 15);
         return cachedDistance;
     }
 
     public int getWidth() {
-        if (cachedWidth != null) return cachedWidth;
-        cachedWidth = inventory.getStackInSlot(0).getCount();
+        if (cachedWidth == null) cachedWidth = inventory.getAmountAsInt(SLOT_WIDTH);
         return cachedWidth;
     }
 
     public int getHeight() {
-        if (cachedHeight != null) return cachedHeight;
-        cachedHeight = inventory.getStackInSlot(1).getCount();
+        if (cachedHeight == null) cachedHeight = inventory.getAmountAsInt(SLOT_HEIGHT);
         return cachedHeight;
     }
 
@@ -90,51 +103,25 @@ public class FanBlockEntity extends BlockEntity implements MenuProvider {
         if (cachedPushZone != null) return cachedPushZone;
 
         Direction facing = getBlockState().getValue(FanBlock.FACING);
-        int d = getDistance();
-        int w = getWidth();
-        int h = getHeight();
-
+        int d = getDistance(), w = getWidth(), h = getHeight();
         BlockPos o = worldPosition.relative(facing);
 
         cachedPushZone = switch (facing) {
-            case NORTH -> new AABB(
-                    o.getX() - w, o.getY() - h, o.getZ() - d,
-                    o.getX() + w + 1, o.getY() + h + 1, o.getZ() + 1
-            );
-            case SOUTH -> new AABB(
-                    o.getX() - w, o.getY() - h, o.getZ(),
-                    o.getX() + w + 1, o.getY() + h + 1, o.getZ() + d + 1
-            );
-            case WEST -> new AABB(
-                    o.getX() - d, o.getY() - h, o.getZ() - w,
-                    o.getX() + 1, o.getY() + h + 1, o.getZ() + w + 1
-            );
-            case EAST -> new AABB(
-                    o.getX(), o.getY() - h, o.getZ() - w,
-                    o.getX() + d + 1, o.getY() + h + 1, o.getZ() + w + 1
-            );
-            case DOWN -> new AABB(
-                    o.getX() - w, o.getY() - d, o.getZ() - h,
-                    o.getX() + w + 1, o.getY() + 1, o.getZ() + h + 1
-            );
-            case UP -> new AABB(
-                    o.getX() - w, o.getY(),
-                    o.getZ() - h,
-                    o.getX() + w + 1, o.getY() + d + 1, o.getZ() + h + 1
-            );
+            case NORTH -> new AABB(o.getX()-w, o.getY()-h, o.getZ()-d, o.getX()+w+1, o.getY()+h+1, o.getZ()+1);
+            case SOUTH -> new AABB(o.getX()-w, o.getY()-h, o.getZ(), o.getX()+w+1, o.getY()+h+1, o.getZ()+d+1);
+            case WEST -> new AABB(o.getX()-d, o.getY()-h, o.getZ()-w, o.getX()+1, o.getY()+h+1, o.getZ()+w+1);
+            case EAST -> new AABB(o.getX(), o.getY()-h, o.getZ()-w, o.getX()+d+1, o.getY()+h+1, o.getZ()+w+1);
+            case DOWN -> new AABB(o.getX()-w, o.getY()-d, o.getZ()-h, o.getX()+w+1, o.getY()+1, o.getZ()+h+1);
+            case UP -> new AABB(o.getX()-w, o.getY(), o.getZ()-h, o.getX()+w+1, o.getY()+d+1, o.getZ()+h+1);
         };
-
         return cachedPushZone;
     }
 
     private void pushEntities(Level level) {
-        AABB zone = getPushZone();
         Direction facing = getBlockState().getValue(FanBlock.FACING);
-        Vec3 push = Vec3.atLowerCornerOf(facing.getNormal()).scale(0.3);
+        Vec3 push = Vec3.atLowerCornerOf(facing.getUnitVec3i()).scale(0.3);
 
-        List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, zone);
-
-        for (LivingEntity entity : entities) {
+        for (LivingEntity entity : level.getEntitiesOfClass(LivingEntity.class, getPushZone())) {
             if (hasClearLane(level, entity)) {
                 entity.push(push.x, push.y, push.z);
                 entity.hurtMarked = true;
@@ -144,14 +131,13 @@ public class FanBlockEntity extends BlockEntity implements MenuProvider {
 
     private boolean hasClearLane(Level level, LivingEntity entity) {
         Direction facing = getBlockState().getValue(FanBlock.FACING);
-
         BlockPos start = worldPosition.relative(facing);
         BlockPos end = entity.blockPosition();
 
         int steps = switch (facing) {
             case NORTH, SOUTH -> Math.abs(end.getZ() - start.getZ());
-            case EAST, WEST   -> Math.abs(end.getX() - start.getX());
-            case UP, DOWN     -> Math.abs(end.getY() - start.getY());
+            case EAST, WEST -> Math.abs(end.getX() - start.getX());
+            case UP, DOWN -> Math.abs(end.getY() - start.getY());
         };
 
         int dx = Integer.signum(end.getX() - start.getX());
@@ -159,17 +145,11 @@ public class FanBlockEntity extends BlockEntity implements MenuProvider {
         int dz = Integer.signum(end.getZ() - start.getZ());
 
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(start.getX(), start.getY(), start.getZ());
-
-
         for (int i = 0; i < steps; i++) {
             pos.move(dx, dy, dz);
-
             BlockState state = level.getBlockState(pos);
-            if (!state.isAir() && state.isSolidRender(level, pos)) {
-                return false;
-            }
+            if (!state.isAir() && state.isSolidRender()) return false;
         }
-
         return true;
     }
 
@@ -181,25 +161,22 @@ public class FanBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     public void dropContents() {
-        if (level != null) {
-            SimpleContainer container = new SimpleContainer(inventory.getSlots());
-            for (int i = 0; i < inventory.getSlots(); i++) {
-                container.setItem(i, inventory.getStackInSlot(i));
-            }
-            Containers.dropContents(level, worldPosition, container);
-        }
+        if (level == null) return;
+        SimpleContainer container = new SimpleContainer(SLOT_COUNT);
+        for (int i = 0; i < SLOT_COUNT; i++) container.setItem(i, getStack(i));
+        Containers.dropContents(level, worldPosition, container);
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.put("inventory", inventory.serializeNBT(registries));
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        inventory.serialize(output);
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, Provider registries) {
-        super.loadAdditional(tag, registries);
-        inventory.deserializeNBT(registries, tag.getCompound("inventory"));
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        inventory.deserialize(input);
         invalidateCaches();
     }
 
@@ -221,7 +198,7 @@ public class FanBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     @Override
-    public CompoundTag getUpdateTag(Provider registries) {
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         return saveWithoutMetadata(registries);
     }
 }

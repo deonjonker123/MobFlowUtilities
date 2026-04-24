@@ -9,8 +9,7 @@ import com.misterd.mobflowutilities.item.custom.VoidFilterItem;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup.Provider;
-import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
@@ -26,24 +25,63 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
-import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.capabilities.Capabilities.ItemHandler;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.slf4j.Logger;
 
 import javax.annotation.Nullable;
-import java.util.List;
 
 public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
 
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final int COLLECTION_INTERVAL = 5;
+
+    private static final int SLOT_RADIUS  = 0;
+    private static final int SLOT_VOID_1  = 1;
+    private static final int SLOT_VOID_2  = 2;
+    private static final int SLOT_VOID_3  = 3;
+    private static final int MODULE_COUNT = 4;
+    private static final int OUTPUT_COUNT = 45;
+    private static final int TOTAL_SLOTS  = MODULE_COUNT + OUTPUT_COUNT;
+
+    public final ItemStacksResourceHandler inventory = new ItemStacksResourceHandler(TOTAL_SLOTS) {
+        @Override
+        public long getCapacityAsLong(int index, ItemResource resource) {
+            if (index == SLOT_RADIUS) return 8;
+            if (index < MODULE_COUNT) return 1;
+            return resource.toStack().getMaxStackSize();
+        }
+
+        @Override
+        public boolean isValid(int index, ItemResource resource) {
+            if (resource.isEmpty()) return false;
+            if (index < MODULE_COUNT) return false;
+            return true;
+        }
+
+        @Override
+        protected void onContentsChanged(int index, ItemStack previousContents) {
+            if (index == SLOT_RADIUS) invalidatePickupRangeCache();
+            CollectorBlockEntity.this.setChanged();
+            if (level != null && !level.isClientSide())
+                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+        }
+    };
+
+    public final ModuleSlotsView moduleSlots = new ModuleSlotsView();
+
+    public class ModuleSlotsView {
+        public ItemStack getStackInSlot(int slot) { return getStack(slot); }
+        public int getSlots() { return MODULE_COUNT; }
+        public int getSlotLimit(int slot) { return slot == SLOT_RADIUS ? 8 : 1; }
+    }
 
     private AABB cachedCollectionArea;
     private boolean collectionAreaDirty = true;
@@ -51,105 +89,8 @@ public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
     private boolean pickupRangeDirty = true;
     private int tickCounter = 0;
 
-    public final ItemStackHandler moduleSlots = new ItemStackHandler(4) {
-        @Override
-        public int getSlotLimit(int slot) {
-            return switch (slot) {
-                case 0 -> 8;
-                case 1, 2, 3 -> 1;
-                default -> 1;
-            };
-        }
-
-        @Override
-        protected void onContentsChanged(int slot) {
-            if (slot == 0) invalidatePickupRangeCache();
-            CollectorBlockEntity.this.setChanged();
-            if (!CollectorBlockEntity.this.level.isClientSide()) {
-                try {
-                    CollectorBlockEntity.this.level.sendBlockUpdated(
-                            CollectorBlockEntity.this.getBlockPos(),
-                            CollectorBlockEntity.this.getBlockState(),
-                            CollectorBlockEntity.this.getBlockState(),
-                            3
-                    );
-                } catch (Exception e) {
-                    LOGGER.error("Failed to send block update for collector at {}", CollectorBlockEntity.this.getBlockPos(), e);
-                }
-            }
-        }
-
-        @Override
-        public boolean isItemValid(int slot, ItemStack stack) {
-            if (stack.isEmpty()) return true;
-            try {
-                stack.save(CollectorBlockEntity.this.level.registryAccess());
-                return super.isItemValid(slot, stack);
-            } catch (Exception e) {
-                LOGGER.warn("Rejected invalid item {} for collector slot {}", stack, slot, e);
-                return false;
-            }
-        }
-    };
-
-    public final ItemStackHandler outputInventory = new ItemStackHandler(45) {
-        @Override
-        protected int getStackLimit(int slot, ItemStack stack) {
-            return stack.getMaxStackSize();
-        }
-
-        @Override
-        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-            if (stack.isEmpty()) return ItemStack.EMPTY;
-
-            int limit = getStackLimit(slot, stack);
-            ItemStack existing = getStackInSlot(slot);
-
-            if (!existing.isEmpty() && !ItemStack.isSameItemSameComponents(stack, existing)) return stack;
-
-            int canInsert = limit - existing.getCount();
-            if (canInsert <= 0) return stack;
-
-            int toInsert = Math.min(stack.getCount(), canInsert);
-            if (!simulate) {
-                if (existing.isEmpty()) {
-                    setStackInSlot(slot, stack.copyWithCount(toInsert));
-                } else {
-                    existing.grow(toInsert);
-                }
-            }
-            return toInsert == stack.getCount() ? ItemStack.EMPTY : stack.copyWithCount(stack.getCount() - toInsert);
-        }
-
-        @Override
-        protected void onContentsChanged(int slot) {
-            CollectorBlockEntity.this.setChanged();
-            if (!CollectorBlockEntity.this.level.isClientSide()) {
-                CollectorBlockEntity.this.level.sendBlockUpdated(
-                        CollectorBlockEntity.this.getBlockPos(),
-                        CollectorBlockEntity.this.getBlockState(),
-                        CollectorBlockEntity.this.getBlockState(),
-                        3
-                );
-            }
-        }
-
-        @Override
-        public boolean isItemValid(int slot, ItemStack stack) {
-            if (stack.isEmpty()) return false;
-            try {
-                stack.save(CollectorBlockEntity.this.level.registryAccess());
-                return true;
-            } catch (Exception e) {
-                LOGGER.warn("Rejected invalid item {} for collector output slot {}", stack, slot, e);
-                return false;
-            }
-        }
-    };
-
     private int storedXP = 0;
     private boolean xpCollectionEnabled = false;
-
     private int downUpOffset = 0;
     private int northSouthOffset = 0;
     private int eastWestOffset = 0;
@@ -158,49 +99,36 @@ public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
         super(MFUBlockEntities.COLLECTOR_BE.get(), pos, blockState);
     }
 
-    public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-        event.registerBlockEntity(ItemHandler.BLOCK, MFUBlockEntities.COLLECTOR_BE.get(),
-                (blockEntity, direction) -> blockEntity instanceof CollectorBlockEntity collector
-                        ? collector.getItemHandler(direction)
-                        : null
-        );
+    @Nullable
+    public ItemStacksResourceHandler getItemHandler(@Nullable Direction direction) {
+        return inventory;
+    }
+
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable("menu.mobflowutilities.collector");
     }
 
     @Nullable
-    public IItemHandler getItemHandler(@Nullable Direction direction) {
-        return outputInventory;
+    @Override
+    public AbstractContainerMenu createMenu(int id, Inventory inv, Player player) {
+        return new CollectorMenu(id, inv, this);
     }
 
-    public void loadFromBlockItem(ItemStack stack) {
-        CustomData customData = (CustomData) stack.get(DataComponents.CUSTOM_DATA);
-        if (customData == null) return;
-
-        CompoundTag tag = customData.copyTag();
-        if (level != null) {
-            Provider registries = level.registryAccess();
-            storedXP = tag.getInt("storedXP");
-            xpCollectionEnabled = tag.getBoolean("xpCollectionEnabled");
-            downUpOffset = tag.getInt("downUpOffset");
-            northSouthOffset = tag.getInt("northSouthOffset");
-            eastWestOffset = tag.getInt("eastWestOffset");
-
-            if (!level.isClientSide()) {
-                CollectorBlock.updateXpCollectionState(level, worldPosition, xpCollectionEnabled);
-            }
-
-            setChanged();
-            if (!level.isClientSide()) {
-                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
-            }
-        }
+    public ItemStack getStack(int slot) {
+        ItemResource res = inventory.getResource(slot);
+        if (res.isEmpty()) return ItemStack.EMPTY;
+        return res.toStack(inventory.getAmountAsInt(slot));
     }
 
-    public int getStoredXP() { return storedXP; }
+    public int getStoredXP() {
+        return storedXP;
+    }
 
     public void setStoredXP(int xp) {
-        int oldXP = storedXP;
+        int old = storedXP;
         storedXP = Math.max(0, xp);
-        if (oldXP != storedXP) setChangedAndUpdate();
+        if (old != storedXP) setChangedAndUpdate();
     }
 
     public boolean isXpCollectionEnabled() { return xpCollectionEnabled; }
@@ -215,226 +143,57 @@ public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
         }
     }
 
-    public int getDownUpOffset() { return downUpOffset; }
-    public void setDownUpOffset(int offset) { setOffset(() -> downUpOffset, offset, val -> downUpOffset = val); }
+    public int getDownUpOffset() {
+        return downUpOffset;
+    }
 
-    public int getNorthSouthOffset() { return northSouthOffset; }
-    public void setNorthSouthOffset(int offset) { setOffset(() -> northSouthOffset, offset, val -> northSouthOffset = val); }
+    public int getNorthSouthOffset() {
+        return northSouthOffset;
+    }
 
-    public int getEastWestOffset() { return eastWestOffset; }
-    public void setEastWestOffset(int offset) { setOffset(() -> eastWestOffset, offset, val -> eastWestOffset = val); }
+    public int getEastWestOffset() {
+        return eastWestOffset;
+    }
 
-    private void setOffset(java.util.concurrent.Callable<Integer> getter, int offset, java.util.function.IntConsumer setter) {
-        int newOffset = Math.max(-10, Math.min(10, offset));
-        try {
-            if (getter.call() != newOffset) {
-                setter.accept(newOffset);
-                invalidateCollectionAreaCache();
-                setChanged();
-            }
-        } catch (Exception ignored) {}
+    public void setDownUpOffset(int v) {
+        setOffset(downUpOffset, v, val -> downUpOffset = val);
+    }
+
+    public void setNorthSouthOffset(int v) {
+        setOffset(northSouthOffset, v, val -> northSouthOffset = val);
+    }
+
+    public void setEastWestOffset(int v) {
+        setOffset(eastWestOffset, v, val -> eastWestOffset = val);
+    }
+
+    private void setOffset(int current, int offset, java.util.function.IntConsumer setter) {
+        int clamped = Math.max(-10, Math.min(10, offset));
+        if (current != clamped) {
+            setter.accept(clamped);
+            invalidateCollectionAreaCache();
+            setChanged();
+        }
     }
 
     public int getPickupRange() {
         if (pickupRangeDirty || cachedPickupRange == -1) {
-            cachedPickupRange = 3 + moduleSlots.getStackInSlot(0).getCount();
+            cachedPickupRange = 3 + inventory.getAmountAsInt(SLOT_RADIUS);
             pickupRangeDirty = false;
         }
         return cachedPickupRange;
     }
 
-    private void invalidateCollectionAreaCache() { collectionAreaDirty = true; }
+    private void invalidateCollectionAreaCache() {
+        collectionAreaDirty = true;
+    }
+
     private void invalidatePickupRangeCache() {
-        pickupRangeDirty = true;
-        invalidateCollectionAreaCache();
+        pickupRangeDirty = true; invalidateCollectionAreaCache();
     }
-    public void invalidateAllCaches() {
+
+    public  void invalidateAllCaches() {
         invalidatePickupRangeCache();
-        invalidateCollectionAreaCache();
-    }
-
-    public void drops() {
-        SimpleContainer outputInv = new SimpleContainer(outputInventory.getSlots());
-        for (int i = 0; i < outputInventory.getSlots(); i++) {
-            outputInv.setItem(i, outputInventory.getStackInSlot(i));
-            outputInventory.setStackInSlot(i, ItemStack.EMPTY);
-        }
-        Containers.dropContents(level, worldPosition, outputInv);
-
-        SimpleContainer moduleInv = new SimpleContainer(moduleSlots.getSlots());
-        for (int i = 0; i < moduleSlots.getSlots(); i++) {
-            moduleInv.setItem(i, moduleSlots.getStackInSlot(i));
-            moduleSlots.setStackInSlot(i, ItemStack.EMPTY);
-        }
-        Containers.dropContents(level, worldPosition, moduleInv);
-    }
-
-    @Override
-    protected void saveAdditional(CompoundTag tag, Provider registries) {
-        super.saveAdditional(tag, registries);
-        try { tag.put("moduleSlots", moduleSlots.serializeNBT(registries)); }
-        catch (Exception e) { LOGGER.error("Failed to serialize module slots for collector at {}", getBlockPos(), e); }
-
-        try { tag.put("outputInventory", outputInventory.serializeNBT(registries)); }
-        catch (Exception e) { LOGGER.error("Failed to serialize output inventory for collector at {}", getBlockPos(), e); }
-
-        tag.putInt("storedXP", storedXP);
-        tag.putBoolean("xpCollectionEnabled", xpCollectionEnabled);
-        tag.putInt("downUpOffset", downUpOffset);
-        tag.putInt("northSouthOffset", northSouthOffset);
-        tag.putInt("eastWestOffset", eastWestOffset);
-    }
-
-    @Override
-    protected void loadAdditional(CompoundTag tag, Provider registries) {
-        super.loadAdditional(tag, registries);
-
-        try {
-            if (tag.contains("moduleSlots")) {
-                CompoundTag moduleTag = tag.getCompound("moduleSlots");
-                int oldSize = moduleTag.getInt("Size");
-                if (oldSize == moduleSlots.getSlots()) moduleSlots.deserializeNBT(registries, moduleTag);
-                else migrateModuleSlots(moduleTag, registries, oldSize);
-            }
-        } catch (Exception e) {
-            LOGGER.error("Failed to deserialize module slots for collector at {}, resetting to empty", getBlockPos(), e);
-            for (int i = 0; i < moduleSlots.getSlots(); i++) moduleSlots.setStackInSlot(i, ItemStack.EMPTY);
-        }
-
-        try {
-            if (tag.contains("outputInventory")) {
-                CompoundTag outputTag = tag.getCompound("outputInventory");
-                int oldSize = outputTag.getInt("Size");
-                if (oldSize == outputInventory.getSlots()) outputInventory.deserializeNBT(registries, outputTag);
-                else migrateOutputInventory(outputTag, registries, oldSize);
-            }
-        } catch (Exception e) {
-            LOGGER.error("Failed to deserialize output inventory for collector at {}, resetting to empty", getBlockPos(), e);
-            for (int i = 0; i < outputInventory.getSlots(); i++) outputInventory.setStackInSlot(i, ItemStack.EMPTY);
-        }
-
-        storedXP = tag.getInt("storedXP");
-        xpCollectionEnabled = tag.getBoolean("xpCollectionEnabled");
-        downUpOffset = tag.getInt("downUpOffset");
-        northSouthOffset = tag.getInt("northSouthOffset");
-        eastWestOffset = tag.getInt("eastWestOffset");
-
-        invalidateAllCaches();
-    }
-
-    private void migrateModuleSlots(CompoundTag oldTag, Provider registries, int oldSize) {
-        for (int i = 0; i < moduleSlots.getSlots(); i++) moduleSlots.setStackInSlot(i, ItemStack.EMPTY);
-        int maxSlots = Math.min(oldSize, moduleSlots.getSlots());
-        for (int i = 0; i < maxSlots; i++) {
-            String key = String.valueOf(i);
-            if (oldTag.contains(key)) {
-                ItemStack stack = ItemStack.parseOptional(registries, oldTag.getCompound(key));
-                if (moduleSlots.isItemValid(i, stack)) moduleSlots.setStackInSlot(i, stack);
-                else if (level != null && !stack.isEmpty()) Block.popResource(level, worldPosition, stack);
-            }
-        }
-    }
-
-    private void migrateOutputInventory(CompoundTag oldTag, Provider registries, int oldSize) {
-        for (int i = 0; i < outputInventory.getSlots(); i++) outputInventory.setStackInSlot(i, ItemStack.EMPTY);
-        int maxSlots = Math.min(oldSize, outputInventory.getSlots());
-        for (int i = 0; i < maxSlots; i++) {
-            String key = String.valueOf(i);
-            if (oldTag.contains(key)) outputInventory.setStackInSlot(i, ItemStack.parseOptional(registries, oldTag.getCompound(key)));
-        }
-        for (int i = outputInventory.getSlots(); i < oldSize; i++) {
-            String key = String.valueOf(i);
-            if (oldTag.contains(key) && level != null) {
-                ItemStack stack = ItemStack.parseOptional(registries, oldTag.getCompound(key));
-                if (!stack.isEmpty()) Block.popResource(level, worldPosition, stack);
-            }
-        }
-    }
-
-    @Override
-    public Component getDisplayName() { return Component.translatable("menu.mobflowutilities.collector"); }
-
-    @Nullable
-    @Override
-    public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        return new CollectorMenu(i, inventory, this);
-    }
-
-    @Nullable
-    @Override
-    public Packet<ClientGamePacketListener> getUpdatePacket() {
-        return ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    @Override
-    public CompoundTag getUpdateTag(Provider registries) {
-        try { return saveWithoutMetadata(registries); }
-        catch (Exception e) {
-            LOGGER.error("Failed to create update tag for collector at {}", getBlockPos(), e);
-            CompoundTag tag = new CompoundTag();
-            tag.putString("id", MFUBlockEntities.COLLECTOR_BE.get().toString());
-            return tag;
-        }
-    }
-
-    public void tick() {
-        if (level == null || level.isClientSide()) return;
-        tickCounter++;
-        if (tickCounter >= COLLECTION_INTERVAL) {
-            tickCounter = 0;
-            collectItems();
-            if (xpCollectionEnabled) collectXP();
-        }
-    }
-
-    private void collectItems() {
-        AABB area = getCollectionArea();
-        List<ItemEntity> items = level.getEntitiesOfClass(ItemEntity.class, area);
-        for (ItemEntity item : items) {
-            if (!item.isAlive() || item.hasPickUpDelay()) continue;
-
-            ItemStack stack = item.getItem().copy();
-            if (shouldVoidItem(stack)) {
-                int amount = stack.getCount();
-                ItemStack current = item.getItem();
-                if (amount >= current.getCount()) item.discard();
-                else item.setItem(current.copyWithCount(current.getCount() - amount));
-            } else {
-                ItemStack remaining = insertIntoInventory(stack);
-                int inserted = stack.getCount() - remaining.getCount();
-                if (inserted > 0) {
-                    ItemStack current = item.getItem();
-                    if (inserted >= current.getCount()) item.discard();
-                    else item.setItem(current.copyWithCount(current.getCount() - inserted));
-                }
-            }
-        }
-    }
-
-    private boolean shouldVoidItem(ItemStack stack) {
-        for (int i = 1; i <= 3; i++) {
-            ItemStack module = moduleSlots.getStackInSlot(i);
-            if (module.getItem() instanceof VoidFilterItem) {
-                VoidFilterData data = module.getOrDefault(MFUDataComponents.VOID_FILTER_DATA.get(), VoidFilterData.DEFAULT);
-                if (data.shouldVoidItem(stack)) return true;
-            }
-        }
-        return false;
-    }
-
-    private void collectXP() {
-        AABB area = getCollectionArea();
-        List<ExperienceOrb> orbs = level.getEntitiesOfClass(ExperienceOrb.class, area);
-        int collected = 0;
-        for (ExperienceOrb orb : orbs) {
-            if (!orb.isAlive()) continue;
-            collected += orb.getValue();
-            orb.discard();
-        }
-        if (collected > 0) {
-            storedXP += collected;
-            setChangedAndUpdate();
-        }
     }
 
     private AABB getCollectionArea() {
@@ -450,24 +209,156 @@ public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
         return cachedCollectionArea;
     }
 
-    private ItemStack insertIntoInventory(ItemStack stack) {
-        for (int i = 0; i < outputInventory.getSlots(); i++) {
-            stack = outputInventory.insertItem(i, stack, false);
-            if (stack.isEmpty()) break;
+    public void loadFromBlockItem(ItemStack stack) {
+        if (level == null) return;
+        CustomData customData = stack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
+        if (customData == null) return;
+
+        CompoundTag tag = customData.copyTag();
+        storedXP = tag.getIntOr("storedXP", 0);
+        xpCollectionEnabled = tag.getBooleanOr("xpCollectionEnabled", false);
+        downUpOffset = tag.getIntOr("downUpOffset", 0);
+        northSouthOffset = tag.getIntOr("northSouthOffset", 0);
+        eastWestOffset = tag.getIntOr("eastWestOffset", 0);
+
+        if (!level.isClientSide())
+            CollectorBlock.updateXpCollectionState(level, worldPosition, xpCollectionEnabled);
+
+        setChangedAndUpdate();
+    }
+
+    public void drops() {
+        SimpleContainer inv = new SimpleContainer(TOTAL_SLOTS);
+        for (int i = 0; i < TOTAL_SLOTS; i++) inv.setItem(i, getStack(i));
+        Containers.dropContents(level, worldPosition, inv);
+    }
+
+    @Override
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        inventory.serialize(output);
+        output.putInt("storedXP", storedXP);
+        output.putBoolean("xpCollectionEnabled", xpCollectionEnabled);
+        output.putInt("downUpOffset", downUpOffset);
+        output.putInt("northSouthOffset", northSouthOffset);
+        output.putInt("eastWestOffset", eastWestOffset);
+    }
+
+    @Override
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        inventory.deserialize(input);
+        storedXP = input.getIntOr("storedXP", 0);
+        xpCollectionEnabled = input.getBooleanOr("xpCollectionEnabled", false);
+        downUpOffset = input.getIntOr("downUpOffset", 0);
+        northSouthOffset = input.getIntOr("northSouthOffset", 0);
+        eastWestOffset = input.getIntOr("eastWestOffset", 0);
+        invalidateAllCaches();
+    }
+
+    @Nullable
+    @Override
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
+    }
+
+    public void tick() {
+        if (level == null || level.isClientSide()) return;
+        if (++tickCounter >= COLLECTION_INTERVAL) {
+            tickCounter = 0;
+            collectItems();
+            if (xpCollectionEnabled) collectXP();
         }
-        return stack;
+    }
+
+    private void collectItems() {
+        AABB area = getCollectionArea();
+        for (ItemEntity itemEntity : level.getEntitiesOfClass(ItemEntity.class, area)) {
+            if (!itemEntity.isAlive() || itemEntity.hasPickUpDelay()) continue;
+            ItemStack stack = itemEntity.getItem().copy();
+
+            if (shouldVoidItem(stack)) {
+                ItemStack current = itemEntity.getItem();
+                if (stack.getCount() >= current.getCount()) itemEntity.discard();
+                else itemEntity.setItem(current.copyWithCount(current.getCount() - stack.getCount()));
+            } else {
+                int inserted = insertIntoOutput(stack);
+                if (inserted > 0) {
+                    ItemStack current = itemEntity.getItem();
+                    if (inserted >= current.getCount()) itemEntity.discard();
+                    else itemEntity.setItem(current.copyWithCount(current.getCount() - inserted));
+                }
+            }
+        }
+    }
+
+    private boolean shouldVoidItem(ItemStack stack) {
+        for (int i = SLOT_VOID_1; i <= SLOT_VOID_3; i++) {
+            ItemStack module = getStack(i);
+            if (module.getItem() instanceof VoidFilterItem) {
+                VoidFilterData data = module.getOrDefault(MFUDataComponents.VOID_FILTER_DATA.get(), VoidFilterData.DEFAULT);
+                if (data.shouldVoidItem(stack)) return true;
+            }
+        }
+        return false;
+    }
+
+    private void collectXP() {
+        AABB area = getCollectionArea();
+        int collected = 0;
+        for (ExperienceOrb orb : level.getEntitiesOfClass(ExperienceOrb.class, area)) {
+            if (!orb.isAlive()) continue;
+            collected += orb.getValue();
+            orb.discard();
+        }
+        if (collected > 0) { storedXP += collected; setChangedAndUpdate(); }
+    }
+
+    private int insertIntoOutput(ItemStack stack) {
+        int totalInserted = 0;
+        ItemResource res = ItemResource.of(stack);
+        int remaining = stack.getCount();
+
+        for (int i = MODULE_COUNT; i < TOTAL_SLOTS && remaining > 0; i++) {
+            ItemStack existing = getStack(i);
+            if (existing.isEmpty() || !ItemStack.isSameItemSameComponents(existing, stack)) continue;
+            int space = existing.getMaxStackSize() - existing.getCount();
+            if (space <= 0) continue;
+            try (Transaction tx = Transaction.openRoot()) {
+                int inserted = inventory.insert(i, res, Math.min(space, remaining), tx);
+                tx.commit();
+                remaining -= inserted;
+                totalInserted += inserted;
+            }
+        }
+
+        for (int i = MODULE_COUNT; i < TOTAL_SLOTS && remaining > 0; i++) {
+            if (!getStack(i).isEmpty()) continue;
+            try (Transaction tx = Transaction.openRoot()) {
+                int inserted = inventory.insert(i, res, Math.min(stack.getMaxStackSize(), remaining), tx);
+                tx.commit();
+                remaining -= inserted;
+                totalInserted += inserted;
+            }
+        }
+
+        return totalInserted;
     }
 
     private void setChangedAndUpdate() {
         setChanged();
-        if (level != null && !level.isClientSide()) {
+        if (level != null && !level.isClientSide())
             level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
-        }
     }
 
     public static <T extends BlockEntity> BlockEntityTicker<T> createTicker() {
-        return (level, pos, state, blockEntity) -> {
-            if (blockEntity instanceof CollectorBlockEntity collector) collector.tick();
+        return (level, pos, state, be) -> {
+            if (be instanceof CollectorBlockEntity collector) collector.tick();
         };
     }
 }

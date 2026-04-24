@@ -1,10 +1,11 @@
 package com.misterd.mobflowutilities.datagen.custom;
 
+import com.misterd.mobflowutilities.MobFlowUtilities;
 import com.misterd.mobflowutilities.item.MFUItems;
 import com.misterd.mobflowutilities.loot.AddItemModifier;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.neoforged.neoforge.common.data.GlobalLootModifierProvider;
@@ -13,11 +14,8 @@ import net.neoforged.neoforge.common.loot.LootTableIdCondition;
 import java.util.concurrent.CompletableFuture;
 
 public class MFUGlobalLootModifierProvider extends GlobalLootModifierProvider {
-
-    private static final String MOD_ID = "mobflowutilities";
-
     public MFUGlobalLootModifierProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-        super(output, registries, MOD_ID);
+        super(output, registries, MobFlowUtilities.MODID);
     }
 
     @Override
@@ -121,9 +119,10 @@ public class MFUGlobalLootModifierProvider extends GlobalLootModifierProvider {
     private void addMobLoot(String name, String entityPath, net.neoforged.neoforge.registries.DeferredItem<?> item, float chance) {
         add(name, new AddItemModifier(
                 new LootItemCondition[] {
-                        new LootTableIdCondition.Builder(ResourceLocation.withDefaultNamespace(entityPath)).build(),
+                        new LootTableIdCondition.Builder(Identifier.withDefaultNamespace(entityPath)).build(),
                         LootItemRandomChanceCondition.randomChance(chance).build()
                 },
+                0,
                 item.get()
         ));
     }
@@ -131,9 +130,10 @@ public class MFUGlobalLootModifierProvider extends GlobalLootModifierProvider {
     private void addChestLoot(String name, String chestPath, net.neoforged.neoforge.registries.DeferredItem<?> item, float chance) {
         add(name, new AddItemModifier(
                 new LootItemCondition[] {
-                        new LootTableIdCondition.Builder(ResourceLocation.withDefaultNamespace(chestPath)).build(),
+                        new LootTableIdCondition.Builder(Identifier.withDefaultNamespace(chestPath)).build(),
                         LootItemRandomChanceCondition.randomChance(chance).build()
                 },
+                0,
                 item.get()
         ));
     }
@@ -141,8 +141,9 @@ public class MFUGlobalLootModifierProvider extends GlobalLootModifierProvider {
     private void addBossLoot(String name, String entityPath, net.neoforged.neoforge.registries.DeferredItem<?> item) {
         add(name, new AddItemModifier(
                 new LootItemCondition[] {
-                        new LootTableIdCondition.Builder(ResourceLocation.withDefaultNamespace(entityPath)).build()
+                        new LootTableIdCondition.Builder(Identifier.withDefaultNamespace(entityPath)).build()
                 },
+                0,
                 item.get()
         ));
     }

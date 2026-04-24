@@ -8,19 +8,34 @@ import net.minecraft.data.recipes.*;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.conditions.IConditionBuilder;
 
 import java.util.concurrent.CompletableFuture;
 
-public class MFURecipeProvider extends RecipeProvider implements IConditionBuilder {
+public class MFURecipeProvider extends RecipeProvider {
 
-    public MFURecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-        super(output, registries);
+    public MFURecipeProvider(HolderLookup.Provider provider, RecipeOutput recipeOutput) {
+        super(provider, recipeOutput);
+    }
+
+    public static class Runner extends RecipeProvider.Runner {
+        public Runner(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> provider) {
+            super(packOutput, provider);
+        }
+
+        @Override
+        protected RecipeProvider createRecipeProvider(HolderLookup.Provider provider, RecipeOutput recipeOutput) {
+            return new MFURecipeProvider(provider, recipeOutput);
+        }
+
+        @Override
+        public String getName() {
+            return "My Recipes";
+        }
     }
 
     @Override
-    protected void buildRecipes(RecipeOutput recipeOutput) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUBlocks.CONTROLLER.get())
+    protected void buildRecipes() {
+        shaped(RecipeCategory.MISC, MFUBlocks.CONTROLLER.get())
                 .pattern("GCG")
                 .pattern("IBI")
                 .pattern("GCG")
@@ -29,9 +44,9 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('C', Items.COMPARATOR)
                 .define('B', Items.REDSTONE_BLOCK)
                 .unlockedBy("has_redstone", has(Items.REDSTONE))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUBlocks.FAN.get())
+        shaped(RecipeCategory.MISC, MFUBlocks.FAN.get())
                 .pattern("GPG")
                 .pattern("PCP")
                 .pattern("GPG")
@@ -39,9 +54,9 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('P', Items.IRON_INGOT)
                 .define('C', Items.PISTON)
                 .unlockedBy("has_piston", has(Items.PISTON))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUBlocks.COLLECTOR.get())
+        shaped(RecipeCategory.MISC, MFUBlocks.COLLECTOR.get())
                 .pattern("GEG")
                 .pattern("PCP")
                 .pattern("GHG")
@@ -51,9 +66,9 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('C', Tags.Items.CHESTS)
                 .define('E', Items.ENDER_EYE)
                 .unlockedBy("has_ender_pearl", has(Items.ENDER_PEARL))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUBlocks.GENESIS_CHAMBER.get())
+        shaped(RecipeCategory.MISC, MFUBlocks.GENESIS_CHAMBER.get())
                 .pattern("GSG")
                 .pattern("PHP")
                 .pattern("GSG")
@@ -62,9 +77,9 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('H', Items.PISTON)
                 .define('S', Items.OBSIDIAN)
                 .unlockedBy("has_diamond", has(Items.DIAMOND))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUBlocks.DAMAGE_PAD.get(), 4)
+        shaped(RecipeCategory.MISC, MFUBlocks.DAMAGE_PAD.get(), 4)
                 .pattern("ISI")
                 .pattern("SGS")
                 .pattern("ISI")
@@ -72,9 +87,9 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('S', Items.IRON_SWORD)
                 .define('I', Items.IRON_INGOT)
                 .unlockedBy("has_iron_sword", has(Items.IRON_SWORD))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUBlocks.FAST_FLOW_PAD.get(), 4)
+        shaped(RecipeCategory.MISC, MFUBlocks.FAST_FLOW_PAD.get(), 4)
                 .pattern("SGS")
                 .pattern("GQG")
                 .pattern("SGS")
@@ -82,9 +97,9 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('S', Tags.Items.STONES)
                 .define('Q', Items.SUGAR)
                 .unlockedBy("has_sugar", has(Items.SUGAR))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUBlocks.FASTER_FLOW_PAD.get(), 4)
+        shaped(RecipeCategory.MISC, MFUBlocks.FASTER_FLOW_PAD.get(), 4)
                 .pattern("GFG")
                 .pattern("FQF")
                 .pattern("GFG")
@@ -92,9 +107,9 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('Q', Items.SUGAR)
                 .define('F', MFUBlocks.FAST_FLOW_PAD.get())
                 .unlockedBy("has_fast_flow_pad", has(MFUBlocks.FAST_FLOW_PAD))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUBlocks.FASTEST_FLOW_PAD.get(), 4)
+        shaped(RecipeCategory.MISC, MFUBlocks.FASTEST_FLOW_PAD.get(), 4)
                 .pattern("GFG")
                 .pattern("FQF")
                 .pattern("GFG")
@@ -102,18 +117,18 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('Q', Items.SUGAR)
                 .define('F', MFUBlocks.FASTER_FLOW_PAD.get())
                 .unlockedBy("has_faster_flow_pad", has(MFUBlocks.FASTER_FLOW_PAD))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, MFUItems.PAD_WRENCH.get())
+        shaped(RecipeCategory.TOOLS, MFUItems.PAD_WRENCH.get())
                 .pattern(" G ")
                 .pattern(" SG")
                 .pattern("S  ")
                 .define('G', Items.IRON_INGOT)
                 .define('S', Items.STICK)
                 .unlockedBy("has_stick", has(Items.STICK))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUItems.SHARPNESS_MODULE.get())
+        shaped(RecipeCategory.MISC, MFUItems.SHARPNESS_MODULE.get())
                 .pattern("GSG")
                 .pattern("SIS")
                 .pattern("GSG")
@@ -121,9 +136,9 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('S', Items.DIAMOND_SWORD)
                 .define('I', Items.IRON_BLOCK)
                 .unlockedBy("has_diamond_sword", has(Items.DIAMOND_SWORD))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUItems.FIRE_ASPECT_MODULE.get())
+        shaped(RecipeCategory.MISC, MFUItems.FIRE_ASPECT_MODULE.get())
                 .pattern("GBG")
                 .pattern("BFB")
                 .pattern("GBG")
@@ -131,9 +146,9 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('B', Items.BLAZE_ROD)
                 .define('F', Items.FLINT_AND_STEEL)
                 .unlockedBy("has_blaze_rod", has(Items.BLAZE_ROD))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUItems.SMITE_MODULE.get())
+        shaped(RecipeCategory.MISC, MFUItems.SMITE_MODULE.get())
                 .pattern("GRG")
                 .pattern("RBR")
                 .pattern("GRG")
@@ -141,9 +156,9 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('R', Items.ROTTEN_FLESH)
                 .define('B', Items.BONE_BLOCK)
                 .unlockedBy("has_rotten_flesh", has(Items.ROTTEN_FLESH))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUItems.BOA_MODULE.get())
+        shaped(RecipeCategory.MISC, MFUItems.BOA_MODULE.get())
                 .pattern("GEG")
                 .pattern("TST")
                 .pattern("GEG")
@@ -152,9 +167,9 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('E', Items.FERMENTED_SPIDER_EYE)
                 .define('T', Items.STRING)
                 .unlockedBy("has_spider_eye", has(Items.SPIDER_EYE))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUItems.LOOTING_MODULE.get())
+        shaped(RecipeCategory.MISC, MFUItems.LOOTING_MODULE.get())
                 .pattern("GLG")
                 .pattern("DXD")
                 .pattern("GLG")
@@ -163,9 +178,9 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('D', Items.DIAMOND)
                 .define('X', Items.GOLD_INGOT)
                 .unlockedBy("has_gold_ingot", has(Items.GOLD_INGOT))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUItems.VOID_FILTER_MODULE.get())
+        shaped(RecipeCategory.MISC, MFUItems.VOID_FILTER_MODULE.get())
                 .pattern("PPP")
                 .pattern("OHO")
                 .pattern("GOG")
@@ -174,9 +189,9 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('P', Items.PAPER)
                 .define('H', Items.HOPPER)
                 .unlockedBy("has_hopper", has(Items.HOPPER))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get())
+        shaped(RecipeCategory.MISC, MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get())
                 .pattern("GEG")
                 .pattern("ERE")
                 .pattern("GEG")
@@ -184,9 +199,9 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('E', Items.ENDER_EYE)
                 .define('R', Items.OBSERVER)
                 .unlockedBy("has_ender_eye", has(Items.ENDER_EYE))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUItems.SPEED_MODULE.get())
+        shaped(RecipeCategory.MISC, MFUItems.SPEED_MODULE.get())
                 .pattern("#L#")
                 .pattern("LDL")
                 .pattern("#L#")
@@ -194,46 +209,46 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('D', Items.DIAMOND)
                 .define('#', Items.SUGAR)
                 .unlockedBy("has_diamond", has(Items.DIAMOND))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUItems.FAN_WIDTH_INCREASE_MODULE.get())
+        shaped(RecipeCategory.MISC, MFUItems.FAN_WIDTH_INCREASE_MODULE.get())
                 .pattern("G G")
                 .pattern("SSS")
                 .pattern("G G")
                 .define('G', Items.IRON_INGOT)
                 .define('S', Items.FEATHER)
                 .unlockedBy("has_feather", has(Items.FEATHER))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUItems.FAN_HEIGHT_INCREASE_MODULE.get())
+        shaped(RecipeCategory.MISC, MFUItems.FAN_HEIGHT_INCREASE_MODULE.get())
                 .pattern("GSG")
                 .pattern(" S ")
                 .pattern("GSG")
                 .define('G', Items.IRON_INGOT)
                 .define('S', Items.FEATHER)
                 .unlockedBy("has_feather", has(Items.FEATHER))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUItems.FAN_DISTANCE_INCREASE_MODULE.get())
+        shaped(RecipeCategory.MISC, MFUItems.FAN_DISTANCE_INCREASE_MODULE.get())
                 .pattern("GSG")
                 .pattern("S S")
                 .pattern("GSG")
                 .define('G', Items.IRON_INGOT)
                 .define('S', Items.FEATHER)
                 .unlockedBy("has_feather", has(Items.FEATHER))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, MFUBlocks.COLLECTOR.get())
+        shapeless(RecipeCategory.MISC, MFUBlocks.COLLECTOR.get())
                 .requires(MFUBlocks.COLLECTOR.get())
                 .unlockedBy("has_collector", has(MFUBlocks.COLLECTOR))
-                .save(recipeOutput, "mobflowutilities:collector_reset");
+                .save(output, "mobflowutilities:collector_reset");
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, MFUItems.VOID_FILTER_MODULE.get())
+        shapeless(RecipeCategory.MISC, MFUItems.VOID_FILTER_MODULE.get())
                 .requires(MFUItems.VOID_FILTER_MODULE.get())
                 .unlockedBy("has_void_filter", has(MFUItems.VOID_FILTER_MODULE))
-                .save(recipeOutput, "mobflowutilities:void_filter_reset");
+                .save(output, "mobflowutilities:void_filter_reset");
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUBlocks.DARK_GLASS.get(), 8)
+        shaped(RecipeCategory.MISC, MFUBlocks.DARK_GLASS.get(), 8)
                 .pattern("GXG")
                 .pattern("XCX")
                 .pattern("GXG")
@@ -241,9 +256,9 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('X', Tags.Items.GLASS_BLOCKS)
                 .define('C', ItemTags.COALS)
                 .unlockedBy("has_coal", has(Items.COAL))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUBlocks.GLIMMER_LAMP.get(), 8)
+        shaped(RecipeCategory.MISC, MFUBlocks.GLIMMER_LAMP.get(), 8)
                 .pattern("GXG")
                 .pattern("XSX")
                 .pattern("GXG")
@@ -251,9 +266,9 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('X', Tags.Items.GLASS_BLOCKS)
                 .define('S', Items.GLOWSTONE)
                 .unlockedBy("has_glowstone", has(Items.GLOWSTONE))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUItems.MOB_CATCHER.get())
+        shaped(RecipeCategory.MISC, MFUItems.MOB_CATCHER.get())
                 .pattern("LEL")
                 .pattern("EGE")
                 .pattern("LYL")
@@ -262,15 +277,15 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('Y', Items.ENDER_EYE)
                 .define('L', Items.LEAD)
                 .unlockedBy("has_lead", has(Items.LEAD))
-                .save(recipeOutput);
+                .save(output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUItems.EMPTY_GENE_VIAL.get())
+        shaped(RecipeCategory.MISC, MFUItems.EMPTY_GENE_VIAL.get())
                 .pattern(" X ")
                 .pattern("B B")
                 .pattern("BBB")
                 .define('B', Tags.Items.GLASS_PANES)
                 .define('X', ItemTags.WOODEN_BUTTONS)
                 .unlockedBy("has_glass_pane", has(Tags.Items.GLASS_PANES))
-                .save(recipeOutput);
+                .save(output);
     }
 }

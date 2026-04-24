@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "G": {
-      "item": "minecraft:iron_ingot"
-    },
-    "I": {
-      "item": "minecraft:iron_block"
-    },
-    "S": {
-      "item": "minecraft:diamond_sword"
-    }
+    "G": "minecraft:iron_ingot",
+    "I": "minecraft:iron_block",
+    "S": "minecraft:diamond_sword"
   },
   "pattern": [
     "GSG",
@@ -18,7 +12,6 @@
     "GSG"
   ],
   "result": {
-    "count": 1,
     "id": "mobflowutilities:sharpness_module"
   }
 }

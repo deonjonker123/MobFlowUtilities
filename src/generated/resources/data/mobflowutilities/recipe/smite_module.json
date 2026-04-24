@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "item": "minecraft:bone_block"
-    },
-    "G": {
-      "item": "minecraft:iron_ingot"
-    },
-    "R": {
-      "item": "minecraft:rotten_flesh"
-    }
+    "B": "minecraft:bone_block",
+    "G": "minecraft:iron_ingot",
+    "R": "minecraft:rotten_flesh"
   },
   "pattern": [
     "GRG",
@@ -18,7 +12,6 @@
     "GRG"
   ],
   "result": {
-    "count": 1,
     "id": "mobflowutilities:smite_module"
   }
 }

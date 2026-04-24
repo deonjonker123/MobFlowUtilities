@@ -2,37 +2,49 @@ package com.misterd.mobflowutilities.datagen.custom;
 
 import com.misterd.mobflowutilities.MobFlowUtilities;
 import com.misterd.mobflowutilities.item.MFUItems;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.ItemModelGenerators;
+import net.minecraft.client.data.models.ModelProvider;
+import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.core.Holder;
 import net.minecraft.data.PackOutput;
-import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.minecraft.world.level.block.Block;
 
-public class MFUItemModelProvider extends ItemModelProvider {
+import java.util.stream.Stream;
 
-    public MFUItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
-        super(output, MobFlowUtilities.MODID, existingFileHelper);
+public class MFUItemModelProvider extends ModelProvider {
+
+    public MFUItemModelProvider(PackOutput output) {
+        super(output, MobFlowUtilities.MODID);
     }
 
     @Override
-    protected void registerModels() {
-        basicItem(MFUItems.BOA_MODULE.get());
-        basicItem(MFUItems.FIRE_ASPECT_MODULE.get());
-        basicItem(MFUItems.SHARPNESS_MODULE.get());
-        basicItem(MFUItems.SMITE_MODULE.get());
-        basicItem(MFUItems.LOOTING_MODULE.get());
-        basicItem(MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get());
-        basicItem(MFUItems.VOID_FILTER_MODULE.get());
-        basicItem(MFUItems.SPEED_MODULE.get());
-        basicItem(MFUItems.FAN_WIDTH_INCREASE_MODULE.get());
-        basicItem(MFUItems.FAN_HEIGHT_INCREASE_MODULE.get());
-        basicItem(MFUItems.FAN_DISTANCE_INCREASE_MODULE.get());
+    protected Stream<? extends Holder<Block>> getKnownBlocks() {
+        return Stream.empty();
+    }
 
-        basicItem(MFUItems.PAD_WRENCH.get());
+    @Override
+    protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
+        itemModels.generateFlatItem(MFUItems.BOA_MODULE.get(),ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(MFUItems.FIRE_ASPECT_MODULE.get(),ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(MFUItems.SHARPNESS_MODULE.get(),ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(MFUItems.SMITE_MODULE.get(),ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(MFUItems.LOOTING_MODULE.get(),ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get(),ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(MFUItems.VOID_FILTER_MODULE.get(),ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(MFUItems.SPEED_MODULE.get(),ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(MFUItems.FAN_WIDTH_INCREASE_MODULE.get(),ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(MFUItems.FAN_HEIGHT_INCREASE_MODULE.get(),ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(MFUItems.FAN_DISTANCE_INCREASE_MODULE.get(),ModelTemplates.FLAT_ITEM);
 
-        basicItem(MFUItems.GLOOM_SPORE.get());
-        basicItem(MFUItems.GLIMMER_SPROUT.get());
+        itemModels.generateFlatItem(MFUItems.PAD_WRENCH.get(),ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(MFUItems.MOB_CATCHER.get(),ModelTemplates.FLAT_ITEM);
 
-        basicItem(MFUItems.EMPTY_GENE_VIAL.get());
-        basicItem(MFUItems.GENE_SAMPLE_VIAL.get());
-        basicItem(MFUItems.INCUBATION_ORB.get());
+        itemModels.generateFlatItem(MFUItems.GLOOM_SPORE.get(),ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(MFUItems.GLIMMER_SPROUT.get(),ModelTemplates.FLAT_ITEM);
+
+        itemModels.generateFlatItem(MFUItems.EMPTY_GENE_VIAL.get(),ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(MFUItems.GENE_SAMPLE_VIAL.get(),ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(MFUItems.INCUBATION_ORB.get(),ModelTemplates.FLAT_ITEM);
     }
 }

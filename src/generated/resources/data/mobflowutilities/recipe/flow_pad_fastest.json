@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "F": {
-      "item": "mobflowutilities:flow_pad_faster"
-    },
-    "G": {
-      "item": "minecraft:diamond"
-    },
-    "Q": {
-      "item": "minecraft:sugar"
-    }
+    "F": "mobflowutilities:flow_pad_faster",
+    "G": "minecraft:diamond",
+    "Q": "minecraft:sugar"
   },
   "pattern": [
     "GFG",

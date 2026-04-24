@@ -2,18 +2,10 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "G": {
-      "item": "minecraft:iron_block"
-    },
-    "H": {
-      "item": "minecraft:piston"
-    },
-    "P": {
-      "item": "minecraft:diamond_block"
-    },
-    "S": {
-      "item": "minecraft:obsidian"
-    }
+    "G": "minecraft:iron_block",
+    "H": "minecraft:piston",
+    "P": "minecraft:diamond_block",
+    "S": "minecraft:obsidian"
   },
   "pattern": [
     "GSG",
@@ -21,7 +13,6 @@
     "GSG"
   ],
   "result": {
-    "count": 1,
     "id": "mobflowutilities:genesis_chamber"
   }
 }

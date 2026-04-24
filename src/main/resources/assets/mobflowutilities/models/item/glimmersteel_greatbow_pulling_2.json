@@ -1,6 +1,0 @@
-{
-  "parent": "mobflowutilities:item/glimmersteel_greatbow",
-  "textures": {
-    "layer0": "mobflowutilities:item/glimmersteel_greatbow_pulling_2"
-  }
-}

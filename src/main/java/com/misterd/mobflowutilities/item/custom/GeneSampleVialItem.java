@@ -2,16 +2,18 @@ package com.misterd.mobflowutilities.item.custom;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import com.misterd.mobflowutilities.component.MFUDataComponents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 
 public class GeneSampleVialItem extends Item {
 
@@ -24,7 +26,7 @@ public class GeneSampleVialItem extends Item {
     }
 
     public Optional<EntityType<?>> getStoredEntityType(ItemStack stack) {
-        ResourceLocation entityKey = stack.get(MFUDataComponents.ENTITY_DNA.get());
+        Identifier entityKey = stack.get(MFUDataComponents.ENTITY_DNA.get());
         return entityKey == null ? Optional.empty() : BuiltInRegistries.ENTITY_TYPE.getOptional(entityKey);
     }
 
@@ -35,22 +37,22 @@ public class GeneSampleVialItem extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        ResourceLocation entityKey = stack.get(MFUDataComponents.ENTITY_DNA.get());
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> adder, TooltipFlag flag) {
+        Identifier entityKey = stack.get(MFUDataComponents.ENTITY_DNA.get());
 
         if (stack.has(MFUDataComponents.ENTITY_DNA.get()) && entityKey != null) {
             String entityName = getStoredEntityName(stack);
-            tooltipComponents.add(Component.translatable("item.mobflowutilities.gene_sample_vial.contains", entityName)
+            adder.accept(Component.translatable("item.mobflowutilities.gene_sample_vial.contains", entityName)
                     .withStyle(ChatFormatting.GREEN));
-            tooltipComponents.add(Component.literal(""));
-            tooltipComponents.add(Component.translatable("item.mobflowutilities.gene_sample_vial.usage")
+            adder.accept(Component.literal(""));
+            adder.accept(Component.translatable("item.mobflowutilities.gene_sample_vial.usage")
                     .withStyle(ChatFormatting.YELLOW, ChatFormatting.ITALIC));
         } else {
-            tooltipComponents.add(Component.translatable("item.mobflowutilities.gene_sample_vial.empty")
+            adder.accept(Component.translatable("item.mobflowutilities.gene_sample_vial.empty")
                     .withStyle(ChatFormatting.RED));
         }
 
-        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+        super.appendHoverText(stack, context, display, adder, flag);
     }
 
     @Override

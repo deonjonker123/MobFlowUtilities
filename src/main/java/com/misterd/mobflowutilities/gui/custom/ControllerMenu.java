@@ -5,6 +5,7 @@ import com.misterd.mobflowutilities.entity.custom.ControllerBlockEntity;
 import com.misterd.mobflowutilities.gui.MFUMenuTypes;
 import com.misterd.mobflowutilities.item.MFUItems;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -14,20 +15,23 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.SlotItemHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 
 public class ControllerMenu extends AbstractContainerMenu {
+
+    private static final int PLAYER_SLOTS = 36;
+    private static final int SLOT_SHARPNESS = 0;
+    private static final int SLOT_FIRE_ASPECT = 1;
+    private static final int SLOT_SMITE = 2;
+    private static final int SLOT_BOA = 3;
+    private static final int SLOT_LOOTING = 4;
+    private static final int TE_SLOT_COUNT = 5;
+    private static final int TE_FIRST_SLOT = PLAYER_SLOTS;
+    private static final int TE_LAST_SLOT = TE_FIRST_SLOT + TE_SLOT_COUNT;
+
     public final ControllerBlockEntity blockEntity;
     private final Level level;
-    private static final int HOTBAR_SLOT_COUNT = 9;
-    private static final int PLAYER_INVENTORY_ROW_COUNT = 3;
-    private static final int PLAYER_INVENTORY_COLUMN_COUNT = 9;
-    private static final int PLAYER_INVENTORY_SLOT_COUNT = 27;
-    private static final int VANILLA_SLOT_COUNT = 36;
-    private static final int VANILLA_FIRST_SLOT_INDEX = 0;
-    private static final int MODULE_INVENTORY_FIRST_SLOT_INDEX = 36;
-    private static final int MODULE_INVENTORY_SLOT_COUNT = 5;
 
     public ControllerMenu(int containerId, Inventory inv, FriendlyByteBuf extraData) {
         this(containerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()));
@@ -35,94 +39,131 @@ public class ControllerMenu extends AbstractContainerMenu {
 
     public ControllerMenu(int containerId, Inventory inv, BlockEntity blockEntity) {
         super(MFUMenuTypes.CONTROLLER_MENU.get(), containerId);
-        this.blockEntity = (ControllerBlockEntity)blockEntity;
+        this.blockEntity = (ControllerBlockEntity) blockEntity;
         this.level = inv.player.level();
-        this.addPlayerInventory(inv);
-        this.addPlayerHotbar(inv);
-        this.addSlot(new ControllerMenu.ModuleSlot(this.blockEntity.inventory, 0, 8, 18, MFUItems.SHARPNESS_MODULE.get()));
-        this.addSlot(new ControllerMenu.ModuleSlot(this.blockEntity.inventory, 1, 44, 18, MFUItems.FIRE_ASPECT_MODULE.get()));
-        this.addSlot(new ControllerMenu.ModuleSlot(this.blockEntity.inventory, 2, 80, 18, MFUItems.SMITE_MODULE.get()));
-        this.addSlot(new ControllerMenu.ModuleSlot(this.blockEntity.inventory, 3, 116, 18, MFUItems.BOA_MODULE.get()));
-        this.addSlot(new ControllerMenu.ModuleSlot(this.blockEntity.inventory, 4, 152, 18, MFUItems.LOOTING_MODULE.get()));
+
+        addPlayerInventory(inv);
+        addPlayerHotbar(inv);
+        addBlockEntitySlots();
     }
 
-    public ItemStack quickMoveStack(Player playerIn, int pIndex) {
-        Slot sourceSlot = this.slots.get(pIndex);
-        if (sourceSlot != null && sourceSlot.hasItem()) {
-            ItemStack sourceStack = sourceSlot.getItem();
-            ItemStack copyOfSourceStack = sourceStack.copy();
-            if (pIndex < 36) {
-                if (!this.isValidModule(sourceStack)) {
-                    return ItemStack.EMPTY;
-                }
+    private void addBlockEntitySlots() {
+        addSlot(new ControllerSlot(blockEntity, SLOT_SHARPNESS, 8, 18, MFUItems.SHARPNESS_MODULE.get()));
+        addSlot(new ControllerSlot(blockEntity, SLOT_FIRE_ASPECT, 44, 18, MFUItems.FIRE_ASPECT_MODULE.get()));
+        addSlot(new ControllerSlot(blockEntity, SLOT_SMITE, 80, 18, MFUItems.SMITE_MODULE.get()));
+        addSlot(new ControllerSlot(blockEntity, SLOT_BOA, 116, 18, MFUItems.BOA_MODULE.get()));
+        addSlot(new ControllerSlot(blockEntity, SLOT_LOOTING, 152, 18, MFUItems.LOOTING_MODULE.get()));
+    }
 
-                if (!this.moveItemStackTo(sourceStack, 36, 41, false)) {
-                    return ItemStack.EMPTY;
-                }
-            } else {
-                if (pIndex >= 41) {
-                    System.out.println("Invalid slotIndex:" + pIndex);
-                    return ItemStack.EMPTY;
-                }
+    @Override
+    public ItemStack quickMoveStack(Player player, int index) {
+        Slot source = slots.get(index);
+        if (source == null || !source.hasItem()) return ItemStack.EMPTY;
 
-                if (!this.moveItemStackTo(sourceStack, 0, 36, false)) {
-                    return ItemStack.EMPTY;
-                }
-            }
+        ItemStack stack = source.getItem();
+        ItemStack copy  = stack.copy();
 
-            if (sourceStack.getCount() == 0) {
-                sourceSlot.set(ItemStack.EMPTY);
-            } else {
-                sourceSlot.setChanged();
-            }
-
-            sourceSlot.onTake(playerIn, sourceStack);
-            return copyOfSourceStack;
+        if (index < PLAYER_SLOTS) {
+            if (!moveToBlockEntity(stack)) return ItemStack.EMPTY;
         } else {
-            return ItemStack.EMPTY;
+            if (index >= TE_LAST_SLOT) return ItemStack.EMPTY;
+            if (!moveItemStackTo(stack, 0, PLAYER_SLOTS, false)) return ItemStack.EMPTY;
+        }
+
+        if (stack.isEmpty()) source.set(ItemStack.EMPTY);
+        else source.setChanged();
+
+        source.onTake(player, stack);
+        return copy;
+    }
+
+    private boolean moveToBlockEntity(ItemStack stack) {
+        Item item = stack.getItem();
+        if (item == MFUItems.SHARPNESS_MODULE.get()) return insertSingle(stack, SLOT_SHARPNESS);
+        if (item == MFUItems.FIRE_ASPECT_MODULE.get()) return insertSingle(stack, SLOT_FIRE_ASPECT);
+        if (item == MFUItems.SMITE_MODULE.get()) return insertSingle(stack, SLOT_SMITE);
+        if (item == MFUItems.BOA_MODULE.get()) return insertSingle(stack, SLOT_BOA);
+        if (item == MFUItems.LOOTING_MODULE.get()) return insertSingle(stack, SLOT_LOOTING);
+        return false;
+    }
+
+    private boolean insertSingle(ItemStack stack, int slot) {
+        try (Transaction tx = Transaction.openRoot()) {
+            int inserted = blockEntity.inventory.insert(slot, ItemResource.of(stack), stack.getCount(), tx);
+            if (inserted == 0) return false;
+            tx.commit();
+            stack.shrink(inserted);
+            return true;
         }
     }
 
-    private boolean isValidModule(ItemStack stack) {
-        return stack.getItem() == MFUItems.SHARPNESS_MODULE.get() || stack.getItem() == MFUItems.FIRE_ASPECT_MODULE.get() || stack.getItem() == MFUItems.SMITE_MODULE.get() || stack.getItem() == MFUItems.BOA_MODULE.get() || stack.getItem() == MFUItems.LOOTING_MODULE.get();
-    }
-
+    @Override
     public boolean stillValid(Player player) {
-        return stillValid(ContainerLevelAccess.create(this.level, this.blockEntity.getBlockPos()), player, MFUBlocks.CONTROLLER.get());
+        return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()),
+                player, MFUBlocks.CONTROLLER.get());
     }
 
-    private void addPlayerInventory(Inventory playerInventory) {
-        for(int i = 0; i < 3; ++i) {
-            for(int l = 0; l < 9; ++l) {
-                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 51 + i * 18));
+    private void addPlayerInventory(Inventory inv) {
+        for (int row = 0; row < 3; row++)
+            for (int col = 0; col < 9; col++)
+                addSlot(new Slot(inv, col + row * 9 + 9, 8 + col * 18, 51 + row * 18));
+    }
+
+    private void addPlayerHotbar(Inventory inv) {
+        for (int i = 0; i < 9; i++)
+            addSlot(new Slot(inv, i, 8 + i * 18, 110));
+    }
+
+    private static class ControllerSlot extends Slot {
+        private final ControllerBlockEntity be;
+        private final int index;
+        private final Item allowedItem;
+
+        ControllerSlot(ControllerBlockEntity be, int index, int x, int y, Item allowedItem) {
+            super(new SimpleContainer(be.inventory.size()), index, x, y);
+            this.be = be;
+            this.index = index;
+            this.allowedItem = allowedItem;
+        }
+
+        @Override public ItemStack getItem() { return be.getStack(index); }
+
+        @Override
+        public void set(ItemStack stack) {
+            try (Transaction tx = Transaction.openRoot()) {
+                ItemStack existing = be.getStack(index);
+                if (!existing.isEmpty())
+                    be.inventory.extract(index, ItemResource.of(existing), existing.getCount(), tx);
+                if (!stack.isEmpty())
+                    be.inventory.insert(index, ItemResource.of(stack), stack.getCount(), tx);
+                tx.commit();
+            }
+            setChanged();
+        }
+
+        @Override
+        public boolean mayPlace(ItemStack stack) {
+            return stack.getItem() == allowedItem;
+        }
+
+        @Override
+        public ItemStack remove(int amount) {
+            ItemStack existing = getItem();
+            if (existing.isEmpty()) return ItemStack.EMPTY;
+            int toExtract = Math.min(amount, existing.getCount());
+            try (Transaction tx = Transaction.openRoot()) {
+                int extracted = be.inventory.extract(index, ItemResource.of(existing), toExtract, tx);
+                tx.commit();
+                return new ItemStack(existing.getItem(), extracted);
             }
         }
 
-    }
-
-    private void addPlayerHotbar(Inventory playerInventory) {
-        for(int i = 0; i < 9; ++i) {
-            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 110));
-        }
-
-    }
-
-    private static class ModuleSlot extends SlotItemHandler {
-        private final Item allowedModule;
-
-        public ModuleSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition, Item allowedModule) {
-            super(itemHandler, index, xPosition, yPosition);
-            this.allowedModule = allowedModule;
-        }
-
-        public boolean mayPlace(ItemStack stack) {
-            return stack.getItem() == this.allowedModule;
-        }
-
+        @Override
         public int getMaxStackSize() {
             return 10;
         }
 
+        @Override
         public int getMaxStackSize(ItemStack stack) {
             return 10;
         }

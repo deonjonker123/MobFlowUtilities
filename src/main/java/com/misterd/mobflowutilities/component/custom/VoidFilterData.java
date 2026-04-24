@@ -4,8 +4,8 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import java.util.List;
 import net.minecraft.core.NonNullList;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.items.ItemStackHandler;
 
 public record VoidFilterData(List<ItemStack> filterItems, boolean ignoreNBT, boolean ignoreDurability) {
 
@@ -27,42 +27,36 @@ public record VoidFilterData(List<ItemStack> filterItems, boolean ignoreNBT, boo
 
     public static final VoidFilterData DEFAULT = new VoidFilterData(createEmptyFilterList(), true, true);
 
-    public VoidFilterData {
-
-    }
+    public VoidFilterData {}
 
     private static NonNullList<ItemStack> createEmptyFilterList() {
         return NonNullList.withSize(45, ItemStack.EMPTY);
     }
 
-    public void loadIntoHandler(ItemStackHandler handler) {
-        for (int i = 0; i < Math.min(this.filterItems.size(), handler.getSlots()); i++) {
-            handler.setStackInSlot(i, this.filterItems.get(i).copy());
+    public void loadIntoHandler(SimpleContainer container) {
+        for (int i = 0; i < Math.min(this.filterItems.size(), container.getContainerSize()); i++) {
+            container.setItem(i, this.filterItems.get(i).copy());
         }
     }
 
-    public static VoidFilterData fromHandler(ItemStackHandler handler, boolean ignoreNBT, boolean ignoreDurability) {
-        NonNullList<ItemStack> items = NonNullList.withSize(handler.getSlots(), ItemStack.EMPTY);
-        for (int i = 0; i < handler.getSlots(); i++) {
-            items.set(i, handler.getStackInSlot(i).copy());
+    public static VoidFilterData fromHandler(SimpleContainer container, boolean ignoreNBT, boolean ignoreDurability) {
+        NonNullList<ItemStack> items = NonNullList.withSize(container.getContainerSize(), ItemStack.EMPTY);
+        for (int i = 0; i < container.getContainerSize(); i++) {
+            items.set(i, container.getItem(i).copy());
         }
         return new VoidFilterData(items, ignoreNBT, ignoreDurability);
     }
 
     public boolean shouldVoidItem(ItemStack itemToCheck) {
         if (itemToCheck.isEmpty()) return false;
-
         for (ItemStack filterItem : filterItems) {
-            if (!filterItem.isEmpty() && itemsMatch(itemToCheck, filterItem)) {
-                return true;
-            }
+            if (!filterItem.isEmpty() && itemsMatch(itemToCheck, filterItem)) return true;
         }
         return false;
     }
 
     private boolean itemsMatch(ItemStack itemToCheck, ItemStack filterItem) {
         if (!itemToCheck.is(filterItem.getItem())) return false;
-
         if (ignoreNBT && ignoreDurability) return true;
         if (ignoreNBT) return itemToCheck.getDamageValue() == filterItem.getDamageValue();
         if (ignoreDurability) {

@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "G": {
-      "item": "minecraft:iron_ingot"
-    },
-    "Q": {
-      "item": "minecraft:sugar"
-    },
-    "S": {
-      "tag": "c:stones"
-    }
+    "G": "minecraft:iron_ingot",
+    "Q": "minecraft:sugar",
+    "S": "#c:stones"
   },
   "pattern": [
     "SGS",

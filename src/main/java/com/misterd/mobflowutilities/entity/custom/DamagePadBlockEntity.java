@@ -1,15 +1,10 @@
 package com.misterd.mobflowutilities.entity.custom;
 
-import java.lang.ref.WeakReference;
-import java.util.List;
-import java.util.UUID;
-import javax.annotation.Nullable;
-
 import com.misterd.mobflowutilities.block.custom.DamagePadBlock;
 import com.misterd.mobflowutilities.entity.MFUBlockEntities;
 import com.misterd.mobflowutilities.util.FakePlayerHandler;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -25,16 +20,23 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.common.util.FakePlayer;
 
+import javax.annotation.Nullable;
+import java.lang.ref.WeakReference;
+import java.util.List;
+import java.util.UUID;
+
 public class DamagePadBlockEntity extends BlockEntity {
-    @Nullable
-    private BlockPos controllerPos;
-    @Nullable
-    private UUID placer;
+
+    @Nullable private BlockPos controllerPos;
+    @Nullable private UUID placer;
     private WeakReference<FakePlayer> fakePlayer = new WeakReference<>(null);
-    private static final float BASE_DAMAGE = 5.0F;
+
+    private static final float BASE_DAMAGE  = 5.0F;
     private static final int DAMAGE_INTERVAL = 5;
     private int tickCounter = 0;
 
@@ -44,163 +46,143 @@ public class DamagePadBlockEntity extends BlockEntity {
 
     public static <T extends BlockEntity> BlockEntityTicker<T> createTicker() {
         return (level, pos, state, blockEntity) -> {
-            if (blockEntity instanceof DamagePadBlockEntity attackPad) {
-                attackPad.tick();
-            }
+            if (blockEntity instanceof DamagePadBlockEntity pad) pad.tick();
         };
     }
 
     public void tick() {
-        if (this.level != null && !this.level.isClientSide()) {
-            ++this.tickCounter;
-            if (this.tickCounter >= 5) {
-                this.tickCounter = 0;
-                if (this.isPowered()) {
-                    this.dealDamage();
-                }
-            }
+        if (level == null || level.isClientSide()) return;
+        tickCounter++;
+        if (tickCounter >= DAMAGE_INTERVAL) {
+            tickCounter = 0;
+            if (isPowered()) dealDamage();
         }
     }
 
     private boolean isPowered() {
-        if (this.level == null) return false;
-        BlockState state = this.getBlockState();
-        return state.getBlock() instanceof DamagePadBlock ? state.getValue(DamagePadBlock.POWERED) : false;
+        BlockState state = getBlockState();
+        return state.getBlock() instanceof DamagePadBlock && state.getValue(DamagePadBlock.POWERED);
     }
 
     private void dealDamage() {
-        if (this.level != null) {
-            AABB damageArea = new AABB(
-                    this.worldPosition.getX(),
-                    this.worldPosition.getY(),
-                    this.worldPosition.getZ(),
-                    this.worldPosition.getX() + 1.0D,
-                    this.worldPosition.getY() + 1.0D,
-                    this.worldPosition.getZ() + 1.0D
-            ).inflate(0.0625D);
+        if (level == null) return;
+        AABB area = new AABB(
+                worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(),
+                worldPosition.getX() + 1, worldPosition.getY() + 1, worldPosition.getZ() + 1
+        ).inflate(0.0625);
 
-            List<LivingEntity> entities = this.level.getEntitiesOfClass(LivingEntity.class, damageArea);
-            if (!entities.isEmpty()) {
-                ControllerBlockEntity controller = this.getLinkedController();
-                if (controller != null) {
-                    this.dealEnchantedDamage(entities, controller);
-                } else {
-                    this.dealDirectDamage(entities);
-                }
-            }
-        }
+        List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, area);
+        if (entities.isEmpty()) return;
+
+        ControllerBlockEntity controller = getLinkedController();
+        if (controller != null) dealEnchantedDamage(entities, controller);
+        else dealDirectDamage(entities);
     }
 
     private void dealEnchantedDamage(List<LivingEntity> entities, ControllerBlockEntity controller) {
-        this.fakePlayer = FakePlayerHandler.get(this.fakePlayer, (ServerLevel) this.level, this.placer, this.worldPosition.below(-500));
-        FakePlayer fakePlayer = this.fakePlayer.get();
+        fakePlayer = FakePlayerHandler.get(fakePlayer, (ServerLevel) level, placer, worldPosition.below(-500));
+        FakePlayer fp = fakePlayer.get();
+        if (fp == null) return;
 
-        if (fakePlayer != null) {
-            ItemStack tempSword = new ItemStack(Items.DIAMOND_SWORD);
+        ItemStack sword = new ItemStack(Items.DIAMOND_SWORD);
 
-            int sharpness = controller.getModuleCount(0);
-            if (sharpness > 0) tempSword.enchant(this.level.holderOrThrow(Enchantments.SHARPNESS), sharpness * 10);
+        int sharpness = controller.getModuleCount(0);
+        if (sharpness > 0) sword.enchant(level.holderOrThrow(Enchantments.SHARPNESS), sharpness * 10);
 
-            int fireAspect = controller.getModuleCount(1);
-            if (fireAspect > 0) tempSword.enchant(this.level.holderOrThrow(Enchantments.FIRE_ASPECT), fireAspect);
+        int fireAspect = controller.getModuleCount(1);
+        if (fireAspect > 0) sword.enchant(level.holderOrThrow(Enchantments.FIRE_ASPECT), fireAspect);
 
-            int smite = controller.getModuleCount(2);
-            if (smite > 0) tempSword.enchant(this.level.holderOrThrow(Enchantments.SMITE), smite * 10);
+        int smite = controller.getModuleCount(2);
+        if (smite > 0) sword.enchant(level.holderOrThrow(Enchantments.SMITE),smite * 10);
 
-            int baneOfArthropods = controller.getModuleCount(3);
-            if (baneOfArthropods > 0) tempSword.enchant(this.level.holderOrThrow(Enchantments.BANE_OF_ARTHROPODS), baneOfArthropods * 10);
+        int boa = controller.getModuleCount(3);
+        if (boa > 0) sword.enchant(level.holderOrThrow(Enchantments.BANE_OF_ARTHROPODS), boa * 10);
 
-            int looting = controller.getModuleCount(4);
-            if (looting > 0) tempSword.enchant(this.level.holderOrThrow(Enchantments.LOOTING), looting);
+        int looting = controller.getModuleCount(4);
+        if (looting > 0) sword.enchant(level.holderOrThrow(Enchantments.LOOTING), looting);
 
-            fakePlayer.setItemInHand(InteractionHand.MAIN_HAND, tempSword);
-
-            for (LivingEntity entity : entities) {
-                if (!(entity instanceof Player)) {
-                    fakePlayer.attack(entity);
-                    fakePlayer.attackStrengthTicker = 100;
-                }
+        fp.setItemInHand(InteractionHand.MAIN_HAND, sword);
+        for (LivingEntity entity : entities) {
+            if (!(entity instanceof Player)) {
+                fp.attack(entity);
+                fp.attackStrengthTicker = 100;
             }
-
-            fakePlayer.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
         }
+        fp.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
     }
 
     private void dealDirectDamage(List<LivingEntity> entities) {
-
+        DamageSource src = level.damageSources().generic();
         for (LivingEntity entity : entities) {
-            if (!(entity instanceof Player)) {
-                DamageSource damageSource = this.level.damageSources().generic();
-                entity.hurt(damageSource, 5.0F);
-            }
+            if (!(entity instanceof Player)) entity.hurt(src, BASE_DAMAGE);
         }
     }
 
     @Nullable
     private ControllerBlockEntity getLinkedController() {
-        if (this.controllerPos != null && this.level != null) {
-            BlockEntity be = this.level.getBlockEntity(this.controllerPos);
-            return (be instanceof ControllerBlockEntity controller) ? controller : null;
-        }
-        return null;
+        if (controllerPos == null || level == null) return null;
+        BlockEntity be = level.getBlockEntity(controllerPos);
+        return be instanceof ControllerBlockEntity c ? c : null;
     }
 
     @Nullable
     public BlockPos getControllerPos() {
-        return this.controllerPos;
-    }
-
-    public void setControllerPos(@Nullable BlockPos controllerPos) {
-        this.controllerPos = controllerPos;
-        this.setChanged();
-        if (this.level != null && !this.level.isClientSide()) {
-            DamagePadBlock.updateLinkedState(this.level, this.getBlockPos(), controllerPos != null);
-            this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
-        }
-    }
-
-    public void clearControllerPos() {
-        this.setControllerPos(null);
+        return controllerPos;
     }
 
     public boolean isLinked() {
-        return this.controllerPos != null;
+        return controllerPos != null;
     }
 
     public boolean isLinkedTo(BlockPos pos) {
-        return this.controllerPos != null && this.controllerPos.equals(pos);
+        return controllerPos != null && controllerPos.equals(pos);
     }
+
+    public void setControllerPos(@Nullable BlockPos pos) {
+        this.controllerPos = pos;
+        setChanged();
+        if (level != null && !level.isClientSide()) {
+            DamagePadBlock.updateLinkedState(level, getBlockPos(), pos != null);
+            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+        }
+    }
+
+    public void clearControllerPos() { setControllerPos(null); }
 
     public void setPlacer(@Nullable Player player) {
         this.placer = player != null ? player.getUUID() : null;
-        this.setChanged();
+        setChanged();
     }
 
-    @Nullable
-    public UUID getPlacer() {
-        return this.placer;
+    @Nullable public UUID getPlacer() {
+        return placer;
     }
 
-    protected void saveAdditional(CompoundTag tag, Provider registries) {
-        super.saveAdditional(tag, registries);
-        if (this.controllerPos != null) tag.putLong("controllerPos", this.controllerPos.asLong());
-        if (this.placer != null) tag.putUUID("placer", this.placer);
+    @Override
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        if (controllerPos != null) output.putLong("controllerPos", controllerPos.asLong());
+        if (placer != null) output.putString("placer", placer.toString());
     }
 
-    protected void loadAdditional(CompoundTag tag, Provider registries) {
-        super.loadAdditional(tag, registries);
-        this.controllerPos = tag.contains("controllerPos") ? BlockPos.of(tag.getLong("controllerPos")) : null;
-        this.placer = tag.hasUUID("placer") ? tag.getUUID("placer") : null;
+    @Override
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        long posLong = input.getLongOr("controllerPos", Long.MIN_VALUE);
+        controllerPos = posLong != Long.MIN_VALUE ? BlockPos.of(posLong) : null;
+        placer = input.getString("placer").map(UUID::fromString).orElse(null);
     }
 
-    public CompoundTag getUpdateTag(Provider registries) {
+    @Override
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         CompoundTag tag = super.getUpdateTag(registries);
-        if (this.controllerPos != null) tag.putLong("controllerPos", this.controllerPos.asLong());
-        if (this.placer != null) tag.putUUID("placer", this.placer);
+        if (controllerPos != null) tag.putLong("controllerPos", controllerPos.asLong());
+        if (placer != null) tag.putString("placer", placer.toString());
         return tag;
     }
 
     @Nullable
+    @Override
     public Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
     }

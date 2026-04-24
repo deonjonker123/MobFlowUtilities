@@ -1,25 +1,19 @@
 package com.misterd.mobflowutilities.datagen.custom;
 
+import com.misterd.mobflowutilities.MobFlowUtilities;
 import com.misterd.mobflowutilities.item.MFUItems;
 import com.misterd.mobflowutilities.util.MFUTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.ItemTagsProvider;
-import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import org.jetbrains.annotations.Nullable;
+import net.neoforged.neoforge.common.data.ItemTagsProvider;
 
 import java.util.concurrent.CompletableFuture;
 
 public class MFUItemTagProvider extends ItemTagsProvider {
 
-    public MFUItemTagProvider(PackOutput output,
-                              CompletableFuture<HolderLookup.Provider> lookupProvider,
-                              CompletableFuture<TagsProvider.TagLookup<Block>> blockTags,
-                              @Nullable ExistingFileHelper existingFileHelper) {
-        super(output, lookupProvider, blockTags, "mobflowutilities", existingFileHelper);
+    public MFUItemTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+        super(output, lookupProvider, MobFlowUtilities.MODID);
     }
 
     @Override

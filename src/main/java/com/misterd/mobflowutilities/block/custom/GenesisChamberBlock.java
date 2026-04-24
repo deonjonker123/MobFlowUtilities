@@ -3,15 +3,20 @@ package com.misterd.mobflowutilities.block.custom;
 import com.misterd.mobflowutilities.entity.MFUBlockEntities;
 import com.misterd.mobflowutilities.entity.custom.GenesisChamberBlockEntity;
 import com.mojang.serialization.MapCodec;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -24,38 +29,40 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 public class GenesisChamberBlock extends BaseEntityBlock {
     public static final VoxelShape SHAPE = Shapes.or(
-            Block.box(0, 0, 0,  16, 1,  16),
-            Block.box(1, 1, 1,  15, 4,  15),
-            Block.box(0, 4, 0,  16, 5,  16),
-            Block.box(3, 5, 3,  13, 6,   13),
-            Block.box(4, 6, 4,  12, 6.5, 12),
-            Block.box(0,  5, 15, 1,  15, 16),
-            Block.box(0,  5, 0,  1,  15, 1),
-            Block.box(15, 5, 0,  16, 15, 1),
+            Block.box(0, 0, 0, 16, 1, 16),
+            Block.box(1, 1, 1, 15, 4, 15),
+            Block.box(0, 4, 0, 16, 5, 16),
+            Block.box(3, 5, 3, 13, 6, 13),
+            Block.box(4, 6, 4, 12, 6.5, 12),
+            Block.box(0, 5, 15, 1, 15, 16),
+            Block.box(0, 5, 0, 1, 15, 1),
+            Block.box(15, 5, 0, 16, 15, 1),
             Block.box(15, 5, 15, 16, 15, 16),
-            Block.box(0,  15, 0,  16, 16, 1),
-            Block.box(0,  15, 15, 16, 16, 16),
-            Block.box(0,  15, 1,  1,  16, 15),
-            Block.box(15, 15, 1,  16, 16, 15),
-            Block.box(1,  5, 0.5,  15, 15, 1),
-            Block.box(1,  5, 15,   15, 15, 15.5),
-            Block.box(0.5, 5, 1,   1,  15, 15),
-            Block.box(15, 5, 1,    15.5, 15, 15),
-            Block.box(1,  15, 1,   15, 15.5, 15)
+            Block.box(0, 15, 0, 16, 16, 1),
+            Block.box(0, 15, 15, 16, 16, 16),
+            Block.box(0, 15, 1, 1, 16, 15),
+            Block.box(15, 15, 1, 16, 16, 15),
+            Block.box(1, 5, 0.5, 15, 15, 1),
+            Block.box(1, 5, 15, 15, 15, 15.5),
+            Block.box(0.5, 5, 1, 1, 15, 15),
+            Block.box(15, 5, 1, 15.5, 15, 15),
+            Block.box(1, 15, 1, 15, 15.5, 15)
     );
-    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     public static final MapCodec<GenesisChamberBlock> CODEC = simpleCodec(GenesisChamberBlock::new);
 
-    protected GenesisChamberBlock(Properties properties) {
+    public GenesisChamberBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
@@ -106,23 +113,21 @@ public class GenesisChamberBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if(state.getBlock() != newState.getBlock()) {
-            if(level.getBlockEntity(pos) instanceof GenesisChamberBlockEntity genesisChamberBlockEntity) {
-                genesisChamberBlockEntity.drops();
-                level.updateNeighbourForOutputSignal(pos, this);
-            }
-        }
-        super.onRemove(state, level, pos, newState, movedByPiston);
+    protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean movedByPiston) {
+        Containers.updateNeighboursAfterDestroy(state, level, pos);
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof GenesisChamberBlockEntity genesisChamberBlockEntity && !level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
             serverPlayer.openMenu(new SimpleMenuProvider(genesisChamberBlockEntity, Component.translatable("gui.mobflowutilities.genesis_chamber")), pos);
-            return ItemInteractionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
-        return ItemInteractionResult.SUCCESS;
+        return InteractionResult.SUCCESS;
+    }
+
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+        tooltipComponents.add(Component.translatable("block.mobflowutilities.genesis_chamber.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
     }
 }

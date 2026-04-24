@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "G": {
-      "item": "minecraft:redstone"
-    },
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
-    "S": {
-      "item": "minecraft:iron_sword"
-    }
+    "G": "minecraft:redstone",
+    "I": "minecraft:iron_ingot",
+    "S": "minecraft:iron_sword"
   },
   "pattern": [
     "ISI",

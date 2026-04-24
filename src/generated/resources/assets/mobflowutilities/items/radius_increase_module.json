@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "mobflowutilities:item/radius_increase_module"
+  }
+}

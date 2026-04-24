@@ -2,18 +2,10 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "item": "minecraft:redstone_block"
-    },
-    "C": {
-      "item": "minecraft:comparator"
-    },
-    "G": {
-      "item": "minecraft:iron_ingot"
-    },
-    "I": {
-      "item": "minecraft:gold_ingot"
-    }
+    "B": "minecraft:redstone_block",
+    "C": "minecraft:comparator",
+    "G": "minecraft:iron_ingot",
+    "I": "minecraft:gold_ingot"
   },
   "pattern": [
     "GCG",
@@ -21,7 +13,6 @@
     "GCG"
   ],
   "result": {
-    "count": 1,
     "id": "mobflowutilities:controller"
   }
 }

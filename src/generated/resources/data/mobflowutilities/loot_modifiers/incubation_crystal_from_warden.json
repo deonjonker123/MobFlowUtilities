@@ -6,5 +6,6 @@
       "loot_table_id": "minecraft:entities/warden"
     }
   ],
-  "item": "mobflowutilities:incubation_orb"
+  "item": "mobflowutilities:incubation_orb",
+  "priority": 0
 }

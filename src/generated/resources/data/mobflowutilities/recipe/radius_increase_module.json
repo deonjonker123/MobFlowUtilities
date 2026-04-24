@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "E": {
-      "item": "minecraft:ender_eye"
-    },
-    "G": {
-      "item": "minecraft:iron_ingot"
-    },
-    "R": {
-      "item": "minecraft:observer"
-    }
+    "E": "minecraft:ender_eye",
+    "G": "minecraft:iron_ingot",
+    "R": "minecraft:observer"
   },
   "pattern": [
     "GEG",
@@ -18,7 +12,6 @@
     "GEG"
   ],
   "result": {
-    "count": 1,
     "id": "mobflowutilities:radius_increase_module"
   }
 }

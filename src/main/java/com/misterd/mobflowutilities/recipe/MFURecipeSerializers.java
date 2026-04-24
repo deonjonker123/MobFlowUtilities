@@ -18,7 +18,8 @@ public class MFURecipeSerializers {
             DeferredRegister.create(BuiltInRegistries.RECIPE_TYPE, MobFlowUtilities.MODID);
 
     public static final Supplier<RecipeSerializer<GeneticRecipe>> GENETIC_RECIPE =
-            RECIPE_SERIALIZERS.register("genetic_recipe", GeneticRecipe.Serializer::new);
+            RECIPE_SERIALIZERS.register("genetic_recipe",
+                    () -> new RecipeSerializer<>(GeneticRecipe.CODEC, GeneticRecipe.STREAM_CODEC));
 
     public static final Supplier<RecipeType<GeneticRecipe>> GENETIC_RECIPE_TYPE =
             RECIPE_TYPES.register("genetic_recipe", () -> new RecipeType<>() {

@@ -1,20 +1,11 @@
 package com.misterd.mobflowutilities.entity.custom;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-import javax.annotation.Nullable;
-
 import com.misterd.mobflowutilities.entity.MFUBlockEntities;
 import com.misterd.mobflowutilities.gui.custom.ControllerMenu;
 import com.misterd.mobflowutilities.item.MFUItems;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.LongTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -28,248 +19,232 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.items.ItemStackHandler;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
+
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class ControllerBlockEntity extends BlockEntity implements MenuProvider {
-    public final ItemStackHandler inventory = new ItemStackHandler(5) {
-        public int getSlotLimit(int slot) {
+
+    private static final int SLOT_SHARPNESS = 0;
+    private static final int SLOT_FIRE_ASPECT = 1;
+    private static final int SLOT_SMITE = 2;
+    private static final int SLOT_BOA = 3;
+    private static final int SLOT_LOOTING = 4;
+    private static final int SLOT_COUNT = 5;
+
+    public final ItemStacksResourceHandler inventory = new ItemStacksResourceHandler(SLOT_COUNT) {
+        @Override
+        public long getCapacityAsLong(int index, ItemResource resource) {
             return 10;
         }
 
-        protected void onContentsChanged(int slot) {
-            ControllerBlockEntity.this.setChanged();
-            if (!ControllerBlockEntity.this.level.isClientSide()) {
-                ControllerBlockEntity.this.level.sendBlockUpdated(ControllerBlockEntity.this.getBlockPos(), ControllerBlockEntity.this.getBlockState(), ControllerBlockEntity.this.getBlockState(), 3);
-            }
-
+        @Override
+        public boolean isValid(int index, ItemResource resource) {
+            if (resource.isEmpty()) return false;
+            return switch (index) {
+                case SLOT_SHARPNESS -> resource.toStack().getItem() == MFUItems.SHARPNESS_MODULE.get();
+                case SLOT_FIRE_ASPECT -> resource.toStack().getItem() == MFUItems.FIRE_ASPECT_MODULE.get();
+                case SLOT_SMITE -> resource.toStack().getItem() == MFUItems.SMITE_MODULE.get();
+                case SLOT_BOA -> resource.toStack().getItem() == MFUItems.BOA_MODULE.get();
+                case SLOT_LOOTING -> resource.toStack().getItem() == MFUItems.LOOTING_MODULE.get();
+                default -> false;
+            };
         }
 
-        public boolean isItemValid(int slot, ItemStack stack) {
-            boolean var10000;
-            switch(slot) {
-                case 0:
-                    var10000 = stack.getItem() == MFUItems.SHARPNESS_MODULE.get();
-                    break;
-                case 1:
-                    var10000 = stack.getItem() == MFUItems.FIRE_ASPECT_MODULE.get();
-                    break;
-                case 2:
-                    var10000 = stack.getItem() == MFUItems.SMITE_MODULE.get();
-                    break;
-                case 3:
-                    var10000 = stack.getItem() == MFUItems.BOA_MODULE.get();
-                    break;
-                case 4:
-                    var10000 = stack.getItem() == MFUItems.LOOTING_MODULE.get();
-                    break;
-                default:
-                    var10000 = false;
-            }
-
-            return var10000;
+        @Override
+        protected void onContentsChanged(int index, ItemStack previousContents) {
+            ControllerBlockEntity.this.setChanged();
+            if (level != null && !level.isClientSide())
+                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
         }
     };
-    private final Set<BlockPos> linkedPads = new HashSet();
+
+    private final Set<BlockPos> linkedPads = new HashSet<>();
     private boolean playerKillMode = false;
 
     public ControllerBlockEntity(BlockPos pos, BlockState blockState) {
         super(MFUBlockEntities.CONTROLLER_BE.get(), pos, blockState);
     }
 
-    public void addPad(BlockPos padPos) {
-        this.linkedPads.add(padPos);
-        this.setChanged();
-        if (this.level != null && !this.level.isClientSide()) {
-            this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
-        }
+    public ItemStack getStack(int slot) {
+        ItemResource res = inventory.getResource(slot);
+        if (res.isEmpty()) return ItemStack.EMPTY;
+        return res.toStack(inventory.getAmountAsInt(slot));
+    }
 
+    public int getModuleCount(int slot) {
+        if (slot < 0 || slot >= SLOT_COUNT) return 0;
+        return Math.min(getStack(slot).getCount(), 10);
+    }
+
+    public boolean hasSharpnessModule() {
+        return getModuleCount(SLOT_SHARPNESS) > 0;
+    }
+
+    public boolean hasFireAspectModule() {
+        return getModuleCount(SLOT_FIRE_ASPECT) > 0;
+    }
+
+    public boolean hasSmiteModule() {
+        return getModuleCount(SLOT_SMITE) > 0;
+    }
+
+    public boolean hasBaneOfArthropodsModule() {
+        return getModuleCount(SLOT_BOA) > 0;
+    }
+
+    public boolean hasLootingModule() {
+        return getModuleCount(SLOT_LOOTING) > 0;
+    }
+
+    public int getSharpnessLevel() {
+        return getModuleCount(SLOT_SHARPNESS);
+    }
+
+    public int getFireAspectLevel() {
+        return getModuleCount(SLOT_FIRE_ASPECT);
+    }
+
+    public int getSmiteLevel() {
+        return getModuleCount(SLOT_SMITE);
+    }
+
+    public int getBaneOfArthropodsLevel() {
+        return getModuleCount(SLOT_BOA);
+    }
+
+    public int getLootingLevel() {
+        return getModuleCount(SLOT_LOOTING);
+    }
+
+    public void addPad(BlockPos padPos) {
+        linkedPads.add(padPos);
+        setChangedAndUpdate();
     }
 
     public void removePad(BlockPos padPos) {
-        this.linkedPads.remove(padPos);
-        this.setChanged();
-        if (this.level != null && !this.level.isClientSide()) {
-            this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
+        linkedPads.remove(padPos);
+        setChangedAndUpdate();
+    }
+
+    public boolean removePadAt(BlockPos padPos) {
+        if (!linkedPads.remove(padPos)) return false;
+        if (level != null && !level.isClientSide()) {
+            BlockEntity be = level.getBlockEntity(padPos);
+            if (be instanceof DamagePadBlockEntity pad) pad.clearControllerPos();
+            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
         }
-
-    }
-
-    public Set<BlockPos> getLinkedPads() {
-        return new HashSet(this.linkedPads);
-    }
-
-    public List<BlockPos> getLinkedPadsList() {
-        return new ArrayList(this.linkedPads);
-    }
-
-    public int getLinkedPadCount() {
-        return this.linkedPads.size();
+        setChanged();
+        return true;
     }
 
     public void clearAllLinkedPads() {
-        if (this.level != null && !this.level.isClientSide()) {
-            Iterator var1 = this.linkedPads.iterator();
-
-            while(var1.hasNext()) {
-                BlockPos padPos = (BlockPos)var1.next();
-                BlockEntity var4 = this.level.getBlockEntity(padPos);
-                if (var4 instanceof DamagePadBlockEntity) {
-                    DamagePadBlockEntity attackPad = (DamagePadBlockEntity)var4;
-                    attackPad.clearControllerPos();
-                }
+        if (level != null && !level.isClientSide()) {
+            for (BlockPos padPos : linkedPads) {
+                BlockEntity be = level.getBlockEntity(padPos);
+                if (be instanceof DamagePadBlockEntity pad) pad.clearControllerPos();
             }
         }
+        linkedPads.clear();
+        setChanged();
+    }
 
-        this.linkedPads.clear();
-        this.setChanged();
+    public Set<BlockPos> getLinkedPads() {
+        return new HashSet<>(linkedPads);
+    }
+
+    public List<BlockPos> getLinkedPadsList() {
+        return new ArrayList<>(linkedPads);
+    }
+
+    public int getLinkedPadCount() {
+        return linkedPads.size();
     }
 
     public boolean isPlayerKillMode() {
-        return this.playerKillMode;
+        return playerKillMode;
     }
 
     public void setPlayerKillMode(boolean playerKillMode) {
         this.playerKillMode = playerKillMode;
-        this.setChanged();
-        if (this.level != null && !this.level.isClientSide()) {
-            this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
-        }
-
-    }
-
-    public int getModuleCount(int slot) {
-        if (slot >= 0 && slot < this.inventory.getSlots()) {
-            ItemStack stack = this.inventory.getStackInSlot(slot);
-            return stack.isEmpty() ? 0 : Math.min(stack.getCount(), 10);
-        } else {
-            return 0;
-        }
-    }
-
-    public boolean hasSharpnessModule() {
-        return this.getModuleCount(0) > 0;
-    }
-
-    public boolean hasFireAspectModule() {
-        return this.getModuleCount(1) > 0;
-    }
-
-    public boolean hasSmiteModule() {
-        return this.getModuleCount(2) > 0;
-    }
-
-    public boolean hasBaneOfArthropodsModule() {
-        return this.getModuleCount(3) > 0;
-    }
-
-    public boolean hasLootingModule() {
-        return this.getModuleCount(4) > 0;
-    }
-
-    public int getSharpnessLevel() {
-        return this.getModuleCount(0);
-    }
-
-    public int getFireAspectLevel() {
-        return this.getModuleCount(1);
-    }
-
-    public int getSmiteLevel() {
-        return this.getModuleCount(2);
-    }
-
-    public int getBaneOfArthropodsLevel() {
-        return this.getModuleCount(3);
-    }
-
-    public int getLootingLevel() {
-        return this.getModuleCount(4);
+        setChangedAndUpdate();
     }
 
     public void clearContents() {
-        for(int i = 0; i < this.inventory.getSlots(); ++i) {
-            this.inventory.setStackInSlot(i, ItemStack.EMPTY);
+        for (int i = 0; i < SLOT_COUNT; i++) {
+            ItemStack existing = getStack(i);
+            if (!existing.isEmpty()) {
+                try (var tx = net.neoforged.neoforge.transfer.transaction.Transaction.openRoot()) {
+                    inventory.extract(i, ItemResource.of(existing), existing.getCount(), tx);
+                    tx.commit();
+                }
+            }
         }
-
-        this.setChanged();
+        setChanged();
     }
 
     public void drops() {
-        SimpleContainer inv = new SimpleContainer(this.inventory.getSlots());
-
-        for(int i = 0; i < this.inventory.getSlots(); ++i) {
-            inv.setItem(i, this.inventory.getStackInSlot(i));
-        }
-
-        Containers.dropContents(this.level, this.worldPosition, inv);
+        SimpleContainer inv = new SimpleContainer(SLOT_COUNT);
+        for (int i = 0; i < SLOT_COUNT; i++) inv.setItem(i, getStack(i));
+        Containers.dropContents(level, worldPosition, inv);
     }
 
-    public boolean removePadAt(BlockPos padPos) {
-        if (this.linkedPads.remove(padPos)) {
-            if (this.level != null && !this.level.isClientSide()) {
-                BlockEntity var3 = this.level.getBlockEntity(padPos);
-                if (var3 instanceof DamagePadBlockEntity) {
-                    DamagePadBlockEntity attackPad = (DamagePadBlockEntity)var3;
-                    attackPad.clearControllerPos();
-                }
-
-                this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
-            }
-
-            this.setChanged();
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    protected void saveAdditional(CompoundTag tag, Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.put("inventory", this.inventory.serializeNBT(registries));
-        tag.putBoolean("playerKillMode", this.playerKillMode);
-        ListTag padList = new ListTag();
-        Iterator var4 = this.linkedPads.iterator();
-
-        while(var4.hasNext()) {
-            BlockPos padPos = (BlockPos)var4.next();
-            padList.add(LongTag.valueOf(padPos.asLong()));
-        }
-
-        tag.put("linkedPads", padList);
-    }
-
-    protected void loadAdditional(CompoundTag tag, Provider registries) {
-        super.loadAdditional(tag, registries);
-        this.inventory.deserializeNBT(registries, tag.getCompound("inventory"));
-        this.playerKillMode = tag.getBoolean("playerKillMode");
-        this.linkedPads.clear();
-        if (tag.contains("linkedPads")) {
-            ListTag padList = tag.getList("linkedPads", 4);
-
-            for(int i = 0; i < padList.size(); ++i) {
-                long posLong = ((LongTag)padList.get(i)).getAsLong();
-                BlockPos padPos = BlockPos.of(posLong);
-                this.linkedPads.add(padPos);
-            }
-        }
-
-    }
-
+    @Override
     public Component getDisplayName() {
         return Component.translatable("menu.mobflowutilities.controller");
     }
 
     @Nullable
-    public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        return new ControllerMenu(i, inventory, this);
+    @Override
+    public AbstractContainerMenu createMenu(int id, Inventory inv, Player player) {
+        return new ControllerMenu(id, inv, this);
+    }
+
+    @Override
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        inventory.serialize(output);
+        output.putBoolean("playerKillMode", playerKillMode);
+
+        output.putInt("linkedPadCount", linkedPads.size());
+        int i = 0;
+        for (BlockPos padPos : linkedPads)
+            output.putLong("linkedPad_" + i++, padPos.asLong());
+    }
+
+    @Override
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        inventory.deserialize(input);
+        playerKillMode = input.getBooleanOr("playerKillMode", false);
+
+        linkedPads.clear();
+        int padCount = input.getIntOr("linkedPadCount", 0);
+        for (int i = 0; i < padCount; i++)
+            input.getLong("linkedPad_" + i).ifPresent(l -> linkedPads.add(BlockPos.of(l)));
     }
 
     @Nullable
+    @Override
     public Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
     }
 
-    public CompoundTag getUpdateTag(Provider pRegistries) {
-        return this.saveWithoutMetadata(pRegistries);
+    @Override
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
+    }
+
+    private void setChangedAndUpdate() {
+        setChanged();
+        if (level != null && !level.isClientSide())
+            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
     }
 }

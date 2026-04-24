@@ -7,7 +7,7 @@ import com.misterd.mobflowutilities.item.custom.EmptyGeneVialItem;
 import com.misterd.mobflowutilities.item.custom.MobCatcherItem;
 import com.misterd.mobflowutilities.util.GeneticHelper;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -20,7 +20,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 
-@EventBusSubscriber(modid = MobFlowUtilities.MODID, bus = EventBusSubscriber.Bus.GAME)
+@EventBusSubscriber(modid = MobFlowUtilities.MODID)
 public class MobCatcherEventHandler {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -73,38 +73,23 @@ public class MobCatcherEventHandler {
         if (!GeneticHelper.canCollectDNA(target.getType())) {
 
             if (target instanceof Player) {
-                player.displayClientMessage(
-                        Component.translatable("item.mobflowutilities.empty_gene_vial.player_immunity"),
-                        true
-                );
+                player.sendSystemMessage(Component.translatable("item.mobflowutilities.empty_gene_vial.player_immunity"));
             } else if (GeneticHelper.getSpawnEgg(target.getType()) == null) {
-                player.displayClientMessage(
-                        Component.translatable("item.mobflowutilities.empty_gene_vial.no_spawn_egg"),
-                        true
-                );
+                player.sendSystemMessage(Component.translatable("item.mobflowutilities.empty_gene_vial.no_spawn_egg"));
             } else {
-                player.displayClientMessage(
-                        Component.translatable("item.mobflowutilities.empty_gene_vial.blacklisted"),
-                        true
-                );
+                player.sendSystemMessage(Component.translatable("item.mobflowutilities.empty_gene_vial.blacklisted"));
             }
 
             return true;
         }
 
-        ResourceLocation entityKey = GeneticHelper.getEntityKey(target.getType());
+        Identifier entityKey = GeneticHelper.getEntityKey(target.getType());
         ItemStack filledVial = new ItemStack(MFUItems.GENE_SAMPLE_VIAL.get());
         filledVial.set(MFUDataComponents.ENTITY_DNA.get(), entityKey);
 
         player.setItemInHand(hand, filledVial);
 
-        player.displayClientMessage(
-                Component.translatable(
-                        "item.mobflowutilities.empty_gene_vial.collected",
-                        target.getDisplayName().getString()
-                ),
-                true
-        );
+        player.sendSystemMessage(Component.translatable("item.mobflowutilities.empty_gene_vial.collected", target.getDisplayName().getString()));
 
         return true;
     }

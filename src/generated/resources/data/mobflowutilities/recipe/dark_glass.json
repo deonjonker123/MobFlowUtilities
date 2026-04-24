@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "C": {
-      "tag": "minecraft:coals"
-    },
-    "G": {
-      "item": "minecraft:iron_ingot"
-    },
-    "X": {
-      "tag": "c:glass_blocks"
-    }
+    "C": "#minecraft:coals",
+    "G": "minecraft:iron_ingot",
+    "X": "#c:glass_blocks"
   },
   "pattern": [
     "GXG",

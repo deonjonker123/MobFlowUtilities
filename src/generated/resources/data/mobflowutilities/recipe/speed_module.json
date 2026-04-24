@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": {
-      "item": "minecraft:sugar"
-    },
-    "D": {
-      "item": "minecraft:diamond"
-    },
-    "L": {
-      "item": "minecraft:iron_ingot"
-    }
+    "#": "minecraft:sugar",
+    "D": "minecraft:diamond",
+    "L": "minecraft:iron_ingot"
   },
   "pattern": [
     "#L#",
@@ -18,7 +12,6 @@
     "#L#"
   ],
   "result": {
-    "count": 1,
     "id": "mobflowutilities:speed_module"
   }
 }

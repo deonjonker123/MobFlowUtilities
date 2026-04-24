@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "item": "minecraft:blaze_rod"
-    },
-    "F": {
-      "item": "minecraft:flint_and_steel"
-    },
-    "G": {
-      "item": "minecraft:iron_ingot"
-    }
+    "B": "minecraft:blaze_rod",
+    "F": "minecraft:flint_and_steel",
+    "G": "minecraft:iron_ingot"
   },
   "pattern": [
     "GBG",
@@ -18,7 +12,6 @@
     "GBG"
   ],
   "result": {
-    "count": 1,
     "id": "mobflowutilities:fire_aspect_module"
   }
 }

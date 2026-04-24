@@ -9,7 +9,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -18,7 +18,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 public record OpenFilterPacket(BlockPos collectorPos, int filterSlotIndex) implements CustomPacketPayload {
 
     public static final Type<OpenFilterPacket> TYPE = new Type<>(
-            ResourceLocation.fromNamespaceAndPath("mobflowutilities", "open_filter")
+            Identifier.fromNamespaceAndPath("mobflowutilities", "open_filter")
     );
 
     public static final StreamCodec<ByteBuf, OpenFilterPacket> STREAM_CODEC = StreamCodec.composite(
