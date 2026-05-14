@@ -20,20 +20,17 @@ import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.Nullable;
 
-public class GenesisChamberBlockEntityRenderer
-        implements BlockEntityRenderer<GenesisChamberBlockEntity, GenesisChamberBlockEntityRenderer.RenderState> {
+public class GenesisChamberBlockEntityRenderer implements BlockEntityRenderer<GenesisChamberBlockEntity, GenesisChamberBlockEntityRenderer.RenderState> {
 
-    private static final float CHAMBER_WIDTH  = 0.75F;
+    private static final float CHAMBER_WIDTH = 0.75F;
     private static final float CHAMBER_HEIGHT = 0.55F;
-    private static final float CHAMBER_DEPTH  = 0.75F;
+    private static final float CHAMBER_DEPTH = 0.75F;
 
     private final EntityRenderDispatcher entityRenderDispatcher;
 
     public GenesisChamberBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
         this.entityRenderDispatcher = context.entityRenderer();
     }
-
-    // --- Render state ---
 
     public static class RenderState extends BlockEntityRenderState {
         @Nullable EntityRenderState entityRenderState;
@@ -49,16 +46,8 @@ public class GenesisChamberBlockEntityRenderer
         return new RenderState();
     }
 
-    // --- Extract (game thread) ---
-
     @Override
-    public void extractRenderState(
-            GenesisChamberBlockEntity blockEntity,
-            RenderState state,
-            float partialTicks,
-            Vec3 cameraPos,
-            ModelFeatureRenderer.@Nullable CrumblingOverlay crumblingOverlay
-    ) {
+    public void extractRenderState(GenesisChamberBlockEntity blockEntity, RenderState state, float partialTicks, Vec3 cameraPos, ModelFeatureRenderer.@Nullable CrumblingOverlay crumblingOverlay) {
         BlockEntityRenderState.extractBase(blockEntity, state, crumblingOverlay);
         state.entityRenderState = null;
         state.entityRenderer = null;
@@ -80,39 +69,35 @@ public class GenesisChamberBlockEntityRenderer
         if (renderer == null) return;
 
         EntityRenderState entityState = renderer.createRenderState();
-        renderer.extractRenderState(entity, entityState, partialTicks);
+        if (entityState == null) return;
+
+        try {
+            renderer.extractRenderState(entity, entityState, partialTicks);
+        } catch (Exception e) {
+            return;
+        }
 
         state.entityRenderState = entityState;
-        state.entityRenderer    = renderer;
-        state.entityWidth       = entity.getBbWidth();
-        state.entityHeight      = entity.getBbHeight();
-        state.tickCount         = entity.tickCount;
-        state.partialTick       = partialTicks;
+        state.entityRenderer = renderer;
+        state.entityWidth = entity.getBbWidth();
+        state.entityHeight = entity.getBbHeight();
+        state.tickCount = entity.tickCount;
+        state.partialTick = partialTicks;
     }
 
-    // --- Submit (render thread) ---
-
     @Override
-    public void submit(
-            RenderState state,
-            PoseStack poseStack,
-            SubmitNodeCollector collector,
-            CameraRenderState cameraState
-    ) {
+    public void submit(RenderState state, PoseStack poseStack, SubmitNodeCollector collector, CameraRenderState cameraState) {
         if (state.entityRenderState == null || state.entityRenderer == null) return;
 
         poseStack.pushPose();
         applyEntityPose(state, poseStack);
 
         @SuppressWarnings("unchecked")
-        EntityRenderer<Entity, EntityRenderState> typedRenderer =
-                (EntityRenderer<Entity, EntityRenderState>) state.entityRenderer;
+        EntityRenderer<Entity, EntityRenderState> typedRenderer = (EntityRenderer<Entity, EntityRenderState>) state.entityRenderer;
         typedRenderer.submit(state.entityRenderState, poseStack, collector, cameraState);
 
         poseStack.popPose();
     }
-
-    // --- Helpers ---
 
     private static void tickEntity(GenesisChamberBlockEntity blockEntity, Entity entity) {
         entity.tickCount = (int) blockEntity.getLevel().getGameTime();
@@ -127,9 +112,9 @@ public class GenesisChamberBlockEntityRenderer
         poseStack.translate(0.5, 0.41, 0.5);
 
         float paddingFactor = 0.8f;
-        float scaleX = (CHAMBER_WIDTH  * paddingFactor) / state.entityWidth;
+        float scaleX = (CHAMBER_WIDTH * paddingFactor) / state.entityWidth;
         float scaleY = (CHAMBER_HEIGHT * paddingFactor) / state.entityHeight;
-        float scaleZ = (CHAMBER_DEPTH  * paddingFactor) / state.entityWidth;
+        float scaleZ = (CHAMBER_DEPTH * paddingFactor) / state.entityWidth;
 
         float scale = Math.min(Math.min(scaleX, scaleY), scaleZ);
         scale = Math.min(scale, 0.6f);

@@ -151,7 +151,9 @@ public class GenesisChamberMenu extends AbstractContainerMenu {
             this.allowedItem = allowedItem;
         }
 
-        @Override public ItemStack getItem() { return be.getStack(index); }
+        @Override public ItemStack getItem() {
+            return be.getStack(index);
+        }
 
         @Override
         public void set(ItemStack stack) {

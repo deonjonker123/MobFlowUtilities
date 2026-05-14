@@ -15,11 +15,11 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.AABB;
 
 import java.util.List;
@@ -39,6 +39,20 @@ public class DarkDirtBlock extends Block {
     }
 
     @Override
+    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, Orientation orientation, boolean movedByPiston) {
+        super.neighborChanged(state, level, pos, neighborBlock, orientation, movedByPiston);
+        if (!level.isClientSide() && level.hasNeighborSignal(pos)) {
+            boolean isDaytime = level.dimensionType().hasSkyLight() && level.isBrightOutside();
+            boolean isExposed = level.canSeeSky(pos.above());
+            if (!isDaytime || !isExposed) {
+                if (level.getMaxLocalRawBrightness(pos.above()) == 0) {
+                    this.attemptMobSpawning((ServerLevel) level, pos, level.getRandom(), 4);
+                }
+            }
+        }
+    }
+
+    @Override
     protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         super.tick(state, level, pos, random);
 
@@ -51,7 +65,7 @@ public class DarkDirtBlock extends Block {
 
         int lightLevel = level.getMaxLocalRawBrightness(pos.above());
         if (lightLevel == 0) {
-            this.attemptMobSpawning(level, pos, random);
+            this.attemptMobSpawning(level, pos, random, 1);
         }
 
         level.scheduleTick(pos, this, Config.getDarkDirtCheckInterval());
@@ -69,13 +83,16 @@ public class DarkDirtBlock extends Block {
         }
     }
 
-    private void attemptMobSpawning(ServerLevel level, BlockPos pos, RandomSource random) {
+    private void attemptMobSpawning(ServerLevel level, BlockPos pos, RandomSource random, int attempts) {
+        for (int i = 0; i < attempts; i++) {
+            this.spawnOnce(level, pos, random);
+        }
+    }
+
+    private void spawnOnce(ServerLevel level, BlockPos pos, RandomSource random) {
         int radius = 8;
         int searchRadius = radius * 2;
-        AABB searchBox = new AABB(
-                pos.getX() - radius, pos.getY() - 2, pos.getZ() - radius,
-                pos.getX() + radius, pos.getY() + 2, pos.getZ() + radius
-        );
+        AABB searchBox = new AABB(pos.getX() - radius, pos.getY() - 2, pos.getZ() - radius, pos.getX() + radius, pos.getY() + 2, pos.getZ() + radius);
         List<Mob> nearbyMobs = level.getEntitiesOfClass(Mob.class, searchBox, mob -> mob.getType().getCategory() == MobCategory.MONSTER);
 
         if (nearbyMobs.size() >= Config.getDarkDirtMobsPerArea()) return;
@@ -95,6 +112,7 @@ public class DarkDirtBlock extends Block {
         WeightedList<SpawnerData> spawners = builder.build();
 
         spawners.getRandom(random).ifPresent(spawner -> {
+
             EntityType<?> entityType = spawner.type();
             try {
                 Mob mob = (Mob) entityType.create(level, EntitySpawnReason.NATURAL);
