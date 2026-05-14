@@ -1,6 +1,7 @@
+![MFU](https://raw.githubusercontent.com/deonjonker123/MobFlowUtilities/refs/heads/26.1.2/banner.png)
 ## Automate Mobs
 
-Mob Flow Utilities is a modular automation mod focused on mob farm efficiency through directional flow control, centralized damage systems, intelligent item collection, and automated mob spawning. Clean design, minimal GUIs, and visual feedback.
+A mob farming automation mod. Flow pads and fans push mobs where you want them, attack pads kill them, and collectors pick up whatever they drop.
 
 ## Features
 
@@ -97,5 +98,3 @@ Gene sampling allows players to collect gene samples from creatures using Empty 
 
 Some textures used in this mod were adapted from **"Unused Minecraft Textures" by Malcolm Riley** ([GitHub Repository](https://github.com/malcolmriley/unused-textures))  
 Licensed under the [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/).
-
-Modifications were made to some of the original assets.
