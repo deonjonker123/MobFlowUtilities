@@ -8,7 +8,7 @@ version="${mod_version}"
 displayName="${mod_name}"
 authors="MisterD Modding"
 description='''
-Mob Flow Utilities is the automation toolkit for players who take mob farming seriously. Every block has a job. Nothing is wasted.
+A mob farming automation mod. Flow pads and fans push mobs where you want them, attack pads kill them, and collectors pick up whatever they drop.
 '''
 
 [[dependencies.${mod_id}]]
