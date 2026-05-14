@@ -1,3 +1,4 @@
+![MFU](https://raw.githubusercontent.com/deonjonker123/MobFlowUtilities/refs/heads/26.1.2/banner.png)
 ## Automate Mobs
 
 A mob farming automation mod. Flow pads and fans push mobs where you want them, attack pads kill them, and collectors pick up whatever they drop.
