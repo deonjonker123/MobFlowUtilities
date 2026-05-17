@@ -1,5 +1,4 @@
 {
-  "__comment": "Connected texture solution credited to vadis365",
   "variants": {
     "connected_down=false,connected_east=false,connected_north=false,connected_south=false,connected_up=false,connected_west=false": { "model": "mobflowutilities:block/dark_glass_isolated" },
     "connected_down=false,connected_east=false,connected_north=false,connected_south=false,connected_up=true,connected_west=false": { "model": "mobflowutilities:block/dark_glass_end" },
@@ -21,7 +20,7 @@
     "connected_down=false,connected_east=false,connected_north=true,connected_south=false,connected_up=false,connected_west=true": { "model": "mobflowutilities:block/dark_glass_corner", "x": 90, "y": -90 },
     "connected_down=false,connected_east=false,connected_north=false,connected_south=true,connected_up=false,connected_west=true": { "model": "mobflowutilities:block/dark_glass_corner", "x": -90, "y": 90 },
     "connected_down=true,connected_east=false,connected_north=false,connected_south=false,connected_up=true,connected_west=false": { "model": "mobflowutilities:block/dark_glass_straight" },
-    "connected_down=false,connected_east=true,connected_north=false,connected_south=false,connected_up=false,connected_west=true": { "model": "mobflowutilities:block/dark_glass_straight", "x": -90, "y": 90  },
+    "connected_down=false,connected_east=true,connected_north=false,connected_south=false,connected_up=false,connected_west=true": { "model": "mobflowutilities:block/dark_glass_straight", "x": -90, "y": 90 },
     "connected_down=false,connected_east=false,connected_north=true,connected_south=true,connected_up=false,connected_west=false": { "model": "mobflowutilities:block/dark_glass_straight", "x": -90 },
     "connected_down=true,connected_east=false,connected_north=false,connected_south=false,connected_up=true,connected_west=true": { "model": "mobflowutilities:block/dark_glass_t" },
     "connected_down=true,connected_east=false,connected_north=false,connected_south=true,connected_up=true,connected_west=false": { "model": "mobflowutilities:block/dark_glass_t", "y": -90 },

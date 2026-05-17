@@ -10,6 +10,8 @@ authors="MisterD Modding"
 description='''
 A mob farming automation mod. Flow pads and fans push mobs where you want them, attack pads kill them, and collectors pick up whatever they drop.
 '''
+[[mixins]]
+config="mobflowutilities.mixins.json"
 
 [[dependencies.${mod_id}]]
 modId="neoforge"

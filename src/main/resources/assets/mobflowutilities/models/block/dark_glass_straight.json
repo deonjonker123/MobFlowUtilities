@@ -1,14 +1,13 @@
 {
-  "__comment": "Connected texture solution credited to vadis365",
-  "parent": "block/cube",
-  "render_type": "translucent",
-  "textures": {
-    "particle": "mobflowutilities:block/dark_glass_middle",
-    "down": "mobflowutilities:block/dark_glass_n_e_w_s",
-    "up": "mobflowutilities:block/dark_glass_n_e_w_s",
-    "north": "mobflowutilities:block/dark_glass_n_s",
-    "south": "mobflowutilities:block/dark_glass_n_s",
-    "west": "mobflowutilities:block/dark_glass_n_s",
-    "east": "mobflowutilities:block/dark_glass_n_s"
-  }
+	"parent": "block/cube",
+	"render_type": "translucent",
+    "textures": {
+		"particle": "mobflowutilities:block/dark_glass_normal",
+        "down": "mobflowutilities:block/dark_glass_north_east_west_south",
+		"up": "mobflowutilities:block/dark_glass_north_east_west_south",
+		"north": "mobflowutilities:block/dark_glass_north_south",
+		"south": "mobflowutilities:block/dark_glass_north_south",
+		"west": "mobflowutilities:block/dark_glass_north_south",
+		"east": "mobflowutilities:block/dark_glass_north_south"
+    }
 }
