@@ -46,6 +46,10 @@ public class MFUBlockEntities {
                     () -> new BlockEntityType<>(GenesisChamberBlockEntity::new,
                             MFUBlocks.GENESIS_CHAMBER.get()));
 
+    public static final Supplier<BlockEntityType<GigaTankBlockEntity>> GIGA_TANK_BE =
+            BLOCK_ENTITIES.register("giga_tank_be", () -> new BlockEntityType<>(
+                    GigaTankBlockEntity::new, MFUBlocks.GIGATANK.get()));
+
     private static void registerCapabilities(RegisterCapabilitiesEvent event) {
 
         event.registerBlockEntity(Capabilities.Item.BLOCK, COLLECTOR_BE.get(),
@@ -60,6 +64,22 @@ public class MFUBlockEntities {
                 (blockEntity, direction) -> {
                     if (blockEntity instanceof GenesisChamberBlockEntity genesisChamber) {
                         return genesisChamber.getItemHandler(direction);
+                    }
+                    return null;
+                });
+
+        event.registerBlockEntity(Capabilities.Fluid.BLOCK, COLLECTOR_BE.get(),
+                (blockEntity, direction) -> {
+                    if (blockEntity instanceof CollectorBlockEntity collector) {
+                        return collector.getFluidTank();
+                    }
+                    return null;
+                });
+
+        event.registerBlockEntity(Capabilities.Fluid.BLOCK, GIGA_TANK_BE.get(),
+                (blockEntity, direction) -> {
+                    if (blockEntity instanceof GigaTankBlockEntity gigaTankBlockEntity) {
+                        return gigaTankBlockEntity.tank;
                     }
                     return null;
                 });

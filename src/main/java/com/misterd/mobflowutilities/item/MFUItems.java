@@ -3,6 +3,8 @@ package com.misterd.mobflowutilities.item;
 import com.misterd.mobflowutilities.block.MFUBlocks;
 import com.misterd.mobflowutilities.item.custom.*;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.TooltipDisplay;
@@ -20,7 +22,7 @@ public class MFUItems {
             props -> new Item(props) {
                 @Override
                 public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> adder, TooltipFlag flag) {
-                    adder.accept(Component.translatable("item.mobflowutilities.bane_of_arthropods_module.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
+                    adder.accept(Component.translatable("item.mobflowutilities.bane_of_arthropods_module.subtitle").withStyle(ChatFormatting.GRAY));
                 }
             });
 
@@ -28,7 +30,7 @@ public class MFUItems {
             props -> new Item(props) {
                 @Override
                 public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> adder, TooltipFlag flag) {
-                    adder.accept(Component.translatable("item.mobflowutilities.fire_aspect_module.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
+                    adder.accept(Component.translatable("item.mobflowutilities.fire_aspect_module.subtitle").withStyle(ChatFormatting.GRAY));
                 }
             });
 
@@ -36,7 +38,7 @@ public class MFUItems {
             props -> new Item(props) {
                 @Override
                 public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> adder, TooltipFlag flag) {
-                    adder.accept(Component.translatable("item.mobflowutilities.looting_module.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
+                    adder.accept(Component.translatable("item.mobflowutilities.looting_module.subtitle").withStyle(ChatFormatting.GRAY));
                 }
             });
 
@@ -44,7 +46,7 @@ public class MFUItems {
             props -> new Item(props) {
                 @Override
                 public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> adder, TooltipFlag flag) {
-                    adder.accept(Component.translatable("item.mobflowutilities.sharpness_module.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
+                    adder.accept(Component.translatable("item.mobflowutilities.sharpness_module.subtitle").withStyle(ChatFormatting.GRAY));
                 }
             });
 
@@ -52,7 +54,7 @@ public class MFUItems {
             props -> new Item(props) {
                 @Override
                 public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> adder, TooltipFlag flag) {
-                    adder.accept(Component.translatable("item.mobflowutilities.smite_module.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
+                    adder.accept(Component.translatable("item.mobflowutilities.smite_module.subtitle").withStyle(ChatFormatting.GRAY));
                 }
             });
 
@@ -60,7 +62,7 @@ public class MFUItems {
             props -> new Item(props) {
                 @Override
                 public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> adder, TooltipFlag flag) {
-                    adder.accept(Component.translatable("item.mobflowutilities.radius_increase_module.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
+                    adder.accept(Component.translatable("item.mobflowutilities.radius_increase_module.subtitle").withStyle(ChatFormatting.GRAY));
                 }
             });
 
@@ -68,7 +70,7 @@ public class MFUItems {
             props -> new Item(props) {
                 @Override
                 public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> adder, TooltipFlag flag) {
-                    adder.accept(Component.translatable("item.mobflowutilities.speed_module.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
+                    adder.accept(Component.translatable("item.mobflowutilities.speed_module.subtitle").withStyle(ChatFormatting.GRAY));
                 }
             });
 
@@ -76,7 +78,7 @@ public class MFUItems {
             props -> new Item(props) {
                 @Override
                 public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> adder, TooltipFlag flag) {
-                    adder.accept(Component.translatable("item.mobflowutilities.fan_width_increase_module.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
+                    adder.accept(Component.translatable("item.mobflowutilities.fan_width_increase_module.subtitle").withStyle(ChatFormatting.GRAY));
                 }
             });
 
@@ -84,7 +86,7 @@ public class MFUItems {
             props -> new Item(props) {
                 @Override
                 public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> adder, TooltipFlag flag) {
-                    adder.accept(Component.translatable("item.mobflowutilities.fan_height_increase_module.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
+                    adder.accept(Component.translatable("item.mobflowutilities.fan_height_increase_module.subtitle").withStyle(ChatFormatting.GRAY));
                 }
             });
 
@@ -92,7 +94,7 @@ public class MFUItems {
             props -> new Item(props) {
                 @Override
                 public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> adder, TooltipFlag flag) {
-                    adder.accept(Component.translatable("item.mobflowutilities.fan_distance_increase_module.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
+                    adder.accept(Component.translatable("item.mobflowutilities.fan_distance_increase_module.subtitle").withStyle(ChatFormatting.GRAY));
                 }
             });
 
@@ -100,7 +102,7 @@ public class MFUItems {
             props -> new GloomSporeItem(props) {
                 @Override
                 public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> adder, TooltipFlag flag) {
-                    adder.accept(Component.translatable("item.mobflowutilities.gloom_spore.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
+                    adder.accept(Component.translatable("item.mobflowutilities.gloom_spore.subtitle").withStyle(ChatFormatting.GRAY));
                 }
             });
 
@@ -108,15 +110,15 @@ public class MFUItems {
             props -> new GlimmerSproutItem(props) {
                 @Override
                 public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> adder, TooltipFlag flag) {
-                    adder.accept(Component.translatable("item.mobflowutilities.glimmer_sprout.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
+                    adder.accept(Component.translatable("item.mobflowutilities.glimmer_sprout.subtitle").withStyle(ChatFormatting.GRAY));
                 }
             });
 
-    public static final DeferredItem<Item> INCUBATION_ORB = ITEMS.registerItem("incubation_orb",
+    public static final DeferredItem<Item> LIFE_CATALYST = ITEMS.registerItem("life_catalyst",
             props -> new Item(props) {
                 @Override
                 public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> adder, TooltipFlag flag) {
-                    adder.accept(Component.translatable("item.mobflowutilities.incubation_orb.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
+                    adder.accept(Component.translatable("item.mobflowutilities.life_catalyst.subtitle").withStyle(ChatFormatting.GRAY));
                 }
             });
 
@@ -160,7 +162,7 @@ public class MFUItems {
             props -> new BlockItem(MFUBlocks.DARK_DIRT.get(), props) {
                 @Override
                 public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> adder, TooltipFlag flag) {
-                    adder.accept(Component.translatable("item.mobflowutilities.dark_dirt.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
+                    adder.accept(Component.translatable("item.mobflowutilities.dark_dirt.subtitle").withStyle(ChatFormatting.GRAY));
                 }
             });
 
@@ -168,7 +170,7 @@ public class MFUItems {
             props -> new BlockItem(MFUBlocks.GLIMMER_GRASS.get(), props) {
                 @Override
                 public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> adder, TooltipFlag flag) {
-                    adder.accept(Component.translatable("item.mobflowutilities.glimmer_grass.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
+                    adder.accept(Component.translatable("item.mobflowutilities.glimmer_grass.subtitle").withStyle(ChatFormatting.GRAY));
                 }
             });
 
@@ -176,7 +178,7 @@ public class MFUItems {
             props -> new BlockItem(MFUBlocks.DARK_GLASS.get(), props) {
                 @Override
                 public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> adder, TooltipFlag flag) {
-                    adder.accept(Component.translatable("item.mobflowutilities.dark_glass.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
+                    adder.accept(Component.translatable("item.mobflowutilities.dark_glass.subtitle").withStyle(ChatFormatting.GRAY));
                 }
             });
 
@@ -184,8 +186,8 @@ public class MFUItems {
             props -> new BlockItem(MFUBlocks.FAN.get(), props) {
                 @Override
                 public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> adder, TooltipFlag flag) {
-                    adder.accept(Component.translatable("item.mobflowutilities.fan.subtitle_line1").withStyle(ChatFormatting.LIGHT_PURPLE));
-                    adder.accept(Component.translatable("item.mobflowutilities.fan.subtitle_line2").withStyle(ChatFormatting.LIGHT_PURPLE));
+                    adder.accept(Component.translatable("item.mobflowutilities.fan.subtitle_line1").withStyle(ChatFormatting.GRAY));
+                    adder.accept(Component.translatable("item.mobflowutilities.fan.subtitle_line2").withStyle(ChatFormatting.GRAY));
                 }
             });
 
@@ -193,7 +195,25 @@ public class MFUItems {
             props -> new BlockItem(MFUBlocks.GENESIS_CHAMBER.get(), props) {
                 @Override
                 public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> adder, TooltipFlag flag) {
-                    adder.accept(Component.translatable("item.mobflowutilities.genesis_chamber.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
+                    adder.accept(Component.translatable("item.mobflowutilities.genesis_chamber.subtitle").withStyle(ChatFormatting.GRAY));
+                }
+            });
+
+    public static final DeferredItem<Item> GIGATANK = ITEMS.registerItem("gigatank",
+            props -> new BlockItem(MFUBlocks.GIGATANK.get(), props) {
+                @Override
+                public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> adder, TooltipFlag flag) {
+                    adder.accept(Component.translatable("item.mobflowutilities.gigatank.subtitle").withStyle(ChatFormatting.GRAY));
+                    if (stack.has(DataComponents.CUSTOM_DATA)) {
+                        CompoundTag tag = stack.get(DataComponents.CUSTOM_DATA).copyTag();
+                        if (tag.contains("Tank")) {
+                            int amount = tag.getIntOr("Amount", 0);
+                            String fluidName = tag.getStringOr("FluidName", "Unknown");
+                            if (amount > 0) {
+                                adder.accept(Component.literal(String.format("%s - %,d mB", fluidName, amount)).withStyle(ChatFormatting.AQUA));
+                            }
+                        }
+                    }
                 }
             });
 

@@ -104,6 +104,15 @@ public class MFUBlocks {
                     .sound(SoundType.STONE)
                     .noOcclusion()));
 
+    public static final DeferredBlock<Block> GIGATANK = registerBlock("gigatank",
+            id -> new GigaTankBlock(BlockBehaviour.Properties.of()
+                    .setId(ResourceKey.create(Registries.BLOCK, id))
+                    .strength(2.0F)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.STONE)
+                    .noLootTable()
+                    .noOcclusion()));
+
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Function<Identifier, T> factory) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, factory);
         return toReturn;

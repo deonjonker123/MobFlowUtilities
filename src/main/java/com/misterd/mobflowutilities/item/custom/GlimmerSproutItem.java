@@ -3,6 +3,8 @@ package com.misterd.mobflowutilities.item.custom;
 import com.misterd.mobflowutilities.block.MFUBlocks;
 import com.misterd.mobflowutilities.config.Config;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -41,12 +43,14 @@ public class GlimmerSproutItem extends Item {
 
                 if (isConvertibleBlock(targetState)) {
                     level.setBlock(targetPos, MFUBlocks.GLIMMER_GRASS.get().defaultBlockState(), 3);
+                    level.levelEvent(2001, targetPos, Block.getId(targetState));
                     blocksConverted++;
                 }
             }
         }
 
         if (blocksConverted > 0) {
+            level.playSound(null, clickedPos, SoundEvents.AMETHYST_CLUSTER_BREAK, SoundSource.BLOCKS, 2.0F, 1.0F);
             stack.shrink(1);
             return InteractionResult.SUCCESS;
         }

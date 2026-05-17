@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_glass_pane": {
+    "has_glass_block": {
       "conditions": {
         "items": [
           {
-            "items": "#c:glass_panes"
+            "items": "#c:glass_blocks"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_glass_pane"
+      "has_glass_block"
     ]
   ],
   "rewards": {

@@ -1,15 +1,23 @@
 package com.misterd.mobflowutilities.datagen.custom;
 
 import com.misterd.mobflowutilities.MobFlowUtilities;
+import com.misterd.mobflowutilities.client.MobCatcherOccupiedProperty;
+import com.misterd.mobflowutilities.fluid.MFUFluids;
 import com.misterd.mobflowutilities.item.MFUItems;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
+import net.minecraft.client.data.models.model.ItemModelUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.client.renderer.item.ClientItem;
+import net.minecraft.client.renderer.item.ConditionalItemModel;
+import net.minecraft.client.renderer.item.ItemModel;
+import net.minecraft.client.renderer.item.properties.conditional.HasComponent;
 import net.minecraft.core.Holder;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Block;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public class MFUItemModelProvider extends ModelProvider {
@@ -38,13 +46,25 @@ public class MFUItemModelProvider extends ModelProvider {
         itemModels.generateFlatItem(MFUItems.FAN_DISTANCE_INCREASE_MODULE.get(),ModelTemplates.FLAT_ITEM);
 
         itemModels.generateFlatItem(MFUItems.PAD_WRENCH.get(),ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(MFUItems.MOB_CATCHER.get(),ModelTemplates.FLAT_ITEM);
 
         itemModels.generateFlatItem(MFUItems.GLOOM_SPORE.get(),ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(MFUItems.GLIMMER_SPROUT.get(),ModelTemplates.FLAT_ITEM);
 
         itemModels.generateFlatItem(MFUItems.EMPTY_GENE_VIAL.get(),ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(MFUItems.GENE_SAMPLE_VIAL.get(),ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(MFUItems.INCUBATION_ORB.get(),ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(MFUItems.LIFE_CATALYST.get(),ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(MFUFluids.LIQUID_XP_BUCKET.get(), ModelTemplates.FLAT_ITEM);
+
+        ItemModel.Unbaked empty = ItemModelUtils.plainModel(
+                itemModels.createFlatItemModel(MFUItems.MOB_CATCHER.get(), ModelTemplates.FLAT_ITEM));
+        ItemModel.Unbaked occupied = ItemModelUtils.plainModel(
+                itemModels.createFlatItemModel(MFUItems.MOB_CATCHER.get(), "_occupied", ModelTemplates.FLAT_ITEM));
+        itemModels.itemModelOutput.accept(MFUItems.MOB_CATCHER.get(),
+                new ClientItem(new ConditionalItemModel.Unbaked(
+                        Optional.empty(),
+                        new MobCatcherOccupiedProperty(),
+                        occupied,
+                        empty),
+                        new ClientItem.Properties(false, false, 1F)).model());
     }
 }

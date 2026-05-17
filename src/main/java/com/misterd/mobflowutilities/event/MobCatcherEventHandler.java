@@ -52,8 +52,7 @@ public class MobCatcherEventHandler {
                     return;
                 }
 
-                InteractionResult result =
-                        catcher.interactLivingEntity(stack, player, living, hand);
+                InteractionResult result = catcher.interactLivingEntity(stack, player, living, hand);
 
                 if (result.consumesAction()) {
                     event.setCanceled(true);

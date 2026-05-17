@@ -4,6 +4,7 @@ import com.misterd.mobflowutilities.block.custom.CollectorBlock;
 import com.misterd.mobflowutilities.component.MFUDataComponents;
 import com.misterd.mobflowutilities.component.custom.VoidFilterData;
 import com.misterd.mobflowutilities.entity.MFUBlockEntities;
+import com.misterd.mobflowutilities.fluid.LiquidXpFluidTank;
 import com.misterd.mobflowutilities.gui.custom.CollectorMenu;
 import com.misterd.mobflowutilities.item.MFUItems;
 import com.misterd.mobflowutilities.item.custom.VoidFilterItem;
@@ -54,6 +55,7 @@ public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
     private static final int MODULE_COUNT = 4;
     private static final int OUTPUT_COUNT = 45;
     private static final int TOTAL_SLOTS  = MODULE_COUNT + OUTPUT_COUNT;
+    private LiquidXpFluidTank fluidTank;
 
     public final ItemStacksResourceHandler inventory = new ItemStacksResourceHandler(TOTAL_SLOTS) {
         @Override
@@ -258,6 +260,11 @@ public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
         setChangedAndUpdate();
     }
 
+    public LiquidXpFluidTank getFluidTank() {
+        if (fluidTank == null) fluidTank = new LiquidXpFluidTank(this);
+        return fluidTank;
+    }
+
     @Override
     public void preRemoveSideEffects(BlockPos pos, BlockState state) {
         drops();
@@ -386,7 +393,7 @@ public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
         return totalInserted;
     }
 
-    private void setChangedAndUpdate() {
+    public void setChangedAndUpdate() {
         setChanged();
         if (level != null && !level.isClientSide())
             level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);

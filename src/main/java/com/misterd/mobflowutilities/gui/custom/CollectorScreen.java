@@ -4,8 +4,8 @@ import com.misterd.mobflowutilities.client.renderer.CollectorWireframeRenderer;
 import com.misterd.mobflowutilities.network.CollectorXpPacket;
 import com.misterd.mobflowutilities.network.ConfigPacket;
 import com.misterd.mobflowutilities.network.OpenFilterPacket;
+import com.misterd.mobflowutilities.util.MFUExperienceUtils;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.components.WidgetSprites;
@@ -24,6 +24,8 @@ import java.util.function.Supplier;
 public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
 
     private static final Identifier GUI_TEXTURE = Identifier.fromNamespaceAndPath("mobflowutilities", "textures/gui/collector_gui.png");
+    private static final Identifier XP_BAR_BG = Identifier.fromNamespaceAndPath("mobflowutilities", "xp_bar");
+    private static final Identifier XP_BAR_PROGRESS = Identifier.fromNamespaceAndPath("mobflowutilities", "xp_bar_progress");
     private static final WidgetSprites REDUCE_OFFSET_SPRITES = new WidgetSprites(Identifier.fromNamespaceAndPath("mobflowutilities", "reduce_offset_btn"), Identifier.fromNamespaceAndPath("mobflowutilities", "reduce_offset_btn"), Identifier.fromNamespaceAndPath("mobflowutilities", "reduce_offset_btn_hover"), Identifier.fromNamespaceAndPath("mobflowutilities", "reduce_offset_btn_hover"));
     private static final WidgetSprites INCREASE_OFFSET_SPRITES = new WidgetSprites(Identifier.fromNamespaceAndPath("mobflowutilities", "increase_offset_btn"), Identifier.fromNamespaceAndPath("mobflowutilities", "increase_offset_btn"), Identifier.fromNamespaceAndPath("mobflowutilities", "increase_offset_btn_hover"), Identifier.fromNamespaceAndPath("mobflowutilities", "increase_offset_btn_hover"));
     private static final WidgetSprites TOGGLE_WIREFRAME_SPRITES = new WidgetSprites(Identifier.fromNamespaceAndPath("mobflowutilities", "toggle_zone_wireframe_btn"), Identifier.fromNamespaceAndPath("mobflowutilities", "toggle_zone_wireframe_btn"), Identifier.fromNamespaceAndPath("mobflowutilities", "toggle_zone_wireframe_btn_hover"), Identifier.fromNamespaceAndPath("mobflowutilities", "toggle_zone_wireframe_btn_hover"));
@@ -37,7 +39,6 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
     private static final int GUI_W = 234;
     private static final int GUI_H = 244;
 
-    private EditBox xpInputField;
     private int downUpOffset = 0;
     private int northSouthOffset = 0;
     private int eastWestOffset = 0;
@@ -63,42 +64,12 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
         }
     }
 
-    private int xpToLevel(int xp) {
-        if (xp < 0) return 0;
-        int level = 0;
-        for (int remaining = xp; remaining > 0; ++level) {
-            int xpForNextLevel = getXpNeededForLevel(level);
-            if (remaining < xpForNextLevel) break;
-            remaining -= xpForNextLevel;
-        }
-        return level;
-    }
-
-    private int getXpNeededForLevel(int level) {
-        if (level >= 30) return 112 + (level - 30) * 9;
-        return level >= 16 ? 37 + (level - 15) * 5 : 7 + level * 2;
-    }
-
-    private int levelToXp(int level) {
-        if (level <= 0) return 0;
-        int totalXp = 0;
-        for (int i = 0; i < level; ++i) totalXp += getXpNeededForLevel(i);
-        return totalXp;
-    }
-
     @Override
     protected void init() {
         super.init();
         int leftPos = (this.width - this.imageWidth) / 2;
         int topPos = (this.height - this.imageHeight) / 2;
         this.clearWidgets();
-        this.xpInputField = new EditBox(this.font, leftPos + 9, topPos + 113, 39, 8, Component.translatable("gui.mobflowutilities.collector.xp_input_levels"));
-        this.xpInputField.setMaxLength(4);
-        this.xpInputField.setValue("0");
-        this.xpInputField.setBordered(false);
-        this.xpInputField.setTextColor(0xFF30a324);
-        this.xpInputField.setTooltip(Tooltip.create(Component.translatable("tooltip.mobflowutilities.collector.xp_input_levels")));
-        this.addRenderableWidget(this.xpInputField);
         this.addOffsetButtons(leftPos, topPos);
         this.addWireframeButton(leftPos, topPos);
         this.addXpButtons(leftPos, topPos);
@@ -130,13 +101,13 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
         ewIncreaseButton.setTooltip(Tooltip.create(Component.translatable("tooltip.mobflowutilities.collector.offset.east_west.increase")));
         this.addRenderableWidget(ewIncreaseButton);
 
-        ImageButton resetOffsetButton = new ImageButton(leftPos + 194, topPos + 129, 12, 12, RESET_OFFSET_SPRITES, button -> this.resetAllOffsets());
+        ImageButton resetOffsetButton = new ImageButton(leftPos + 194, topPos + 125, 12, 12, RESET_OFFSET_SPRITES, button -> this.resetAllOffsets());
         resetOffsetButton.setTooltip(Tooltip.create(Component.translatable("tooltip.mobflowutilities.collector.offset.reset_all")));
         this.addRenderableWidget(resetOffsetButton);
     }
 
     private void addWireframeButton(int leftPos, int topPos) {
-        ImageButton wireframeButton = new ImageButton(leftPos + 155, topPos + 112, 10, 10,
+        ImageButton wireframeButton = new ImageButton(leftPos + 218, topPos + 146, 10, 10,
                 this.createConditionalSprites(TOGGLE_WIREFRAME_SPRITES, () -> this.showWireframe),
                 button -> this.toggleWireframe());
         wireframeButton.setTooltip(Tooltip.create(Component.translatable("tooltip.mobflowutilities.collector.wireframe_toggle")));
@@ -144,19 +115,19 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
     }
 
     private void addXpButtons(int leftPos, int topPos) {
-        ImageButton withdrawButton = new ImageButton(leftPos + 49, topPos + 112, 10, 10, WITHDRAW_XP_SPRITES, button -> this.withdrawXP());
-        withdrawButton.setTooltip(Tooltip.create(Component.translatable("tooltip.mobflowutilities.collector.xp.withdraw")));
-        this.addRenderableWidget(withdrawButton);
-
-        ImageButton depositButton = new ImageButton(leftPos + 60, topPos + 112, 10, 10, DEPOSIT_XP_SPRITES, button -> this.depositXP());
-        depositButton.setTooltip(Tooltip.create(Component.translatable("tooltip.mobflowutilities.collector.xp.deposit")));
-        this.addRenderableWidget(depositButton);
-
-        ImageButton withdrawAllButton = new ImageButton(leftPos + 71, topPos + 112, 10, 10, WITHDRAW_ALL_XP_SPRITES, button -> this.withdrawAllXP());
+        ImageButton withdrawAllButton = new ImageButton(leftPos + 39, topPos + 125, 10, 10, WITHDRAW_ALL_XP_SPRITES, button -> this.withdrawAllXP());
         withdrawAllButton.setTooltip(Tooltip.create(Component.translatable("tooltip.mobflowutilities.collector.xp.withdraw_all")));
         this.addRenderableWidget(withdrawAllButton);
 
-        ImageButton depositAllButton = new ImageButton(leftPos + 82, topPos + 112, 10, 10, DEPOSIT_ALL_XP_SPRITES, button -> this.depositAllXP());
+        ImageButton withdrawButton = new ImageButton(leftPos + 50, topPos + 125, 10, 10, WITHDRAW_XP_SPRITES, button -> this.withdrawXP());
+        withdrawButton.setTooltip(Tooltip.create(Component.translatable("tooltip.mobflowutilities.collector.xp.withdraw")));
+        this.addRenderableWidget(withdrawButton);
+
+        ImageButton depositButton = new ImageButton(leftPos + 116, topPos + 125, 10, 10, DEPOSIT_XP_SPRITES, button -> this.depositXP());
+        depositButton.setTooltip(Tooltip.create(Component.translatable("tooltip.mobflowutilities.collector.xp.deposit")));
+        this.addRenderableWidget(depositButton);
+
+        ImageButton depositAllButton = new ImageButton(leftPos + 127, topPos + 125, 10, 10, DEPOSIT_ALL_XP_SPRITES, button -> this.depositAllXP());
         depositAllButton.setTooltip(Tooltip.create(Component.translatable("tooltip.mobflowutilities.collector.xp.deposit_all")));
         this.addRenderableWidget(depositAllButton);
     }
@@ -235,49 +206,29 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
     }
 
     private void withdrawXP() {
-        try {
-            int levels = Integer.parseInt(this.xpInputField.getValue());
-            if (levels > 0) {
-                int xpAmount = this.levelToXp(levels);
-                if (xpAmount <= this.storedXP) {
-                    ClientPacketDistributor.sendToServer(new CollectorXpPacket(this.menu.blockEntity.getBlockPos(), CollectorXpPacket.XpAction.WITHDRAW, xpAmount));
-                    this.storedXP -= xpAmount;
-                    this.xpInputField.setValue("0");
-                }
-            }
-        } catch (NumberFormatException e) {
-            this.xpInputField.setValue("0");
-        }
+        if (this.storedXP <= 0) return;
+        ClientPacketDistributor.sendToServer(new CollectorXpPacket(this.menu.blockEntity.getBlockPos(), CollectorXpPacket.XpAction.WITHDRAW_ONE_LEVEL, 0));
     }
 
     private void depositXP() {
-        try {
-            int levels = Integer.parseInt(this.xpInputField.getValue());
-            if (levels > 0) {
-                int xpAmount = this.levelToXp(levels);
-                ClientPacketDistributor.sendToServer(new CollectorXpPacket(this.menu.blockEntity.getBlockPos(), CollectorXpPacket.XpAction.DEPOSIT, xpAmount));
-                this.storedXP = Math.min(this.maxStoredXP, this.storedXP + xpAmount);
-                this.xpInputField.setValue("0");
-            }
-        } catch (NumberFormatException e) {
-            this.xpInputField.setValue("0");
-        }
+        if (this.minecraft.player == null) return;
+        if (this.minecraft.player.experienceLevel <= 0) return;
+        ClientPacketDistributor.sendToServer(new CollectorXpPacket(this.menu.blockEntity.getBlockPos(), CollectorXpPacket.XpAction.DEPOSIT_ONE_LEVEL, 0));
     }
 
     private void withdrawAllXP() {
         if (this.storedXP > 0) {
             ClientPacketDistributor.sendToServer(new CollectorXpPacket(this.menu.blockEntity.getBlockPos(), CollectorXpPacket.XpAction.WITHDRAW, this.storedXP));
             this.storedXP = 0;
-            this.xpInputField.setValue("0");
         }
     }
 
     private void depositAllXP() {
+        if (this.minecraft.player == null) return;
         int playerXP = this.minecraft.player.totalExperience;
         if (playerXP > 0) {
             ClientPacketDistributor.sendToServer(new CollectorXpPacket(this.menu.blockEntity.getBlockPos(), CollectorXpPacket.XpAction.DEPOSIT, playerXP));
             this.storedXP = Math.min(this.maxStoredXP, this.storedXP + playerXP);
-            this.xpInputField.setValue("0");
         }
     }
 
@@ -302,18 +253,26 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
 
     private void renderXPCollectionToggle(GuiGraphicsExtractor graphics, int x, int y) {
         Identifier toggleHandle = Identifier.fromNamespaceAndPath("mobflowutilities", "toggle_scroller_handle");
-        int handleX = this.xpCollectionEnabled ? x + 125 : x + 117;
-        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, toggleHandle, handleX, y + 112, 6, 10);
+        int handleX = this.xpCollectionEnabled ? x + 17 : x + 9;
+        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, toggleHandle, handleX, y + 111, 6, 10);
     }
 
     private void renderXPDisplay(GuiGraphicsExtractor graphics, int x, int y) {
+        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, XP_BAR_BG, x + 7, y + 137, 162, 5);
+
+        int progress = (int) (MFUExperienceUtils.getProgressToNextLevel(this.storedXP) * 162.0F);
+        if (progress > 0) {
+            graphics.blitSprite(RenderPipelines.GUI_TEXTURED, XP_BAR_PROGRESS, 162, 5, 0, 0, x + 7, y + 137, progress, 5);
+        }
+
         var pose = graphics.pose();
-        float scale = 0.65F;
+        float scale = 1.0F;
         pose.pushMatrix();
         pose.scale(scale, scale);
-        int storedLevels = this.xpToLevel(this.storedXP);
+        int storedLevels = MFUExperienceUtils.getLevelFromTotalExperience(this.storedXP);
         String xpDisplayText = String.format(Component.translatable("gui.mobflowutilities.collector.xp_levels_stored").getString(), storedLevels);
-        graphics.text(this.font, xpDisplayText, (int) ((x + 12) / scale), (int) ((y + 132) / scale), 0xFF30a324, false);
+        int centeredX = (int) ((x + 88) / scale) - (this.font.width(xpDisplayText) / 2);
+        graphics.text(this.font, xpDisplayText, centeredX, (int) ((y + 127) / scale), 0xFF30a324, false);
         pose.popMatrix();
     }
 
@@ -321,7 +280,7 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
     public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
-        if (event.button() == 0 && event.x() >= x + 118 && event.x() <= x + 134 && event.y() >= y + 113 && event.y() <= y + 121) {
+        if (event.button() == 0 && event.x() >= x + 9 && event.x() <= x + 25 && event.y() >= y + 111 && event.y() <= y + 121) {
             this.xpCollectionEnabled = !this.xpCollectionEnabled;
             ClientPacketDistributor.sendToServer(new ConfigPacket(
                     ConfigPacket.ConfigTarget.COLLECTOR_BLOCK,
@@ -352,7 +311,7 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
 
-        if (mouseX >= x + 117 && mouseX <= x + 131 && mouseY >= y + 113 && mouseY <= y + 130) {
+        if (mouseX >= x + 9 && mouseX <= x + 25 && mouseY >= y + 111 && mouseY <= y + 121) {
             Component tooltipText = this.xpCollectionEnabled
                     ? Component.translatable("tooltip.mobflowutilities.collector.xp_collection.enabled")
                     : Component.translatable("tooltip.mobflowutilities.collector.xp_collection.disabled");
@@ -360,12 +319,7 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
             return;
         }
 
-        float scale = 0.8F;
-        int displayWidth = (int) (this.font.width(this.getXpDisplayText()) * scale);
-        int displayHeight = (int) (9.0F * scale);
-        int actualX = x + 9;
-        int actualY = y + 129;
-        if (mouseX >= actualX && mouseX <= actualX + displayWidth && mouseY >= actualY && mouseY <= actualY + displayHeight) {
+        if (mouseX >= x + 7 && mouseX <= x + 169 && mouseY >= y + 137 && mouseY <= y + 142) {
             MutableComponent tooltipText = Component.translatable("tooltip.mobflowutilities.collector.xp_display", String.format("%,d", this.storedXP));
             graphics.setComponentTooltipForNextFrame(this.font, List.of(tooltipText), mouseX, mouseY);
             return;
@@ -385,10 +339,6 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
         }
 
         super.extractTooltip(graphics, mouseX, mouseY);
-    }
-
-    private String getXpDisplayText() {
-        return String.format("Levels Stored: %,d", this.xpToLevel(this.storedXP));
     }
 
     @Override

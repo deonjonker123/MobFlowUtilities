@@ -3,6 +3,8 @@ package com.misterd.mobflowutilities.block.custom;
 import javax.annotation.Nullable;
 
 import com.misterd.mobflowutilities.entity.custom.CollectorBlockEntity;
+import com.misterd.mobflowutilities.fluid.LiquidXpFluidTank;
+import com.misterd.mobflowutilities.fluid.MFUFluids;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -11,13 +13,17 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -101,11 +107,49 @@ public class CollectorBlock extends BaseEntityBlock {
         return super.playerWillDestroy(level, pos, state, player);
     }
 
+    @Override
     protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (level.isClientSide()) return InteractionResult.SUCCESS;
+
         BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof CollectorBlockEntity collector && !level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
-            serverPlayer.openMenu(new SimpleMenuProvider(collector, Component.translatable("gui.mobflowutilities.collector")), pos);
+        if (!(blockEntity instanceof CollectorBlockEntity collector)) return InteractionResult.SUCCESS;
+
+        if (stack.getItem() == Items.BUCKET) {
+            int xpPerBucket = LiquidXpFluidTank.MB_PER_XP > 0 ? 1000 / LiquidXpFluidTank.MB_PER_XP : 50;
+            if (collector.getStoredXP() >= xpPerBucket) {
+                collector.setStoredXP(collector.getStoredXP() - xpPerBucket);
+                level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
+                ItemStack filledBucket = new ItemStack(MFUFluids.LIQUID_XP_BUCKET.get());
+                if (!player.isCreative()) {
+                    stack.shrink(1);
+                    if (stack.isEmpty()) {
+                        player.setItemInHand(hand, filledBucket);
+                    } else {
+                        player.getInventory().add(filledBucket);
+                    }
+                }
+                return InteractionResult.SUCCESS;
+            }
             return InteractionResult.SUCCESS;
+        }
+
+        if (stack.getItem() == MFUFluids.LIQUID_XP_BUCKET.get()) {
+            int xpPerBucket = LiquidXpFluidTank.MB_PER_XP > 0 ? 1000 / LiquidXpFluidTank.MB_PER_XP : 50;
+            collector.setStoredXP(collector.getStoredXP() + xpPerBucket);
+            level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
+            if (!player.isCreative()) {
+                stack.shrink(1);
+                if (stack.isEmpty()) {
+                    player.setItemInHand(hand, new ItemStack(Items.BUCKET));
+                } else {
+                    player.getInventory().add(new ItemStack(Items.BUCKET));
+                }
+            }
+            return InteractionResult.SUCCESS;
+        }
+
+        if (player instanceof ServerPlayer serverPlayer) {
+            serverPlayer.openMenu(new SimpleMenuProvider(collector, Component.translatable("gui.mobflowutilities.collector")), pos);
         }
         return InteractionResult.SUCCESS;
     }

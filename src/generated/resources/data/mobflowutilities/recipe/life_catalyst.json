@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": "#c:experience_bucket",
+    "E": "minecraft:ender_eye",
+    "P": "minecraft:ender_pearl"
+  },
+  "pattern": [
+    "BEB",
+    "EPE",
+    "BEB"
+  ],
+  "result": {
+    "id": "mobflowutilities:life_catalyst"
+  }
+}

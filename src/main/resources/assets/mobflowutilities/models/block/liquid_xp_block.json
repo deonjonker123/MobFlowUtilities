@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/water",
+  "textures": {
+    "particle": "mobflowutilities:block/xp_still"
+  }
+}

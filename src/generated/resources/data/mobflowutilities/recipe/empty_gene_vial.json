@@ -2,13 +2,12 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": "#c:glass_panes",
+    "B": "#c:glass_blocks",
     "X": "#minecraft:wooden_buttons"
   },
   "pattern": [
-    " X ",
-    "B B",
-    "BBB"
+    "BXB",
+    " B "
   ],
   "result": {
     "id": "mobflowutilities:empty_gene_vial"

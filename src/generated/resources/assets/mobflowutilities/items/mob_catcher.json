@@ -1,6 +1,14 @@
 {
   "model": {
-    "type": "minecraft:model",
-    "model": "mobflowutilities:item/mob_catcher"
+    "type": "minecraft:condition",
+    "on_false": {
+      "type": "minecraft:model",
+      "model": "mobflowutilities:item/mob_catcher"
+    },
+    "on_true": {
+      "type": "minecraft:model",
+      "model": "mobflowutilities:item/mob_catcher_occupied"
+    },
+    "property": "mobflowutilities:mob_catcher_occupied"
   }
 }

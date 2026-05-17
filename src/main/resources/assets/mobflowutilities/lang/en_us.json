@@ -8,6 +8,7 @@
 
   "block.mobflowutilities.collector": "Collector",
   "block.mobflowutilities.controller": "Controller",
+  "block.mobflowutilities.gigtank": "Giga Tank",
   "block.mobflowutilities.fan": "Fan",
   "block.mobflowutilities.fan.subtitle_line1": "Pushes mobs in the facing direction",
   "block.mobflowutilities.fan.subtitle_line2": "Can be upgraded with fan upgrades",
@@ -31,6 +32,8 @@
 
   "item.mobflowutilities.collector": "Collector",
   "item.mobflowutilities.controller": "Controller",
+  "item.mobflowutilities.gigatank": "Giga Tank",
+  "item.mobflowutilities.gigatank.subtitle": "Holds 1024 buckets",
   "item.mobflowutilities.fan": "Fan",
   "item.mobflowutilities.fan.subtitle_line1": "Pushes mobs in the facing direction",
   "item.mobflowutilities.fan.subtitle_line2": "Can be upgraded with fan upgrades",
@@ -78,13 +81,13 @@
   "item.mobflowutilities.mob_catcher": "Mob Catcher",
 
   "item.mobflowutilities.gloom_spore": "Gloom Spore",
-  "item.mobflowutilities.gloom_spore.subtitle": "Converts dirt-like blocks to Dark Dirt. Rare drop from hostile creatures and loot chests",
+  "item.mobflowutilities.gloom_spore.subtitle": "Converts dirt-like blocks to Dark Dirt.",
 
   "item.mobflowutilities.glimmer_sprout": "Glimmer Sprout",
-  "item.mobflowutilities.glimmer_sprout.subtitle": "Converts dirt-like blocks to Glimmer Grass. Rare drop from passive creatures and loot chests",
+  "item.mobflowutilities.glimmer_sprout.subtitle": "Converts dirt-like blocks to Glimmer Grass.",
 
-  "item.mobflowutilities.incubation_orb": "Incubation Orb",
-  "item.mobflowutilities.incubation_orb.subtitle": "Crafting component for spawn eggs. Drops from bosses",
+  "item.mobflowutilities.life_catalyst": "Life Catalyst",
+  "item.mobflowutilities.life_catalyst.subtitle": "Crafting component for spawn eggs.",
 
   "item.mobflowutilities.empty_gene_vial": "Empty Gene Vial",
 
@@ -92,6 +95,10 @@
 
   "menu.mobflowutilities.collector": "Collector",
   "menu.mobflowutilities.controller": "Controller",
+
+  "fluid_type.mobflowutilities.liquid_xp": "Liquid XP",
+  "block.mobflowutilities.liquid_xp_block": "Liquid XP",
+  "item.mobflowutilities.liquid_xp_bucket": "Liquid XP Bucket",
 
   "gui.mobflowutilities.collector": "Collector",
   "gui.mobflowutilities.controller": "Controller",
@@ -103,13 +110,11 @@
   "gui.mobflowutilities.collector.offset.down_up": "D/U Offset",
   "gui.mobflowutilities.collector.offset.north_south": "N/S Offset",
   "gui.mobflowutilities.collector.offset.east_west": "E/W Offset",
-  "gui.mobflowutilities.collector.xp_levels_stored": "Levels Stored: %,d",
+  "gui.mobflowutilities.collector.xp_levels_stored": "%,d",
 
   "tooltip.mobflowutilities.controller.remove_pad": "Remove Selected Pad",
   "tooltip.mobflowutilities.controller.pad_coordinates": "Damage Pad at %d, %d, %d",
   "tooltip.mobflowutilities.controller.scrollbar": "Showing pads %d-%d",
-
-  "tooltip.mobflowutilities.collector.xp_input_levels": "Enter the number of levels to withdraw or deposit",
 
   "tooltip.mobflowutilities.collector.offset.down_up.decrease": "Decrease Down/Up Collection Radius",
   "tooltip.mobflowutilities.collector.offset.down_up.increase": "Increase Down/Up Collection Radius",
@@ -124,13 +129,13 @@
 
   "tooltip.mobflowutilities.collector.wireframe_toggle": "Show/Hide Collection Radius",
   "tooltip.mobflowutilities.genesis_chamber.wireframe_toggle": "Show/Hide Spawn Radius",
-  "tooltip.mobflowutilities.genesis_chamber.redstone_required": "Disable Redstone Control",
-  "tooltip.mobflowutilities.genesis_chamber.no_redstone_required": "Enable Redstone Control",
+  "tooltip.mobflowutilities.genesis_chamber.redstone_required": "Redstone Required",
+  "tooltip.mobflowutilities.genesis_chamber.no_redstone_required": "Always Active",
 
-  "tooltip.mobflowutilities.collector.xp.withdraw": "Withdraw levels from the Collector",
-  "tooltip.mobflowutilities.collector.xp.deposit": "Deposit levels into the Collector",
-  "tooltip.mobflowutilities.collector.xp.withdraw_all": "Withdraw all stored XP from the Collector",
-  "tooltip.mobflowutilities.collector.xp.deposit_all": "Deposit all your XP into the Collector",
+  "tooltip.mobflowutilities.collector.xp.withdraw": "Retrieve Level",
+  "tooltip.mobflowutilities.collector.xp.deposit": "Store Level",
+  "tooltip.mobflowutilities.collector.xp.withdraw_all": "Retrieve all Experience",
+  "tooltip.mobflowutilities.collector.xp.deposit_all": "Store all Experience",
   "tooltip.mobflowutilities.collector.xp_collection.enabled": "Disable XP Collection",
   "tooltip.mobflowutilities.collector.xp_collection.disabled": "Enable XP Collection",
   "tooltip.mobflowutilities.collector.xp_display": "XP: %s",
@@ -188,10 +193,13 @@
 
   "item.mobflowutilities.gene_sample_vial.contains": "Gene Sample: %s",
   "item.mobflowutilities.gene_sample_vial.empty": "Empty - No Gene Sample detected",
-  "item.mobflowutilities.gene_sample_vial.usage": "Craft with Incubation Crystal + Emerald to create spawn egg",
+  "item.mobflowutilities.gene_sample_vial.usage": "Craft with Life Catalyst and Emerald to create spawn egg",
 
   "menu.mobflowutilities.fan": "Fan",
   "gui.mobflowutilities.fan": "Fan",
 
-  "tooltip.mobflowutilities.fan.wireframe_toggle": "Show/Hide Push Zone"
+  "tooltip.mobflowutilities.fan.wireframe_toggle": "Show/Hide Push Zone",
+
+  "message.mobflowutilities.tank.full": "Tank is Full",
+  "message.mobflowutilities.tank.empty": "Tank is Empty"
 }

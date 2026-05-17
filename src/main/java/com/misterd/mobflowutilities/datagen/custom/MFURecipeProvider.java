@@ -2,6 +2,7 @@ package com.misterd.mobflowutilities.datagen.custom;
 
 import com.misterd.mobflowutilities.block.MFUBlocks;
 import com.misterd.mobflowutilities.item.MFUItems;
+import com.misterd.mobflowutilities.util.MFUTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
@@ -35,6 +36,30 @@ public class MFURecipeProvider extends RecipeProvider {
 
     @Override
     protected void buildRecipes() {
+        shaped(RecipeCategory.MISC, MFUItems.LIFE_CATALYST.get())
+                .pattern("BEB")
+                .pattern("EPE")
+                .pattern("BEB")
+                .define('B', MFUTags.Items.EXPERIENCE_BUCKET)
+                .define('E', Items.ENDER_EYE)
+                .define('P', Items.ENDER_PEARL)
+                .unlockedBy("has_ender_eye", has(Items.ENDER_EYE))
+                .save(output);
+
+        shapeless(RecipeCategory.MISC, MFUItems.GLOOM_SPORE.get())
+                .requires(MFUTags.Items.EXPERIENCE_BUCKET)
+                .requires(MFUTags.Items.GLOOM_SPORE_CRAFTING_ING)
+                .requires(ItemTags.CHICKEN_FOOD)
+                .unlockedBy("has_seeds", has(ItemTags.CHICKEN_FOOD))
+                .save(output);
+
+        shapeless(RecipeCategory.MISC, MFUItems.GLIMMER_SPROUT.get())
+                .requires(MFUTags.Items.EXPERIENCE_BUCKET)
+                .requires(MFUTags.Items.GLIMMER_SPROUT_CRAFTING_ING)
+                .requires(ItemTags.CHICKEN_FOOD)
+                .unlockedBy("has_seeds", has(ItemTags.CHICKEN_FOOD))
+                .save(output);
+
         shaped(RecipeCategory.MISC, MFUBlocks.CONTROLLER.get())
                 .pattern("GCG")
                 .pattern("IBI")
@@ -268,6 +293,16 @@ public class MFURecipeProvider extends RecipeProvider {
                 .unlockedBy("has_glowstone", has(Items.GLOWSTONE))
                 .save(output);
 
+        shaped(RecipeCategory.MISC, MFUBlocks.GIGATANK.get())
+                .pattern("GXG")
+                .pattern("XSX")
+                .pattern("GXG")
+                .define('G', Items.IRON_INGOT)
+                .define('X', Tags.Items.GLASS_BLOCKS)
+                .define('S', Items.BUCKET)
+                .unlockedBy("has_bucket", has(Items.BUCKET))
+                .save(output);
+
         shaped(RecipeCategory.MISC, MFUItems.MOB_CATCHER.get())
                 .pattern("LEL")
                 .pattern("EGE")
@@ -280,12 +315,11 @@ public class MFURecipeProvider extends RecipeProvider {
                 .save(output);
 
         shaped(RecipeCategory.MISC, MFUItems.EMPTY_GENE_VIAL.get())
-                .pattern(" X ")
-                .pattern("B B")
-                .pattern("BBB")
-                .define('B', Tags.Items.GLASS_PANES)
+                .pattern("BXB")
+                .pattern(" B ")
+                .define('B', Tags.Items.GLASS_BLOCKS)
                 .define('X', ItemTags.WOODEN_BUTTONS)
-                .unlockedBy("has_glass_pane", has(Tags.Items.GLASS_PANES))
+                .unlockedBy("has_glass_block", has(Tags.Items.GLASS_BLOCKS))
                 .save(output);
     }
 }

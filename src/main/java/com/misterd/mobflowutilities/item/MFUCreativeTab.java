@@ -2,6 +2,7 @@ package com.misterd.mobflowutilities.item;
 
 import com.misterd.mobflowutilities.MobFlowUtilities;
 import com.misterd.mobflowutilities.block.MFUBlocks;
+import com.misterd.mobflowutilities.fluid.MFUFluids;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -28,12 +29,13 @@ public class MFUCreativeTab {
                         output.accept(MFUBlocks.CONTROLLER);
                         output.accept(MFUBlocks.FAN);
                         output.accept(MFUBlocks.GENESIS_CHAMBER);
-
-                        output.accept(MFUBlocks.DARK_DIRT);
-                        output.accept(MFUBlocks.GLIMMER_GRASS);
+                        output.accept(MFUBlocks.GIGATANK);
 
                         output.accept(MFUBlocks.DARK_GLASS);
                         output.accept(MFUBlocks.GLIMMER_LAMP);
+
+                        output.accept(MFUBlocks.DARK_DIRT);
+                        output.accept(MFUBlocks.GLIMMER_GRASS);
 
                         output.accept(MFUItems.PAD_WRENCH);
 
@@ -49,9 +51,10 @@ public class MFUCreativeTab {
                         output.accept(MFUItems.FAN_HEIGHT_INCREASE_MODULE);
                         output.accept(MFUItems.FAN_DISTANCE_INCREASE_MODULE);
 
+                        output.accept(MFUFluids.LIQUID_XP_BUCKET.get());
                         output.accept(MFUItems.GLOOM_SPORE);
                         output.accept(MFUItems.GLIMMER_SPROUT);
-                        output.accept(MFUItems.INCUBATION_ORB);
+                        output.accept(MFUItems.LIFE_CATALYST);
                         output.accept(MFUItems.EMPTY_GENE_VIAL);
                         output.accept(MFUItems.GENE_SAMPLE_VIAL);
                         output.accept(MFUItems.MOB_CATCHER);

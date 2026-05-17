@@ -40,7 +40,7 @@ public class GeneticRecipe implements CraftingRecipe {
     public PlacementInfo placementInfo() {
         return PlacementInfo.create(List.of(
                 Ingredient.of(MFUItems.GENE_SAMPLE_VIAL.get()),
-                Ingredient.of(MFUItems.INCUBATION_ORB.get()),
+                Ingredient.of(MFUItems.LIFE_CATALYST.get()),
                 Ingredient.of(Items.EMERALD)
         ));
     }
@@ -68,7 +68,7 @@ public class GeneticRecipe implements CraftingRecipe {
                 entityDNA = stack.get(MFUDataComponents.ENTITY_DNA.get());
                 if (entityDNA == null) return false;
                 hasGeneSample = true;
-            } else if (stack.getItem() == MFUItems.INCUBATION_ORB.get()) {
+            } else if (stack.getItem() == MFUItems.LIFE_CATALYST.get()) {
                 if (hasIncubationOrb) return false;
                 hasIncubationOrb = true;
             } else if (stack.getItem() == Items.EMERALD) {
@@ -109,7 +109,7 @@ public class GeneticRecipe implements CraftingRecipe {
         return List.of(new ShapelessCraftingRecipeDisplay(
                 List.of(
                         Ingredient.of(MFUItems.GENE_SAMPLE_VIAL.get()).display(),
-                        Ingredient.of(MFUItems.INCUBATION_ORB.get()).display(),
+                        Ingredient.of(MFUItems.LIFE_CATALYST.get()).display(),
                         Ingredient.of(Items.EMERALD).display()
                 ),
                 new SlotDisplay.ItemSlotDisplay(Items.EGG),

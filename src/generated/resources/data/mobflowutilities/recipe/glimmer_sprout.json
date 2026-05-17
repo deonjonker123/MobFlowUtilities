@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:experience_bucket",
+    "#mobflowutilities:glimmer_sprout_crafting_ing",
+    "#minecraft:chicken_food"
+  ],
+  "result": {
+    "id": "mobflowutilities:glimmer_sprout"
+  }
+}

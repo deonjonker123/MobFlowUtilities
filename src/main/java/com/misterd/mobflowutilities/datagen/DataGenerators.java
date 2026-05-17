@@ -34,6 +34,7 @@ public class DataGenerators {
 
         generator.addProvider(true, new MFUItemModelProvider(packOutput));
         generator.addProvider(true, new MFUGlobalLootModifierProvider(packOutput, lookupProvider));
+        generator.addProvider(true, new MFUFluidTagsProvider(packOutput, lookupProvider));
     }
 
     @SubscribeEvent
@@ -52,5 +53,6 @@ public class DataGenerators {
 
         generator.addProvider(true, new MFUItemModelProvider(packOutput));
         generator.addProvider(true, new MFUGlobalLootModifierProvider(packOutput, lookupProvider));
+        generator.addProvider(true, new MFUFluidTagsProvider(packOutput, lookupProvider));
     }
 }

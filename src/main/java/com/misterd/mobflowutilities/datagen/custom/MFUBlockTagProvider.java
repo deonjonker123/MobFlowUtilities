@@ -30,7 +30,8 @@ public class MFUBlockTagProvider extends BlockTagsProvider {
                 .add(MFUBlocks.FAN.get())
 
                 .add(MFUBlocks.DARK_GLASS.get())
-                .add(MFUBlocks.GLIMMER_LAMP.get());
+                .add(MFUBlocks.GLIMMER_LAMP.get())
+                .add(MFUBlocks.GIGATANK.get());
 
         tag(BlockTags.MINEABLE_WITH_SHOVEL)
                 .add(MFUBlocks.DARK_DIRT.get())
