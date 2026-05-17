@@ -59,7 +59,7 @@ public class MFUBlocks {
                     .sound(SoundType.GRASS)));
 
     public static final DeferredBlock<Block> DARK_GLASS = registerBlock("dark_glass",
-            id -> new TintedGlassBlock(BlockBehaviour.Properties.of()
+            id -> new DarkGlassBlock(BlockBehaviour.Properties.of()
                     .setId(ResourceKey.create(Registries.BLOCK, id))
                     .strength(2.0F, 5000000.0F)
                     .requiresCorrectToolForDrops()

@@ -1,0 +1,8 @@
+{
+  "__comment": "Connected texture solution credited to vadis365",
+  "parent": "minecraft:block/cube_all",
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "all": "mobflowutilities:block/dark_glass_middle"
+  }
+}
