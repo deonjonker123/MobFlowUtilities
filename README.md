@@ -9,7 +9,6 @@ A mob farming automation mod. Flow pads and fans push mobs where you want them, 
 
 *   **Directional Movement**: Push mobs and items in the direction you place them
 *   **Three Speed Tiers**: Fast, Faster, and Fastest for different flow rates
-*   **Waterloggable**: Works seamlessly with water-based farm designs
 *   **No Configuration**: Direction set by placement orientation
 
 ### Damage Pads + Controller
@@ -29,8 +28,8 @@ A mob farming automation mod. Flow pads and fans push mobs where you want them, 
 
 *   **Configurable Collection Zone**: Adjust pickup radius with Radius Increase Modules
 *   **Zone Positioning**: Offset collection area in any direction
-*   **XP Storage**: Collect and store experience as Liquid XP — deposit and withdraw one level at a time, or all at once
-*   **Liquid XP Output**: Expose stored XP as a fluid via pipes or direct bucket interaction
+*   **XP Storage**: Collect and store experience as Liquid XP — deposit and withdraw one level at a time, or all at once (26.1.2 Exclusive)
+*   **Liquid XP Output**: Expose stored XP as a fluid via pipes or direct bucket interaction (26.1.2 Exclusive)
 *   **Void Filtering**: Automatically delete unwanted items with up to 3 configurable filter modules
 *   **Visual Zone Preview**: Wireframe overlay shows collection boundaries
 
@@ -66,7 +65,7 @@ A mob farming automation mod. Flow pads and fans push mobs where you want them, 
     *   Spawns up to 12 hostile mobs per area
     *   Functions in darkness, ignores player proximity
     *   Reverts to dirt in direct sunlight
-    *   **Redstone Pulse**: Receiving a redstone signal drastically accelerates spawn tick rate for exponential spawn bursts
+    *   **Redstone Pulse**: Receiving a redstone signal drastically accelerates spawn tick rate for exponential spawn bursts (26.1.2 Exclusive)
 *   **Glimmer Sprouts**: Craftable item that transforms dirt into Glimmer Grass
     *   Converts 5x5 area
     *   Also obtainable from passive mob loot chests
