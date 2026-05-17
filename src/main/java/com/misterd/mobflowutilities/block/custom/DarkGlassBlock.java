@@ -11,8 +11,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
 
@@ -45,26 +43,26 @@ public class DarkGlassBlock extends Block {
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        BlockGetter world = context.getLevel();
+        BlockGetter level = context.getLevel();
         BlockPos pos = context.getClickedPos();
         return super.getStateForPlacement(context)
-                .setValue(CONNECTED_DOWN, this.isSideConnectable(world, pos, Direction.DOWN))
-                .setValue(CONNECTED_EAST, this.isSideConnectable(world, pos, Direction.EAST))
-                .setValue(CONNECTED_NORTH, this.isSideConnectable(world, pos, Direction.NORTH))
-                .setValue(CONNECTED_SOUTH, this.isSideConnectable(world, pos, Direction.SOUTH))
-                .setValue(CONNECTED_UP, this.isSideConnectable(world, pos, Direction.UP))
-                .setValue(CONNECTED_WEST, this.isSideConnectable(world, pos, Direction.WEST));
+                .setValue(CONNECTED_DOWN, this.canConnect(level, pos, Direction.DOWN))
+                .setValue(CONNECTED_EAST, this.canConnect(level, pos, Direction.EAST))
+                .setValue(CONNECTED_NORTH, this.canConnect(level, pos, Direction.NORTH))
+                .setValue(CONNECTED_SOUTH, this.canConnect(level, pos, Direction.SOUTH))
+                .setValue(CONNECTED_UP, this.canConnect(level, pos, Direction.UP))
+                .setValue(CONNECTED_WEST, this.canConnect(level, pos, Direction.WEST));
     }
 
     @Nonnull
     @Override
     protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess ticks, BlockPos pos, Direction directionToNeighbour, BlockPos neighbourPos, BlockState neighbourState, RandomSource random) {
-        return state.setValue(CONNECTED_DOWN, this.isSideConnectable(level, pos, Direction.DOWN))
-                .setValue(CONNECTED_EAST, this.isSideConnectable(level, pos, Direction.EAST))
-                .setValue(CONNECTED_NORTH, this.isSideConnectable(level, pos, Direction.NORTH))
-                .setValue(CONNECTED_SOUTH, this.isSideConnectable(level, pos, Direction.SOUTH))
-                .setValue(CONNECTED_UP, this.isSideConnectable(level, pos, Direction.UP))
-                .setValue(CONNECTED_WEST, this.isSideConnectable(level, pos, Direction.WEST));
+        return state.setValue(CONNECTED_DOWN, this.canConnect(level, pos, Direction.DOWN))
+                .setValue(CONNECTED_EAST, this.canConnect(level, pos, Direction.EAST))
+                .setValue(CONNECTED_NORTH, this.canConnect(level, pos, Direction.NORTH))
+                .setValue(CONNECTED_SOUTH, this.canConnect(level, pos, Direction.SOUTH))
+                .setValue(CONNECTED_UP, this.canConnect(level, pos, Direction.UP))
+                .setValue(CONNECTED_WEST, this.canConnect(level, pos, Direction.WEST));
     }
 
     @Override
@@ -72,7 +70,7 @@ public class DarkGlassBlock extends Block {
         builder.add(CONNECTED_DOWN, CONNECTED_UP, CONNECTED_NORTH, CONNECTED_SOUTH, CONNECTED_WEST, CONNECTED_EAST);
     }
 
-    private boolean isSideConnectable(BlockGetter level, BlockPos pos, Direction direction) {
+    private boolean canConnect(BlockGetter level, BlockPos pos, Direction direction) {
         final BlockState stateConnection = level.getBlockState(pos.relative(direction));
         return stateConnection != null && stateConnection.getBlock() == this;
     }
