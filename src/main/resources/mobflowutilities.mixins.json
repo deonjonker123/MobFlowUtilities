@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "package": "com.misterd.mobflowutilities.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "ZombieMixin"
+  ]
+}

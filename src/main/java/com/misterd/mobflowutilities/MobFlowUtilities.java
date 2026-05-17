@@ -71,7 +71,6 @@ public class MobFlowUtilities {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             event.enqueueWork(() -> {
-                ItemBlockRenderTypes.setRenderLayer(MFUBlocks.DARK_GLASS.get(), RenderType.translucent());
                 ItemBlockRenderTypes.setRenderLayer(MFUBlocks.GENESIS_CHAMBER.get(), RenderType.translucent());
                 ItemBlockRenderTypes.setRenderLayer(MFUBlocks.COLLECTOR.get(), RenderType.translucent());
                 ItemBlockRenderTypes.setRenderLayer(MFUBlocks.FAN.get(), RenderType.translucent());

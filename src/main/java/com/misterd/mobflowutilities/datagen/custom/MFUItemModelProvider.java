@@ -33,6 +33,6 @@ public class MFUItemModelProvider extends ItemModelProvider {
 
         basicItem(MFUItems.EMPTY_GENE_VIAL.get());
         basicItem(MFUItems.GENE_SAMPLE_VIAL.get());
-        basicItem(MFUItems.INCUBATION_ORB.get());
+        basicItem(MFUItems.LIFE_CATALYST.get());
     }
 }
