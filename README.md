@@ -14,7 +14,7 @@ A mob farming automation mod. Flow pads and fans push mobs where you want them, 
 
 ### Damage Pads + Controller
 
-*   **Centralized Damage Control**: One Controller manages multiple Damage Pads
+*   **Centralized Damage Control**: One Controller manages multiple Damage Pads in multiple farms
 *   **Pad Wrench Linking**: Connect pads to controllers with visual feedback
 *   **Stackable Enchantment Modules**: Up to 10 modules per slot
     *   **Sharpness**: Increased damage output
@@ -29,7 +29,8 @@ A mob farming automation mod. Flow pads and fans push mobs where you want them, 
 
 *   **Configurable Collection Zone**: Adjust pickup radius with Radius Increase Modules
 *   **Zone Positioning**: Offset collection area in any direction
-*   **XP Storage**: Collect and store experience with level-based deposit/withdrawal
+*   **XP Storage**: Collect and store experience as Liquid XP — deposit and withdraw one level at a time, or all at once
+*   **Liquid XP Output**: Expose stored XP as a fluid via pipes or direct bucket interaction
 *   **Void Filtering**: Automatically delete unwanted items with up to 3 configurable filter modules
 *   **Visual Zone Preview**: Wireframe overlay shows collection boundaries
 
@@ -46,7 +47,7 @@ A mob farming automation mod. Flow pads and fans push mobs where you want them, 
 
 ### Fan
 
-*   **Pushes mobs in the facing direction.** 
+*   **Pushes mobs in the facing direction.**
 *   **Area of effect can be upgraded using fan upgrade module**
 
 ### Pad Wrench
@@ -57,15 +58,18 @@ A mob farming automation mod. Flow pads and fans push mobs where you want them, 
 
 ### Mob Spawn Control
 
-*   **Gloom Spores**: Rare drops from hostile mobs that transform dirt into Dark Dirt
+*   **Gloom Spores**: Craftable item that transforms dirt into Dark Dirt
     *   Converts 5x5 area
-    *   Only spawns mobs in low light conditions
+    *   Plays sound and block break particles on conversion
+    *   Also obtainable from hostile mob loot chests
 *   **Dark Dirt**: Accelerated hostile mob spawning blocks
     *   Spawns up to 12 hostile mobs per area
     *   Functions in darkness, ignores player proximity
     *   Reverts to dirt in direct sunlight
-*   **Glimmer Sprouts**: Rare drops from passive mobs that transform dirt into Glimmer Grass
+    *   **Redstone Pulse**: Receiving a redstone signal drastically accelerates spawn tick rate for exponential spawn bursts
+*   **Glimmer Sprouts**: Craftable item that transforms dirt into Glimmer Grass
     *   Converts 5x5 area
+    *   Also obtainable from passive mob loot chests
 *   **Glimmer Grass**: Accelerated passive mob spawning blocks
     *   Spawns up to 12 passive mobs per area
     *   Functions in bright light, ignores player proximity
@@ -74,7 +78,7 @@ A mob farming automation mod. Flow pads and fans push mobs where you want them, 
 
 *   **Empty Gene Vial**: Used to collect genetic material from mobs
 *   **Gene Sample Vial**: Contains collected gene samples that can be used for crafting spawn eggs
-*   **Incubation Crystal**: Boss mob drop only, used for crafting spawn eggs
+*   **Life Catalust**: Used for crafting spawn eggs
 
 Gene sampling allows players to collect gene samples from creatures using Empty Gene Vials, then combine the resulting Gene Sample Vials with Incubation Crystals and Emeralds to craft spawn eggs for use in the Genesis Chamber.
 
@@ -93,8 +97,3 @@ Gene sampling allows players to collect gene samples from creatures using Empty 
 *   **Genesis Chamber Spawn Cap**: Configurable per-zone mob limit
 *   **Dark Dirt/Glimmer Grass**: Adjust spawn rates and check intervals
 *   **Conversion Areas**: Configure Gloom Spore and Glimmer Sprout conversion radius
-
-### Credit
-
-Some textures used in this mod were adapted from **"Unused Minecraft Textures" by Malcolm Riley** ([GitHub Repository](https://github.com/malcolmriley/unused-textures))  
-Licensed under the [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/).

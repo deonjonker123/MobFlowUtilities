@@ -29,9 +29,14 @@ public class MFUItemTagProvider extends ItemTagsProvider {
                 .add(MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get())
                 .add(MFUItems.VOID_FILTER_MODULE.get());
 
-        tag(MFUTags.Items.MOBFLOWUTILITIES_TOOLS)
-                .add(MFUItems.PAD_WRENCH.get())
-                .add(MFUItems.MOB_CATCHER.get());
+        tag(MFUTags.Items.WRENCH)
+                .add(MFUItems.PAD_WRENCH.get());
+
+        tag(MFUTags.Items.WRENCHES)
+                .add(MFUItems.PAD_WRENCH.get());
+
+        tag(MFUTags.Items.TOOL)
+                .add(MFUItems.PAD_WRENCH.get());
 
         tag(MFUTags.Items.GENESIS_CHAMBER_FUELS)
                 .add(Items.COAL)

@@ -29,10 +29,12 @@ public class MFUTags {
     }
 
     public static class Items {
-        public static final TagKey<Item> MOBFLOWUTILITIES_TOOLS = createTag("mobflowutilities", "mobflowutilities_tools");
         public static final TagKey<Item> MOBFLOWUTILITIES_MODULES = createTag("mobflowutilities", "mobflowutilities_modules");
         public static final TagKey<Item> GENESIS_CHAMBER_FUELS = createTag("mobflowutilities", "genesis_chamber_fuels");
         public static final TagKey<Item> EXPERIENCE_BUCKET = createTag("c", "experience_bucket");
+        public static final TagKey<Item> WRENCHES = createTag("c", "wrenches");
+        public static final TagKey<Item> WRENCH = createTag("c", "tools/wrench");
+        public static final TagKey<Item> TOOL = createTag("c", "tools");
         public static final TagKey<Item> GLOOM_SPORE_CRAFTING_ING = createTag("mobflowutilities", "gloom_spore_crafting_ing");
         public static final TagKey<Item> GLIMMER_SPROUT_CRAFTING_ING = createTag("mobflowutilities", "glimmer_sprout_crafting_ing");
 
