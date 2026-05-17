@@ -1,0 +1,14 @@
+{
+  "__comment": "Connected texture solution credited to vadis365",
+  "parent": "block/cube",
+  "render_type": "translucent",
+  "textures": {
+    "particle": "mobflowutilities:block/dark_glass_middle",
+    "down": "mobflowutilities:block/dark_glass_n_e",
+    "up": "mobflowutilities:block/dark_glass_n_e_w_s",
+    "north": "mobflowutilities:block/dark_glass_n_w",
+    "south": "mobflowutilities:block/dark_glass_n_e_w_s",
+    "west": "mobflowutilities:block/dark_glass_n_e",
+    "east": "mobflowutilities:block/dark_glass_n_e_w_s"
+  }
+}

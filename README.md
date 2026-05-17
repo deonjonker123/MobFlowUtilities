@@ -46,7 +46,7 @@ A mob farming automation mod. Flow pads and fans push mobs where you want them, 
 
 ### Fan
 
-*   **Pushes mobs in the facing direction.** 
+*   **Pushes mobs in the facing direction.**
 *   **Area of effect can be upgraded using fan upgrade module**
 
 ### Pad Wrench
