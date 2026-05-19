@@ -80,7 +80,7 @@ public class DamagePadBlockEntity extends BlockEntity {
     }
 
     private void dealEnchantedDamage(List<LivingEntity> entities, ControllerBlockEntity controller) {
-        fakePlayer = FakePlayerHandler.get(fakePlayer, (ServerLevel) level, placer, worldPosition.below(-500));
+        fakePlayer = FakePlayerHandler.get(fakePlayer, (ServerLevel) level, placer, worldPosition.below(-100));
         FakePlayer fp = fakePlayer.get();
         if (fp == null) return;
 
