@@ -2,6 +2,6 @@
     "parent": "block/cube_all",
     "render_type": "translucent",
     "textures": {
-        "all": "mobflowutilities:block/dark_glass_news"
+        "all": "mobflowutilities:block/dark_glass_north_east_west_south"
     }
 }
