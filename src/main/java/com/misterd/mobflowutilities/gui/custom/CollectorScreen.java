@@ -115,19 +115,19 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
     }
 
     private void addXpButtons(int leftPos, int topPos) {
-        ImageButton withdrawAllButton = new ImageButton(leftPos + 39, topPos + 125, 10, 10, WITHDRAW_ALL_XP_SPRITES, button -> this.withdrawAllXP());
+        ImageButton withdrawAllButton = new ImageButton(leftPos + 39, topPos + 121, 10, 10, WITHDRAW_ALL_XP_SPRITES, button -> this.withdrawAllXP());
         withdrawAllButton.setTooltip(Tooltip.create(Component.translatable("tooltip.mobflowutilities.collector.xp.withdraw_all")));
         this.addRenderableWidget(withdrawAllButton);
 
-        ImageButton withdrawButton = new ImageButton(leftPos + 50, topPos + 125, 10, 10, WITHDRAW_XP_SPRITES, button -> this.withdrawXP());
+        ImageButton withdrawButton = new ImageButton(leftPos + 50, topPos + 121, 10, 10, WITHDRAW_XP_SPRITES, button -> this.withdrawXP());
         withdrawButton.setTooltip(Tooltip.create(Component.translatable("tooltip.mobflowutilities.collector.xp.withdraw")));
         this.addRenderableWidget(withdrawButton);
 
-        ImageButton depositButton = new ImageButton(leftPos + 116, topPos + 125, 10, 10, DEPOSIT_XP_SPRITES, button -> this.depositXP());
+        ImageButton depositButton = new ImageButton(leftPos + 116, topPos + 121, 10, 10, DEPOSIT_XP_SPRITES, button -> this.depositXP());
         depositButton.setTooltip(Tooltip.create(Component.translatable("tooltip.mobflowutilities.collector.xp.deposit")));
         this.addRenderableWidget(depositButton);
 
-        ImageButton depositAllButton = new ImageButton(leftPos + 127, topPos + 125, 10, 10, DEPOSIT_ALL_XP_SPRITES, button -> this.depositAllXP());
+        ImageButton depositAllButton = new ImageButton(leftPos + 127, topPos + 121, 10, 10, DEPOSIT_ALL_XP_SPRITES, button -> this.depositAllXP());
         depositAllButton.setTooltip(Tooltip.create(Component.translatable("tooltip.mobflowutilities.collector.xp.deposit_all")));
         this.addRenderableWidget(depositAllButton);
     }
@@ -272,7 +272,7 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
         int storedLevels = MFUExperienceUtils.getLevelFromTotalExperience(this.storedXP);
         String xpDisplayText = String.format(Component.translatable("gui.mobflowutilities.collector.xp_levels_stored").getString(), storedLevels);
         int centeredX = (int) ((x + 88) / scale) - (this.font.width(xpDisplayText) / 2);
-        graphics.text(this.font, xpDisplayText, centeredX, (int) ((y + 127) / scale), 0xFF30a324, false);
+        graphics.text(this.font, xpDisplayText, centeredX, (int) ((y + 122) / scale), 0xFF30a324, false);
         pose.popMatrix();
     }
 

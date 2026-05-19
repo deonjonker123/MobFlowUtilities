@@ -100,7 +100,6 @@ public class GigaTankBlockEntityRenderer<T extends BlockEntity> implements Block
             int ov = OverlayTexture.NO_OVERLAY;
             int li = state.lightCoords;
 
-            // Top face (still texture, fill level)
             quad(consumer, m, r, g, b, a, ov, li,
                     x0, y1, z0, u0, v0,
                     x0, y1, z1, u0, v1,
@@ -108,7 +107,6 @@ public class GigaTankBlockEntityRenderer<T extends BlockEntity> implements Block
                     x1, y1, z0, u1, v0,
                     0, 1, 0);
 
-            // Bottom face
             quad(consumer, m, r, g, b, a, ov, li,
                     x0, y0, z0, u0, v0,
                     x1, y0, z0, u1, v0,
@@ -116,7 +114,6 @@ public class GigaTankBlockEntityRenderer<T extends BlockEntity> implements Block
                     x0, y0, z1, u0, v1,
                     0, -1, 0);
 
-            // North face (z-)
             quad(consumer, m, r, g, b, a, ov, li,
                     x0, y0, z0, u0, v0,
                     x0, y1, z0, u0, v1,
@@ -124,7 +121,6 @@ public class GigaTankBlockEntityRenderer<T extends BlockEntity> implements Block
                     x1, y0, z0, u1, v0,
                     0, 0, -1);
 
-            // South face (z+)
             quad(consumer, m, r, g, b, a, ov, li,
                     x1, y0, z1, u0, v0,
                     x1, y1, z1, u0, v1,
@@ -132,7 +128,6 @@ public class GigaTankBlockEntityRenderer<T extends BlockEntity> implements Block
                     x0, y0, z1, u1, v0,
                     0, 0, 1);
 
-            // West face (x-)
             quad(consumer, m, r, g, b, a, ov, li,
                     x0, y0, z1, u0, v0,
                     x0, y1, z1, u0, v1,
@@ -140,7 +135,6 @@ public class GigaTankBlockEntityRenderer<T extends BlockEntity> implements Block
                     x0, y0, z0, u1, v0,
                     -1, 0, 0);
 
-            // East face (x+)
             quad(consumer, m, r, g, b, a, ov, li,
                     x1, y0, z0, u0, v0,
                     x1, y1, z0, u0, v1,
