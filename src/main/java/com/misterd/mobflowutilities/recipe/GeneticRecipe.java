@@ -127,8 +127,6 @@ public class GeneticRecipe implements CraftingRecipe {
         return true;
     }
 
-    // --- Serializer ---
-
     public static final MapCodec<GeneticRecipe> CODEC = MapCodec.unit(GeneticRecipe::new);
 
     public static final StreamCodec<RegistryFriendlyByteBuf, GeneticRecipe> STREAM_CODEC =

@@ -1,7 +1,5 @@
 package com.misterd.mobflowutilities.block.custom;
 
-import javax.annotation.Nullable;
-
 import com.misterd.mobflowutilities.entity.custom.CollectorBlockEntity;
 import com.misterd.mobflowutilities.fluid.LiquidXpFluidTank;
 import com.misterd.mobflowutilities.fluid.MFUFluids;
@@ -21,7 +19,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.CustomData;
@@ -42,6 +39,8 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+
+import javax.annotation.Nullable;
 
 public class CollectorBlock extends BaseEntityBlock {
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;

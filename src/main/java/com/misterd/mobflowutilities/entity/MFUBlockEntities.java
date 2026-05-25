@@ -2,16 +2,15 @@ package com.misterd.mobflowutilities.entity;
 
 import com.misterd.mobflowutilities.MobFlowUtilities;
 import com.misterd.mobflowutilities.block.MFUBlocks;
-import java.util.function.Supplier;
-
 import com.misterd.mobflowutilities.entity.custom.*;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.minecraft.core.registries.BuiltInRegistries;
+
+import java.util.function.Supplier;
 
 public class MFUBlockEntities {
 
