@@ -1,0 +1,13 @@
+{
+	"parent": "block/cube",
+	"render_type": "translucent",
+    "textures": {
+		"particle": "mobflowutilities:block/dark_glass_normal",
+        "down": "mobflowutilities:block/dark_glass_north_east",
+		"up": "mobflowutilities:block/dark_glass_north_east_west_south",
+		"north": "mobflowutilities:block/dark_glass_north_west",
+		"south": "mobflowutilities:block/dark_glass_north_east_west_south",
+		"west": "mobflowutilities:block/dark_glass_north_east",
+		"east": "mobflowutilities:block/dark_glass_north_east_west_south"
+    }
+}

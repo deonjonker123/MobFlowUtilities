@@ -17,7 +17,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-@EventBusSubscriber(modid = MobFlowUtilities.MODID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = MobFlowUtilities.MODID)
 public class DataGenerators {
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {
@@ -35,7 +35,6 @@ public class DataGenerators {
         generator.addProvider(event.includeServer(), new MFUItemTagProvider(packOutput, lookupProvider, blockTagsProvider.contentsGetter(), existingFileHelper));
 
         generator.addProvider(event.includeClient(), new MFUItemModelProvider(packOutput, existingFileHelper));
-        generator.addProvider(event.includeClient(), new MFUBlockStateProvider(packOutput, existingFileHelper));
         generator.addProvider(event.includeServer(), new MFUGlobalLootModifierProvider(packOutput, lookupProvider));
     }
 }

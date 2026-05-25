@@ -110,11 +110,11 @@ public class MFUItems {
                 }
             });
 
-    public static final DeferredItem<Item> INCUBATION_ORB = ITEMS.register("incubation_orb",
+    public static final DeferredItem<Item> LIFE_CATALYST = ITEMS.register("life_catalyst",
             () -> new Item(new Item.Properties()) {
                 @Override
                 public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-                    tooltipComponents.add(Component.translatable("item.mobflowutilities.incubation_orb.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
+                    tooltipComponents.add(Component.translatable("item.mobflowutilities.life_catalyst.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
                 }
             });
 

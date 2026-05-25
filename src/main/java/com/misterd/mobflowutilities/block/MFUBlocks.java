@@ -70,7 +70,7 @@ public class MFUBlocks {
             });
 
     public static final DeferredBlock<Block> DARK_GLASS = registerBlock("dark_glass",
-            () -> new TintedGlassBlock(BlockBehaviour.Properties.of()
+            () -> new DarkGlassBlock(BlockBehaviour.Properties.of()
                     .strength(2.0F, 5000000.0F)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.GLASS)

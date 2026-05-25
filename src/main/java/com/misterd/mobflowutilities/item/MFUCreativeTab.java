@@ -51,7 +51,7 @@ public class MFUCreativeTab {
 
                         output.accept(MFUItems.GLOOM_SPORE);
                         output.accept(MFUItems.GLIMMER_SPROUT);
-                        output.accept(MFUItems.INCUBATION_ORB);
+                        output.accept(MFUItems.LIFE_CATALYST);
                         output.accept(MFUItems.EMPTY_GENE_VIAL);
                         output.accept(MFUItems.GENE_SAMPLE_VIAL);
                         output.accept(MFUItems.MOB_CATCHER);

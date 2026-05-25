@@ -20,7 +20,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 
-@EventBusSubscriber(modid = MobFlowUtilities.MODID, bus = EventBusSubscriber.Bus.GAME)
+@EventBusSubscriber(modid = MobFlowUtilities.MODID)
 public class MobCatcherEventHandler {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
