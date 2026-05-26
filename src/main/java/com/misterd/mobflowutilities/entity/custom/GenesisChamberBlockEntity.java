@@ -1,5 +1,6 @@
 package com.misterd.mobflowutilities.entity.custom;
 
+import com.misterd.mobflowutilities.block.MFUBlocks;
 import com.misterd.mobflowutilities.config.Config;
 import com.misterd.mobflowutilities.entity.MFUBlockEntities;
 import com.misterd.mobflowutilities.gui.custom.GenesisChamberMenu;
@@ -27,6 +28,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
@@ -327,8 +329,15 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
     private boolean isValidSpawnPosition(BlockPos pos) {
         BlockState ground = level.getBlockState(pos);
         BlockState above  = level.getBlockState(pos.above());
-        return (ground.isAir() || ground.canBeReplaced()) &&
-                (above.isAir()  || above.canBeReplaced());
+        return (ground.isAir() || ground.canBeReplaced() || isPad(ground.getBlock())) &&
+                (above.isAir()  || above.canBeReplaced()  || isPad(above.getBlock()));
+    }
+
+    private boolean isPad(Block block) {
+        return block == MFUBlocks.FAST_FLOW_PAD.get() ||
+                block == MFUBlocks.FASTER_FLOW_PAD.get() ||
+                block == MFUBlocks.FASTEST_FLOW_PAD.get() ||
+                block == MFUBlocks.DAMAGE_PAD.get();
     }
 
     private boolean isValidLightLevel(BlockPos pos, EntityType<?> type) {
