@@ -373,16 +373,17 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
         BlockState spawnState = level.getBlockState(pos);
         BlockState aboveState = level.getBlockState(pos.above());
 
-        boolean hasSpace = (spawnState.isAir() || spawnState.canBeReplaced()) &&
-                (aboveState.isAir() || aboveState.canBeReplaced());
+        boolean hasSpace = (spawnState.isAir() || spawnState.canBeReplaced() || isPad(spawnState)) &&
+                (aboveState.isAir() || aboveState.canBeReplaced() || isPad(aboveState));
 
         return hasSpace;
     }
 
-    private boolean isFlowPad(BlockState state) {
+    private boolean isPad(BlockState state) {
         return state.is(MFUBlocks.FAST_FLOW_PAD.get()) ||
                 state.is(MFUBlocks.FASTER_FLOW_PAD.get()) ||
-                state.is(MFUBlocks.FASTEST_FLOW_PAD.get());
+                state.is(MFUBlocks.FASTEST_FLOW_PAD.get()) ||
+                state.is(MFUBlocks.DAMAGE_PAD.get());
     }
 
     private boolean isValidLightLevel(BlockPos pos, EntityType<?> entityType) {
