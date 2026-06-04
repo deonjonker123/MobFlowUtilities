@@ -149,7 +149,9 @@ public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
     public ItemStack getStack(int slot) {
         ItemResource res = inventory.getResource(slot);
         if (res.isEmpty()) return ItemStack.EMPTY;
-        return res.toStack(inventory.getAmountAsInt(slot));
+        ItemStack stack = res.toStack();
+        stack.setCount(inventory.getAmountAsInt(slot));
+        return stack;
     }
 
     public int getStoredXP() {
