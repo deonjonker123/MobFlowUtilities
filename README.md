@@ -36,7 +36,7 @@ A mob farming automation mod. Flow pads and fans push mobs where you want them, 
 ### Genesis Chamber
 
 *   **Automated Mob Spawning**: Spawn mobs from spawn eggs using fuel
-*   **Fuel System**: Uses vanilla furnace fuels (coal, lava buckets, etc.)
+*   **Fuel System**: Uses most vanilla furnace fuels (coal, lava buckets, blaze rods, etc.)
 *   **Configurable Spawn Zone**: 5x5 base area, expandable to 10x10 with Radius Increase Modules
 *   **Speed Control**: Base 200 tick spawn interval, reducible to 50 ticks with Speed Modules
 *   **Light Level Aware**: Respects vanilla spawning rules (hostiles in darkness, passives in light)

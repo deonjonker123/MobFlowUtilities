@@ -9,6 +9,7 @@ import com.misterd.mobflowutilities.util.MFUTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
@@ -259,6 +260,7 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
         }
 
         if (burnTime > 0 && canOperate() && !zoneIsFull) {
+            spawnFireParticles((ServerLevel) level);
             spawnTimer++;
             if (spawnTimer >= getSpawnInterval()) {
                 if (attemptSpawn()) { spawnTimer = 0; changed = true; }
@@ -368,6 +370,29 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
         return new AABB(
                 pos.getX() - r + eastWestOffset, pos.getY() + downUpOffset, pos.getZ() - r + northSouthOffset,
                 pos.getX() + r + 1 + eastWestOffset, pos.getY() + 2 + downUpOffset, pos.getZ() + r + 1 + northSouthOffset
+        );
+    }
+
+    private void spawnFireParticles(ServerLevel serverLevel) {
+        if (!Config.isGenesisChamberParticlesEnabled()) return;
+        BlockPos pos = getBlockPos();
+        double cx = pos.getX() + 0.5;
+        double cy = pos.getY() + 0.5;
+        double cz = pos.getZ() + 0.5;
+
+        serverLevel.sendParticles(
+                ParticleTypes.FLAME,
+                cx, cy, cz,
+                1,
+                0.25, 0.1, 0.25,
+                0.005
+        );
+        serverLevel.sendParticles(
+                ParticleTypes.SMOKE,
+                cx, cy, cz,
+                1,
+                0.2, 0.1, 0.2,
+                0.005
         );
     }
 

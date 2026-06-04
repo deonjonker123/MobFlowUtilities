@@ -25,6 +25,7 @@ public class Config {
     private static ModConfigSpec.IntValue GLIMMER_GRASS_CHECK_INTERVAL;
     private static ModConfigSpec.BooleanValue GLIMMER_GRASS_PARTICLES_ENABLED;
     private static ModConfigSpec.IntValue GENESIS_CHAMBER_SPAWN_CAP;
+    private static ModConfigSpec.BooleanValue GENESIS_CHAMBER_PARTICLES_ENABLED;
 
     static {
         buildCommonConfig();
@@ -143,6 +144,13 @@ public class Config {
                 )
                 .defineInRange("spawn_cap", 12, 1, 100);
 
+        GENESIS_CHAMBER_PARTICLES_ENABLED = COMMON_BUILDER
+                .comment(
+                        "Enable Genesis Chamber particle effects",
+                        "If true, Genesis Chamber shows spawner particle effects"
+                )
+                .define("particles_enabled", true);
+
         COMMON_BUILDER.pop();
     }
 
@@ -180,6 +188,10 @@ public class Config {
 
     public static int getGenesisChamberSpawnCap() {
         return GENESIS_CHAMBER_SPAWN_CAP.get();
+    }
+
+    public static boolean isGenesisChamberParticlesEnabled() {
+        return GENESIS_CHAMBER_PARTICLES_ENABLED.get();
     }
 
     private static void validateConfig() {
@@ -247,5 +259,6 @@ public class Config {
 
         LOGGER.info("Genesis Chamber Configuration:");
         LOGGER.info("  Spawn Cap: {} mobs", getGenesisChamberSpawnCap());
+        LOGGER.info("  Particles Enabled: {}", isGenesisChamberParticlesEnabled());
     }
 }

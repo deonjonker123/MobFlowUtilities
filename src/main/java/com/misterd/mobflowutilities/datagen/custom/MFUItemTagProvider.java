@@ -43,7 +43,8 @@ public class MFUItemTagProvider extends ItemTagsProvider {
                 .add(Items.CHARCOAL)
                 .add(Items.COAL_BLOCK)
                 .add(Items.BLAZE_ROD)
-                .add(Items.LAVA_BUCKET);
+                .add(Items.LAVA_BUCKET)
+                .addTag(ItemTags.COALS);
 
         tag(MFUTags.Items.EXPERIENCE_BUCKET)
                 .add(MFUFluids.LIQUID_XP_BUCKET.get());
