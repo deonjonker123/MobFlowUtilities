@@ -112,3 +112,6 @@ Gene sampling allows players to collect gene samples from creatures using Empty 
 *   **Genesis Infuser**: Configurable speed and cost
 *   **Dark Dirt/Glimmer Grass**: Adjust spawn rates and check intervals
 *   **Conversion Areas**: Configure Gloom Spore and Glimmer Sprout conversion radius
+
+### Required Dependencies
+* Full in-game guide explaining every block and item using GuideMe.
