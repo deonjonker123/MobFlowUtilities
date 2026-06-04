@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": "minecraft:iron_ingot",
+    "H": "#c:experience_bucket",
+    "P": "minecraft:diamond",
+    "S": "minecraft:obsidian"
+  },
+  "pattern": [
+    "GSG",
+    "PHP",
+    "GSG"
+  ],
+  "result": {
+    "id": "mobflowutilities:genesis_infuser"
+  }
+}

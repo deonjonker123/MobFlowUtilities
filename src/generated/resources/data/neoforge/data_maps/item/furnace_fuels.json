@@ -1,0 +1,10 @@
+{
+  "values": {
+    "mobflowutilities:infused_charcoal": {
+      "burn_time": 12800
+    },
+    "mobflowutilities:infused_coal": {
+      "burn_time": 12800
+    }
+  }
+}

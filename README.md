@@ -44,6 +44,17 @@ A mob farming automation mod. Flow pads and fans push mobs where you want them, 
 *   **3-Axis Positioning**: Offset spawn zone in any direction with wireframe preview
 *   **Automation Ready**: Accepts fuel from hoppers/pipes automatically
 
+### Genesis Infuser
+
+*   **Create Super-Efficient Fuels**: Infuses coal and charcoal with liquid XP to produce Infused Coal and Infused Charcoal, each burning 8x longer than its vanilla counterpart
+*   **Liquid XP Powered**: Consumes 125mB of liquid XP per item — a full bucket yields 8 infused items
+*   **Open Fluid Compatibility**: Accepts any `c:experience`-tagged fluid, so XP from other mods works too
+*   **Internal Buffer**: Holds up to 32 buckets (32,000mB) of liquid XP
+*   **Speed Control**: Base 200 tick processing time, reducible by 15 ticks per Speed Module (up to 10)
+*   **6 Input / 6 Output Slots**: Batch-process multiple coal and charcoal at once
+*   **Bucket Interaction**: Fill or drain the internal tank by hand with XP buckets — drain before relocating to keep your XP
+*   **Automation Ready**: Pipe liquid XP in and infused fuel out; works with hoppers and fluid pipes in any direction
+
 ### Fan
 
 *   **Pushes mobs in the facing direction.**
@@ -81,6 +92,10 @@ A mob farming automation mod. Flow pads and fans push mobs where you want them, 
 
 Gene sampling allows players to collect gene samples from creatures using Empty Gene Vials, then combine the resulting Gene Sample Vials with Incubation Crystals and Emeralds to craft spawn eggs for use in the Genesis Chamber.
 
+### Infused Coal and Charcoal
+
+*   Burns 8x longer than vanilla coal and charcoal. One Infused Coal/Charcoal can smelt a stack (64) of items.
+
 ### Utility Tools
 
 *   **Mob Catcher**: Capture and release any non-boss mob
@@ -94,5 +109,6 @@ Gene sampling allows players to collect gene samples from creatures using Empty 
 
 *   **Flexible Settings**: Adjust spawn rates, mob caps, particle effects, and more
 *   **Genesis Chamber Spawn Cap**: Configurable per-zone mob limit
+*   **Genesis Infuser**: Configurable speed and cost
 *   **Dark Dirt/Glimmer Grass**: Adjust spawn rates and check intervals
 *   **Conversion Areas**: Configure Gloom Spore and Glimmer Sprout conversion radius
