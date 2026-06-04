@@ -13,14 +13,7 @@ version = mod_version
 group = mod_group_id
 
 repositories {
-    maven {
-        name = "Jared's maven"
-        url = "https://maven.blamejared.com/"
-    }
-    maven {
-        name = "ModMaven"
-        url = "https://modmaven.dev"
-    }
+    mavenCentral()
 }
 
 base {
@@ -73,8 +66,8 @@ configurations {
 }
 
 dependencies {
-    compileOnly("mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}")
-    runtimeOnly("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
+    compileOnly "org.appliedenergistics:guideme:${guideme}:api"
+    runtimeOnly "org.appliedenergistics:guideme:${guideme}"
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
@@ -87,6 +80,7 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             mod_name               : mod_name,
             mod_license            : mod_license,
             mod_version            : mod_version,
+            guideme                : guideme
     ]
     inputs.properties replaceProperties
     expand replaceProperties

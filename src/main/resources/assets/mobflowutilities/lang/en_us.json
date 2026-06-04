@@ -70,7 +70,7 @@
   "item.mobflowutilities.void_filter_module": "Void Filter Module",
   "item.mobflowutilities.void_filter_module.subtitle": "Destroys filtered items collected by Collectors",
   "item.mobflowutilities.speed_module": "Speed Module",
-  "item.mobflowutilities.speed_module.subtitle": "Increases spawn rates of the Genesis Chamber",
+  "item.mobflowutilities.speed_module.subtitle": "Increases spawn rates of the Genesis Chamber and processing speed of the Genesis Infuser",
 
   "item.mobflowutilities.fan_width_increase_module": "Fan Width Increase Module",
   "item.mobflowutilities.fan_width_increase_module.subtitle": "Increases the Fan's effective blowing width",
