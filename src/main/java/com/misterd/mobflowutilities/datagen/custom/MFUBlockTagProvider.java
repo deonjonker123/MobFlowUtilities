@@ -27,6 +27,7 @@ public class MFUBlockTagProvider extends BlockTagsProvider {
                 .add(MFUBlocks.CONTROLLER.get())
                 .add(MFUBlocks.COLLECTOR.get())
                 .add(MFUBlocks.GENESIS_CHAMBER.get())
+                .add(MFUBlocks.GENESIS_INFUSER.get())
                 .add(MFUBlocks.FAN.get())
 
                 .add(MFUBlocks.DARK_GLASS.get())

@@ -104,7 +104,18 @@ public class MFURecipeProvider extends RecipeProvider {
                 .unlockedBy("has_diamond", has(Items.DIAMOND))
                 .save(output);
 
-        shaped(RecipeCategory.MISC, MFUBlocks.DAMAGE_PAD.get(), 4)
+        shaped(RecipeCategory.MISC, MFUBlocks.GENESIS_INFUSER.get())
+                .pattern("GSG")
+                .pattern("PHP")
+                .pattern("GSG")
+                .define('G', Items.IRON_INGOT)
+                .define('P', Items.DIAMOND)
+                .define('H', MFUTags.Items.EXPERIENCE_BUCKET)
+                .define('S', Items.OBSIDIAN)
+                .unlockedBy("has_diamond", has(Items.DIAMOND))
+                .save(output);
+
+        shaped(RecipeCategory.MISC, MFUBlocks.DAMAGE_PAD.get(), 5)
                 .pattern("ISI")
                 .pattern("SGS")
                 .pattern("ISI")
@@ -114,7 +125,7 @@ public class MFURecipeProvider extends RecipeProvider {
                 .unlockedBy("has_iron_sword", has(Items.IRON_SWORD))
                 .save(output);
 
-        shaped(RecipeCategory.MISC, MFUBlocks.FAST_FLOW_PAD.get(), 4)
+        shaped(RecipeCategory.MISC, MFUBlocks.FAST_FLOW_PAD.get(), 5)
                 .pattern("SGS")
                 .pattern("GQG")
                 .pattern("SGS")

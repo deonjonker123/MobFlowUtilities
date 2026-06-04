@@ -44,6 +44,8 @@ public class MFUItemModelProvider extends ModelProvider {
         itemModels.generateFlatItem(MFUItems.FAN_WIDTH_INCREASE_MODULE.get(),ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(MFUItems.FAN_HEIGHT_INCREASE_MODULE.get(),ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(MFUItems.FAN_DISTANCE_INCREASE_MODULE.get(),ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(MFUItems.INFUSED_COAL.get(),ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(MFUItems.INFUSED_CHARCOAL.get(),ModelTemplates.FLAT_ITEM);
 
         itemModels.generateFlatItem(MFUItems.PAD_WRENCH.get(),ModelTemplates.FLAT_ITEM);
 

@@ -113,6 +113,14 @@ public class MFUBlocks {
                     .noLootTable()
                     .noOcclusion()));
 
+    public static final DeferredBlock<Block> GENESIS_INFUSER = registerBlock("genesis_infuser",
+            id -> new GenesisInfuserBlock(BlockBehaviour.Properties.of()
+                    .setId(ResourceKey.create(Registries.BLOCK, id))
+                    .strength(2.0F)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.STONE)
+                    .noOcclusion()));
+
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Function<Identifier, T> factory) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, factory);
         return toReturn;

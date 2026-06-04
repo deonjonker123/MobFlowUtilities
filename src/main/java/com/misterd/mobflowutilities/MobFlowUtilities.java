@@ -92,6 +92,7 @@ public class MobFlowUtilities {
             event.register(MFUMenuTypes.CONTROLLER_MENU.get(), ControllerScreen::new);
             event.register(MFUMenuTypes.GENESIS_CHAMBER_MENU.get(), GenesisChamberScreen::new);
             event.register(MFUMenuTypes.FAN_MENU.get(), FanScreen::new);
+            event.register(MFUMenuTypes.GENESIS_INFUSER_MENU.get(), GenesisInfuserScreen::new);
         }
 
         @SubscribeEvent

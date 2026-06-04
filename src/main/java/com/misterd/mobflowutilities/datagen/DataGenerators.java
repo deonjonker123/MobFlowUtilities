@@ -32,6 +32,8 @@ public class DataGenerators {
         generator.addProvider(true, blockTagsProvider);
         generator.addProvider(true, new MFUItemTagProvider(packOutput, lookupProvider));
 
+        generator.addProvider(true, new MFUDataMapProvider(packOutput, lookupProvider));
+
         generator.addProvider(true, new MFUItemModelProvider(packOutput));
         generator.addProvider(true, new MFUGlobalLootModifierProvider(packOutput, lookupProvider));
         generator.addProvider(true, new MFUFluidTagsProvider(packOutput, lookupProvider));
@@ -50,6 +52,8 @@ public class DataGenerators {
         BlockTagsProvider blockTagsProvider = new MFUBlockTagProvider(packOutput, lookupProvider);
         generator.addProvider(true, blockTagsProvider);
         generator.addProvider(true, new MFUItemTagProvider(packOutput, lookupProvider));
+
+        generator.addProvider(true, new MFUDataMapProvider(packOutput, lookupProvider));
 
         generator.addProvider(true, new MFUItemModelProvider(packOutput));
         generator.addProvider(true, new MFUGlobalLootModifierProvider(packOutput, lookupProvider));

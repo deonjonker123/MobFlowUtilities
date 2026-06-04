@@ -27,6 +27,9 @@ public class Config {
     private static ModConfigSpec.IntValue GENESIS_CHAMBER_SPAWN_CAP;
     private static ModConfigSpec.BooleanValue GENESIS_CHAMBER_PARTICLES_ENABLED;
 
+    private static ModConfigSpec.IntValue GENESIS_INFUSER_PROCESS_TICKS;
+    private static ModConfigSpec.IntValue GENESIS_INFUSER_XP_COST;
+
     static {
         buildCommonConfig();
         COMMON_CONFIG = COMMON_BUILDER.build();
@@ -42,6 +45,7 @@ public class Config {
         buildGlimmerSproutConfig();
         buildGlimmerGrassConfig();
         buildGenesisChamberConfig();
+        buildGenesisInfuserConfig();
     }
 
     private static void buildGloomSporeConfig() {
@@ -154,6 +158,29 @@ public class Config {
         COMMON_BUILDER.pop();
     }
 
+    private static void buildGenesisInfuserConfig() {
+        COMMON_BUILDER.comment("Genesis Infuser - Configure infusion processing for Genesis Infuser blocks")
+                .push("genesis_infuser");
+
+        GENESIS_INFUSER_PROCESS_TICKS = COMMON_BUILDER
+                .comment(
+                        "Base processing time per infused item (ticks)",
+                        "Reduced by Speed Modules, lower values = faster processing",
+                        "20 ticks = 1 second"
+                )
+                .defineInRange("process_ticks", 200, 20, 1200);
+
+        GENESIS_INFUSER_XP_COST = COMMON_BUILDER
+                .comment(
+                        "Liquid XP consumed per infused item (mB)",
+                        "1000 mB = 1 bucket of Liquid XP",
+                        "Higher values increase the XP cost per item"
+                )
+                .defineInRange("xp_cost", 125, 1, 1000);
+
+        COMMON_BUILDER.pop();
+    }
+
     public static int getGloomSporeConversionArea() {
         return GLOOM_SPORE_CONVERSION_AREA.get();
     }
@@ -194,6 +221,14 @@ public class Config {
         return GENESIS_CHAMBER_PARTICLES_ENABLED.get();
     }
 
+    public static int getGenesisInfuserProcessTicks() {
+        return GENESIS_INFUSER_PROCESS_TICKS.get();
+    }
+
+    public static int getGenesisInfuserXpCost() {
+        return GENESIS_INFUSER_XP_COST.get();
+    }
+
     private static void validateConfig() {
         if (getDarkDirtMobsPerArea() > 25) {
             LOGGER.warn(
@@ -229,6 +264,13 @@ public class Config {
                     getGenesisChamberSpawnCap()
             );
         }
+
+        if (getGenesisInfuserProcessTicks() < 40) {
+            LOGGER.warn(
+                    "Genesis Infuser process time ({} ticks) is very fast and may impact server performance!",
+                    getGenesisInfuserProcessTicks()
+            );
+        }
     }
 
     @SubscribeEvent
@@ -260,5 +302,9 @@ public class Config {
         LOGGER.info("Genesis Chamber Configuration:");
         LOGGER.info("  Spawn Cap: {} mobs", getGenesisChamberSpawnCap());
         LOGGER.info("  Particles Enabled: {}", isGenesisChamberParticlesEnabled());
+
+        LOGGER.info("Genesis Infuser Configuration:");
+        LOGGER.info("  Process Time: {} ticks", getGenesisInfuserProcessTicks());
+        LOGGER.info("  XP Cost: {} mB per item", getGenesisInfuserXpCost());
     }
 }

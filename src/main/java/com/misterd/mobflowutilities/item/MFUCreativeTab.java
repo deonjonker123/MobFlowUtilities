@@ -29,6 +29,7 @@ public class MFUCreativeTab {
                         output.accept(MFUBlocks.CONTROLLER);
                         output.accept(MFUBlocks.FAN);
                         output.accept(MFUBlocks.GENESIS_CHAMBER);
+                        output.accept(MFUBlocks.GENESIS_INFUSER);
                         output.accept(MFUBlocks.GIGATANK);
 
                         output.accept(MFUBlocks.DARK_GLASS);
@@ -52,6 +53,8 @@ public class MFUCreativeTab {
                         output.accept(MFUItems.FAN_DISTANCE_INCREASE_MODULE);
 
                         output.accept(MFUFluids.LIQUID_XP_BUCKET.get());
+                        output.accept(MFUItems.INFUSED_COAL);
+                        output.accept(MFUItems.INFUSED_CHARCOAL);
                         output.accept(MFUItems.GLOOM_SPORE);
                         output.accept(MFUItems.GLIMMER_SPROUT);
                         output.accept(MFUItems.LIFE_CATALYST);

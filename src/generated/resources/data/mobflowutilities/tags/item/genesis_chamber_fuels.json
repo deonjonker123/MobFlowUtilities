@@ -4,6 +4,9 @@
     "minecraft:charcoal",
     "minecraft:coal_block",
     "minecraft:blaze_rod",
-    "minecraft:lava_bucket"
+    "minecraft:lava_bucket",
+    "mobflowutilities:infused_coal",
+    "mobflowutilities:infused_charcoal",
+    "#minecraft:coals"
   ]
 }

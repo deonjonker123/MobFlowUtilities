@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "north": "mobflowutilities:block/genesis_infuser_front",
+    "south": "mobflowutilities:block/genesis_infuser_side",
+    "east": "mobflowutilities:block/genesis_infuser_side",
+    "west": "mobflowutilities:block/genesis_infuser_side",
+    "up": "mobflowutilities:block/genesis_infuser_top",
+    "down": "mobflowutilities:block/genesis_infuser_bottom",
+    "particle": "mobflowutilities:block/genesis_infuser_front"
+  }
+}

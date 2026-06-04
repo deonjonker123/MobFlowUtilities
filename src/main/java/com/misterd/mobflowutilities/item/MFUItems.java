@@ -137,6 +137,22 @@ public class MFUItems {
     public static final DeferredItem<Item> PAD_WRENCH = ITEMS.registerItem("pad_wrench",
             props -> new PadWrenchItem(props));
 
+    public static final DeferredItem<Item> INFUSED_COAL = ITEMS.registerItem("infused_coal",
+            props -> new Item(props) {
+                @Override
+                public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> adder, TooltipFlag flag) {
+                    adder.accept(Component.translatable("item.mobflowutilities.infused_coal.subtitle").withStyle(ChatFormatting.GRAY));
+                }
+            });
+
+    public static final DeferredItem<Item> INFUSED_CHARCOAL = ITEMS.registerItem("infused_charcoal",
+            props -> new Item(props) {
+                @Override
+                public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> adder, TooltipFlag flag) {
+                    adder.accept(Component.translatable("item.mobflowutilities.infused_coal.subtitle").withStyle(ChatFormatting.GRAY));
+                }
+            });
+
     public static final DeferredItem<Item> FAST_FLOW_PAD = ITEMS.registerItem("flow_pad_fast",
             props -> new BlockItem(MFUBlocks.FAST_FLOW_PAD.get(), props));
 
@@ -196,6 +212,14 @@ public class MFUItems {
                 @Override
                 public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> adder, TooltipFlag flag) {
                     adder.accept(Component.translatable("item.mobflowutilities.genesis_chamber.subtitle").withStyle(ChatFormatting.GRAY));
+                }
+            });
+
+    public static final DeferredItem<Item> GENESIS_INFUSER = ITEMS.registerItem("genesis_infuser",
+            props -> new BlockItem(MFUBlocks.GENESIS_INFUSER.get(), props) {
+                @Override
+                public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> adder, TooltipFlag flag) {
+                    adder.accept(Component.translatable("item.mobflowutilities.genesis_infuser.subtitle").withStyle(ChatFormatting.GRAY));
                 }
             });
 

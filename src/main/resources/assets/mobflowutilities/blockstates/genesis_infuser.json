@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "mobflowutilities:block/genesis_infuser"
+    },
+    "facing=south": {
+      "model": "mobflowutilities:block/genesis_infuser",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "mobflowutilities:block/genesis_infuser",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "mobflowutilities:block/genesis_infuser",
+      "y": 270
+    }
+  }
+}
