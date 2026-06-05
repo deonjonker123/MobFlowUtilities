@@ -1,21 +1,17 @@
 {
   "creativetab.mobflowutilities": "Mob Flow Utilities",
-
   "block.mobflowutilities.flow_pad_fast": "高速の誘導パッド",
   "block.mobflowutilities.flow_pad_faster": "超高速の誘導パッド",
   "block.mobflowutilities.flow_pad_fastest": "最速の誘導パッド",
   "block.mobflowutilities.damage_pad": "ダメージパッド",
-
   "block.mobflowutilities.collector": "回収機",
   "block.mobflowutilities.controller": "パッド操作機",
   "block.mobflowutilities.gigtank": "ギガタンク",
   "block.mobflowutilities.fan": "送風機",
   "block.mobflowutilities.fan.subtitle_line1": "向いている方向へモブを押し出す",
   "block.mobflowutilities.fan.subtitle_line2": "送風機アップグレードで強化できます",
-
   "block.mobflowutilities.genesis_chamber": "創世室",
   "block.mobflowutilities.genesis_chamber.subtitle": "周囲5x5範囲にモブをスポーンさせる。稼働には燃料が必要",
-
   "block.mobflowutilities.dark_dirt": "黒い土",
   "block.mobflowutilities.dark_dirt.subtitle": "敵対モブのスポーン速度が上昇する",
   "block.mobflowutilities.glimmer_grass": "きらめく草ブロック",
@@ -24,12 +20,10 @@
   "block.mobflowutilities.dark_glass.subtitle": "光を通さず、ウィザー耐性がある",
   "block.mobflowutilities.glimmer_lamp": "きらめくランプ",
   "block.mobflowutilities.glimmer_lamp.subtitle": "レッドストーン信号で発光する",
-
   "item.mobflowutilities.flow_pad_fast": "高速の誘導パッド",
   "item.mobflowutilities.flow_pad_faster": "超高速の誘導パッド",
   "item.mobflowutilities.flow_pad_fastest": "最速の誘導パッド",
   "item.mobflowutilities.damage_pad": "ダメージパッド",
-
   "item.mobflowutilities.collector": "回収機",
   "item.mobflowutilities.controller": "パッド操作機",
   "item.mobflowutilities.gigatank": "ギガタンク",
@@ -37,10 +31,8 @@
   "item.mobflowutilities.fan": "送風機",
   "item.mobflowutilities.fan.subtitle_line1": "向いている方向へモブを押し出す",
   "item.mobflowutilities.fan.subtitle_line2": "送風機アップグレードで強化できます",
-
   "item.mobflowutilities.genesis_chamber": "創世室",
   "item.mobflowutilities.genesis_chamber.subtitle": "周囲5x5範囲にモブをスポーンさせる。稼働には燃料が必要",
-
   "item.mobflowutilities.dark_dirt": "黒い土",
   "item.mobflowutilities.dark_dirt.subtitle": "敵対モブのスポーン速度が上昇する",
   "item.mobflowutilities.glimmer_grass": "きらめく草ブロック",
@@ -49,7 +41,6 @@
   "item.mobflowutilities.dark_glass.subtitle": "光を通さず、ウィザー耐性がある",
   "item.mobflowutilities.glimmer_lamp": "きらめくランプ",
   "item.mobflowutilities.glimmer_lamp.subtitle": "レッドストーン信号で発光する",
-
   "item.mobflowutilities.bane_of_arthropods_module": "虫特攻モジュール",
   "item.mobflowutilities.bane_of_arthropods_module.subtitle": "クモやシルバーフィッシュなどの虫へのダメージが増加する",
   "item.mobflowutilities.fire_aspect_module": "火属性モジュール",
@@ -60,62 +51,47 @@
   "item.mobflowutilities.smite_module.subtitle": "ゾンビやスケルトンなどのアンデッドへのダメージが増加する",
   "item.mobflowutilities.looting_module": "ドロップ増加モジュール",
   "item.mobflowutilities.looting_module.subtitle": "モブからのアイテムドロップ数とレアドロップ率が増加する",
-
   "item.mobflowutilities.radius_increase_module": "範囲拡張モジュール",
   "item.mobflowutilities.radius_increase_module.subtitle": "回収機の回収範囲と創世室のスポーン範囲を拡張する",
   "item.mobflowutilities.void_filter_module": "破棄フィルターモジュール",
   "item.mobflowutilities.void_filter_module.subtitle": "回収機で回収したアイテムがフィルターと一致していたら破棄する",
   "item.mobflowutilities.speed_module": "速度モジュール",
   "item.mobflowutilities.speed_module.subtitle": "創世室のスポーン頻度を増加させる",
-
   "item.mobflowutilities.fan_width_increase_module": "送風範囲拡張モジュール",
   "item.mobflowutilities.fan_width_increase_module.subtitle": "送風機の送風幅を拡張する",
   "item.mobflowutilities.fan_height_increase_module": "送風高度拡張モジュール",
   "item.mobflowutilities.fan_height_increase_module.subtitle": "送風機の送風高度を拡張する",
   "item.mobflowutilities.fan_distance_increase_module": "送風距離拡張モジュール",
   "item.mobflowutilities.fan_distance_increase_module.subtitle": "送風機の送風距離を拡張する",
-
   "item.mobflowutilities.pad_wrench": "パッドレンチ",
   "item.mobflowutilities.pad_wrench.subtitle": "ダメージパッドとパッド操作機をリンクするのに使用できる",
-
   "item.mobflowutilities.mob_catcher": "モブ捕獲玉",
-
   "item.mobflowutilities.gloom_spore": "闇の胞子",
   "item.mobflowutilities.gloom_spore.subtitle": "土系ブロックを黒い土に変換する",
-
   "item.mobflowutilities.glimmer_sprout": "きらめく芽",
   "item.mobflowutilities.glimmer_sprout.subtitle": "土系ブロックをきらめく草ブロックに変換する",
-
   "item.mobflowutilities.life_catalyst": "命の触媒",
   "item.mobflowutilities.life_catalyst.subtitle": "スポーンエッグの作成素材",
-
   "item.mobflowutilities.empty_gene_vial": "空の遺伝子バイアル",
-
   "item.mobflowutilities.gene_sample_vial": "遺伝子サンプル入りバイアル",
-
   "menu.mobflowutilities.collector": "回収機",
   "menu.mobflowutilities.controller": "パッド操作機",
-
   "fluid_type.mobflowutilities.liquid_xp": "液体XP",
   "block.mobflowutilities.liquid_xp_block": "液体XP",
   "item.mobflowutilities.liquid_xp_bucket": "液体XP入りバケツ",
-
   "gui.mobflowutilities.collector": "回収機",
   "gui.mobflowutilities.controller": "パッド操作機",
   "gui.mobflowutilities.genesis_chamber": "創世室",
   "gui.mobflowutilities.controller.remove": "削除",
   "gui.mobflowutilities.collector.xp_input_levels": "レベル",
   "gui.mobflowutilities.void_filter": "破棄フィルター",
-
   "gui.mobflowutilities.collector.offset.down_up": "上下方向の位置補正",
   "gui.mobflowutilities.collector.offset.north_south": "南北方向の位置補正",
   "gui.mobflowutilities.collector.offset.east_west": "東西方向の位置補正",
   "gui.mobflowutilities.collector.xp_levels_stored": "%,d",
-
   "tooltip.mobflowutilities.controller.remove_pad": "選択したパッドを削除",
   "tooltip.mobflowutilities.controller.pad_coordinates": "%d, %d, %d のダメージパッド",
   "tooltip.mobflowutilities.controller.scrollbar": "パッド %d～%d を表示中",
-
   "tooltip.mobflowutilities.collector.offset.down_up.decrease": "上下方向の回収範囲を縮小",
   "tooltip.mobflowutilities.collector.offset.down_up.increase": "上下方向の回収範囲を拡大",
   "tooltip.mobflowutilities.collector.offset.down_up.value": "上下方向の位置補正: %s",
@@ -126,12 +102,10 @@
   "tooltip.mobflowutilities.collector.offset.east_west.increase": "東西方向の回収範囲を拡大",
   "tooltip.mobflowutilities.collector.offset.east_west.value": "東西方向の位置補正: %s",
   "tooltip.mobflowutilities.collector.offset.reset_all": "位置補正をリセット",
-
   "tooltip.mobflowutilities.collector.wireframe_toggle": "回収範囲の表示/非表示",
   "tooltip.mobflowutilities.genesis_chamber.wireframe_toggle": "スポーン範囲の表示/非表示",
   "tooltip.mobflowutilities.genesis_chamber.redstone_required": "レッドストーン信号が必須",
   "tooltip.mobflowutilities.genesis_chamber.no_redstone_required": "常に稼働",
-
   "tooltip.mobflowutilities.collector.xp.withdraw": "レベルを回収",
   "tooltip.mobflowutilities.collector.xp.deposit": "レベルを保存",
   "tooltip.mobflowutilities.collector.xp.withdraw_all": "すべての経験値を回収",
@@ -139,9 +113,7 @@
   "tooltip.mobflowutilities.collector.xp_collection.enabled": "経験値の回収を無効",
   "tooltip.mobflowutilities.collector.xp_collection.disabled": "経験値の回収を有効",
   "tooltip.mobflowutilities.collector.xp_display": "XP: %s",
-
   "tooltip.mobflowutilities.collector.edit_filter": "フィルター変更",
-
   "item.mobflowutilities.pad_wrench.mode.add": "追加",
   "item.mobflowutilities.pad_wrench.mode.remove": "削除",
   "item.mobflowutilities.pad_wrench.selection.single": "単一選択",
@@ -154,7 +126,6 @@
   "item.mobflowutilities.pad_wrench.multi.linked": "%d個のダメージパッドをリンクしました",
   "item.mobflowutilities.pad_wrench.multi.unlinked": "%d個のダメージパッドのリンクを解除しました",
   "item.mobflowutilities.pad_wrench.controller.cleared": "パッド操作機の選択を解除しました",
-
   "item.mobflowutilities.pad_wrench.tooltip.operation.add": "操作モード: 追加",
   "item.mobflowutilities.pad_wrench.tooltip.operation.remove": "操作モード: 削除",
   "item.mobflowutilities.pad_wrench.tooltip.selection.single": "選択モード: 単一",
@@ -166,9 +137,7 @@
   "item.mobflowutilities.pad_wrench.tooltip.usage.operation": "Shift+右クリック: 操作モードを切り替え",
   "item.mobflowutilities.pad_wrench.tooltip.usage.controller": "パッド操作機に使用: 対象を選択",
   "item.mobflowutilities.pad_wrench.tooltip.usage.pad": "パッドに使用: リンク/リンク解除",
-
   "fakeplayer.mobflowutilities.damage_pad": "Mob Flow Utilities Damage Pad",
-
   "item.mobflowutilities.mob_catcher.already_occupied": "捕獲玉にはすでにモブが捕獲されている！",
   "item.mobflowutilities.mob_catcher.boss_immunity": "ボスモブは捕獲できません！",
   "item.mobflowutilities.mob_catcher.player_immunity": "プレイヤーは捕獲できません！",
@@ -183,23 +152,30 @@
   "item.mobflowutilities.mob_catcher.empty_tooltip": "空っぽ - Shift+右クリックでモブを捕獲",
   "item.mobflowutilities.mob_catcher.usage.capture": "モブにShift+右クリック: 捕獲",
   "item.mobflowutilities.mob_catcher.usage.release": "ブロックにShift+右クリック: 解放",
-
   "item.mobflowutilities.empty_gene_vial.subtitle": "モブから遺伝子を採取するのに使用できる",
   "item.mobflowutilities.empty_gene_vial.usage": "Shift+右クリックでモブから遺伝子サンプルを採取",
   "item.mobflowutilities.empty_gene_vial.player_immunity": "プレイヤーからDNAを採取できません！",
   "item.mobflowutilities.empty_gene_vial.no_spawn_egg": "この生物からDNAを採取できません！",
   "item.mobflowutilities.empty_gene_vial.blacklisted": "この生物の遺伝子は強力すぎて採取できません！",
   "item.mobflowutilities.empty_gene_vial.collected": "DNA採取元: %s",
-
   "item.mobflowutilities.gene_sample_vial.contains": "遺伝子サンプル: %s",
   "item.mobflowutilities.gene_sample_vial.empty": "空っぽ - 遺伝子サンプルなし",
   "item.mobflowutilities.gene_sample_vial.usage": "命の触媒とエメラルドと一緒に作成すると、スポーンエッグができます",
-
   "menu.mobflowutilities.fan": "送風機",
   "gui.mobflowutilities.fan": "送風機",
-
   "tooltip.mobflowutilities.fan.wireframe_toggle": "送風範囲の表示/非表示",
-
   "message.mobflowutilities.tank.full": "タンクは満杯です",
-  "message.mobflowutilities.tank.empty": "タンクは空です"
+  "message.mobflowutilities.tank.empty": "タンクは空です",
+  "block.mobflowutilities.genesis_infuser": "創世注入機",
+  "block.mobflowutilities.genesis_infuser.subtitle": "石炭や木炭に経験値を注入し、長持ちする燃料を作り出せる",
+  "item.mobflowutilities.genesis_infuser": "創世注入機",
+  "item.mobflowutilities.genesis_infuser.subtitle": "石炭や木炭に経験値を注入し、長持ちする燃料を作り出せる",
+  "item.mobflowutilities.infused_coal": "注入石炭",
+  "item.mobflowutilities.infused_coal.subtitle": "バニラの石炭と比べると8倍長持ちします",
+  "item.mobflowutilities.infused_charcoal": "注入木炭",
+  "item.mobflowutilities.infused_charcoal.subtitle": "バニラの木炭と比べると8倍長持ちします",
+  "tooltip.mobflowutilities.genesis_infuser.tank_empty": "空",
+  "tooltip.mobflowutilities.genesis_infuser.progress": "進行度",
+  "gui.mobflowutilities.genesis_infuser": "創世注入機",
+  "menu.mobflowutilities.genesis_infuser": "創世注入機"
 }
