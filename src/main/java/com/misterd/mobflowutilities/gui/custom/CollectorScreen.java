@@ -272,7 +272,7 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
         int storedLevels = MFUExperienceUtils.getLevelFromTotalExperience(this.storedXP);
         String xpDisplayText = String.format(Component.translatable("gui.mobflowutilities.collector.xp_levels_stored").getString(), storedLevels);
         int centeredX = (int) ((x + 88) / scale) - (this.font.width(xpDisplayText) / 2);
-        graphics.text(this.font, xpDisplayText, centeredX, (int) ((y + 122) / scale), 0xFF30a324, false);
+        graphics.text(this.font, xpDisplayText, centeredX, (int) ((y + 122) / scale), 0xFF000000, false);
         pose.popMatrix();
     }
 
