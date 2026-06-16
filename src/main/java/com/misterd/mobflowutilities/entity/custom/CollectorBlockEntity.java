@@ -33,6 +33,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
+import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
@@ -106,8 +107,23 @@ public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     @Nullable
-    public ItemStacksResourceHandler getItemHandler(@Nullable Direction direction) {
-        return new ItemStacksResourceHandler(OUTPUT_COUNT) {
+    public ResourceHandler<ItemResource> getItemHandler(@Nullable Direction direction) {
+        return new ResourceHandler<>() {
+            @Override
+            public int size() {
+                return OUTPUT_COUNT;
+            }
+
+            @Override
+            public ItemResource getResource(int index) {
+                return inventory.getResource(MODULE_COUNT + index);
+            }
+
+            @Override
+            public long getAmountAsLong(int index) {
+                return inventory.getAmountAsLong(MODULE_COUNT + index);
+            }
+
             @Override
             public long getCapacityAsLong(int index, ItemResource resource) {
                 return inventory.getCapacityAsLong(MODULE_COUNT + index, resource);
@@ -119,18 +135,13 @@ public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
             }
 
             @Override
-            public ItemResource getResource(int index) {
-                return inventory.getResource(MODULE_COUNT + index);
+            public int insert(int index, ItemResource resource, int amount, TransactionContext tx) {
+                return 0;
             }
 
             @Override
-            public int insert(int slot, ItemResource resource, int maxAmount, TransactionContext tx) {
-               return 0;
-            }
-
-            @Override
-            public int extract(int slot, ItemResource resource, int maxAmount, TransactionContext tx) {
-                return inventory.extract(MODULE_COUNT + slot, resource, maxAmount, tx);
+            public int extract(int index, ItemResource resource, int amount, TransactionContext tx) {
+                return inventory.extract(MODULE_COUNT + index, resource, amount, tx);
             }
         };
     }
