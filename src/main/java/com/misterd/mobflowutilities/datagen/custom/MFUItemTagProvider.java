@@ -6,7 +6,9 @@ import com.misterd.mobflowutilities.item.MFUItems;
 import com.misterd.mobflowutilities.util.MFUTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.data.ItemTagsProvider;
 
@@ -18,58 +20,62 @@ public class MFUItemTagProvider extends ItemTagsProvider {
         super(output, lookupProvider, MobFlowUtilities.MODID);
     }
 
+    private static ResourceKey<Item> key(Item item) {
+        return item.builtInRegistryHolder().key();
+    }
+
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         tag(MFUTags.Items.MOBFLOWUTILITIES_MODULES)
-                .add(MFUItems.BOA_MODULE.get())
-                .add(MFUItems.FIRE_ASPECT_MODULE.get())
-                .add(MFUItems.SHARPNESS_MODULE.get())
-                .add(MFUItems.SMITE_MODULE.get())
-                .add(MFUItems.LOOTING_MODULE.get())
-                .add(MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get())
-                .add(MFUItems.VOID_FILTER_MODULE.get());
+                .add(key(MFUItems.BOA_MODULE.get()))
+                .add(key(MFUItems.FIRE_ASPECT_MODULE.get()))
+                .add(key(MFUItems.SHARPNESS_MODULE.get()))
+                .add(key(MFUItems.SMITE_MODULE.get()))
+                .add(key(MFUItems.LOOTING_MODULE.get()))
+                .add(key(MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get()))
+                .add(key(MFUItems.VOID_FILTER_MODULE.get()));
 
         tag(MFUTags.Items.WRENCH)
-                .add(MFUItems.PAD_WRENCH.get());
+                .add(key(MFUItems.PAD_WRENCH.get()));
 
         tag(MFUTags.Items.WRENCHES)
-                .add(MFUItems.PAD_WRENCH.get());
+                .add(key(MFUItems.PAD_WRENCH.get()));
 
         tag(MFUTags.Items.TOOL)
-                .add(MFUItems.PAD_WRENCH.get());
+                .add(key(MFUItems.PAD_WRENCH.get()));
 
         tag(MFUTags.Items.GENESIS_CHAMBER_FUELS)
-                .add(Items.COAL)
-                .add(Items.CHARCOAL)
-                .add(Items.COAL_BLOCK)
-                .add(Items.BLAZE_ROD)
-                .add(Items.LAVA_BUCKET)
-                .add(MFUItems.INFUSED_COAL.get())
-                .add(MFUItems.INFUSED_CHARCOAL.get())
+                .add(key(Items.COAL))
+                .add(key(Items.CHARCOAL))
+                .add(key(Items.COAL_BLOCK))
+                .add(key(Items.BLAZE_ROD))
+                .add(key(Items.LAVA_BUCKET))
+                .add(key(MFUItems.INFUSED_COAL.get()))
+                .add(key(MFUItems.INFUSED_CHARCOAL.get()))
                 .addTag(ItemTags.COALS);
 
         tag(MFUTags.Items.EXPERIENCE_BUCKET)
-                .add(MFUFluids.LIQUID_XP_BUCKET.get());
+                .add(key(MFUFluids.LIQUID_XP_BUCKET.get()));
 
         tag(MFUTags.Items.GLIMMER_SPROUT_CRAFTING_ING)
-                .add(Items.FEATHER)
-                .add(Items.LEATHER)
-                .add(Items.RABBIT_HIDE)
-                .add(Items.RABBIT_FOOT)
+                .add(key(Items.FEATHER))
+                .add(key(Items.LEATHER))
+                .add(key(Items.RABBIT_HIDE))
+                .add(key(Items.RABBIT_FOOT))
                 .addTag(ItemTags.WOOL)
-                .add(Items.INK_SAC)
-                .add(Items.EGG)
-                .add(Items.GLOW_INK_SAC);
+                .add(key(Items.INK_SAC))
+                .add(key(Items.EGG))
+                .add(key(Items.GLOW_INK_SAC));
 
         tag(MFUTags.Items.GLOOM_SPORE_CRAFTING_ING)
-                .add(Items.ROTTEN_FLESH)
-                .add(Items.BONE)
-                .add(Items.GUNPOWDER)
-                .add(Items.STRING)
-                .add(Items.SPIDER_EYE)
-                .add(Items.SKELETON_SKULL)
-                .add(Items.ZOMBIE_HEAD)
-                .add(Items.WITHER_SKELETON_SKULL)
-                .add(Items.CREEPER_HEAD);
+                .add(key(Items.ROTTEN_FLESH))
+                .add(key(Items.BONE))
+                .add(key(Items.GUNPOWDER))
+                .add(key(Items.STRING))
+                .add(key(Items.SPIDER_EYE))
+                .add(key(Items.SKELETON_SKULL))
+                .add(key(Items.ZOMBIE_HEAD))
+                .add(key(Items.WITHER_SKELETON_SKULL))
+                .add(key(Items.CREEPER_HEAD));
     }
 }

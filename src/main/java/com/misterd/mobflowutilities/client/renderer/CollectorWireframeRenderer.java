@@ -1,33 +1,21 @@
 package com.misterd.mobflowutilities.client.renderer;
 
 import com.misterd.mobflowutilities.entity.custom.CollectorBlockEntity;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.ShapeRenderer;
-import net.minecraft.client.renderer.rendertype.RenderTypes;
-import net.minecraft.client.renderer.state.level.LevelRenderState;
-import net.minecraft.util.ARGB;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.Identifier;
-import net.minecraft.util.context.ContextKey;
+import net.minecraft.gizmos.Gizmos;
+import net.minecraft.gizmos.GizmoStyle;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.ExtractLevelRenderStateEvent;
-import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 
 @EventBusSubscriber(modid = "mobflowutilities", value = Dist.CLIENT)
 public class CollectorWireframeRenderer {
-
-    private static final ContextKey<AABB> WIREFRAME_KEY = new ContextKey<>(
-            Identifier.fromNamespaceAndPath("mobflowutilities", "collector_wireframe")
-    );
 
     private static boolean showWireframe = false;
     private static BlockPos activeCollectorPos = null;
@@ -52,47 +40,22 @@ public class CollectorWireframeRenderer {
     }
 
     @SubscribeEvent
-    public static void onExtractLevelRenderState(ExtractLevelRenderStateEvent event) {
+    public static void onClientTick(ClientTickEvent.Post event) {
         if (!showWireframe || activeCollectorPos == null) return;
 
-        Level level = event.getLevel();
-        BlockEntity be = level.getBlockEntity(activeCollectorPos);
-
-        if (be instanceof CollectorBlockEntity collector) {
-            event.getRenderState().setRenderData(WIREFRAME_KEY, calculatePickupZone(collector));
-        } else {
-            clearWireframes();
-        }
-    }
-
-    @SubscribeEvent
-    public static void onRenderLevelStage(RenderLevelStageEvent.AfterTranslucentBlocks event) {
-        LevelRenderState renderState = event.getLevelRenderState();
-        AABB zone = renderState.getRenderData(WIREFRAME_KEY);
-        if (zone == null) return;
-
         Minecraft mc = Minecraft.getInstance();
-        if (mc.player == null) return;
+        Level level = mc.level;
+        if (level == null) return;
 
-        Vec3 camPos = mc.gameRenderer.getMainCamera().position();
-        PoseStack poseStack = event.getPoseStack();
-        poseStack.pushPose();
-        poseStack.translate(-camPos.x(), -camPos.y(), -camPos.z());
+        BlockEntity be = level.getBlockEntity(activeCollectorPos);
+        if (!(be instanceof CollectorBlockEntity collector)) {
+            clearWireframes();
+            return;
+        }
 
-        var bufferSource = mc.renderBuffers().bufferSource();
-        VertexConsumer buffer = bufferSource.getBuffer(RenderTypes.lines());
-        ShapeRenderer.renderShape(
-                poseStack, buffer,
-                Shapes.create(zone),
-                0.0, 0.0, 0.0,
-                ARGB.colorFromFloat(0.8f, 0f, 1f, 1f),
-                mc.gameRenderer.getGameRenderState().windowRenderState.appropriateLineWidth
-        );
-        bufferSource.endLastBatch();
-        poseStack.popPose();
+        AABB zone = calculatePickupZone(collector);
+        Gizmos.cuboid(zone, GizmoStyle.stroke(ARGB.colorFromFloat(0.8f, 0f, 1f, 1f)));
     }
-
-    // --- Helper ---
 
     private static AABB calculatePickupZone(CollectorBlockEntity collector) {
         BlockPos pos = collector.getBlockPos();

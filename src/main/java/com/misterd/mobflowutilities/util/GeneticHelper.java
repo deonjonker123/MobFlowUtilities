@@ -3,19 +3,20 @@ package com.misterd.mobflowutilities.util;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
 
 public class GeneticHelper {
 
     public static boolean canCollectDNA(EntityType<?> entityType) {
-        if (entityType == EntityType.PLAYER) return false;
+        if (entityType == EntityTypes.PLAYER) return false;
         if (!hasSpawnEgg(entityType)) return false;
         return !isBlacklisted(entityType);
     }
 
     private static boolean isBlacklisted(EntityType<?> entityType) {
-        return entityType == EntityType.ENDER_DRAGON || entityType == EntityType.WITHER;
+        return entityType == EntityTypes.ENDER_DRAGON || entityType == EntityTypes.WITHER;
     }
 
     public static boolean hasSpawnEgg(EntityType<?> entityType) {

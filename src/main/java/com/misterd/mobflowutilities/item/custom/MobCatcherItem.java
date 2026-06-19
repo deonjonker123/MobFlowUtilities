@@ -6,7 +6,9 @@ import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.level.storage.TagValueInput;
 import net.minecraft.world.level.storage.TagValueOutput;
@@ -148,7 +150,10 @@ public class MobCatcherItem extends Item {
             String entityTypeString = itemTag.getStringOr(ENTITY_TYPE_TAG, "");
             if (entityTypeString.isEmpty()) return false;
 
-            Optional<EntityType<?>> entityTypeOpt = EntityType.byString(entityTypeString);
+            Identifier entityTypeId = Identifier.tryParse(entityTypeString);
+            if (entityTypeId == null) return false;
+
+            Optional<EntityType<?>> entityTypeOpt = BuiltInRegistries.ENTITY_TYPE.getOptional(entityTypeId);
             if (entityTypeOpt.isEmpty()) return false;
 
             EntityType<?> entityType = entityTypeOpt.get();

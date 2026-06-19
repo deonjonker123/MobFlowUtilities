@@ -19,18 +19,18 @@ public class MFULootTableProvider extends BlockLootSubProvider {
 
     @Override
     protected void generate() {
-        dropSelf( MFUBlocks.CONTROLLER.get());
-        dropSelf( MFUBlocks.GENESIS_CHAMBER.get());
-        dropSelf( MFUBlocks.GENESIS_INFUSER.get());
-        dropSelf( MFUBlocks.FAN.get());
+        dropSelf(MFUBlocks.CONTROLLER.get());
+        dropSelf(MFUBlocks.GENESIS_CHAMBER.get());
+        dropSelf(MFUBlocks.GENESIS_INFUSER.get());
+        dropSelf(MFUBlocks.FAN.get());
 
-        dropSelf( MFUBlocks.FAST_FLOW_PAD.get());
-        dropSelf( MFUBlocks.FASTER_FLOW_PAD.get());
-        dropSelf( MFUBlocks.FASTEST_FLOW_PAD.get());
-        dropSelf( MFUBlocks.DAMAGE_PAD.get());
+        dropSelf(MFUBlocks.FAST_FLOW_PAD.get());
+        dropSelf(MFUBlocks.FASTER_FLOW_PAD.get());
+        dropSelf(MFUBlocks.FASTEST_FLOW_PAD.get());
+        dropSelf(MFUBlocks.DAMAGE_PAD.get());
 
-        dropSelf( MFUBlocks.DARK_GLASS.get());
-        dropSelf( MFUBlocks.GLIMMER_LAMP.get());
+        dropSelf(MFUBlocks.DARK_GLASS.get());
+        dropSelf(MFUBlocks.GLIMMER_LAMP.get());
 
         add(MFUBlocks.DARK_DIRT.get(),
                 block -> createSilkTouchDispatchTable(

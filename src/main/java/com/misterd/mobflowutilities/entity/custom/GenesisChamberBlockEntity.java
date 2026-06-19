@@ -212,6 +212,7 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
         entity.noPhysics = true;
         if (entity instanceof Mob mob) mob.setNoAi(true);
         entity.invulnerableTime = Integer.MAX_VALUE;
+        entity.setId(-1);
         cachedEntity = entity;
         return entity;
     }

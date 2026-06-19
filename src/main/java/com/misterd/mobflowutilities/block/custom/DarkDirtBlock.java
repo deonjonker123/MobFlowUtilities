@@ -9,11 +9,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.WeightedList;
-import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.block.Block;
@@ -107,8 +103,8 @@ public class DarkDirtBlock extends Block {
         WeightedList<SpawnerData> mobList = level.getBiome(spawnPos).value().getMobSettings().getMobs(MobCategory.MONSTER);
 
         WeightedList.Builder<SpawnerData> builder = WeightedList.<SpawnerData>builder().addAll(mobList);
-        boolean hasSlime = mobList.unwrap().stream().anyMatch(w -> w.value().type() == EntityType.SLIME);
-        if (!hasSlime) builder.add(new SpawnerData(EntityType.SLIME, 1, 3), 10);
+        boolean hasSlime = mobList.unwrap().stream().anyMatch(w -> w.value().type() == EntityTypes.SLIME);
+        if (!hasSlime) builder.add(new SpawnerData(EntityTypes.SLIME, 1, 3), 10);
         WeightedList<SpawnerData> spawners = builder.build();
 
         spawners.getRandom(random).ifPresent(spawner -> {
@@ -118,7 +114,7 @@ public class DarkDirtBlock extends Block {
                 Mob mob = (Mob) entityType.create(level, EntitySpawnReason.NATURAL);
                 if (mob != null) {
                     mob.snapTo(spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5, random.nextFloat() * 360.0F, 0.0F);
-                    if (SpawnPlacements.checkSpawnRules(entityType, level, EntitySpawnReason.NATURAL, spawnPos, random) || entityType == EntityType.SLIME) {
+                    if (SpawnPlacements.checkSpawnRules(entityType, level, EntitySpawnReason.NATURAL, spawnPos, random) || entityType == EntityTypes.SLIME) {
                         mob.finalizeSpawn(level, level.getCurrentDifficultyAt(spawnPos), EntitySpawnReason.NATURAL, null);
                         level.addFreshEntity(mob);
                     }
