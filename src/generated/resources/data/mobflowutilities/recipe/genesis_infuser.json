@@ -3,7 +3,10 @@
   "category": "misc",
   "key": {
     "G": "minecraft:iron_ingot",
-    "H": "#c:experience_bucket",
+    "H": {
+      "neoforge:ingredient_type": "mobflowutilities:fluid_tag_bucket",
+      "fluid_tag": "c:experience"
+    },
     "P": "minecraft:diamond",
     "S": "minecraft:obsidian"
   },

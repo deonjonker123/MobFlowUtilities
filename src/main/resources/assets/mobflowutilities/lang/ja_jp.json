@@ -177,5 +177,11 @@
   "tooltip.mobflowutilities.genesis_infuser.tank_empty": "空",
   "tooltip.mobflowutilities.genesis_infuser.progress": "進行度",
   "gui.mobflowutilities.genesis_infuser": "創世注入機",
-  "menu.mobflowutilities.genesis_infuser": "創世注入機"
+  "menu.mobflowutilities.genesis_infuser": "創世注入機",
+  "item.mobflowutilities.pad_wrench.error.too_far": "パッドがパッド操作機から遠すぎます（最大%sブロック）",
+  "item.mobflowutilities.pad_wrench.error.controller_full": "パッド操作機がいっぱいです（最大%s個）",
+  "item.mobflowutilities.pad_wrench.error.controller_missing": "選択したパッド操作機が存在しません",
+  "item.mobflowutilities.pad_wrench.error.invalid": "無効なリンク先です",
+  "item.mobflowutilities.pad_wrench.multi.skipped_far": "%s個のパッドをスキップしました：遠すぎます（最大%sブロック）",
+  "item.mobflowutilities.pad_wrench.multi.skipped_full": "%s個のパッドをスキップしました：パッド操作機がいっぱいです"
 }

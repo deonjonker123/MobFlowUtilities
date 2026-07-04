@@ -31,7 +31,6 @@ public class MFUTags {
     public static class Items {
         public static final TagKey<Item> MOBFLOWUTILITIES_MODULES = createTag("mobflowutilities", "mobflowutilities_modules");
         public static final TagKey<Item> GENESIS_CHAMBER_FUELS = createTag("mobflowutilities", "genesis_chamber_fuels");
-        public static final TagKey<Item> EXPERIENCE_BUCKET = createTag("c", "experience_bucket");
         public static final TagKey<Item> WRENCHES = createTag("c", "wrenches");
         public static final TagKey<Item> WRENCH = createTag("c", "tools/wrench");
         public static final TagKey<Item> TOOL = createTag("c", "tools");

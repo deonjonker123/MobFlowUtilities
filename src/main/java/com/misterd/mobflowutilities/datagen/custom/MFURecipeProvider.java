@@ -2,6 +2,7 @@ package com.misterd.mobflowutilities.datagen.custom;
 
 import com.misterd.mobflowutilities.block.MFUBlocks;
 import com.misterd.mobflowutilities.item.MFUItems;
+import com.misterd.mobflowutilities.recipe.FluidTagBucketIngredient;
 import com.misterd.mobflowutilities.util.MFUTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -40,21 +41,21 @@ public class MFURecipeProvider extends RecipeProvider {
                 .pattern("BEB")
                 .pattern("EPE")
                 .pattern("BEB")
-                .define('B', MFUTags.Items.EXPERIENCE_BUCKET)
+                .define('B', new FluidTagBucketIngredient(MFUTags.Fluids.EXPERIENCE).toVanilla())
                 .define('E', Items.ENDER_EYE)
                 .define('P', Items.ENDER_PEARL)
                 .unlockedBy("has_ender_eye", has(Items.ENDER_EYE))
                 .save(output);
 
         shapeless(RecipeCategory.MISC, MFUItems.GLOOM_SPORE.get())
-                .requires(MFUTags.Items.EXPERIENCE_BUCKET)
+                .requires(new FluidTagBucketIngredient(MFUTags.Fluids.EXPERIENCE).toVanilla())
                 .requires(MFUTags.Items.GLOOM_SPORE_CRAFTING_ING)
                 .requires(ItemTags.CHICKEN_FOOD)
                 .unlockedBy("has_seeds", has(ItemTags.CHICKEN_FOOD))
                 .save(output);
 
         shapeless(RecipeCategory.MISC, MFUItems.GLIMMER_SPROUT.get())
-                .requires(MFUTags.Items.EXPERIENCE_BUCKET)
+                .requires(new FluidTagBucketIngredient(MFUTags.Fluids.EXPERIENCE).toVanilla())
                 .requires(MFUTags.Items.GLIMMER_SPROUT_CRAFTING_ING)
                 .requires(ItemTags.CHICKEN_FOOD)
                 .unlockedBy("has_seeds", has(ItemTags.CHICKEN_FOOD))
@@ -110,7 +111,7 @@ public class MFURecipeProvider extends RecipeProvider {
                 .pattern("GSG")
                 .define('G', Items.IRON_INGOT)
                 .define('P', Items.DIAMOND)
-                .define('H', MFUTags.Items.EXPERIENCE_BUCKET)
+                .define('H', new FluidTagBucketIngredient(MFUTags.Fluids.EXPERIENCE).toVanilla())
                 .define('S', Items.OBSIDIAN)
                 .unlockedBy("has_diamond", has(Items.DIAMOND))
                 .save(output);
