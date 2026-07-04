@@ -111,7 +111,7 @@ public class MFURecipeProvider extends RecipeProvider {
                 .pattern("GSG")
                 .define('G', Items.IRON_INGOT)
                 .define('P', Items.DIAMOND)
-                .define('H', MFUTags.Items.EXPERIENCE_BUCKET)
+                .define('H', new FluidTagBucketIngredient(MFUTags.Fluids.EXPERIENCE).toVanilla())
                 .define('S', Items.OBSIDIAN)
                 .unlockedBy("has_diamond", has(Items.DIAMOND))
                 .save(output);

@@ -54,9 +54,6 @@ public class MFUItemTagProvider extends ItemTagsProvider {
                 .add(key(MFUItems.INFUSED_CHARCOAL.get()))
                 .addTag(ItemTags.COALS);
 
-        tag(MFUTags.Items.EXPERIENCE_BUCKET)
-                .add(key(MFUFluids.LIQUID_XP_BUCKET.get()));
-
         tag(MFUTags.Items.GLIMMER_SPROUT_CRAFTING_ING)
                 .add(key(Items.FEATHER))
                 .add(key(Items.LEATHER))

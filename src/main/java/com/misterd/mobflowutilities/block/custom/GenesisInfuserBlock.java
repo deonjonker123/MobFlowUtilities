@@ -107,7 +107,7 @@ public class GenesisInfuserBlock extends BaseEntityBlock {
         if (level.isClientSide()) return InteractionResult.SUCCESS;
         if (!(level.getBlockEntity(pos) instanceof GenesisInfuserBlockEntity infuser)) return InteractionResult.SUCCESS;
 
-        if (stack.is(MFUTags.Items.EXPERIENCE_BUCKET) && stack.getItem() instanceof BucketItem bucketItem) {
+        if (stack.getItem() instanceof BucketItem bucketItem && isExperienceFluid(bucketItem.content)) {
             if (tryFillFromBucket(infuser, bucketItem, player, stack, level, pos)) return InteractionResult.SUCCESS;
         }
 
@@ -119,6 +119,10 @@ public class GenesisInfuserBlock extends BaseEntityBlock {
             serverPlayer.openMenu(new SimpleMenuProvider(infuser, Component.translatable("gui.mobflowutilities.genesis_infuser")), pos);
         }
         return InteractionResult.SUCCESS;
+    }
+
+    private static boolean isExperienceFluid(Fluid fluid) {
+        return fluid != null && fluid.builtInRegistryHolder().is(MFUTags.Fluids.EXPERIENCE);
     }
 
     private boolean tryFillFromBucket(GenesisInfuserBlockEntity infuser, BucketItem bucketItem, Player player, ItemStack stack, Level level, BlockPos pos) {
