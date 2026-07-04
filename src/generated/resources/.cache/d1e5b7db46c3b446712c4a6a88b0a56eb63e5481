@@ -1,4 +1,4 @@
-// 26.2	2026-07-04T13:15:17.7291722	My Recipes
+// 26.2	2026-07-04T13:22:35.8822704	My Recipes
 ebd769f8d9a5427c390cc3706281024eeb89c5d2 data/mobflowutilities/advancement/recipes/misc/bane_of_arthropods_module.json
 e83c465d1f9010a28acd16e01fce7e92de02b5ae data/mobflowutilities/advancement/recipes/misc/collector.json
 e0c9c86edc73dc2987ca83b0b4c923327626dd37 data/mobflowutilities/advancement/recipes/misc/collector_reset.json
@@ -50,8 +50,8 @@ b520ea247ec7903f0ca51c22e06bc95629c605bb data/mobflowutilities/recipe/flow_pad_f
 fa72e2c734bb9f326fba2006b81498e47235d049 data/mobflowutilities/recipe/gigatank.json
 48df5a7f95f8ac960d7dc0ae601aae55bb5b45b0 data/mobflowutilities/recipe/glimmer_lamp.json
 9715ce384f6d171a90c8c70cdadc323978281a79 data/mobflowutilities/recipe/glimmer_sprout.json
-9085a487436f4a33759050aaea29102b31f3e302 data/mobflowutilities/recipe/gloom_spore.json
-4c5023168b20d2c6d9508b53b3b7875c97592b57 data/mobflowutilities/recipe/life_catalyst.json
+981bcf22a147521ab571cb16dff10989a062c2a3 data/mobflowutilities/recipe/gloom_spore.json
+eff75b9455ea128e0ab233e7a07fc6d8646721f9 data/mobflowutilities/recipe/life_catalyst.json
 cbf9a9faaf2185f38a6c3c494a519ccc6050e186 data/mobflowutilities/recipe/looting_module.json
 816e875bf3b6cda7f5bee82f871f16db7fb8197c data/mobflowutilities/recipe/mob_catcher.json
 1bf0d833ab01b4ac59ec21833add455472bfcd45 data/mobflowutilities/recipe/pad_wrench.json
