@@ -1,9 +1,9 @@
-package com.misterd.mobflowutilities.entity.custom;
+package com.misterd.mobflowutilities.blockentity.custom;
 
 import com.misterd.mobflowutilities.block.MFUBlocks;
 import java.util.List;
 
-import com.misterd.mobflowutilities.entity.MFUBlockEntities;
+import com.misterd.mobflowutilities.blockentity.MFUBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;

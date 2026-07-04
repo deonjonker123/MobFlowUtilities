@@ -1,6 +1,6 @@
 package com.misterd.mobflowutilities.fluid;
 
-import com.misterd.mobflowutilities.entity.custom.CollectorBlockEntity;
+import com.misterd.mobflowutilities.blockentity.custom.CollectorBlockEntity;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.TransferPreconditions;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;

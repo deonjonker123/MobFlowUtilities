@@ -1,6 +1,6 @@
 package com.misterd.mobflowutilities.network;
 
-import com.misterd.mobflowutilities.entity.custom.CollectorBlockEntity;
+import com.misterd.mobflowutilities.blockentity.custom.CollectorBlockEntity;
 import com.misterd.mobflowutilities.util.MFUExperienceUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;

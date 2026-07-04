@@ -1,7 +1,7 @@
-package com.misterd.mobflowutilities.entity.custom;
+package com.misterd.mobflowutilities.blockentity.custom;
 
 import com.misterd.mobflowutilities.block.custom.FanBlock;
-import com.misterd.mobflowutilities.entity.MFUBlockEntities;
+import com.misterd.mobflowutilities.blockentity.MFUBlockEntities;
 import com.misterd.mobflowutilities.gui.custom.FanMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -30,7 +30,6 @@ import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 
 import javax.annotation.Nullable;
-import java.util.List;
 
 public class FanBlockEntity extends BlockEntity implements MenuProvider {
 

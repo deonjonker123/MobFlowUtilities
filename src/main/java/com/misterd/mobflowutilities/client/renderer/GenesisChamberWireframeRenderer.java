@@ -1,6 +1,6 @@
 package com.misterd.mobflowutilities.client.renderer;
 
-import com.misterd.mobflowutilities.entity.custom.GenesisChamberBlockEntity;
+import com.misterd.mobflowutilities.blockentity.custom.GenesisChamberBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
@@ -17,7 +17,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ExtractLevelRenderStateEvent;

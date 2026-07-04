@@ -158,10 +158,10 @@ public class MFURecipeProvider extends RecipeProvider {
         shaped(RecipeCategory.TOOLS, MFUItems.PAD_WRENCH.get())
                 .pattern(" G ")
                 .pattern(" SG")
-                .pattern("S  ")
+                .pattern("G  ")
                 .define('G', Items.IRON_INGOT)
-                .define('S', Items.STICK)
-                .unlockedBy("has_stick", has(Items.STICK))
+                .define('S', Items.GOLD_INGOT)
+                .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
                 .save(output);
 
         shaped(RecipeCategory.MISC, MFUItems.SHARPNESS_MODULE.get())

@@ -2,8 +2,8 @@ package com.misterd.mobflowutilities.client.renderer;
 
 import com.misterd.mobflowutilities.component.MFUDataComponents;
 import com.misterd.mobflowutilities.component.custom.PadWrenchData;
-import com.misterd.mobflowutilities.entity.custom.ControllerBlockEntity;
-import com.misterd.mobflowutilities.entity.custom.DamagePadBlockEntity;
+import com.misterd.mobflowutilities.blockentity.custom.ControllerBlockEntity;
+import com.misterd.mobflowutilities.blockentity.custom.DamagePadBlockEntity;
 import com.misterd.mobflowutilities.item.custom.PadWrenchItem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -24,7 +24,6 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ExtractLevelRenderStateEvent;
@@ -32,7 +31,6 @@ import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @EventBusSubscriber(modid = "mobflowutilities", value = Dist.CLIENT)
 public class PadWrenchWireframeRenderer {

@@ -5,6 +5,8 @@ import com.misterd.mobflowutilities.config.Config;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -12,11 +14,17 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 
+import java.util.List;
+
 public class GloomSporeItem extends Item {
+
+    private static final List<TagKey<Block>> CONVERTIBLE_TAGS = List.of(
+            BlockTags.DIRT,
+            BlockTags.GRASS_BLOCKS
+    );
 
     public GloomSporeItem(Properties properties) {
         super(properties);
@@ -60,12 +68,9 @@ public class GloomSporeItem extends Item {
     }
 
     private boolean isConvertibleBlock(BlockState state) {
-        Block block = state.getBlock();
-        return block == Blocks.DIRT
-                || block == Blocks.GRASS_BLOCK
-                || block == Blocks.PODZOL
-                || block == Blocks.MYCELIUM
-                || block == Blocks.ROOTED_DIRT
-                || block == Blocks.COARSE_DIRT;
+        for (TagKey<Block> tag : CONVERTIBLE_TAGS) {
+            if (state.is(tag)) return true;
+        }
+        return false;
     }
 }

@@ -1,7 +1,7 @@
 package com.misterd.mobflowutilities.gui.custom;
 
 import com.misterd.mobflowutilities.block.MFUBlocks;
-import com.misterd.mobflowutilities.entity.custom.CollectorBlockEntity;
+import com.misterd.mobflowutilities.blockentity.custom.CollectorBlockEntity;
 import com.misterd.mobflowutilities.gui.MFUMenuTypes;
 import com.misterd.mobflowutilities.item.MFUItems;
 import net.minecraft.network.FriendlyByteBuf;

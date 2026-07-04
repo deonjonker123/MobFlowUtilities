@@ -1,9 +1,9 @@
-package com.misterd.mobflowutilities.entity.custom;
+package com.misterd.mobflowutilities.blockentity.custom;
 
 import com.misterd.mobflowutilities.block.custom.CollectorBlock;
 import com.misterd.mobflowutilities.component.MFUDataComponents;
 import com.misterd.mobflowutilities.component.custom.VoidFilterData;
-import com.misterd.mobflowutilities.entity.MFUBlockEntities;
+import com.misterd.mobflowutilities.blockentity.MFUBlockEntities;
 import com.misterd.mobflowutilities.fluid.LiquidXpFluidTank;
 import com.misterd.mobflowutilities.gui.custom.CollectorMenu;
 import com.misterd.mobflowutilities.item.MFUItems;

@@ -1,6 +1,6 @@
 package com.misterd.mobflowutilities.block.custom;
 
-import com.misterd.mobflowutilities.entity.custom.CollectorBlockEntity;
+import com.misterd.mobflowutilities.blockentity.custom.CollectorBlockEntity;
 import com.misterd.mobflowutilities.fluid.LiquidXpFluidTank;
 import com.misterd.mobflowutilities.fluid.MFUFluids;
 import com.mojang.serialization.MapCodec;

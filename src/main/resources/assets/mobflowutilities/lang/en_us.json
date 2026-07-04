@@ -216,5 +216,12 @@
   "tooltip.mobflowutilities.fan.wireframe_toggle": "Show/Hide Push Zone",
 
   "message.mobflowutilities.tank.full": "Tank is Full",
-  "message.mobflowutilities.tank.empty": "Tank is Empty"
+  "message.mobflowutilities.tank.empty": "Tank is Empty",
+
+  "item.mobflowutilities.pad_wrench.error.too_far": "Pad is too far from the controller (max %s blocks)",
+  "item.mobflowutilities.pad_wrench.error.controller_full": "Controller is full (max %s pads)",
+  "item.mobflowutilities.pad_wrench.error.controller_missing": "Selected controller no longer exists",
+  "item.mobflowutilities.pad_wrench.error.invalid": "Invalid link target",
+  "item.mobflowutilities.pad_wrench.multi.skipped_far": "%s pad(s) skipped: too far (max %s blocks)",
+  "item.mobflowutilities.pad_wrench.multi.skipped_full": "%s pad(s) skipped: controller full"
 }

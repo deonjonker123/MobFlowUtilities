@@ -1,6 +1,6 @@
 package com.misterd.mobflowutilities.client.renderer.ber;
 
-import com.misterd.mobflowutilities.entity.custom.GigaTankBlockEntity;
+import com.misterd.mobflowutilities.blockentity.custom.GigaTankBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;

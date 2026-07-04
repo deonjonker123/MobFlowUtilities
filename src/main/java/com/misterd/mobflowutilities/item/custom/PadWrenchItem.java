@@ -5,9 +5,9 @@ import java.util.function.Consumer;
 import com.misterd.mobflowutilities.block.custom.ControllerBlock;
 import com.misterd.mobflowutilities.block.custom.DamagePadBlock;
 import com.misterd.mobflowutilities.component.MFUDataComponents;
+import com.misterd.mobflowutilities.config.Config;
 import com.misterd.mobflowutilities.component.custom.PadWrenchData;
-import com.misterd.mobflowutilities.entity.custom.ControllerBlockEntity;
-import com.misterd.mobflowutilities.entity.custom.DamagePadBlockEntity;
+import com.misterd.mobflowutilities.blockentity.custom.DamagePadBlockEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -112,40 +112,29 @@ public class PadWrenchItem extends Item {
     private void handleSinglePadAction(Level level, BlockPos padPos, ItemStack stack, Player player) {
         PadWrenchData data = stack.getOrDefault(MFUDataComponents.PAD_WRENCH_DATA.get(), PadWrenchData.DEFAULT);
 
-        if (data.selectedController() == null) {
-            Component message = Component.translatable("item.mobflowutilities.pad_wrench.error.no_controller").withStyle(ChatFormatting.RED);
-            player.sendOverlayMessage(message);
-            return;
-        }
-
         BlockEntity be = level.getBlockEntity(padPos);
         if (!(be instanceof DamagePadBlockEntity padEntity)) {
             return;
         }
 
         if (data.operationMode() == PadWrenchData.OperationMode.ADD) {
-            padEntity.setControllerPos(data.selectedController());
-
-            BlockEntity controllerBE = level.getBlockEntity(data.selectedController());
-            if (controllerBE instanceof ControllerBlockEntity controller) {
-                controller.addPad(padPos);
+            if (data.selectedController() == null) {
+                player.sendOverlayMessage(Component.translatable("item.mobflowutilities.pad_wrench.error.no_controller").withStyle(ChatFormatting.RED));
+                return;
             }
 
-            Component message = Component.translatable("item.mobflowutilities.pad_wrench.pad.linked").withStyle(ChatFormatting.GREEN);
+            DamagePadBlockEntity.LinkResult result = padEntity.linkTo(data.selectedController());
+            Component message = switch (result) {
+                case SUCCESS -> Component.translatable("item.mobflowutilities.pad_wrench.pad.linked").withStyle(ChatFormatting.GREEN);
+                case TOO_FAR -> Component.translatable("item.mobflowutilities.pad_wrench.error.too_far", Config.getDamagePadConnectionRadius()).withStyle(ChatFormatting.RED);
+                case CONTROLLER_FULL -> Component.translatable("item.mobflowutilities.pad_wrench.error.controller_full", Config.getDamagePadMaxConnectedPads()).withStyle(ChatFormatting.RED);
+                case NO_CONTROLLER -> Component.translatable("item.mobflowutilities.pad_wrench.error.controller_missing").withStyle(ChatFormatting.RED);
+                case INVALID -> Component.translatable("item.mobflowutilities.pad_wrench.error.invalid").withStyle(ChatFormatting.RED);
+            };
             player.sendOverlayMessage(message);
         } else {
-            BlockPos oldControllerPos = padEntity.getControllerPos();
-            padEntity.clearControllerPos();
-
-            if (oldControllerPos != null) {
-                BlockEntity oldControllerBE = level.getBlockEntity(oldControllerPos);
-                if (oldControllerBE instanceof ControllerBlockEntity oldController) {
-                    oldController.removePad(padPos);
-                }
-            }
-
-            Component message = Component.translatable("item.mobflowutilities.pad_wrench.pad.unlinked").withStyle(ChatFormatting.RED);
-            player.sendOverlayMessage(message);
+            padEntity.unlink();
+            player.sendOverlayMessage(Component.translatable("item.mobflowutilities.pad_wrench.pad.unlinked").withStyle(ChatFormatting.RED));
         }
     }
 
@@ -184,15 +173,10 @@ public class PadWrenchItem extends Item {
         int minZ = Math.min(pos1.getZ(), pos2.getZ());
         int maxZ = Math.max(pos1.getZ(), pos2.getZ());
 
-        ControllerBlockEntity controller = null;
-        if (data.selectedController() != null) {
-            BlockEntity be = level.getBlockEntity(data.selectedController());
-            if (be instanceof ControllerBlockEntity controllerBE) {
-                controller = controllerBE;
-            }
-        }
-
-        int processedCount = 0;
+        int linked = 0;
+        int unlinked = 0;
+        int skippedTooFar = 0;
+        int skippedFull = 0;
 
         for (int x = minX; x <= maxX; x++) {
             for (int y = minY; y <= maxY; y++) {
@@ -205,31 +189,37 @@ public class PadWrenchItem extends Item {
                     if (!(maybePadBE instanceof DamagePadBlockEntity padEntity)) continue;
 
                     if (data.operationMode() == PadWrenchData.OperationMode.ADD) {
-                        padEntity.setControllerPos(data.selectedController());
-                        if (controller != null) {
-                            controller.addPad(currentPos);
+                        DamagePadBlockEntity.LinkResult result = padEntity.linkTo(data.selectedController());
+                        switch (result) {
+                            case SUCCESS -> linked++;
+                            case TOO_FAR -> skippedTooFar++;
+                            case CONTROLLER_FULL -> skippedFull++;
+                            case NO_CONTROLLER, INVALID -> { /* ignore silently */ }
                         }
                     } else {
-                        BlockPos oldControllerPos = padEntity.getControllerPos();
-                        padEntity.clearControllerPos();
-                        if (oldControllerPos != null) {
-                            BlockEntity oldControllerBE = level.getBlockEntity(oldControllerPos);
-                            if (oldControllerBE instanceof ControllerBlockEntity oldController) {
-                                oldController.removePad(currentPos);
-                            }
+                        if (padEntity.isLinked()) {
+                            padEntity.unlink();
+                            unlinked++;
                         }
                     }
-
-                    processedCount++;
                 }
             }
         }
 
+        int processedCount = data.operationMode() == PadWrenchData.OperationMode.ADD ? linked : unlinked;
         Component message = data.operationMode() == PadWrenchData.OperationMode.ADD
                 ? Component.translatable("item.mobflowutilities.pad_wrench.multi.linked", processedCount)
                 : Component.translatable("item.mobflowutilities.pad_wrench.multi.unlinked", processedCount);
-
         player.sendOverlayMessage(message);
+
+        if (data.operationMode() == PadWrenchData.OperationMode.ADD) {
+            if (skippedTooFar > 0) {
+                player.sendOverlayMessage(Component.translatable("item.mobflowutilities.pad_wrench.multi.skipped_far", skippedTooFar, Config.getDamagePadConnectionRadius()).withStyle(ChatFormatting.RED));
+            }
+            if (skippedFull > 0) {
+                player.sendOverlayMessage(Component.translatable("item.mobflowutilities.pad_wrench.multi.skipped_full", skippedFull).withStyle(ChatFormatting.RED));
+            }
+        }
     }
 
     @Override

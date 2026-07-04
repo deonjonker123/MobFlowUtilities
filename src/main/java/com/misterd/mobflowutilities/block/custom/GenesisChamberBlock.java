@@ -1,7 +1,7 @@
 package com.misterd.mobflowutilities.block.custom;
 
-import com.misterd.mobflowutilities.entity.MFUBlockEntities;
-import com.misterd.mobflowutilities.entity.custom.GenesisChamberBlockEntity;
+import com.misterd.mobflowutilities.blockentity.MFUBlockEntities;
+import com.misterd.mobflowutilities.blockentity.custom.GenesisChamberBlockEntity;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;

@@ -1,6 +1,6 @@
 package com.misterd.mobflowutilities.client.renderer.ber;
 
-import com.misterd.mobflowutilities.entity.custom.GenesisChamberBlockEntity;
+import com.misterd.mobflowutilities.blockentity.custom.GenesisChamberBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.renderer.SubmitNodeCollector;
