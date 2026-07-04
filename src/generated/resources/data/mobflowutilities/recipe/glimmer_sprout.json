@@ -1,8 +1,10 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "category": "misc",
   "ingredients": [
-    "#c:experience_bucket",
+    {
+      "neoforge:ingredient_type": "mobflowutilities:fluid_tag_bucket",
+      "fluid_tag": "c:experience"
+    },
     "#mobflowutilities:glimmer_sprout_crafting_ing",
     "#minecraft:chicken_food"
   ],

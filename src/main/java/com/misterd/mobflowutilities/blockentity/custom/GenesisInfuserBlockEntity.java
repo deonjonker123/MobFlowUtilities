@@ -1,7 +1,7 @@
-package com.misterd.mobflowutilities.entity.custom;
+package com.misterd.mobflowutilities.blockentity.custom;
 
 import com.misterd.mobflowutilities.config.Config;
-import com.misterd.mobflowutilities.entity.MFUBlockEntities;
+import com.misterd.mobflowutilities.blockentity.MFUBlockEntities;
 import com.misterd.mobflowutilities.gui.custom.GenesisInfuserMenu;
 import com.misterd.mobflowutilities.item.MFUItems;
 import com.misterd.mobflowutilities.util.MFUTags;

@@ -2,6 +2,7 @@ package com.misterd.mobflowutilities.datagen.custom;
 
 import com.misterd.mobflowutilities.block.MFUBlocks;
 import com.misterd.mobflowutilities.item.MFUItems;
+import com.misterd.mobflowutilities.recipe.FluidTagBucketIngredient;
 import com.misterd.mobflowutilities.util.MFUTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -40,21 +41,21 @@ public class MFURecipeProvider extends RecipeProvider {
                 .pattern("BEB")
                 .pattern("EPE")
                 .pattern("BEB")
-                .define('B', MFUTags.Items.EXPERIENCE_BUCKET)
+                .define('B', new FluidTagBucketIngredient(MFUTags.Fluids.EXPERIENCE).toVanilla())
                 .define('E', Items.ENDER_EYE)
                 .define('P', Items.ENDER_PEARL)
                 .unlockedBy("has_ender_eye", has(Items.ENDER_EYE))
                 .save(output);
 
         shapeless(RecipeCategory.MISC, MFUItems.GLOOM_SPORE.get())
-                .requires(MFUTags.Items.EXPERIENCE_BUCKET)
+                .requires(new FluidTagBucketIngredient(MFUTags.Fluids.EXPERIENCE).toVanilla())
                 .requires(MFUTags.Items.GLOOM_SPORE_CRAFTING_ING)
                 .requires(ItemTags.CHICKEN_FOOD)
                 .unlockedBy("has_seeds", has(ItemTags.CHICKEN_FOOD))
                 .save(output);
 
         shapeless(RecipeCategory.MISC, MFUItems.GLIMMER_SPROUT.get())
-                .requires(MFUTags.Items.EXPERIENCE_BUCKET)
+                .requires(new FluidTagBucketIngredient(MFUTags.Fluids.EXPERIENCE).toVanilla())
                 .requires(MFUTags.Items.GLIMMER_SPROUT_CRAFTING_ING)
                 .requires(ItemTags.CHICKEN_FOOD)
                 .unlockedBy("has_seeds", has(ItemTags.CHICKEN_FOOD))
@@ -158,10 +159,10 @@ public class MFURecipeProvider extends RecipeProvider {
         shaped(RecipeCategory.TOOLS, MFUItems.PAD_WRENCH.get())
                 .pattern(" G ")
                 .pattern(" SG")
-                .pattern("S  ")
+                .pattern("G  ")
                 .define('G', Items.IRON_INGOT)
-                .define('S', Items.STICK)
-                .unlockedBy("has_stick", has(Items.STICK))
+                .define('S', Items.GOLD_INGOT)
+                .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
                 .save(output);
 
         shaped(RecipeCategory.MISC, MFUItems.SHARPNESS_MODULE.get())

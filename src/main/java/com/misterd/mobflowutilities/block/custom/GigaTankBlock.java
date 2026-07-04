@@ -1,6 +1,6 @@
 package com.misterd.mobflowutilities.block.custom;
 
-import com.misterd.mobflowutilities.entity.custom.GigaTankBlockEntity;
+import com.misterd.mobflowutilities.blockentity.custom.GigaTankBlockEntity;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;

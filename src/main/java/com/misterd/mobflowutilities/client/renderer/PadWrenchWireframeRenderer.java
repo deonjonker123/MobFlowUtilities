@@ -2,8 +2,8 @@ package com.misterd.mobflowutilities.client.renderer;
 
 import com.misterd.mobflowutilities.component.MFUDataComponents;
 import com.misterd.mobflowutilities.component.custom.PadWrenchData;
-import com.misterd.mobflowutilities.entity.custom.ControllerBlockEntity;
-import com.misterd.mobflowutilities.entity.custom.DamagePadBlockEntity;
+import com.misterd.mobflowutilities.blockentity.custom.ControllerBlockEntity;
+import com.misterd.mobflowutilities.blockentity.custom.DamagePadBlockEntity;
 import com.misterd.mobflowutilities.item.custom.PadWrenchItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;

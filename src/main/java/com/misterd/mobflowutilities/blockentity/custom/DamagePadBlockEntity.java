@@ -1,7 +1,7 @@
-package com.misterd.mobflowutilities.entity.custom;
+package com.misterd.mobflowutilities.blockentity.custom;
 
 import com.misterd.mobflowutilities.block.custom.DamagePadBlock;
-import com.misterd.mobflowutilities.entity.MFUBlockEntities;
+import com.misterd.mobflowutilities.blockentity.MFUBlockEntities;
 import com.misterd.mobflowutilities.util.FakePlayerHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -138,7 +138,61 @@ public class DamagePadBlockEntity extends BlockEntity {
         return controllerPos != null && controllerPos.equals(pos);
     }
 
-    public void setControllerPos(@Nullable BlockPos pos) {
+    public enum LinkResult {
+        SUCCESS,
+        NO_CONTROLLER,
+        TOO_FAR,
+        CONTROLLER_FULL,
+        INVALID
+    }
+
+    public LinkResult linkTo(@Nullable BlockPos newControllerPos) {
+        if (level == null || level.isClientSide() || newControllerPos == null) {
+            return LinkResult.INVALID;
+        }
+
+        if (newControllerPos.equals(this.controllerPos)) {
+            return LinkResult.SUCCESS;
+        }
+
+        BlockEntity be = level.getBlockEntity(newControllerPos);
+        if (!(be instanceof ControllerBlockEntity controller)) {
+            return LinkResult.NO_CONTROLLER;
+        }
+
+        ControllerBlockEntity.PadLinkResult result = controller.addPad(this.worldPosition);
+        LinkResult mapped = switch (result) {
+            case SUCCESS, ALREADY_LINKED -> LinkResult.SUCCESS;
+            case TOO_FAR -> LinkResult.TOO_FAR;
+            case FULL -> LinkResult.CONTROLLER_FULL;
+        };
+        if (mapped != LinkResult.SUCCESS) {
+            return mapped;
+        }
+
+        if (this.controllerPos != null && !this.controllerPos.equals(newControllerPos)) {
+            BlockEntity oldBE = level.getBlockEntity(this.controllerPos);
+            if (oldBE instanceof ControllerBlockEntity oldController) {
+                oldController.removePad(this.worldPosition);
+            }
+        }
+
+        setControllerPosInternal(newControllerPos);
+        return LinkResult.SUCCESS;
+    }
+
+    public void unlink() {
+        if (this.controllerPos == null) return;
+        if (level != null && !level.isClientSide()) {
+            BlockEntity be = level.getBlockEntity(this.controllerPos);
+            if (be instanceof ControllerBlockEntity controller) {
+                controller.removePad(this.worldPosition);
+            }
+        }
+        setControllerPosInternal(null);
+    }
+
+    private void setControllerPosInternal(@Nullable BlockPos pos) {
         this.controllerPos = pos;
         setChanged();
         if (level != null && !level.isClientSide()) {
@@ -146,8 +200,6 @@ public class DamagePadBlockEntity extends BlockEntity {
             level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
         }
     }
-
-    public void clearControllerPos() { setControllerPos(null); }
 
     public void setPlacer(@Nullable Player player) {
         this.placer = player != null ? player.getUUID() : null;

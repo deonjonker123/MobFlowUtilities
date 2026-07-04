@@ -1,8 +1,8 @@
-package com.misterd.mobflowutilities.entity;
+package com.misterd.mobflowutilities.blockentity;
 
 import com.misterd.mobflowutilities.MobFlowUtilities;
 import com.misterd.mobflowutilities.block.MFUBlocks;
-import com.misterd.mobflowutilities.entity.custom.*;
+import com.misterd.mobflowutilities.blockentity.custom.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;

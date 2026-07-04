@@ -6,13 +6,12 @@ import com.misterd.mobflowutilities.client.renderer.ber.GenesisChamberBlockEntit
 import com.misterd.mobflowutilities.client.renderer.ber.GigaTankBlockEntityRenderer;
 import com.misterd.mobflowutilities.component.MFUDataComponents;
 import com.misterd.mobflowutilities.config.Config;
-import com.misterd.mobflowutilities.entity.MFUBlockEntities;
+import com.misterd.mobflowutilities.blockentity.MFUBlockEntities;
 import com.misterd.mobflowutilities.fluid.MFUFluids;
 import com.misterd.mobflowutilities.gui.MFUMenuTypes;
 import com.misterd.mobflowutilities.gui.custom.*;
 import com.misterd.mobflowutilities.item.MFUCreativeTab;
 import com.misterd.mobflowutilities.item.MFUItems;
-import com.misterd.mobflowutilities.loot.MFULootModifiers;
 import com.misterd.mobflowutilities.network.MFUNetwork;
 import com.misterd.mobflowutilities.recipe.MFURecipeSerializers;
 import com.mojang.logging.LogUtils;
@@ -48,7 +47,6 @@ public class MobFlowUtilities {
         MFUItems.register(modEventBus);
         MFUBlocks.register(modEventBus);
         MFUCreativeTab.register(modEventBus);
-        MFULootModifiers.register(modEventBus);
         MFURecipeSerializers.register(modEventBus);
         MFUBlockEntities.register(modEventBus);
         MFUMenuTypes.register(modEventBus);

@@ -1,6 +1,6 @@
 package com.misterd.mobflowutilities.client.renderer;
 
-import com.misterd.mobflowutilities.entity.custom.GenesisChamberBlockEntity;
+import com.misterd.mobflowutilities.blockentity.custom.GenesisChamberBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gizmos.Gizmos;

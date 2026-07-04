@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "key": {
     "F": "mobflowutilities:flow_pad_faster",
     "G": "minecraft:diamond",

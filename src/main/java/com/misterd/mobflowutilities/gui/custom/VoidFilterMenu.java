@@ -2,7 +2,7 @@ package com.misterd.mobflowutilities.gui.custom;
 
 import com.misterd.mobflowutilities.component.MFUDataComponents;
 import com.misterd.mobflowutilities.component.custom.VoidFilterData;
-import com.misterd.mobflowutilities.entity.custom.CollectorBlockEntity;
+import com.misterd.mobflowutilities.blockentity.custom.CollectorBlockEntity;
 import com.misterd.mobflowutilities.gui.MFUMenuTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;

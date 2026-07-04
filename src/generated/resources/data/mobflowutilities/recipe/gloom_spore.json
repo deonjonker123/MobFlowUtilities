@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "category": "misc",
   "ingredients": [
     "#c:experience_bucket",
     "#mobflowutilities:gloom_spore_crafting_ing",

@@ -1,7 +1,7 @@
 package com.misterd.mobflowutilities.gui.custom;
 
 import com.misterd.mobflowutilities.block.MFUBlocks;
-import com.misterd.mobflowutilities.entity.custom.GenesisChamberBlockEntity;
+import com.misterd.mobflowutilities.blockentity.custom.GenesisChamberBlockEntity;
 import com.misterd.mobflowutilities.gui.MFUMenuTypes;
 import com.misterd.mobflowutilities.item.MFUItems;
 import com.misterd.mobflowutilities.util.MFUTags;

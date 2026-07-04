@@ -1,6 +1,6 @@
 package com.misterd.mobflowutilities.network;
 
-import com.misterd.mobflowutilities.entity.custom.CollectorBlockEntity;
+import com.misterd.mobflowutilities.blockentity.custom.CollectorBlockEntity;
 import com.misterd.mobflowutilities.gui.custom.VoidFilterMenu;
 import com.misterd.mobflowutilities.item.custom.VoidFilterItem;
 import io.netty.buffer.ByteBuf;

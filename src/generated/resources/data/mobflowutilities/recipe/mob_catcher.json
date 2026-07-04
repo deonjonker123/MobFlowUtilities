@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "key": {
     "E": "minecraft:ender_pearl",
     "G": "minecraft:lapis_block",

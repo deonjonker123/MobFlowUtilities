@@ -30,6 +30,9 @@ public class Config {
     private static ModConfigSpec.IntValue GENESIS_INFUSER_PROCESS_TICKS;
     private static ModConfigSpec.IntValue GENESIS_INFUSER_XP_COST;
 
+    private static ModConfigSpec.IntValue DAMAGE_PAD_MAX_CONNECTED_PADS;
+    private static ModConfigSpec.IntValue DAMAGE_PAD_CONNECTION_RADIUS;
+
     static {
         buildCommonConfig();
         COMMON_CONFIG = COMMON_BUILDER.build();
@@ -46,6 +49,7 @@ public class Config {
         buildGlimmerGrassConfig();
         buildGenesisChamberConfig();
         buildGenesisInfuserConfig();
+        buildDamagePadConfig();
     }
 
     private static void buildGloomSporeConfig() {
@@ -181,6 +185,27 @@ public class Config {
         COMMON_BUILDER.pop();
     }
 
+    private static void buildDamagePadConfig() {
+        COMMON_BUILDER.comment("Damage Pad - Configure controller linking settings for Damage Pads")
+                .push("damage_pad");
+
+        DAMAGE_PAD_MAX_CONNECTED_PADS = COMMON_BUILDER
+                .comment(
+                        "Maximum number of Damage Pads a single Controller can have linked",
+                        "Higher numbers allow larger setups but may impact performance"
+                )
+                .defineInRange("max_connected_pads", 25, 5, 250);
+
+        DAMAGE_PAD_CONNECTION_RADIUS = COMMON_BUILDER
+                .comment(
+                        "Maximum distance (blocks) a Damage Pad can be from a Controller to be linked",
+                        "Higher numbers allow more spread out setups"
+                )
+                .defineInRange("connection_radius", 8, 1, 64);
+
+        COMMON_BUILDER.pop();
+    }
+
     public static int getGloomSporeConversionArea() {
         return GLOOM_SPORE_CONVERSION_AREA.get();
     }
@@ -229,6 +254,14 @@ public class Config {
         return GENESIS_INFUSER_XP_COST.get();
     }
 
+    public static int getDamagePadMaxConnectedPads() {
+        return DAMAGE_PAD_MAX_CONNECTED_PADS.get();
+    }
+
+    public static int getDamagePadConnectionRadius() {
+        return DAMAGE_PAD_CONNECTION_RADIUS.get();
+    }
+
     private static void validateConfig() {
         if (getDarkDirtMobsPerArea() > 25) {
             LOGGER.warn(
@@ -271,6 +304,20 @@ public class Config {
                     getGenesisInfuserProcessTicks()
             );
         }
+
+        if (getDamagePadMaxConnectedPads() > 60) {
+            LOGGER.warn(
+                    "Damage Pad max connected pads ({}) is very high and may impact server performance!",
+                    getDamagePadMaxConnectedPads()
+            );
+        }
+
+        if (getDamagePadConnectionRadius() > 32) {
+            LOGGER.warn(
+                    "Damage Pad connection radius ({} blocks) is very large and may impact server performance!",
+                    getDamagePadConnectionRadius()
+            );
+        }
     }
 
     @SubscribeEvent
@@ -306,5 +353,9 @@ public class Config {
         LOGGER.info("Genesis Infuser Configuration:");
         LOGGER.info("  Process Time: {} ticks", getGenesisInfuserProcessTicks());
         LOGGER.info("  XP Cost: {} mB per item", getGenesisInfuserXpCost());
+
+        LOGGER.info("Damage Pad Configuration:");
+        LOGGER.info("  Max Connected Pads: {}", getDamagePadMaxConnectedPads());
+        LOGGER.info("  Connection Radius: {} blocks", getDamagePadConnectionRadius());
     }
 }

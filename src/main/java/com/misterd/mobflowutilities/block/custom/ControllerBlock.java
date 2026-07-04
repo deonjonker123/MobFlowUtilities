@@ -2,7 +2,7 @@ package com.misterd.mobflowutilities.block.custom;
 
 import com.misterd.mobflowutilities.component.MFUDataComponents;
 import com.misterd.mobflowutilities.component.custom.PadWrenchData;
-import com.misterd.mobflowutilities.entity.custom.ControllerBlockEntity;
+import com.misterd.mobflowutilities.blockentity.custom.ControllerBlockEntity;
 import com.misterd.mobflowutilities.item.custom.PadWrenchItem;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;

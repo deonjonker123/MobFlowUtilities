@@ -1,6 +1,6 @@
 package com.misterd.mobflowutilities.block.custom;
 
-import com.misterd.mobflowutilities.entity.custom.DamagePadBlockEntity;
+import com.misterd.mobflowutilities.blockentity.custom.DamagePadBlockEntity;
 import com.mojang.serialization.MapCodec;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;

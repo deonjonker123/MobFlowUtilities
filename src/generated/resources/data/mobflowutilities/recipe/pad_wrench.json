@@ -3,12 +3,12 @@
   "category": "equipment",
   "key": {
     "G": "minecraft:iron_ingot",
-    "S": "minecraft:stick"
+    "S": "minecraft:gold_ingot"
   },
   "pattern": [
     " G ",
     " SG",
-    "S  "
+    "G  "
   ],
   "result": {
     "id": "mobflowutilities:pad_wrench"

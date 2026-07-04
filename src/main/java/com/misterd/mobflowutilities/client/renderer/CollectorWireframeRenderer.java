@@ -1,6 +1,6 @@
 package com.misterd.mobflowutilities.client.renderer;
 
-import com.misterd.mobflowutilities.entity.custom.CollectorBlockEntity;
+import com.misterd.mobflowutilities.blockentity.custom.CollectorBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gizmos.Gizmos;
