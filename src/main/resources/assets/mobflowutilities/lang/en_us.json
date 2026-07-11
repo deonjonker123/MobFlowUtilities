@@ -127,8 +127,8 @@
   "item.mobflowutilities.pad_wrench.multi.unlinked": "Unlinked %d Attack Pads",
   "item.mobflowutilities.pad_wrench.controller.cleared": "Controller Removed - Pad Wrench Cleared",
 
-  "item.mobflowutilities.pad_wrench.tooltip.operation.add": "Operation: Add",
-  "item.mobflowutilities.pad_wrench.tooltip.operation.remove": "Operation: Remove",
+  "item.mobflowutilities.pad_wrench.tooltip.operation.add": "Operation: Link",
+  "item.mobflowutilities.pad_wrench.tooltip.operation.remove": "Operation: Unlink",
   "item.mobflowutilities.pad_wrench.tooltip.selection.single": "Selection Mode: Single",
   "item.mobflowutilities.pad_wrench.tooltip.selection.multi": "Selection Mode: Multi",
   "item.mobflowutilities.pad_wrench.tooltip.controller.selected": "Controller: %d, %d, %d",
