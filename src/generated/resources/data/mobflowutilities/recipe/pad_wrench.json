@@ -6,13 +6,13 @@
       "item": "minecraft:iron_ingot"
     },
     "S": {
-      "item": "minecraft:stick"
+      "item": "minecraft:gold_ingot"
     }
   },
   "pattern": [
     " G ",
     " SG",
-    "S  "
+    "G  "
   ],
   "result": {
     "count": 1,

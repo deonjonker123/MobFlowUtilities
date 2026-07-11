@@ -19,12 +19,14 @@ public class MFUTags {
     }
 
     public static class Items {
-        public static final TagKey<Item> MOBFLOWUTILITIES_TOOLS = createTag("mobflowutilities_tools");
-        public static final TagKey<Item> MOBFLOWUTILITIES_MODULES = createTag("mobflowutilities_modules");
-        public static final TagKey<Item> GENESIS_CHAMBER_FUELS = createTag("genesis_chamber_fuels");
+        public static final TagKey<Item> MOBFLOWUTILITIES_MODULES = createTag("mobflowutilities", "mobflowutilities_modules");
+        public static final TagKey<Item> GENESIS_CHAMBER_FUELS = createTag("mobflowutilities", "genesis_chamber_fuels");
+        public static final TagKey<Item> WRENCHES = createTag("c", "wrenches");
+        public static final TagKey<Item> WRENCH = createTag("c", "tools/wrench");
+        public static final TagKey<Item> TOOL = createTag("c", "tools");
 
-        private static TagKey<Item> createTag(String name) {
-            return ItemTags.create(ResourceLocation.fromNamespaceAndPath("mobflowutilities", name));
+        private static TagKey<Item> createTag(String namespace, String name) {
+            return ItemTags.create(ResourceLocation.fromNamespaceAndPath(namespace, name));
         }
     }
 }

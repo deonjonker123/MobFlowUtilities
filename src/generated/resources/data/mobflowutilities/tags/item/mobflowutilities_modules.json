@@ -6,6 +6,13 @@
     "mobflowutilities:smite_module",
     "mobflowutilities:looting_module",
     "mobflowutilities:radius_increase_module",
+    "mobflowutilities:void_filter_module",
+    "mobflowutilities:bane_of_arthropods_module",
+    "mobflowutilities:fire_aspect_module",
+    "mobflowutilities:sharpness_module",
+    "mobflowutilities:smite_module",
+    "mobflowutilities:looting_module",
+    "mobflowutilities:radius_increase_module",
     "mobflowutilities:void_filter_module"
   ]
 }

@@ -1,4 +1,6 @@
-// 1.21.1	2025-12-22T15:14:24.2484503	Tags for minecraft:item mod id mobflowutilities
-f1ab6116f631caaa4488d41f8a895179660770e1 data/mobflowutilities/tags/item/genesis_chamber_fuels.json
-150aeaab2c59aacf471df45cbbdbf1cd23597b35 data/mobflowutilities/tags/item/mobflowutilities_modules.json
-b3e0f340b209eef598937c94b091fd38811675fe data/mobflowutilities/tags/item/mobflowutilities_tools.json
+// 1.21.1	2026-07-11T10:08:51.6837446	Tags for minecraft:item mod id mobflowutilities
+79e1103840230bca1dc120751749214e35cfc5bb data/c/tags/item/tools.json
+79e1103840230bca1dc120751749214e35cfc5bb data/c/tags/item/tools/wrench.json
+79e1103840230bca1dc120751749214e35cfc5bb data/c/tags/item/wrenches.json
+429ecf6d549f3019253d794dc6c97bed7195b48f data/mobflowutilities/tags/item/genesis_chamber_fuels.json
+643f0a7c97f00aa43163fb2b935404880ddf66c7 data/mobflowutilities/tags/item/mobflowutilities_modules.json

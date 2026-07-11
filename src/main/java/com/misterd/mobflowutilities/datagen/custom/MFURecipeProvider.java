@@ -64,7 +64,7 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_diamond", has(Items.DIAMOND))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUBlocks.DAMAGE_PAD.get(), 4)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUBlocks.DAMAGE_PAD.get(), 5)
                 .pattern("ISI")
                 .pattern("SGS")
                 .pattern("ISI")
@@ -107,10 +107,10 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, MFUItems.PAD_WRENCH.get())
                 .pattern(" G ")
                 .pattern(" SG")
-                .pattern("S  ")
+                .pattern("G  ")
                 .define('G', Items.IRON_INGOT)
-                .define('S', Items.STICK)
-                .unlockedBy("has_stick", has(Items.STICK))
+                .define('S', Items.GOLD_INGOT)
+                .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUItems.SHARPNESS_MODULE.get())

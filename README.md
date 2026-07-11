@@ -1,61 +1,50 @@
-![MFU](https://raw.githubusercontent.com/deonjonker123/MobFlowUtilities/refs/heads/26.1.2/banner.png)
 ## Automate Mobs
 
-A mob farming automation mod. Flow pads and fans push mobs where you want them, attack pads kill them, and collectors pick up whatever they drop.
-
-## Features
+A mob farming automation mod.
 
 ### Flow Pads
 
-*   **Directional Movement**: Push mobs and items in the direction you place them
-*   **Three Speed Tiers**: Fast, Faster, and Fastest for different flow rates
-*   **Waterloggable**: Works seamlessly with water-based farm designs
-*   **No Configuration**: Direction set by placement orientation
+*   Push mobs and items in the direction you place them
 
 ### Damage Pads + Controller
 
-*   **Centralized Damage Control**: One Controller manages multiple Damage Pads
-*   **Pad Wrench Linking**: Connect pads to controllers with visual feedback
-*   **Stackable Enchantment Modules**: Up to 10 modules per slot
-    *   **Sharpness**: Increased damage output
-    *   **Fire Aspect**: Burning damage over time
-    *   **Smite**: Specialized undead damage
-    *   **Bane of Arthropods**: Arthropod-specific damage
-    *   **Looting**: Enhanced drop rates
-*   **Redstone Activation**: Damage Pads require a redstone signal to operate
-*   **Enderman Teleport Blocking**: Damage Pads prevent Endermen from escaping
+*   One Controller manages multiple Damage Pads in multiple farms
+*   Connect pads to a controllers with the pad wrench
+*   5 damage enchantment slots, up to 10 modules per slot
+    *  Sharpness
+    *   Fire Aspect
+    *   Smite
+    *   Bane of Arthropods
+    *   Looting
+*   Requires a redstone signal to work
+*   Prevents Endermen from teleporting
 
 ### Collector Block
 
-*   **Configurable Collection Zone**: Adjust pickup radius with Radius Increase Modules
-*   **Zone Positioning**: Offset collection area in any direction
-*   **XP Storage**: Collect and store experience with level-based deposit/withdrawal
-*   **Void Filtering**: Automatically delete unwanted items with up to 3 configurable filter modules
-*   **Visual Zone Preview**: Wireframe overlay shows collection boundaries
+*   Configurable collection area and size. Can be increased with modules
+*   Can collect and store XP
+*   Automatically trash junk with up to 3 filter modules (45 slots per filter)
 
 ### Genesis Chamber
 
-*   **Automated Mob Spawning**: Spawn mobs from spawn eggs using fuel
-*   **Fuel System**: Uses vanilla furnace fuels (coal, lava buckets, etc.)
-*   **Configurable Spawn Zone**: 5x5 base area, expandable to 10x10 with Radius Increase Modules
-*   **Speed Control**: Base 200 tick spawn interval, reducible to 50 ticks with Speed Modules
-*   **Light Level Aware**: Respects vanilla spawning rules (hostiles in darkness, passives in light)
-*   **Spawn Cap**: Configurable mob limit per zone (default 12)
-*   **3-Axis Positioning**: Offset spawn zone in any direction with wireframe preview
-*   **Automation Ready**: Accepts fuel from hoppers/pipes automatically
+*   Spawn mobs from spawn eggs using fuel
+*   Uses most vanilla furnace fuels (coal, lava buckets, blaze rods, etc.)
+*   5x5 spawn area, expandable to 10x10 with modules
+*   Base 200 tick spawn interval, down to 50 ticks with Speed Modules
+*   Respects vanilla spawning rules (hostiles in darkness, passives in light)
+*   Configurable mob limit per zone (default 12)
 
 ### Fan
 
-*   **Pushes mobs in the facing direction.**
-*   **Area of effect can be upgraded using fan upgrade module**
+Pushes mobs in the facing direction.
+*   Area of effect can be upgraded using fan upgrade module
 
 ### Pad Wrench
 
-*   **Operation Modes**: Add or Remove mode for linking/unlinking pads
-*   **Selection Types**: Single pad or area selection for bulk operations
-*   **Visual Feedback**: Wireframe highlights linked systems
+*   **Operation Modes**: Add or Remove mode
+*   **Selection Types**: Single pad or area selection
 
-### Mob Spawn Control
+### Mob Spawning
 
 *   **Gloom Spores**: Rare drops from hostile mobs that transform dirt into Dark Dirt
     *   Converts 5x5 area
@@ -72,11 +61,11 @@ A mob farming automation mod. Flow pads and fans push mobs where you want them, 
 
 ### Gene Sampling
 
-*   **Empty Gene Vial**: Used to collect genetic material from mobs
-*   **Gene Sample Vial**: Contains collected gene samples that can be used for crafting spawn eggs
-*   **Incubation Crystal**: Boss mob drop only, used for crafting spawn eggs
+*   **Empty Gene Vial**: Used to collect DNA from mobs
+*   **Gene Sample Vial**: Contains collected DNA that can be used for crafting spawn eggs
+*   **Life Catalyst**: Used for crafting spawn eggs
 
-Gene sampling allows players to collect gene samples from creatures using Empty Gene Vials, then combine the resulting Gene Sample Vials with Incubation Crystals and Emeralds to craft spawn eggs for use in the Genesis Chamber.
+Using a Gene Sample Vial with some DNA, a life Catalyst and an emerald, you can craft the sampled DNA into a spawn egg. Doesn't work on bosses (except the Warden, cause why not)
 
 ### Utility Tools
 
@@ -84,17 +73,5 @@ Gene sampling allows players to collect gene samples from creatures using Empty 
 
 ### Decorative Blocks
 
-*   **Dark Glass**: Blocks light transmission while maintaining transparency and is wither immune
-*   **Glimmer Lamp**: High-output decorative lighting
-
-### Configuration
-
-*   **Flexible Settings**: Adjust spawn rates, mob caps, particle effects, and more
-*   **Genesis Chamber Spawn Cap**: Configurable per-zone mob limit
-*   **Dark Dirt/Glimmer Grass**: Adjust spawn rates and check intervals
-*   **Conversion Areas**: Configure Gloom Spore and Glimmer Sprout conversion radius
-
-### Credit
-
-Some textures used in this mod were adapted from **"Unused Minecraft Textures" by Malcolm Riley** ([GitHub Repository](https://github.com/malcolmriley/unused-textures))  
-Licensed under the [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/).
+*   **Dark Glass**: Blocks light and is wither immune
+*   **Glimmer Lamp**: Fancier redstone lamp

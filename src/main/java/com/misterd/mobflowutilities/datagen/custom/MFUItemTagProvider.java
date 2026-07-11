@@ -6,6 +6,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -33,15 +34,30 @@ public class MFUItemTagProvider extends ItemTagsProvider {
                 .add(MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get())
                 .add(MFUItems.VOID_FILTER_MODULE.get());
 
-        tag(MFUTags.Items.MOBFLOWUTILITIES_TOOLS)
-                .add(MFUItems.PAD_WRENCH.get())
-                .add(MFUItems.MOB_CATCHER.get());
+        tag(MFUTags.Items.MOBFLOWUTILITIES_MODULES)
+                .add(MFUItems.BOA_MODULE.get())
+                .add(MFUItems.FIRE_ASPECT_MODULE.get())
+                .add(MFUItems.SHARPNESS_MODULE.get())
+                .add(MFUItems.SMITE_MODULE.get())
+                .add(MFUItems.LOOTING_MODULE.get())
+                .add(MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get())
+                .add(MFUItems.VOID_FILTER_MODULE.get());
+
+        tag(MFUTags.Items.WRENCH)
+                .add(MFUItems.PAD_WRENCH.get());
+
+        tag(MFUTags.Items.WRENCHES)
+                .add(MFUItems.PAD_WRENCH.get());
+
+        tag(MFUTags.Items.TOOL)
+                .add(MFUItems.PAD_WRENCH.get());
 
         tag(MFUTags.Items.GENESIS_CHAMBER_FUELS)
                 .add(Items.COAL)
                 .add(Items.CHARCOAL)
                 .add(Items.COAL_BLOCK)
                 .add(Items.BLAZE_ROD)
-                .add(Items.LAVA_BUCKET);
+                .add(Items.LAVA_BUCKET)
+                .addTag(ItemTags.COALS);
     }
 }
