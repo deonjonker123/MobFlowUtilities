@@ -114,8 +114,8 @@
 
   "tooltip.mobflowutilities.collector.edit_filter": "Edit Filter",
 
-  "item.mobflowutilities.pad_wrench.mode.add": "Add Mode",
-  "item.mobflowutilities.pad_wrench.mode.remove": "Remove Mode",
+  "item.mobflowutilities.pad_wrench.mode.add": "Link Mode",
+  "item.mobflowutilities.pad_wrench.mode.remove": "Unlink Mode",
   "item.mobflowutilities.pad_wrench.selection.single": "Single Selection",
   "item.mobflowutilities.pad_wrench.selection.multi": "Multi-Selection",
   "item.mobflowutilities.pad_wrench.controller.selected": "Selected Controller at %d, %d, %d",
