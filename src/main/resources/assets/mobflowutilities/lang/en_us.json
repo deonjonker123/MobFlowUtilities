@@ -155,8 +155,8 @@
   "tooltip.mobflowutilities.genesis_infuser.tank_empty": "Empty",
   "tooltip.mobflowutilities.genesis_infuser.progress": "Progress",
 
-  "item.mobflowutilities.pad_wrench.mode.add": "Add Mode",
-  "item.mobflowutilities.pad_wrench.mode.remove": "Remove Mode",
+  "item.mobflowutilities.pad_wrench.mode.add": "Link Mode",
+  "item.mobflowutilities.pad_wrench.mode.remove": "Unlink Mode",
   "item.mobflowutilities.pad_wrench.selection.single": "Single Selection",
   "item.mobflowutilities.pad_wrench.selection.multi": "Multi-Selection",
   "item.mobflowutilities.pad_wrench.controller.selected": "Selected Controller at %d, %d, %d",
@@ -168,8 +168,8 @@
   "item.mobflowutilities.pad_wrench.multi.unlinked": "Unlinked %d Attack Pads",
   "item.mobflowutilities.pad_wrench.controller.cleared": "Controller Removed - Pad Wrench Cleared",
 
-  "item.mobflowutilities.pad_wrench.tooltip.operation.add": "Operation: Add",
-  "item.mobflowutilities.pad_wrench.tooltip.operation.remove": "Operation: Remove",
+  "item.mobflowutilities.pad_wrench.tooltip.operation.add": "Operation: Link",
+  "item.mobflowutilities.pad_wrench.tooltip.operation.remove": "Operation: Unlink",
   "item.mobflowutilities.pad_wrench.tooltip.selection.single": "Selection Mode: Single",
   "item.mobflowutilities.pad_wrench.tooltip.selection.multi": "Selection Mode: Multi",
   "item.mobflowutilities.pad_wrench.tooltip.controller.selected": "Controller: %d, %d, %d",
