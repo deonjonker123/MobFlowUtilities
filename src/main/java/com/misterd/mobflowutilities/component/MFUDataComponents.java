@@ -1,7 +1,6 @@
 package com.misterd.mobflowutilities.component;
 
 import com.misterd.mobflowutilities.component.custom.PadWrenchData;
-import com.misterd.mobflowutilities.component.custom.VoidFilterData;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -14,14 +13,6 @@ public class MFUDataComponents {
 
     public static final DeferredRegister<DataComponentType<?>> DATA_COMPONENT_TYPES =
             DeferredRegister.create(Registries.DATA_COMPONENT_TYPE, "mobflowutilities");
-
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<VoidFilterData>> VOID_FILTER_DATA =
-            DATA_COMPONENT_TYPES.register("void_filter_data",
-                    () -> DataComponentType.<VoidFilterData>builder()
-                            .persistent(VoidFilterData.CODEC)
-                            .cacheEncoding()
-                            .build()
-            );
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<PadWrenchData>> PAD_WRENCH_DATA =
             DATA_COMPONENT_TYPES.register("pad_wrench_data",
