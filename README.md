@@ -25,9 +25,8 @@ A mob farming automation mod.
 
 *   Configurable collection area and size. Can be be increased with modules
 *   Can collect and store XP as a fluid.
-*   Automatically trash junk with up to 3 filter modules (45 slots per filter)
 
-### Genesis Chamber 
+### Genesis Chamber
 
 *   Spawn mobs from spawn eggs using fuel
 *   Uses most vanilla furnace fuels (coal, lava buckets, blaze rods, etc.)
