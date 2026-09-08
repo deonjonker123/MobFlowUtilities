@@ -1,3 +1,5 @@
+![MFU](https://raw.githubusercontent.com/deonjonker123/MobFlowUtilities/refs/heads/26.1.2/banner2.png)
+
 ## Automate Mobs
 
 A mob farming automation mod.
@@ -22,8 +24,7 @@ A mob farming automation mod.
 ### Collector Block
 
 *   Configurable collection area and size. Can be increased with modules
-*   Can collect and store XP
-*   Automatically trash junk with up to 3 filter modules (45 slots per filter)
+*   Can collect and store XP as a fluid.
 
 ### Genesis Chamber
 
@@ -46,16 +47,18 @@ Pushes mobs in the facing direction.
 
 ### Mob Spawning
 
-*   **Gloom Spores**: Rare drops from hostile mobs that transform dirt into Dark Dirt
+*   **Gloom Spores**: Craftable item that transforms dirt into Dark Dirt
     *   Converts 5x5 area
-    *   Only spawns mobs in low light conditions
-*   **Dark Dirt**: Accelerated hostile mob spawning blocks
-    *   Spawns up to 12 hostile mobs per area
+    *   Can also be found in not-so-nice loot chests (fortress, bastion, stronghold, etc)
+*   **Dark Dirt**: Hostile mob spawning blocks
+    *   Spawns up to 12 hostile mobs per area (can be changed in config)
     *   Functions in darkness, ignores player proximity
     *   Reverts to dirt in direct sunlight
-*   **Glimmer Sprouts**: Rare drops from passive mobs that transform dirt into Glimmer Grass
+    *   Giving the dark dirt a redstone signal accelerates spawn tick rate for faster spawn bursts
+*   **Glimmer Sprouts**: Craftable item that transforms dirt into Glimmer Grass
     *   Converts 5x5 area
-*   **Glimmer Grass**: Accelerated passive mob spawning blocks
+    *   Can also be found in friendly loot chests (villages, shipwrecks, etc)
+*   **Glimmer Grass**: Passive mob spawning blocks
     *   Spawns up to 12 passive mobs per area
     *   Functions in bright light, ignores player proximity
 
@@ -66,6 +69,10 @@ Pushes mobs in the facing direction.
 *   **Life Catalyst**: Used for crafting spawn eggs
 
 Using a Gene Sample Vial with some DNA, a life Catalyst and an emerald, you can craft the sampled DNA into a spawn egg. Doesn't work on bosses (except the Warden, cause why not)
+
+### Infused Coal and Charcoal
+
+*   Burns 8x longer than vanilla coal and charcoal. One Infused Coal/Charcoal can smelt a stack (64) of items.
 
 ### Utility Tools
 
