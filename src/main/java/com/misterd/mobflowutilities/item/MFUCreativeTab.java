@@ -2,6 +2,7 @@ package com.misterd.mobflowutilities.item;
 
 import com.misterd.mobflowutilities.MobFlowUtilities;
 import com.misterd.mobflowutilities.block.MFUBlocks;
+import com.misterd.mobflowutilities.fluid.MFUFluids;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -28,6 +29,7 @@ public class MFUCreativeTab {
                         output.accept(MFUBlocks.CONTROLLER);
                         output.accept(MFUBlocks.FAN);
                         output.accept(MFUBlocks.GENESIS_CHAMBER);
+                        output.accept(MFUBlocks.GIGATANK);
 
                         output.accept(MFUBlocks.DARK_DIRT);
                         output.accept(MFUBlocks.GLIMMER_GRASS);
@@ -43,12 +45,12 @@ public class MFUCreativeTab {
                         output.accept(MFUItems.LOOTING_MODULE);
                         output.accept(MFUItems.SMITE_MODULE);
                         output.accept(MFUItems.COLLECTION_RADIUS_INCREASE_MODULE);
-                        output.accept(MFUItems.VOID_FILTER_MODULE);
                         output.accept(MFUItems.SPEED_MODULE);
                         output.accept(MFUItems.FAN_WIDTH_INCREASE_MODULE);
                         output.accept(MFUItems.FAN_HEIGHT_INCREASE_MODULE);
                         output.accept(MFUItems.FAN_DISTANCE_INCREASE_MODULE);
 
+                        output.accept(MFUFluids.LIQUID_XP_BUCKET.get());
                         output.accept(MFUItems.GLOOM_SPORE);
                         output.accept(MFUItems.GLIMMER_SPROUT);
                         output.accept(MFUItems.LIFE_CATALYST);

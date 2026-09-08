@@ -1,6 +1,8 @@
-// 1.21.1	2026-07-11T10:08:51.6837446	Tags for minecraft:item mod id mobflowutilities
+// 1.21.1	2026-09-08T20:41:42.7679312	Tags for minecraft:item mod id mobflowutilities
 79e1103840230bca1dc120751749214e35cfc5bb data/c/tags/item/tools.json
 79e1103840230bca1dc120751749214e35cfc5bb data/c/tags/item/tools/wrench.json
 79e1103840230bca1dc120751749214e35cfc5bb data/c/tags/item/wrenches.json
 429ecf6d549f3019253d794dc6c97bed7195b48f data/mobflowutilities/tags/item/genesis_chamber_fuels.json
-643f0a7c97f00aa43163fb2b935404880ddf66c7 data/mobflowutilities/tags/item/mobflowutilities_modules.json
+a5efc556bb41a1ac5e13767b3e1a2cb0f0841e01 data/mobflowutilities/tags/item/glimmer_sprout_crafting_ing.json
+9a9433248f3e4f63f5e8cf8d90f5d024fe5baefe data/mobflowutilities/tags/item/gloom_spore_crafting_ing.json
+80e9f8d00c76ffccaf0d1d9b7fad06c68bd44cc8 data/mobflowutilities/tags/item/mobflowutilities_modules.json

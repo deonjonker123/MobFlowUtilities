@@ -127,9 +127,6 @@ public class MFUItems {
     public static final DeferredItem<Item> MOB_CATCHER = ITEMS.register("mob_catcher",
             () -> new MobCatcherItem(new Item.Properties().stacksTo(1)));
 
-    public static final DeferredItem<Item> VOID_FILTER_MODULE = ITEMS.register("void_filter_module",
-            () -> new VoidFilterItem(new Item.Properties().stacksTo(1)));
-
     public static final DeferredItem<Item> PAD_WRENCH = ITEMS.register("pad_wrench",
             () -> new PadWrenchItem(new Item.Properties()));
 

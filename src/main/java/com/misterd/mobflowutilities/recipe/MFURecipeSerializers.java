@@ -5,7 +5,9 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.common.crafting.IngredientType;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 import java.util.function.Supplier;
 
@@ -16,6 +18,9 @@ public class MFURecipeSerializers {
 
     public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES =
             DeferredRegister.create(BuiltInRegistries.RECIPE_TYPE, MobFlowUtilities.MODID);
+
+    public static final DeferredRegister<IngredientType<?>> INGREDIENT_TYPES =
+            DeferredRegister.create(NeoForgeRegistries.Keys.INGREDIENT_TYPES, MobFlowUtilities.MODID);
 
     public static final Supplier<RecipeSerializer<GeneticRecipe>> GENETIC_RECIPE =
             RECIPE_SERIALIZERS.register("genetic_recipe", GeneticRecipe.Serializer::new);
@@ -28,8 +33,13 @@ public class MFURecipeSerializers {
                 }
             });
 
+    public static final Supplier<IngredientType<FluidTagBucketIngredient>> FLUID_TAG_BUCKET =
+            INGREDIENT_TYPES.register("fluid_tag_bucket",
+                    () -> new IngredientType<>(FluidTagBucketIngredient.CODEC));
+
     public static void register(IEventBus eventBus) {
         RECIPE_SERIALIZERS.register(eventBus);
         RECIPE_TYPES.register(eventBus);
+        INGREDIENT_TYPES.register(eventBus);
     }
 }

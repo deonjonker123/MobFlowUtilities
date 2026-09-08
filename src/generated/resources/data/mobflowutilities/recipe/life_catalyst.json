@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "type": "mobflowutilities:fluid_tag_bucket",
+      "fluid_tag": "c:experience"
+    },
+    "E": {
+      "item": "minecraft:ender_eye"
+    },
+    "P": {
+      "item": "minecraft:ender_pearl"
+    }
+  },
+  "pattern": [
+    "BEB",
+    "EPE",
+    "BEB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mobflowutilities:life_catalyst"
+  }
+}

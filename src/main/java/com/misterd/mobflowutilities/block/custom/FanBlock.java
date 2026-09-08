@@ -1,7 +1,7 @@
 package com.misterd.mobflowutilities.block.custom;
 
-import com.misterd.mobflowutilities.entity.MFUBlockEntities;
-import com.misterd.mobflowutilities.entity.custom.FanBlockEntity;
+import com.misterd.mobflowutilities.blockentity.MFUBlockEntities;
+import com.misterd.mobflowutilities.blockentity.custom.FanBlockEntity;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

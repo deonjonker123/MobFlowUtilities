@@ -2,6 +2,8 @@ package com.misterd.mobflowutilities.datagen.custom;
 
 import com.misterd.mobflowutilities.block.MFUBlocks;
 import com.misterd.mobflowutilities.item.MFUItems;
+import com.misterd.mobflowutilities.recipe.FluidTagBucketIngredient;
+import com.misterd.mobflowutilities.util.MFUTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
@@ -20,6 +22,30 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
 
     @Override
     protected void buildRecipes(RecipeOutput recipeOutput) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUItems.LIFE_CATALYST.get())
+                .pattern("BEB")
+                .pattern("EPE")
+                .pattern("BEB")
+                .define('B', new FluidTagBucketIngredient(MFUTags.Fluids.EXPERIENCE).toVanilla())
+                .define('E', Items.ENDER_EYE)
+                .define('P', Items.ENDER_PEARL)
+                .unlockedBy("has_ender_eye", has(Items.ENDER_EYE))
+                .save(recipeOutput);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, MFUItems.GLOOM_SPORE.get())
+                .requires(new FluidTagBucketIngredient(MFUTags.Fluids.EXPERIENCE).toVanilla())
+                .requires(MFUTags.Items.GLOOM_SPORE_CRAFTING_ING)
+                .requires(ItemTags.CHICKEN_FOOD)
+                .unlockedBy("has_seeds", has(ItemTags.CHICKEN_FOOD))
+                .save(recipeOutput);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, MFUItems.GLIMMER_SPROUT.get())
+                .requires(new FluidTagBucketIngredient(MFUTags.Fluids.EXPERIENCE).toVanilla())
+                .requires(MFUTags.Items.GLIMMER_SPROUT_CRAFTING_ING)
+                .requires(ItemTags.CHICKEN_FOOD)
+                .unlockedBy("has_seeds", has(ItemTags.CHICKEN_FOOD))
+                .save(recipeOutput);
+
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUBlocks.CONTROLLER.get())
                 .pattern("GCG")
                 .pattern("IBI")
@@ -165,17 +191,6 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_gold_ingot", has(Items.GOLD_INGOT))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUItems.VOID_FILTER_MODULE.get())
-                .pattern("PPP")
-                .pattern("OHO")
-                .pattern("GOG")
-                .define('G', Items.IRON_INGOT)
-                .define('O', Tags.Items.OBSIDIANS)
-                .define('P', Items.PAPER)
-                .define('H', Items.HOPPER)
-                .unlockedBy("has_hopper", has(Items.HOPPER))
-                .save(recipeOutput);
-
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get())
                 .pattern("GEG")
                 .pattern("ERE")
@@ -227,11 +242,6 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .requires(MFUBlocks.COLLECTOR.get())
                 .unlockedBy("has_collector", has(MFUBlocks.COLLECTOR))
                 .save(recipeOutput, "mobflowutilities:collector_reset");
-
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, MFUItems.VOID_FILTER_MODULE.get())
-                .requires(MFUItems.VOID_FILTER_MODULE.get())
-                .unlockedBy("has_void_filter", has(MFUItems.VOID_FILTER_MODULE))
-                .save(recipeOutput, "mobflowutilities:void_filter_reset");
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUBlocks.DARK_GLASS.get(), 8)
                 .pattern("GXG")

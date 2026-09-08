@@ -31,8 +31,7 @@ public class MFUItemTagProvider extends ItemTagsProvider {
                 .add(MFUItems.SHARPNESS_MODULE.get())
                 .add(MFUItems.SMITE_MODULE.get())
                 .add(MFUItems.LOOTING_MODULE.get())
-                .add(MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get())
-                .add(MFUItems.VOID_FILTER_MODULE.get());
+                .add(MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get());
 
         tag(MFUTags.Items.MOBFLOWUTILITIES_MODULES)
                 .add(MFUItems.BOA_MODULE.get())
@@ -40,8 +39,7 @@ public class MFUItemTagProvider extends ItemTagsProvider {
                 .add(MFUItems.SHARPNESS_MODULE.get())
                 .add(MFUItems.SMITE_MODULE.get())
                 .add(MFUItems.LOOTING_MODULE.get())
-                .add(MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get())
-                .add(MFUItems.VOID_FILTER_MODULE.get());
+                .add(MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get());
 
         tag(MFUTags.Items.WRENCH)
                 .add(MFUItems.PAD_WRENCH.get());
@@ -59,5 +57,26 @@ public class MFUItemTagProvider extends ItemTagsProvider {
                 .add(Items.BLAZE_ROD)
                 .add(Items.LAVA_BUCKET)
                 .addTag(ItemTags.COALS);
+
+        tag(MFUTags.Items.GLIMMER_SPROUT_CRAFTING_ING)
+                .add(Items.FEATHER)
+                .add(Items.LEATHER)
+                .add(Items.RABBIT_HIDE)
+                .add(Items.RABBIT_FOOT)
+                .addTag(ItemTags.WOOL)
+                .add(Items.INK_SAC)
+                .add(Items.EGG)
+                .add(Items.GLOW_INK_SAC);
+
+        tag(MFUTags.Items.GLOOM_SPORE_CRAFTING_ING)
+                .add(Items.ROTTEN_FLESH)
+                .add(Items.BONE)
+                .add(Items.GUNPOWDER)
+                .add(Items.STRING)
+                .add(Items.SPIDER_EYE)
+                .add(Items.SKELETON_SKULL)
+                .add(Items.ZOMBIE_HEAD)
+                .add(Items.WITHER_SKELETON_SKULL)
+                .add(Items.CREEPER_HEAD);
     }
 }

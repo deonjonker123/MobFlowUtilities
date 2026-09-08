@@ -2,8 +2,8 @@ package com.misterd.mobflowutilities.network;
 
 import java.util.Optional;
 
-import com.misterd.mobflowutilities.entity.custom.CollectorBlockEntity;
-import com.misterd.mobflowutilities.entity.custom.GenesisChamberBlockEntity;
+import com.misterd.mobflowutilities.blockentity.custom.CollectorBlockEntity;
+import com.misterd.mobflowutilities.blockentity.custom.GenesisChamberBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;

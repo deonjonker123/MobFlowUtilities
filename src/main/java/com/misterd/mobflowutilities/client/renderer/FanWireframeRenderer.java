@@ -1,6 +1,6 @@
 package com.misterd.mobflowutilities.client.renderer;
 
-import com.misterd.mobflowutilities.entity.custom.FanBlockEntity;
+import com.misterd.mobflowutilities.blockentity.custom.FanBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;

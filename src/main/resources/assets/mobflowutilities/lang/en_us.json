@@ -23,6 +23,7 @@
   "block.mobflowutilities.dark_glass.subtitle": "Blocks light. Wither Immune",
   "block.mobflowutilities.glimmer_lamp": "Glimmer Lamp",
   "block.mobflowutilities.glimmer_lamp.subtitle": "Emits light when powered with redstone",
+  "block.mobflowutilities.gigatank": "Giga Tank",
 
   "item.mobflowutilities.bane_of_arthropods_module": "Bane of Arthropods Module",
   "item.mobflowutilities.bane_of_arthropods_module.subtitle": "Deals increased damage to spiders, silverfish, and other arthropods",
@@ -37,8 +38,6 @@
 
   "item.mobflowutilities.radius_increase_module": "Radius Increase Module",
   "item.mobflowutilities.radius_increase_module.subtitle": "Extends the pickup range of Collectors and spawn radius of the Genesis Chamber",
-  "item.mobflowutilities.void_filter_module": "Void Filter Module",
-  "item.mobflowutilities.void_filter_module.subtitle": "Destroys filtered items collected by Collectors",
   "item.mobflowutilities.speed_module": "Speed Module",
   "item.mobflowutilities.speed_module.subtitle": "Increases spawn rates of the Genesis Chamber",
 
@@ -55,17 +54,18 @@
   "item.mobflowutilities.mob_catcher": "Mob Catcher",
 
   "item.mobflowutilities.gloom_spore": "Gloom Spore",
-  "item.mobflowutilities.gloom_spore.subtitle": "Converts dirt-like blocks to Dark Dirt. Rare drop from hostile creatures and loot chests",
+  "item.mobflowutilities.gloom_spore.subtitle": "Converts dirt-like blocks to Dark Dirt.",
 
   "item.mobflowutilities.glimmer_sprout": "Glimmer Sprout",
-  "item.mobflowutilities.glimmer_sprout.subtitle": "Converts dirt-like blocks to Glimmer Grass. Rare drop from passive creatures and loot chests",
+  "item.mobflowutilities.glimmer_sprout.subtitle": "Converts dirt-like blocks to Glimmer Grass.",
 
   "item.mobflowutilities.life_catalyst": "Life Catalyst",
-  "item.mobflowutilities.life_catalyst.subtitle": "Crafting component for spawn eggs. Drops from bosses",
+  "item.mobflowutilities.life_catalyst.subtitle": "Crafting component for spawn eggs.",
 
   "item.mobflowutilities.empty_gene_vial": "Empty Gene Vial",
 
   "item.mobflowutilities.gene_sample_vial": "Gene Sample Vial",
+  "item.mobflowutilities.gigatank.subtitle": "Holds 1024 buckets",
 
   "menu.mobflowutilities.collector": "Collector",
   "menu.mobflowutilities.controller": "Controller",
@@ -80,7 +80,7 @@
   "gui.mobflowutilities.collector.offset.down_up": "D/U Offset",
   "gui.mobflowutilities.collector.offset.north_south": "N/S Offset",
   "gui.mobflowutilities.collector.offset.east_west": "E/W Offset",
-  "gui.mobflowutilities.collector.xp_levels_stored": "Levels Stored: %,d",
+  "gui.mobflowutilities.collector.xp_levels_stored": "%,d",
 
   "tooltip.mobflowutilities.controller.remove_pad": "Remove Selected Pad",
   "tooltip.mobflowutilities.controller.pad_coordinates": "Damage Pad at %d, %d, %d",
@@ -111,8 +111,6 @@
   "tooltip.mobflowutilities.collector.xp_collection.enabled": "Disable XP Collection",
   "tooltip.mobflowutilities.collector.xp_collection.disabled": "Enable XP Collection",
   "tooltip.mobflowutilities.collector.xp_display": "XP: %s",
-
-  "tooltip.mobflowutilities.collector.edit_filter": "Edit Filter",
 
   "item.mobflowutilities.pad_wrench.mode.add": "Link Mode",
   "item.mobflowutilities.pad_wrench.mode.remove": "Unlink Mode",
@@ -170,5 +168,12 @@
   "menu.mobflowutilities.fan": "Fan",
   "gui.mobflowutilities.fan": "Fan",
 
-  "tooltip.mobflowutilities.fan.wireframe_toggle": "Show/Hide Push Zone"
+  "tooltip.mobflowutilities.fan.wireframe_toggle": "Show/Hide Push Zone",
+
+  "message.mobflowutilities.tank.full": "Tank is Full",
+  "message.mobflowutilities.tank.empty": "Tank is Empty",
+
+  "fluid_type.mobflowutilities.liquid_xp": "Liquid XP",
+  "block.mobflowutilities.liquid_xp_block": "Liquid XP",
+  "item.mobflowutilities.liquid_xp_bucket": "Liquid XP Bucket"
 }

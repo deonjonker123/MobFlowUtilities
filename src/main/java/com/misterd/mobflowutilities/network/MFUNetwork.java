@@ -23,11 +23,5 @@ public class MFUNetwork {
                 CollectorXpPacket.STREAM_CODEC,
                 CollectorXpPacket::handle
         );
-
-        registrar.playToServer(
-                OpenFilterPacket.TYPE,
-                OpenFilterPacket.STREAM_CODEC,
-                OpenFilterPacket::handle
-        );
     }
 }

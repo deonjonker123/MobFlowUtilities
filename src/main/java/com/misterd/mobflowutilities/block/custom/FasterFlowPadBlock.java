@@ -1,7 +1,7 @@
 package com.misterd.mobflowutilities.block.custom;
 
-import com.misterd.mobflowutilities.entity.MFUBlockEntities;
-import com.misterd.mobflowutilities.entity.custom.FlowPadBlockEntity;
+import com.misterd.mobflowutilities.blockentity.MFUBlockEntities;
+import com.misterd.mobflowutilities.blockentity.custom.FlowPadBlockEntity;
 import com.mojang.serialization.MapCodec;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;

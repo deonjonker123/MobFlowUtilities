@@ -1,6 +1,7 @@
 package com.misterd.mobflowutilities.network;
 
-import com.misterd.mobflowutilities.entity.custom.CollectorBlockEntity;
+import com.misterd.mobflowutilities.blockentity.custom.CollectorBlockEntity;
+import com.misterd.mobflowutilities.util.MFUExperienceUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -42,25 +43,51 @@ public record CollectorXpPacket(BlockPos pos, XpAction action, int amount) imple
             BlockEntity blockEntity = serverPlayer.level().getBlockEntity(packet.pos());
             if (!(blockEntity instanceof CollectorBlockEntity collector)) return;
 
-            int depositAmount;
-            int storedXp;
-
             switch (packet.action()) {
                 case WITHDRAW -> {
-                    storedXp = collector.getStoredXP();
-                    depositAmount = Math.min(packet.amount(), storedXp);
+                    int storedXp = collector.getStoredXP();
+                    int depositAmount = Math.min(packet.amount(), storedXp);
                     if (depositAmount > 0) {
                         collector.setStoredXP(storedXp - depositAmount);
                         serverPlayer.giveExperiencePoints(depositAmount);
                     }
                 }
                 case DEPOSIT -> {
-                    storedXp = serverPlayer.totalExperience;
-                    depositAmount = Math.min(packet.amount(), storedXp);
+                    int storedXp = serverPlayer.totalExperience;
+                    int depositAmount = Math.min(packet.amount(), storedXp);
                     if (depositAmount > 0) {
                         serverPlayer.giveExperiencePoints(-depositAmount);
                         collector.setStoredXP(collector.getStoredXP() + depositAmount);
                     }
+                }
+                case WITHDRAW_ONE_LEVEL -> {
+                    int storedXp = collector.getStoredXP();
+                    if (storedXp <= 0) return;
+                    int partialNeeded = MFUExperienceUtils.getExpNeededForNextLevel(serverPlayer);
+                    if (serverPlayer.experienceProgress > 0.0f && partialNeeded > 0) {
+                        int toGive = Math.min(partialNeeded, storedXp);
+                        serverPlayer.giveExperiencePoints(toGive);
+                        collector.setStoredXP(storedXp - toGive);
+                        return;
+                    }
+                    int xpForOneLevel = MFUExperienceUtils.getExperienceForNextLevel(serverPlayer.experienceLevel);
+                    int toGive = Math.min(xpForOneLevel, storedXp);
+                    if (toGive <= 0) return;
+                    serverPlayer.giveExperiencePoints(toGive);
+                    collector.setStoredXP(storedXp - toGive);
+                }
+                case DEPOSIT_ONE_LEVEL -> {
+                    int partialXp = Math.round(serverPlayer.experienceProgress * serverPlayer.getXpNeededForNextLevel());
+                    if (partialXp > 0) {
+                        int removed = MFUExperienceUtils.removePoints(serverPlayer, partialXp);
+                        serverPlayer.experienceProgress = 0.0f;
+                        collector.setStoredXP(collector.getStoredXP() + removed);
+                        return;
+                    }
+                    if (serverPlayer.experienceLevel <= 0) return;
+                    int xpForThisLevel = MFUExperienceUtils.getExperienceForNextLevel(serverPlayer.experienceLevel - 1);
+                    serverPlayer.giveExperienceLevels(-1);
+                    collector.setStoredXP(collector.getStoredXP() + xpForThisLevel);
                 }
             }
         });
@@ -68,7 +95,9 @@ public record CollectorXpPacket(BlockPos pos, XpAction action, int amount) imple
 
     public enum XpAction {
         WITHDRAW,
-        DEPOSIT;
+        DEPOSIT,
+        WITHDRAW_ONE_LEVEL,
+        DEPOSIT_ONE_LEVEL;
 
         public static final StreamCodec<FriendlyByteBuf, XpAction> STREAM_CODEC = StreamCodec.of(
                 (buf, action) -> buf.writeEnum(action),

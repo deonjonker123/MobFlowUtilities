@@ -35,6 +35,6 @@ public class DataGenerators {
         generator.addProvider(event.includeServer(), new MFUItemTagProvider(packOutput, lookupProvider, blockTagsProvider.contentsGetter(), existingFileHelper));
 
         generator.addProvider(event.includeClient(), new MFUItemModelProvider(packOutput, existingFileHelper));
-        generator.addProvider(event.includeServer(), new MFUGlobalLootModifierProvider(packOutput, lookupProvider));
+        generator.addProvider(true, new MFUFluidTagsProvider(packOutput, lookupProvider));
     }
 }

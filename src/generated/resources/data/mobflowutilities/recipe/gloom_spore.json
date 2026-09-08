@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "type": "mobflowutilities:fluid_tag_bucket",
+      "fluid_tag": "c:experience"
+    },
+    {
+      "tag": "mobflowutilities:gloom_spore_crafting_ing"
+    },
+    {
+      "tag": "minecraft:chicken_food"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "mobflowutilities:gloom_spore"
+  }
+}

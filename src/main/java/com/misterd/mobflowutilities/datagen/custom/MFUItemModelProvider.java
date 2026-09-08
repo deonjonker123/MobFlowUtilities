@@ -1,6 +1,7 @@
 package com.misterd.mobflowutilities.datagen.custom;
 
 import com.misterd.mobflowutilities.MobFlowUtilities;
+import com.misterd.mobflowutilities.fluid.MFUFluids;
 import com.misterd.mobflowutilities.item.MFUItems;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
@@ -20,7 +21,6 @@ public class MFUItemModelProvider extends ItemModelProvider {
         basicItem(MFUItems.SMITE_MODULE.get());
         basicItem(MFUItems.LOOTING_MODULE.get());
         basicItem(MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get());
-        basicItem(MFUItems.VOID_FILTER_MODULE.get());
         basicItem(MFUItems.SPEED_MODULE.get());
         basicItem(MFUItems.FAN_WIDTH_INCREASE_MODULE.get());
         basicItem(MFUItems.FAN_HEIGHT_INCREASE_MODULE.get());
@@ -34,5 +34,7 @@ public class MFUItemModelProvider extends ItemModelProvider {
         basicItem(MFUItems.EMPTY_GENE_VIAL.get());
         basicItem(MFUItems.GENE_SAMPLE_VIAL.get());
         basicItem(MFUItems.LIFE_CATALYST.get());
+
+        basicItem(MFUFluids.LIQUID_XP_BUCKET.get());
     }
 }

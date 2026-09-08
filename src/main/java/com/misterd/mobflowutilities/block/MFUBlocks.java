@@ -4,6 +4,8 @@ import com.misterd.mobflowutilities.MobFlowUtilities;
 import com.misterd.mobflowutilities.block.custom.*;
 import com.misterd.mobflowutilities.item.MFUItems;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -127,6 +129,13 @@ public class MFUBlocks {
                     tooltipComponents.add(Component.translatable("block.mobflowutilities.genesis_chamber.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
                 }
             });
+
+    public static final DeferredBlock<Block> GIGATANK = registerBlock("gigatank",
+            () -> new GigaTankBlock(BlockBehaviour.Properties.of()
+                    .strength(2.0F)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.STONE)
+                    .noOcclusion()));
 
     private static <T extends Block> DeferredBlock<T> registerBlock (String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);
