@@ -133,19 +133,20 @@ public class FanBlockEntity extends BlockEntity implements MenuProvider {
         BlockPos start = worldPosition.relative(facing);
         BlockPos end = entity.blockPosition();
 
-        int steps = switch (facing) {
-            case NORTH, SOUTH -> Math.abs(end.getZ() - start.getZ());
-            case EAST, WEST -> Math.abs(end.getX() - start.getX());
-            case UP, DOWN -> Math.abs(end.getY() - start.getY());
+        int steps = switch (facing.getAxis()) {
+            case X -> Math.abs(end.getX() - start.getX());
+            case Y -> Math.abs(end.getY() - start.getY());
+            case Z -> Math.abs(end.getZ() - start.getZ());
         };
 
-        int dx = Integer.signum(end.getX() - start.getX());
-        int dy = Integer.signum(end.getY() - start.getY());
-        int dz = Integer.signum(end.getZ() - start.getZ());
+        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(
+                facing.getAxis() == Direction.Axis.X ? start.getX() : end.getX(),
+                facing.getAxis() == Direction.Axis.Y ? start.getY() : end.getY(),
+                facing.getAxis() == Direction.Axis.Z ? start.getZ() : end.getZ()
+        );
 
-        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(start.getX(), start.getY(), start.getZ());
         for (int i = 0; i < steps; i++) {
-            pos.move(dx, dy, dz);
+            pos.move(facing);
             BlockState state = level.getBlockState(pos);
             if (!state.isAir() && state.isSolidRender()) return false;
         }
