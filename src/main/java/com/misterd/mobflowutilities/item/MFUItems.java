@@ -131,9 +131,6 @@ public class MFUItems {
     public static final DeferredItem<Item> MOB_CATCHER = ITEMS.registerItem("mob_catcher",
             props -> new MobCatcherItem(props.stacksTo(1)));
 
-    public static final DeferredItem<Item> VOID_FILTER_MODULE = ITEMS.registerItem("void_filter_module",
-            props -> new VoidFilterItem(props.stacksTo(1)));
-
     public static final DeferredItem<Item> PAD_WRENCH = ITEMS.registerItem("pad_wrench",
             props -> new PadWrenchItem(props));
 

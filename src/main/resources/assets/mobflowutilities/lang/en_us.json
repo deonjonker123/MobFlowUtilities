@@ -115,7 +115,6 @@
   "gui.mobflowutilities.genesis_chamber": "Genesis Chamber",
   "gui.mobflowutilities.controller.remove": "Remove",
   "gui.mobflowutilities.collector.xp_input_levels": "Levels",
-  "gui.mobflowutilities.void_filter": "Void Filter",
 
   "gui.mobflowutilities.collector.offset.down_up": "D/U Offset",
   "gui.mobflowutilities.collector.offset.north_south": "N/S Offset",
@@ -149,8 +148,6 @@
   "tooltip.mobflowutilities.collector.xp_collection.enabled": "Disable XP Collection",
   "tooltip.mobflowutilities.collector.xp_collection.disabled": "Enable XP Collection",
   "tooltip.mobflowutilities.collector.xp_display": "XP: %s",
-
-  "tooltip.mobflowutilities.collector.edit_filter": "Edit Filter",
 
   "tooltip.mobflowutilities.genesis_infuser.tank_empty": "Empty",
   "tooltip.mobflowutilities.genesis_infuser.progress": "Progress",

@@ -15,7 +15,6 @@ public class MFUMenuTypes {
 
     public static final DeferredHolder<MenuType<?>, MenuType<CollectorMenu>> COLLECTOR_MENU = registerMenuType("collector_menu", CollectorMenu::new);
     public static final DeferredHolder<MenuType<?>, MenuType<ControllerMenu>> CONTROLLER_MENU = registerMenuType("controller_menu", ControllerMenu::new);
-    public static final DeferredHolder<MenuType<?>, MenuType<VoidFilterMenu>> VOID_FILTER_MENU = registerMenuType("void_filter_menu", VoidFilterMenu::new);
     public static final DeferredHolder<MenuType<?>, MenuType<GenesisChamberMenu>> GENESIS_CHAMBER_MENU = registerMenuType("genesis_chamber_menu", GenesisChamberMenu::new);
     public static final DeferredHolder<MenuType<?>, MenuType<GenesisInfuserMenu>> GENESIS_INFUSER_MENU = registerMenuType("genesis_infuser_menu", GenesisInfuserMenu::new);
     public static final DeferredHolder<MenuType<?>, MenuType<FanMenu>> FAN_MENU = registerMenuType("fan_menu", FanMenu::new);

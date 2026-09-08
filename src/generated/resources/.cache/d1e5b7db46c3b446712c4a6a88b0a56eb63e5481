@@ -1,4 +1,4 @@
-// 26.2	2026-07-04T13:37:08.6951864	My Recipes
+// 26.2	2026-09-08T18:34:47.6373709	My Recipes
 ebd769f8d9a5427c390cc3706281024eeb89c5d2 data/mobflowutilities/advancement/recipes/misc/bane_of_arthropods_module.json
 e83c465d1f9010a28acd16e01fce7e92de02b5ae data/mobflowutilities/advancement/recipes/misc/collector.json
 e0c9c86edc73dc2987ca83b0b4c923327626dd37 data/mobflowutilities/advancement/recipes/misc/collector_reset.json
@@ -27,8 +27,6 @@ db3f4a5f844cbd8c3ba4a54d878c3c5c509db64a data/mobflowutilities/advancement/recip
 e431a4a52134e44503eda3d3c13f996bf84e6e40 data/mobflowutilities/advancement/recipes/misc/sharpness_module.json
 1606137517beb8530551da0a68295a5927e440e8 data/mobflowutilities/advancement/recipes/misc/smite_module.json
 36d636dadf5f414279c3e0aa3851b8829837c860 data/mobflowutilities/advancement/recipes/misc/speed_module.json
-92cf86a4853ac044aae898a9ac231576f4fa6288 data/mobflowutilities/advancement/recipes/misc/void_filter_module.json
-c530c07d367d567e0bbbc88c13bd16edd73e861f data/mobflowutilities/advancement/recipes/misc/void_filter_reset.json
 a10b538956ada4bbf694f25fa0ed58b6c9685c3f data/mobflowutilities/advancement/recipes/tools/pad_wrench.json
 c1ed4bd0332853f6dbdf76772aa98c2c5394f503 data/mobflowutilities/recipe/bane_of_arthropods_module.json
 d1e13cb38f4a6eb293719f071af00ba795f0c1c2 data/mobflowutilities/recipe/collector.json
@@ -59,5 +57,3 @@ fb58b78353580bfc8ed6ce067b1591dcc9764174 data/mobflowutilities/recipe/radius_inc
 e4ec461a1434e8a548f46387e2637ba864484f7f data/mobflowutilities/recipe/sharpness_module.json
 3128d4f0879d7fd7aea05d4ca1b85b4f00f6b160 data/mobflowutilities/recipe/smite_module.json
 da7000898c06b7bf174f9dce631144d6d17ba802 data/mobflowutilities/recipe/speed_module.json
-e1e15dcaf9e7f5a8562eb65d9c7c9fd8f9f75f88 data/mobflowutilities/recipe/void_filter_module.json
-dd4f84e7d556c35df52476d8fc915e094770604d data/mobflowutilities/recipe/void_filter_reset.json
