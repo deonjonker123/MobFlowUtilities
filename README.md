@@ -88,7 +88,3 @@ Using a Gene Sample Vial with some DNA, a life Catalyst and an emerald, you can 
 
 *   **Dark Glass**: Blocks light and is wither immune
 *   **Glimmer Lamp**: Fancier redstone lamp
-
-### Required Dependencies
-
-*   Full in-game guide explaining every block and item using [GuideMe.](https://www.curseforge.com/minecraft/mc-mods/guideme)
