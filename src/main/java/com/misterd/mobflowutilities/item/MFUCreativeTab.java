@@ -46,7 +46,6 @@ public class MFUCreativeTab {
                         output.accept(MFUItems.LOOTING_MODULE);
                         output.accept(MFUItems.SMITE_MODULE);
                         output.accept(MFUItems.COLLECTION_RADIUS_INCREASE_MODULE);
-                        output.accept(MFUItems.VOID_FILTER_MODULE);
                         output.accept(MFUItems.SPEED_MODULE);
                         output.accept(MFUItems.FAN_WIDTH_INCREASE_MODULE);
                         output.accept(MFUItems.FAN_HEIGHT_INCREASE_MODULE);

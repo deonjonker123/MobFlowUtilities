@@ -217,17 +217,6 @@ public class MFURecipeProvider extends RecipeProvider {
                 .unlockedBy("has_gold_ingot", has(Items.GOLD_INGOT))
                 .save(output);
 
-        shaped(RecipeCategory.MISC, MFUItems.VOID_FILTER_MODULE.get())
-                .pattern("PPP")
-                .pattern("OHO")
-                .pattern("GOG")
-                .define('G', Items.IRON_INGOT)
-                .define('O', Tags.Items.OBSIDIANS)
-                .define('P', Items.PAPER)
-                .define('H', Items.HOPPER)
-                .unlockedBy("has_hopper", has(Items.HOPPER))
-                .save(output);
-
         shaped(RecipeCategory.MISC, MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get())
                 .pattern("GEG")
                 .pattern("ERE")
@@ -279,11 +268,6 @@ public class MFURecipeProvider extends RecipeProvider {
                 .requires(MFUBlocks.COLLECTOR.get())
                 .unlockedBy("has_collector", has(MFUBlocks.COLLECTOR))
                 .save(output, "mobflowutilities:collector_reset");
-
-        shapeless(RecipeCategory.MISC, MFUItems.VOID_FILTER_MODULE.get())
-                .requires(MFUItems.VOID_FILTER_MODULE.get())
-                .unlockedBy("has_void_filter", has(MFUItems.VOID_FILTER_MODULE))
-                .save(output, "mobflowutilities:void_filter_reset");
 
         shaped(RecipeCategory.MISC, MFUBlocks.DARK_GLASS.get(), 8)
                 .pattern("GXG")

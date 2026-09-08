@@ -1,4 +1,4 @@
-// 26.1.2	2026-06-04T12:35:56.7205669	Model Definitions - mobflowutilities
+// 26.1.2	2026-09-08T19:13:51.792317	Model Definitions - mobflowutilities
 860ee26a8f29a3d85e14dac208b6cf03334539ae assets/mobflowutilities/items/bane_of_arthropods_module.json
 de8c5281f767e7056ef6521a8e47c45d8007c7ba assets/mobflowutilities/items/collector.json
 d3aea66f571cd3dfab1e819a462c0b315ce33ce8 assets/mobflowutilities/items/controller.json
@@ -33,7 +33,6 @@ ee5c53dd41e3d29592d3a952e399e3bef54df050 assets/mobflowutilities/items/looting_m
 c7ed8dd39acb1c7d07f1c2ba06d3c7a896bf37ee assets/mobflowutilities/items/sharpness_module.json
 52aebecd83e5464fd0e85d6c853cc21266a5eec6 assets/mobflowutilities/items/smite_module.json
 c953e1987515db4ea06a09c3dda51f61c94384c9 assets/mobflowutilities/items/speed_module.json
-2f41804150c93b5254dfd403bed8b0e95c7a20a1 assets/mobflowutilities/items/void_filter_module.json
 79b2ee0a8e3013fe016bb424df89fdd0cc6ba20e assets/mobflowutilities/models/item/bane_of_arthropods_module.json
 5dd9dd7e3f84273175a8d3f7f7374c605b575c53 assets/mobflowutilities/models/item/empty_gene_vial.json
 9cf3315bb1c040c242accb695824843f24095db4 assets/mobflowutilities/models/item/fan_distance_increase_module.json
@@ -55,4 +54,3 @@ c35fe90b5198a9b0a79cf54bd5a60fe9f09fbb14 assets/mobflowutilities/models/item/pad
 6363c7310e9ebbcdccded62b3abe73b087ab5f4c assets/mobflowutilities/models/item/sharpness_module.json
 8193fc3823cbd4d8a245df9f48555b65e8f13ac4 assets/mobflowutilities/models/item/smite_module.json
 205a3c4ed32fd33b4710fccd096148155f58f736 assets/mobflowutilities/models/item/speed_module.json
-c2c68641b474cd824a5757316a72d9335c23d7e2 assets/mobflowutilities/models/item/void_filter_module.json

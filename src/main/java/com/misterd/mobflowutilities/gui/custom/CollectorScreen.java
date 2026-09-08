@@ -3,7 +3,6 @@ package com.misterd.mobflowutilities.gui.custom;
 import com.misterd.mobflowutilities.client.renderer.CollectorWireframeRenderer;
 import com.misterd.mobflowutilities.network.CollectorXpPacket;
 import com.misterd.mobflowutilities.network.ConfigPacket;
-import com.misterd.mobflowutilities.network.OpenFilterPacket;
 import com.misterd.mobflowutilities.util.MFUExperienceUtils;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.ImageButton;
@@ -24,17 +23,50 @@ import java.util.function.Supplier;
 public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
 
     private static final Identifier GUI_TEXTURE = Identifier.fromNamespaceAndPath("mobflowutilities", "textures/gui/collector_gui.png");
+
     private static final Identifier XP_BAR_BG = Identifier.fromNamespaceAndPath("mobflowutilities", "xp_bar");
+
     private static final Identifier XP_BAR_PROGRESS = Identifier.fromNamespaceAndPath("mobflowutilities", "xp_bar_progress");
-    private static final WidgetSprites REDUCE_OFFSET_SPRITES = new WidgetSprites(Identifier.fromNamespaceAndPath("mobflowutilities", "reduce_offset_btn"), Identifier.fromNamespaceAndPath("mobflowutilities", "reduce_offset_btn"), Identifier.fromNamespaceAndPath("mobflowutilities", "reduce_offset_btn_hover"), Identifier.fromNamespaceAndPath("mobflowutilities", "reduce_offset_btn_hover"));
-    private static final WidgetSprites INCREASE_OFFSET_SPRITES = new WidgetSprites(Identifier.fromNamespaceAndPath("mobflowutilities", "increase_offset_btn"), Identifier.fromNamespaceAndPath("mobflowutilities", "increase_offset_btn"), Identifier.fromNamespaceAndPath("mobflowutilities", "increase_offset_btn_hover"), Identifier.fromNamespaceAndPath("mobflowutilities", "increase_offset_btn_hover"));
-    private static final WidgetSprites TOGGLE_WIREFRAME_SPRITES = new WidgetSprites(Identifier.fromNamespaceAndPath("mobflowutilities", "toggle_zone_wireframe_btn"), Identifier.fromNamespaceAndPath("mobflowutilities", "toggle_zone_wireframe_btn"), Identifier.fromNamespaceAndPath("mobflowutilities", "toggle_zone_wireframe_btn_hover"), Identifier.fromNamespaceAndPath("mobflowutilities", "toggle_zone_wireframe_btn_hover"));
-    private static final WidgetSprites WITHDRAW_XP_SPRITES = new WidgetSprites(Identifier.fromNamespaceAndPath("mobflowutilities", "withdraw_xp_btn"), Identifier.fromNamespaceAndPath("mobflowutilities", "withdraw_xp_btn"), Identifier.fromNamespaceAndPath("mobflowutilities", "withdraw_xp_btn_hover"), Identifier.fromNamespaceAndPath("mobflowutilities", "withdraw_xp_btn_hover"));
-    private static final WidgetSprites DEPOSIT_XP_SPRITES = new WidgetSprites(Identifier.fromNamespaceAndPath("mobflowutilities", "deposit_xp_btn"), Identifier.fromNamespaceAndPath("mobflowutilities", "deposit_xp_btn"), Identifier.fromNamespaceAndPath("mobflowutilities", "deposit_xp_btn_hover"), Identifier.fromNamespaceAndPath("mobflowutilities", "deposit_xp_btn_hover"));
-    private static final WidgetSprites WITHDRAW_ALL_XP_SPRITES = new WidgetSprites(Identifier.fromNamespaceAndPath("mobflowutilities", "withdraw_all_xp_btn"), Identifier.fromNamespaceAndPath("mobflowutilities", "withdraw_all_xp_btn"), Identifier.fromNamespaceAndPath("mobflowutilities", "withdraw_all_xp_btn_hover"), Identifier.fromNamespaceAndPath("mobflowutilities", "withdraw_all_xp_btn_hover"));
-    private static final WidgetSprites DEPOSIT_ALL_XP_SPRITES = new WidgetSprites(Identifier.fromNamespaceAndPath("mobflowutilities", "deposit_all_xp_btn"), Identifier.fromNamespaceAndPath("mobflowutilities", "deposit_all_xp_btn"), Identifier.fromNamespaceAndPath("mobflowutilities", "deposit_all_xp_btn_hover"), Identifier.fromNamespaceAndPath("mobflowutilities", "deposit_all_xp_btn_hover"));
-    private static final WidgetSprites RESET_OFFSET_SPRITES = new WidgetSprites(Identifier.fromNamespaceAndPath("mobflowutilities", "collection_zone_offset_reset_btn"), Identifier.fromNamespaceAndPath("mobflowutilities", "collection_zone_offset_reset_btn"), Identifier.fromNamespaceAndPath("mobflowutilities", "collection_zone_offset_reset_btn_hover"), Identifier.fromNamespaceAndPath("mobflowutilities", "collection_zone_offset_reset_btn_hover"));
-    private static final WidgetSprites EDIT_FILTER_SPRITES = new WidgetSprites(Identifier.fromNamespaceAndPath("mobflowutilities", "edit_filter_btn"), Identifier.fromNamespaceAndPath("mobflowutilities", "edit_filter_btn"), Identifier.fromNamespaceAndPath("mobflowutilities", "edit_filter_btn_hover"), Identifier.fromNamespaceAndPath("mobflowutilities", "edit_filter_btn_hover"));
+
+    private static final WidgetSprites REDUCE_OFFSET_SPRITES = new WidgetSprites(Identifier.fromNamespaceAndPath("mobflowutilities", "reduce_offset_btn"),
+            Identifier.fromNamespaceAndPath("mobflowutilities", "reduce_offset_btn"),
+            Identifier.fromNamespaceAndPath("mobflowutilities", "reduce_offset_btn_hover"),
+            Identifier.fromNamespaceAndPath("mobflowutilities", "reduce_offset_btn_hover"));
+
+    private static final WidgetSprites INCREASE_OFFSET_SPRITES = new WidgetSprites(Identifier.fromNamespaceAndPath("mobflowutilities", "increase_offset_btn"),
+            Identifier.fromNamespaceAndPath("mobflowutilities", "increase_offset_btn"),
+            Identifier.fromNamespaceAndPath("mobflowutilities", "increase_offset_btn_hover"),
+            Identifier.fromNamespaceAndPath("mobflowutilities", "increase_offset_btn_hover"));
+
+    private static final WidgetSprites TOGGLE_WIREFRAME_SPRITES = new WidgetSprites(Identifier.fromNamespaceAndPath("mobflowutilities", "toggle_zone_wireframe_btn"),
+            Identifier.fromNamespaceAndPath("mobflowutilities", "toggle_zone_wireframe_btn"),
+            Identifier.fromNamespaceAndPath("mobflowutilities", "toggle_zone_wireframe_btn_hover"),
+            Identifier.fromNamespaceAndPath("mobflowutilities", "toggle_zone_wireframe_btn_hover"));
+
+    private static final WidgetSprites WITHDRAW_XP_SPRITES = new WidgetSprites(Identifier.fromNamespaceAndPath("mobflowutilities", "withdraw_xp_btn"),
+            Identifier.fromNamespaceAndPath("mobflowutilities", "withdraw_xp_btn"),
+            Identifier.fromNamespaceAndPath("mobflowutilities", "withdraw_xp_btn_hover"),
+            Identifier.fromNamespaceAndPath("mobflowutilities", "withdraw_xp_btn_hover"));
+
+    private static final WidgetSprites DEPOSIT_XP_SPRITES = new WidgetSprites(Identifier.fromNamespaceAndPath("mobflowutilities", "deposit_xp_btn"),
+            Identifier.fromNamespaceAndPath("mobflowutilities", "deposit_xp_btn"),
+            Identifier.fromNamespaceAndPath("mobflowutilities", "deposit_xp_btn_hover"),
+            Identifier.fromNamespaceAndPath("mobflowutilities", "deposit_xp_btn_hover"));
+
+    private static final WidgetSprites WITHDRAW_ALL_XP_SPRITES = new WidgetSprites(Identifier.fromNamespaceAndPath("mobflowutilities", "withdraw_all_xp_btn"),
+            Identifier.fromNamespaceAndPath("mobflowutilities", "withdraw_all_xp_btn"),
+            Identifier.fromNamespaceAndPath("mobflowutilities", "withdraw_all_xp_btn_hover"),
+            Identifier.fromNamespaceAndPath("mobflowutilities", "withdraw_all_xp_btn_hover"));
+
+    private static final WidgetSprites DEPOSIT_ALL_XP_SPRITES = new WidgetSprites(Identifier.fromNamespaceAndPath("mobflowutilities", "deposit_all_xp_btn"),
+            Identifier.fromNamespaceAndPath("mobflowutilities", "deposit_all_xp_btn"),
+            Identifier.fromNamespaceAndPath("mobflowutilities", "deposit_all_xp_btn_hover"),
+            Identifier.fromNamespaceAndPath("mobflowutilities", "deposit_all_xp_btn_hover"));
+
+    private static final WidgetSprites RESET_OFFSET_SPRITES = new WidgetSprites(Identifier.fromNamespaceAndPath("mobflowutilities", "collection_zone_offset_reset_btn"),
+            Identifier.fromNamespaceAndPath("mobflowutilities", "collection_zone_offset_reset_btn"),
+            Identifier.fromNamespaceAndPath("mobflowutilities", "collection_zone_offset_reset_btn_hover"),
+            Identifier.fromNamespaceAndPath("mobflowutilities", "collection_zone_offset_reset_btn_hover"));
 
     private static final int GUI_W = 234;
     private static final int GUI_H = 244;
@@ -73,7 +105,6 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
         this.addOffsetButtons(leftPos, topPos);
         this.addWireframeButton(leftPos, topPos);
         this.addXpButtons(leftPos, topPos);
-        this.addFilterEditButtons(leftPos, topPos);
     }
 
     private void addOffsetButtons(int leftPos, int topPos) {
@@ -132,24 +163,6 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
         this.addRenderableWidget(depositAllButton);
     }
 
-    private void addFilterEditButtons(int leftPos, int topPos) {
-        ImageButton editFilter1Button = new ImageButton(leftPos + 177, topPos + 5, 10, 10, EDIT_FILTER_SPRITES, button -> this.openFilterEditor(1));
-        editFilter1Button.setTooltip(Tooltip.create(Component.translatable("tooltip.mobflowutilities.collector.edit_filter")));
-        this.addRenderableWidget(editFilter1Button);
-
-        ImageButton editFilter2Button = new ImageButton(leftPos + 195, topPos + 5, 10, 10, EDIT_FILTER_SPRITES, button -> this.openFilterEditor(2));
-        editFilter2Button.setTooltip(Tooltip.create(Component.translatable("tooltip.mobflowutilities.collector.edit_filter")));
-        this.addRenderableWidget(editFilter2Button);
-
-        ImageButton editFilter3Button = new ImageButton(leftPos + 213, topPos + 5, 10, 10, EDIT_FILTER_SPRITES, button -> this.openFilterEditor(3));
-        editFilter3Button.setTooltip(Tooltip.create(Component.translatable("tooltip.mobflowutilities.collector.edit_filter")));
-        this.addRenderableWidget(editFilter3Button);
-    }
-
-    private void openFilterEditor(int filterSlotIndex) {
-        ClientPacketDistributor.sendToServer(new OpenFilterPacket(this.menu.blockEntity.getBlockPos(), filterSlotIndex));
-    }
-
     private WidgetSprites createConditionalSprites(WidgetSprites baseSprites, Supplier<Boolean> isActive) {
         return isActive.get()
                 ? new WidgetSprites(
@@ -200,9 +213,12 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
         this.downUpOffset = 0;
         this.northSouthOffset = 0;
         this.eastWestOffset = 0;
-        ClientPacketDistributor.sendToServer(new ConfigPacket(ConfigPacket.ConfigTarget.COLLECTOR_BLOCK, this.menu.blockEntity.getBlockPos(), ConfigPacket.ConfigType.COLLECTOR_DOWN_UP_OFFSET, 0, false));
-        ClientPacketDistributor.sendToServer(new ConfigPacket(ConfigPacket.ConfigTarget.COLLECTOR_BLOCK, this.menu.blockEntity.getBlockPos(), ConfigPacket.ConfigType.COLLECTOR_NORTH_SOUTH_OFFSET, 0, false));
-        ClientPacketDistributor.sendToServer(new ConfigPacket(ConfigPacket.ConfigTarget.COLLECTOR_BLOCK, this.menu.blockEntity.getBlockPos(), ConfigPacket.ConfigType.COLLECTOR_EAST_WEST_OFFSET, 0, false));
+        ClientPacketDistributor.sendToServer(new ConfigPacket(ConfigPacket.ConfigTarget.COLLECTOR_BLOCK, this.menu.blockEntity.getBlockPos(),
+                ConfigPacket.ConfigType.COLLECTOR_DOWN_UP_OFFSET, 0, false));
+        ClientPacketDistributor.sendToServer(new ConfigPacket(ConfigPacket.ConfigTarget.COLLECTOR_BLOCK, this.menu.blockEntity.getBlockPos(),
+                ConfigPacket.ConfigType.COLLECTOR_NORTH_SOUTH_OFFSET, 0, false));
+        ClientPacketDistributor.sendToServer(new ConfigPacket(ConfigPacket.ConfigTarget.COLLECTOR_BLOCK, this.menu.blockEntity.getBlockPos(),
+                ConfigPacket.ConfigType.COLLECTOR_EAST_WEST_OFFSET, 0, false));
     }
 
     private void withdrawXP() {
@@ -253,7 +269,7 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
 
     private void renderXPCollectionToggle(GuiGraphicsExtractor graphics, int x, int y) {
         Identifier toggleHandle = Identifier.fromNamespaceAndPath("mobflowutilities", "toggle_scroller_handle");
-        int handleX = this.xpCollectionEnabled ? x + 17 : x + 9;
+        int handleX = this.xpCollectionEnabled ? x + 18 : x + 8;
         graphics.blitSprite(RenderPipelines.GUI_TEXTURED, toggleHandle, handleX, y + 111, 6, 10);
     }
 

@@ -26,8 +26,7 @@ public class MFUItemTagProvider extends ItemTagsProvider {
                 .add(MFUItems.SHARPNESS_MODULE.get())
                 .add(MFUItems.SMITE_MODULE.get())
                 .add(MFUItems.LOOTING_MODULE.get())
-                .add(MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get())
-                .add(MFUItems.VOID_FILTER_MODULE.get());
+                .add(MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get());
 
         tag(MFUTags.Items.WRENCH)
                 .add(MFUItems.PAD_WRENCH.get());

@@ -67,8 +67,6 @@
 
   "item.mobflowutilities.radius_increase_module": "Radius Increase Module",
   "item.mobflowutilities.radius_increase_module.subtitle": "Extends the pickup range of Collectors and spawn radius of the Genesis Chamber",
-  "item.mobflowutilities.void_filter_module": "Void Filter Module",
-  "item.mobflowutilities.void_filter_module.subtitle": "Destroys filtered items collected by Collectors",
   "item.mobflowutilities.speed_module": "Speed Module",
   "item.mobflowutilities.speed_module.subtitle": "Increases spawn rates of the Genesis Chamber and processing speed of the Genesis Infuser",
 

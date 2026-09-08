@@ -86,7 +86,6 @@ public class MobFlowUtilities {
         @SubscribeEvent
         public static void registerScreens(RegisterMenuScreensEvent event) {
             event.register(MFUMenuTypes.COLLECTOR_MENU.get(), CollectorScreen::new);
-            event.register(MFUMenuTypes.VOID_FILTER_MENU.get(), VoidFilterScreen::new);
             event.register(MFUMenuTypes.CONTROLLER_MENU.get(), ControllerScreen::new);
             event.register(MFUMenuTypes.GENESIS_CHAMBER_MENU.get(), GenesisChamberScreen::new);
             event.register(MFUMenuTypes.FAN_MENU.get(), FanScreen::new);

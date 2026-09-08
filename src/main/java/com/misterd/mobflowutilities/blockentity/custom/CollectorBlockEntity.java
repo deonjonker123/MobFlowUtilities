@@ -1,13 +1,10 @@
 package com.misterd.mobflowutilities.blockentity.custom;
 
 import com.misterd.mobflowutilities.block.custom.CollectorBlock;
-import com.misterd.mobflowutilities.component.MFUDataComponents;
-import com.misterd.mobflowutilities.component.custom.VoidFilterData;
 import com.misterd.mobflowutilities.blockentity.MFUBlockEntities;
 import com.misterd.mobflowutilities.fluid.LiquidXpFluidTank;
 import com.misterd.mobflowutilities.gui.custom.CollectorMenu;
 import com.misterd.mobflowutilities.item.MFUItems;
-import com.misterd.mobflowutilities.item.custom.VoidFilterItem;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -44,14 +41,10 @@ import javax.annotation.Nullable;
 
 public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
 
-    private static final Logger LOGGER = LogUtils.getLogger();
     private static final int COLLECTION_INTERVAL = 5;
 
     private static final int SLOT_RADIUS  = 0;
-    private static final int SLOT_VOID_1  = 1;
-    private static final int SLOT_VOID_2  = 2;
-    private static final int SLOT_VOID_3  = 3;
-    private static final int MODULE_COUNT = 4;
+    private static final int MODULE_COUNT = 1;
     private static final int OUTPUT_COUNT = 45;
     private static final int TOTAL_SLOTS  = MODULE_COUNT + OUTPUT_COUNT;
     private LiquidXpFluidTank fluidTank;
@@ -68,8 +61,6 @@ public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
         public boolean isValid(int index, ItemResource resource) {
             if (resource.isEmpty()) return false;
             if (index == SLOT_RADIUS) return resource.toStack().getItem() == MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get();
-            if (index == SLOT_VOID_1 || index == SLOT_VOID_2 || index == SLOT_VOID_3)
-                return resource.toStack().getItem() == MFUItems.VOID_FILTER_MODULE.get();
             return true;
         }
 
@@ -336,30 +327,13 @@ public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
             if (!itemEntity.isAlive() || itemEntity.hasPickUpDelay()) continue;
             ItemStack stack = itemEntity.getItem().copy();
 
-            if (shouldVoidItem(stack)) {
+            int inserted = insertIntoOutput(stack);
+            if (inserted > 0) {
                 ItemStack current = itemEntity.getItem();
-                if (stack.getCount() >= current.getCount()) itemEntity.discard();
-                else itemEntity.setItem(current.copyWithCount(current.getCount() - stack.getCount()));
-            } else {
-                int inserted = insertIntoOutput(stack);
-                if (inserted > 0) {
-                    ItemStack current = itemEntity.getItem();
-                    if (inserted >= current.getCount()) itemEntity.discard();
-                    else itemEntity.setItem(current.copyWithCount(current.getCount() - inserted));
-                }
+                if (inserted >= current.getCount()) itemEntity.discard();
+                else itemEntity.setItem(current.copyWithCount(current.getCount() - inserted));
             }
         }
-    }
-
-    private boolean shouldVoidItem(ItemStack stack) {
-        for (int i = SLOT_VOID_1; i <= SLOT_VOID_3; i++) {
-            ItemStack module = getStack(i);
-            if (module.getItem() instanceof VoidFilterItem) {
-                VoidFilterData data = module.getOrDefault(MFUDataComponents.VOID_FILTER_DATA.get(), VoidFilterData.DEFAULT);
-                if (data.shouldVoidItem(stack)) return true;
-            }
-        }
-        return false;
     }
 
     private void collectXP() {

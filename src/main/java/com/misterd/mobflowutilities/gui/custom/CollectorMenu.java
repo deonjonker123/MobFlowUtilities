@@ -22,10 +22,7 @@ public class CollectorMenu extends AbstractContainerMenu {
 
     private static final int PLAYER_SLOTS = 36;
     private static final int SLOT_MODULE_RADIUS = 0;
-    private static final int SLOT_MODULE_VOID_1 = 1;
-    private static final int SLOT_MODULE_VOID_2 = 2;
-    private static final int SLOT_MODULE_VOID_3 = 3;
-    private static final int MODULE_SLOT_COUNT = 4;
+    private static final int MODULE_SLOT_COUNT = 1;
     private static final int OUTPUT_SLOT_COUNT = 45;
     private static final int TE_SLOT_COUNT = MODULE_SLOT_COUNT + OUTPUT_SLOT_COUNT;
     private static final int TE_FIRST_SLOT = PLAYER_SLOTS;
@@ -50,10 +47,7 @@ public class CollectorMenu extends AbstractContainerMenu {
     }
 
     private void addBlockEntitySlots() {
-        addSlot(new CollectorSlot(blockEntity, SLOT_MODULE_RADIUS, 192, 41, MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get()));
-        addSlot(new CollectorSlot(blockEntity, SLOT_MODULE_VOID_1, 174, 18, MFUItems.VOID_FILTER_MODULE.get()));
-        addSlot(new CollectorSlot(blockEntity, SLOT_MODULE_VOID_2, 192, 18, MFUItems.VOID_FILTER_MODULE.get()));
-        addSlot(new CollectorSlot(blockEntity, SLOT_MODULE_VOID_3, 210, 18, MFUItems.VOID_FILTER_MODULE.get()));
+        addSlot(new CollectorSlot(blockEntity, SLOT_MODULE_RADIUS, 192, 18, MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get()));
 
         int idx = MODULE_SLOT_COUNT;
         for (int row = 0; row < 5; row++)
@@ -98,21 +92,6 @@ public class CollectorMenu extends AbstractContainerMenu {
                 stack.shrink(inserted);
                 return true;
             }
-        }
-
-        if (item == MFUItems.VOID_FILTER_MODULE.get()) {
-            for (int slot = SLOT_MODULE_VOID_1; slot <= SLOT_MODULE_VOID_3; slot++) {
-                if (blockEntity.getStack(slot).isEmpty()) {
-                    try (Transaction tx = Transaction.openRoot()) {
-                        int inserted = blockEntity.inventory.insert(slot, ItemResource.of(stack), 1, tx);
-                        if (inserted == 0) continue;
-                        tx.commit();
-                        stack.shrink(inserted);
-                        return true;
-                    }
-                }
-            }
-            return false;
         }
 
         for (int slot = MODULE_SLOT_COUNT; slot < MODULE_SLOT_COUNT + OUTPUT_SLOT_COUNT; slot++) {

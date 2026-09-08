@@ -38,7 +38,6 @@ public class MFUModelProvider extends ModelProvider {
         itemModels.generateFlatItem(MFUItems.SMITE_MODULE.get(),ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(MFUItems.LOOTING_MODULE.get(),ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get(),ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(MFUItems.VOID_FILTER_MODULE.get(),ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(MFUItems.SPEED_MODULE.get(),ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(MFUItems.FAN_WIDTH_INCREASE_MODULE.get(),ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(MFUItems.FAN_HEIGHT_INCREASE_MODULE.get(),ModelTemplates.FLAT_ITEM);
