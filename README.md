@@ -70,10 +70,6 @@ Pushes mobs in the facing direction.
 
 Using a Gene Sample Vial with some DNA, a life Catalyst and an emerald, you can craft the sampled DNA into a spawn egg. Doesn't work on bosses (except the Warden, cause why not)
 
-### Infused Coal and Charcoal
-
-*   Burns 8x longer than vanilla coal and charcoal. One Infused Coal/Charcoal can smelt a stack (64) of items.
-
 ### Utility Tools
 
 *   **Mob Catcher**: Capture and release any non-boss mob
