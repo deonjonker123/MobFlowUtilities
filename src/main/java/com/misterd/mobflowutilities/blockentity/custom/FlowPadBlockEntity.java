@@ -118,6 +118,6 @@ public class FlowPadBlockEntity extends BlockEntity {
         );
 
         entity.setDeltaMovement(newVelocity);
-        entity.hurtMarked = true;
+        entity.syncVelocity = true;
     }
 }

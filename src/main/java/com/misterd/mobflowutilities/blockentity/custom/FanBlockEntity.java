@@ -123,7 +123,7 @@ public class FanBlockEntity extends BlockEntity implements MenuProvider {
         for (LivingEntity entity : level.getEntitiesOfClass(LivingEntity.class, getPushZone())) {
             if (hasClearLane(level, entity)) {
                 entity.push(push.x, push.y, push.z);
-                entity.hurtMarked = true;
+                entity.syncVelocity = true;
             }
         }
     }

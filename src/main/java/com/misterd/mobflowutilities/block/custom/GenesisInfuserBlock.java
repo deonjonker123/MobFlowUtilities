@@ -3,14 +3,14 @@ package com.misterd.mobflowutilities.block.custom;
 import com.misterd.mobflowutilities.blockentity.MFUBlockEntities;
 import com.misterd.mobflowutilities.blockentity.custom.GenesisInfuserBlockEntity;
 import com.misterd.mobflowutilities.util.MFUTags;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Prediction;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -45,16 +45,10 @@ import org.jetbrains.annotations.Nullable;
 public class GenesisInfuserBlock extends BaseEntityBlock {
     public static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
-    public static final MapCodec<GenesisInfuserBlock> CODEC = simpleCodec(GenesisInfuserBlock::new);
 
     public GenesisInfuserBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
-    }
-
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return CODEC;
     }
 
     @Override
@@ -135,7 +129,7 @@ public class GenesisInfuserBlock extends BaseEntityBlock {
         if (!player.isCreative()) {
             stack.shrink(1);
             ItemStack empty = new ItemStack(Items.BUCKET);
-            if (!player.getInventory().add(empty)) player.drop(empty, false);
+            if (!player.getInventory().add(empty)) player.drop(empty, false, Prediction.SERVER_ONLY);
         }
         level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
         return true;
@@ -157,7 +151,7 @@ public class GenesisInfuserBlock extends BaseEntityBlock {
         if (!player.isCreative()) {
             stack.shrink(1);
             ItemStack filled = new ItemStack(bucket);
-            if (!player.getInventory().add(filled)) player.drop(filled, false);
+            if (!player.getInventory().add(filled)) player.drop(filled, false, Prediction.SERVER_ONLY);
         }
         level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
         return true;

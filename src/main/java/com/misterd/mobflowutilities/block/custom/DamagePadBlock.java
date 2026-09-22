@@ -1,8 +1,6 @@
 package com.misterd.mobflowutilities.block.custom;
 
 import com.misterd.mobflowutilities.blockentity.custom.DamagePadBlockEntity;
-import com.mojang.serialization.MapCodec;
-import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -30,6 +28,8 @@ import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+import javax.annotation.Nullable;
+
 public class DamagePadBlock extends BaseEntityBlock {
 
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
@@ -37,7 +37,6 @@ public class DamagePadBlock extends BaseEntityBlock {
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 
     public static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
-    public static final MapCodec<DamagePadBlock> CODEC = simpleCodec(DamagePadBlock::new);
 
     public DamagePadBlock(BlockBehaviour.Properties properties) {
         super(properties);
@@ -50,11 +49,6 @@ public class DamagePadBlock extends BaseEntityBlock {
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPE;
-    }
-
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return CODEC;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.misterd.mobflowutilities.block.custom;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -21,16 +20,10 @@ import java.util.List;
 public class GlimmerLampBlock extends Block {
 
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
-    public static final MapCodec<GlimmerLampBlock> CODEC = simpleCodec(GlimmerLampBlock::new);
 
     public GlimmerLampBlock(BlockBehaviour.Properties properties) {
         super(properties);
         registerDefaultState(this.stateDefinition.any().setValue(LIT, false));
-    }
-
-    @Override
-    protected MapCodec<? extends Block> codec() {
-        return CODEC;
     }
 
     @Override

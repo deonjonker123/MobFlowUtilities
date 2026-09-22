@@ -9,6 +9,7 @@ import com.misterd.mobflowutilities.util.MFUTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -28,15 +29,23 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.item.component.CookingFuel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ResolvableInt;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.common.loot.NeoForgeLootContextParams;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
@@ -46,6 +55,7 @@ import net.neoforged.neoforge.transfer.ResourceHandler;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvider {
 
@@ -211,7 +221,7 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
         if (entity == null) return null;
         entity.noPhysics = true;
         if (entity instanceof Mob mob) mob.setNoAi(true);
-        entity.invulnerableTime = Integer.MAX_VALUE;
+        entity.setInvulnerableTime(Integer.MAX_VALUE);
         entity.setId(-1);
         cachedEntity = entity;
         return entity;
@@ -355,9 +365,21 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
         return true;
     }
 
+    private LootContext getLootContext(ServerLevel level, ItemStack queriedStack) {
+        return new LootContext.Builder(
+                new LootParams.Builder(level)
+                        .withParameter(LootContextParams.BLOCK_STATE, this.getBlockState())
+                        .withParameter(LootContextParams.BLOCK_ENTITY, this)
+                        .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(this.getBlockPos()))
+                        .withParameter(LootContextParams.CONTAINER, new SimpleContainer(queriedStack))
+                        .withOptionalParameter(NeoForgeLootContextParams.QUERIED_STACK, queriedStack.isEmpty() ? null : queriedStack)
+                        .create(LootContextParamSets.CONTAINER_PROCESS)
+        ).create(Optional.empty());
+    }
+
     private int getBurnDuration(ItemStack stack) {
         if (stack.isEmpty() || !stack.is(MFUTags.Items.GENESIS_CHAMBER_FUELS)) return 0;
-        return stack.getBurnTime(null, ((ServerLevel) level).fuelValues());
+        return ResolvableInt.getFromItem(stack, DataComponents.COOKING_FUEL, CookingFuel::burnTime, this.getLootContext((ServerLevel) level, stack), 0);
     }
 
     private boolean isSpawnZoneFull() {
@@ -381,20 +403,8 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
         double cy = pos.getY() + 0.5;
         double cz = pos.getZ() + 0.5;
 
-        serverLevel.sendParticles(
-                ParticleTypes.FLAME,
-                cx, cy, cz,
-                1,
-                0.25, 0.1, 0.25,
-                0.005
-        );
-        serverLevel.sendParticles(
-                ParticleTypes.SMOKE,
-                cx, cy, cz,
-                1,
-                0.2, 0.1, 0.2,
-                0.005
-        );
+        serverLevel.sendParticles(ParticleTypes.FLAME, cx, cy, cz, 1, 0.25, 0.1, 0.25, 0.005);
+        serverLevel.sendParticles(ParticleTypes.SMOKE, cx, cy, cz, 1, 0.2, 0.1, 0.2, 0.005);
     }
 
     @Override

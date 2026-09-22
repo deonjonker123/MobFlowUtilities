@@ -122,6 +122,6 @@ public class GenesisChamberBlockEntityRenderer implements BlockEntityRenderer<Ge
         poseStack.scale(scale, scale, scale);
 
         float rotation = (state.tickCount + state.partialTick) * 2.0f;
-        poseStack.mulPose(Axis.YP.rotationDegrees(rotation % 360));
+        poseStack.rotateDegrees(Axis.YP, rotation % 360);
     }
 }

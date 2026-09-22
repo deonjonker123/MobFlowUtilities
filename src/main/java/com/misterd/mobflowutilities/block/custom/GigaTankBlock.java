@@ -1,12 +1,12 @@
 package com.misterd.mobflowutilities.block.custom;
 
 import com.misterd.mobflowutilities.blockentity.custom.GigaTankBlockEntity;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Prediction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -29,15 +29,9 @@ import org.jspecify.annotations.Nullable;
 import java.util.List;
 
 public class GigaTankBlock extends BaseEntityBlock {
-    public static final MapCodec<GigaTankBlock> CODEC = simpleCodec(GigaTankBlock::new);
-    
+
     public GigaTankBlock(Properties properties) {
         super(properties);
-    }
-
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return CODEC;
     }
 
     @Override
@@ -73,7 +67,7 @@ public class GigaTankBlock extends BaseEntityBlock {
                         if (!player.isCreative()) {
                             stack.shrink(1);
                             ItemStack filledBucket = new ItemStack(res.getFluid().getBucket());
-                            if (!player.getInventory().add(filledBucket)) player.drop(filledBucket, false);
+                            if (!player.getInventory().add(filledBucket)) player.drop(filledBucket, false, Prediction.SERVER_ONLY);
                         }
                         level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
                         return InteractionResult.SUCCESS;
@@ -89,7 +83,7 @@ public class GigaTankBlock extends BaseEntityBlock {
                     if (!player.isCreative()) {
                         stack.shrink(1);
                         ItemStack emptyBucket = new ItemStack(Items.BUCKET);
-                        if (!player.getInventory().add(emptyBucket)) player.drop(emptyBucket, false);
+                        if (!player.getInventory().add(emptyBucket)) player.drop(emptyBucket, false, Prediction.SERVER_ONLY);
                     }
                     level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
                     return InteractionResult.SUCCESS;

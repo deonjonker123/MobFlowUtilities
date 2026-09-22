@@ -1,7 +1,6 @@
 package com.misterd.mobflowutilities.datagen.custom;
 
 import com.misterd.mobflowutilities.MobFlowUtilities;
-import com.misterd.mobflowutilities.fluid.MFUFluids;
 import com.misterd.mobflowutilities.item.MFUItems;
 import com.misterd.mobflowutilities.util.MFUTags;
 import net.minecraft.core.HolderLookup;

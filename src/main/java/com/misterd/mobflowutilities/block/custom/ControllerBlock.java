@@ -1,10 +1,9 @@
 package com.misterd.mobflowutilities.block.custom;
 
+import com.misterd.mobflowutilities.blockentity.custom.ControllerBlockEntity;
 import com.misterd.mobflowutilities.component.MFUDataComponents;
 import com.misterd.mobflowutilities.component.custom.PadWrenchData;
-import com.misterd.mobflowutilities.blockentity.custom.ControllerBlockEntity;
 import com.misterd.mobflowutilities.item.custom.PadWrenchItem;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -35,7 +34,6 @@ import org.jetbrains.annotations.Nullable;
 public class ControllerBlock extends BaseEntityBlock {
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     public static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
-    public static final MapCodec<ControllerBlock> CODEC = simpleCodec(ControllerBlock::new);
 
     public ControllerBlock(Properties properties) {
         super(properties);
@@ -45,11 +43,6 @@ public class ControllerBlock extends BaseEntityBlock {
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPE;
-    }
-
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return CODEC;
     }
 
     @Override

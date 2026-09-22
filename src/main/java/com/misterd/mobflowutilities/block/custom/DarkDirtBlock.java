@@ -9,8 +9,11 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.WeightedList;
+import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -100,11 +103,12 @@ public class DarkDirtBlock extends Block {
         BlockPos spawnPos = this.findSpawnPosition(level, minX, maxX, minZ, maxZ, pos.getY(), random);
         if (spawnPos == null) return;
 
-        WeightedList<SpawnerData> mobList = level.getBiome(spawnPos).value().getMobSettings().getMobs(MobCategory.MONSTER);
+        MobSpawnSettings spawnSettings = level.environmentAttributes().getValue(EnvironmentAttributes.NATURAL_MOB_SPAWNS, spawnPos);
+        WeightedList<SpawnerData> mobList = spawnSettings.getMobsInCategory(MobCategory.MONSTER);
 
         WeightedList.Builder<SpawnerData> builder = WeightedList.<SpawnerData>builder().addAll(mobList);
         boolean hasSlime = mobList.unwrap().stream().anyMatch(w -> w.value().type() == EntityTypes.SLIME);
-        if (!hasSlime) builder.add(new SpawnerData(EntityTypes.SLIME, 1, 3), 10);
+        if (!hasSlime) builder.add(new SpawnerData(EntityTypes.SLIME, UniformInt.of(1, 3)), 10);
         WeightedList<SpawnerData> spawners = builder.build();
 
         spawners.getRandom(random).ifPresent(spawner -> {

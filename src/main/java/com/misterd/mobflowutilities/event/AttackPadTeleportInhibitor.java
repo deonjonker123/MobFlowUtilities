@@ -4,7 +4,7 @@ import com.misterd.mobflowutilities.block.custom.DamagePadBlock;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.monster.EnderMan;
+import net.minecraft.world.entity.monster.Enderman;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -33,7 +33,7 @@ public class AttackPadTeleportInhibitor {
     }
 
     private static boolean shouldBlockTeleportation(LivingEntity entity) {
-        if (entity instanceof EnderMan) {
+        if (entity instanceof Enderman) {
             return true;
         } else {
             return entity instanceof Player ? false : false;

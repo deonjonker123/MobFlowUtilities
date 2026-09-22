@@ -3,6 +3,7 @@ package com.misterd.mobflowutilities.gui.custom;
 import com.misterd.mobflowutilities.MobFlowUtilities;
 import com.misterd.mobflowutilities.client.renderer.GenesisChamberWireframeRenderer;
 import com.misterd.mobflowutilities.network.ConfigPacket;
+import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Tooltip;
@@ -177,9 +178,7 @@ public class GenesisChamberScreen extends AbstractContainerScreen<GenesisChamber
 
     @Override
     public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
-        int x = (this.width - this.imageWidth) / 2;
-        int y = (this.height - this.imageHeight) / 2;
-        if (event.button() == 0 && event.x() >= x + 55 && event.x() <= x + 67 && event.y() >= y + 73 && event.y() <= y + 85) {
+        if (event.button() == InputConstants.MOUSE_BUTTON_LEFT && event.x() >= this.leftPos + 55 && event.x() <= this.leftPos + 67 && event.y() >= this.topPos + 73 && event.y() <= this.topPos + 85) {
             this.requiresRedstone = !this.requiresRedstone;
             ClientPacketDistributor.sendToServer(new ConfigPacket(
                     ConfigPacket.ConfigTarget.GENESIS_CHAMBER_BLOCK,

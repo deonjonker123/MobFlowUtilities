@@ -27,7 +27,7 @@ public class FakePlayerHandler {
 
         fakePlayer.getPersistentData().putBoolean("mobflowutilities", true);
         fakePlayer.setInvisible(true);
-        fakePlayer.setInvulnerable(true);
+        fakePlayer.setInvulnerableTime(Integer.MAX_VALUE);
         return fakePlayer;
     }
 

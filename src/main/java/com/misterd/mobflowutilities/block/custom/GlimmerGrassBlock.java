@@ -9,12 +9,14 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.WeightedList;
+import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -67,8 +69,10 @@ public class GlimmerGrassBlock extends Block {
 
         if (existingMobs >= Config.getGlimmerGrassMobsPerArea()) return;
 
-        WeightedList<SpawnerData> spawns = level.getBiome(pos).value().getMobSettings().getMobs(MobCategory.CREATURE);
-        if (spawns.isEmpty()) spawns = level.getBiome(pos).value().getMobSettings().getMobs(MobCategory.AMBIENT);
+        MobSpawnSettings spawnSettings = level.environmentAttributes().getValue(EnvironmentAttributes.NATURAL_MOB_SPAWNS, pos);
+
+        WeightedList<SpawnerData> spawns = spawnSettings.getMobsInCategory(MobCategory.CREATURE);
+        if (spawns.isEmpty()) spawns = spawnSettings.getMobsInCategory(MobCategory.AMBIENT);
         if (spawns.isEmpty()) return;
 
         int mobsToSpawn = Math.min(Config.getGlimmerGrassMobsPerArea() - existingMobs, 3);

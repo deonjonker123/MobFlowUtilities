@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    "mobflowutilities:collector"
-  ],
-  "result": {
-    "id": "mobflowutilities:collector"
-  }
-}

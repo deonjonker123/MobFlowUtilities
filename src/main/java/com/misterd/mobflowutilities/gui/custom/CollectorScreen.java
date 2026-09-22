@@ -4,6 +4,7 @@ import com.misterd.mobflowutilities.client.renderer.CollectorWireframeRenderer;
 import com.misterd.mobflowutilities.network.CollectorXpPacket;
 import com.misterd.mobflowutilities.network.ConfigPacket;
 import com.misterd.mobflowutilities.util.MFUExperienceUtils;
+import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Tooltip;
@@ -291,9 +292,7 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
 
     @Override
     public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
-        int x = (this.width - this.imageWidth) / 2;
-        int y = (this.height - this.imageHeight) / 2;
-        if (event.button() == 0 && event.x() >= x + 9 && event.x() <= x + 25 && event.y() >= y + 111 && event.y() <= y + 121) {
+        if (event.button() == InputConstants.MOUSE_BUTTON_LEFT && event.x() >= this.leftPos + 9 && event.x() <= this.leftPos + 25 && event.y() >= this.topPos + 111 && event.y() <= this.topPos + 121) {
             this.xpCollectionEnabled = !this.xpCollectionEnabled;
             ClientPacketDistributor.sendToServer(new ConfigPacket(
                     ConfigPacket.ConfigTarget.COLLECTOR_BLOCK,

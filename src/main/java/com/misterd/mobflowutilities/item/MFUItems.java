@@ -7,7 +7,10 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.CookingFuel;
 import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.world.level.storage.loot.providers.number.floats.ResolvableFloat;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ResolvableInt;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -135,7 +138,11 @@ public class MFUItems {
             props -> new PadWrenchItem(props));
 
     public static final DeferredItem<Item> INFUSED_COAL = ITEMS.registerItem("infused_coal",
-            props -> new Item(props) {
+            props -> new Item(props.component(DataComponents.COOKING_FUEL, new CookingFuel(
+                    new ResolvableInt.Constant(12_800),
+                    new ResolvableFloat.Constant(1.0F)
+            )))
+            {
                 @Override
                 public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> adder, TooltipFlag flag) {
                     adder.accept(Component.translatable("item.mobflowutilities.infused_coal.subtitle").withStyle(ChatFormatting.GRAY));
@@ -143,7 +150,11 @@ public class MFUItems {
             });
 
     public static final DeferredItem<Item> INFUSED_CHARCOAL = ITEMS.registerItem("infused_charcoal",
-            props -> new Item(props) {
+            props -> new Item(props.component(DataComponents.COOKING_FUEL, new CookingFuel(
+                    new ResolvableInt.Constant(12_800),
+                    new ResolvableFloat.Constant(1.0F)
+            )))
+            {
                 @Override
                 public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> adder, TooltipFlag flag) {
                     adder.accept(Component.translatable("item.mobflowutilities.infused_coal.subtitle").withStyle(ChatFormatting.GRAY));
