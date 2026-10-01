@@ -12,7 +12,9 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -102,12 +104,20 @@ public class DamagePadBlockEntity extends BlockEntity {
         if (looting > 0) sword.enchant(level.holderOrThrow(Enchantments.LOOTING), looting);
 
         fp.setItemInHand(InteractionHand.MAIN_HAND, sword);
+        sword.forEachModifier(EquipmentSlot.MAINHAND, (attr, mod) -> {
+            AttributeInstance inst = fp.getAttribute(attr);
+            if (inst != null) { inst.removeModifier(mod.id()); inst.addTransientModifier(mod); }
+        });
         for (LivingEntity entity : entities) {
             if (!(entity instanceof Player)) {
-                fp.attack(entity);
                 fp.attackStrengthTicker = 100;
+                fp.attack(entity);
             }
         }
+        sword.forEachModifier(EquipmentSlot.MAINHAND, (attr, mod) -> {
+            AttributeInstance inst = fp.getAttribute(attr);
+            if (inst != null) inst.removeModifier(mod.id());
+        });
         fp.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
     }
 
