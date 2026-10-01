@@ -39,7 +39,7 @@ public class Config {
     }
 
     public static void register(ModContainer container) {
-        container.registerConfig(ModConfig.Type.COMMON, COMMON_CONFIG);
+        container.registerConfig(ModConfig.Type.LOCAL, COMMON_CONFIG);
     }
 
     private static void buildCommonConfig() {
@@ -322,7 +322,7 @@ public class Config {
 
     @SubscribeEvent
     public static void onConfigLoad(ModConfigEvent event) {
-        if (event.getConfig().getType() == ModConfig.Type.COMMON) {
+        if (event.getConfig().getType() == ModConfig.Type.LOCAL) {
             LOGGER.info("Mob Flow Utilities configuration loaded");
             logConfigValues();
             validateConfig();
