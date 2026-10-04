@@ -35,6 +35,8 @@ public class DataGenerators {
         PackOutput packOutput = generator.getPackOutput();
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getWorldLookupProvider();
 
+        event.createReloadableRegistryObjects(reloadableRegistries());
+
         BlockTagsProvider blockTagsProvider = new MFUBlockTagProvider(packOutput, lookupProvider);
         generator.addProvider(true, blockTagsProvider);
         generator.addProvider(true, new MFUItemTagProvider(packOutput, lookupProvider));
@@ -48,6 +50,8 @@ public class DataGenerators {
         DataGenerator generator = event.getGenerator();
         PackOutput packOutput = generator.getPackOutput();
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getWorldLookupProvider();
+
+        event.createReloadableRegistryObjects(reloadableRegistries());
 
         BlockTagsProvider blockTagsProvider = new MFUBlockTagProvider(packOutput, lookupProvider);
         generator.addProvider(true, blockTagsProvider);

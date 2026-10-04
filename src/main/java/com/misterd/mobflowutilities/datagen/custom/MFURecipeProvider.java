@@ -5,11 +5,9 @@ import com.misterd.mobflowutilities.item.MFUItems;
 import com.misterd.mobflowutilities.recipe.FluidTagBucketIngredient;
 import com.misterd.mobflowutilities.util.MFUTags;
 import net.minecraft.advancements.Advancement;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.MultiRegistryBootstrap;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
@@ -19,7 +17,6 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.neoforged.neoforge.common.Tags;
 
 import java.util.Set;
-import java.util.concurrent.CompletableFuture;
 
 public class MFURecipeProvider extends RecipeProvider {
 
