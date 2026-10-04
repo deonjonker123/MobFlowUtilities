@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": "minecraft:sugar",
+    "D": "minecraft:diamond",
+    "L": "minecraft:iron_ingot"
+  },
+  "pattern": [
+    "#L#",
+    "LDL",
+    "#L#"
+  ],
+  "result": {
+    "id": "mobflowutilities:speed_module"
+  }
+}

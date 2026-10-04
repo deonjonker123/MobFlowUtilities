@@ -1,0 +1,8 @@
+{
+  "values": [
+    "mobflowutilities:controller",
+    "mobflowutilities:collector",
+    "mobflowutilities:genesis_chamber",
+    "mobflowutilities:fan"
+  ]
+}

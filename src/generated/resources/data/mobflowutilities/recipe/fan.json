@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": "minecraft:piston",
+    "G": "#c:stones",
+    "P": "minecraft:iron_ingot"
+  },
+  "pattern": [
+    "GPG",
+    "PCP",
+    "GPG"
+  ],
+  "result": {
+    "id": "mobflowutilities:fan"
+  }
+}

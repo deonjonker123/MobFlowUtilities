@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "D": "minecraft:diamond",
+    "G": "minecraft:iron_ingot",
+    "L": "minecraft:lapis_lazuli",
+    "X": "minecraft:gold_ingot"
+  },
+  "pattern": [
+    "GLG",
+    "DXD",
+    "GLG"
+  ],
+  "result": {
+    "id": "mobflowutilities:looting_module"
+  }
+}

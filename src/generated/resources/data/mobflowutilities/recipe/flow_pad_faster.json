@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "F": "mobflowutilities:flow_pad_fast",
+    "G": "minecraft:gold_ingot",
+    "Q": "minecraft:sugar"
+  },
+  "pattern": [
+    "GFG",
+    "FQF",
+    "GFG"
+  ],
+  "result": {
+    "count": 4,
+    "id": "mobflowutilities:flow_pad_faster"
+  }
+}

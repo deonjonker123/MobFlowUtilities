@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": {
+      "neoforge:ingredient_type": "mobflowutilities:fluid_tag_bucket",
+      "fluid_tag": "c:experience"
+    },
+    "E": "minecraft:ender_eye",
+    "P": "minecraft:ender_pearl"
+  },
+  "pattern": [
+    "BEB",
+    "EPE",
+    "BEB"
+  ],
+  "result": {
+    "id": "mobflowutilities:life_catalyst"
+  }
+}

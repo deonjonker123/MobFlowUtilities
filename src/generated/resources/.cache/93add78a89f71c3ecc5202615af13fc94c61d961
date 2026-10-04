@@ -1,0 +1,6 @@
+// 26.3	2026-10-04T08:45:37.0245757	Tags for minecraft:block mod id mobflowutilities
+ddabe8e13e96279432f5bdb2e1e9a2777ca106b1 data/minecraft/tags/block/mineable/pickaxe.json
+57a9844f994b8e8749bd986b7f8228cacf2f698a data/minecraft/tags/block/mineable/shovel.json
+35a6e4fb5dcb80e01b2b3a69eb4835eff08441fc data/minecraft/tags/block/wither_immune.json
+2c7d078f6c53ecbc4fd507a2f482dc070af37742 data/mobflowutilities/tags/block/mobflowutilities_machines.json
+3de53d1f7af4401b4e8530c0d4bfe7b6b20b0849 data/mobflowutilities/tags/block/mobflowutilities_pads.json

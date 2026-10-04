@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "condition": {
+        "type": "minecraft:survives_explosion"
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "mobflowutilities:flow_pad_fastest"
+        }
+      ],
+      "rolls": 1
+    }
+  ],
+  "random_sequence": "mobflowutilities:blocks/flow_pad_fastest"
+}

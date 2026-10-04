@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "G": "minecraft:iron_ingot",
+    "Q": "minecraft:sugar",
+    "S": "#c:stones"
+  },
+  "pattern": [
+    "SGS",
+    "GQG",
+    "SGS"
+  ],
+  "result": {
+    "count": 5,
+    "id": "mobflowutilities:flow_pad_fast"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "G": "minecraft:iron_ingot",
+    "S": "minecraft:feather"
+  },
+  "pattern": [
+    "GSG",
+    "S S",
+    "GSG"
+  ],
+  "result": {
+    "id": "mobflowutilities:fan_distance_increase_module"
+  }
+}

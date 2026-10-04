@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": "#c:glass_blocks",
+    "X": "#minecraft:wooden_buttons"
+  },
+  "pattern": [
+    "BXB",
+    " B "
+  ],
+  "result": {
+    "id": "mobflowutilities:empty_gene_vial"
+  }
+}

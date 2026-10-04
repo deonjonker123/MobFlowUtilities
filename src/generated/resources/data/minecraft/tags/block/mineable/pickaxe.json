@@ -1,0 +1,16 @@
+{
+  "values": [
+    "mobflowutilities:damage_pad",
+    "mobflowutilities:flow_pad_fast",
+    "mobflowutilities:flow_pad_faster",
+    "mobflowutilities:flow_pad_fastest",
+    "mobflowutilities:controller",
+    "mobflowutilities:collector",
+    "mobflowutilities:genesis_chamber",
+    "mobflowutilities:genesis_infuser",
+    "mobflowutilities:fan",
+    "mobflowutilities:dark_glass",
+    "mobflowutilities:glimmer_lamp",
+    "mobflowutilities:gigatank"
+  ]
+}

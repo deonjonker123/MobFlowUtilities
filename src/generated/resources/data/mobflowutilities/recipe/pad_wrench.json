@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "G": "minecraft:iron_ingot",
+    "S": "minecraft:gold_ingot"
+  },
+  "pattern": [
+    " G ",
+    " SG",
+    "G  "
+  ],
+  "result": {
+    "id": "mobflowutilities:pad_wrench"
+  }
+}
