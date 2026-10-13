@@ -241,7 +241,7 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
 
     private void depositAllXP() {
         if (this.minecraft.player == null) return;
-        int playerXP = this.minecraft.player.totalExperience;
+        int playerXP = MFUExperienceUtils.getPlayerTotalExperience(this.minecraft.player);
         if (playerXP > 0) {
             ClientPacketDistributor.sendToServer(new CollectorXpPacket(this.menu.blockEntity.getBlockPos(), CollectorXpPacket.XpAction.DEPOSIT, playerXP));
             this.storedXP = Math.min(this.maxStoredXP, this.storedXP + playerXP);

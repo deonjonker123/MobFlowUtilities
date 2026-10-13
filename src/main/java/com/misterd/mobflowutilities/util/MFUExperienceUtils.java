@@ -1,5 +1,6 @@
 package com.misterd.mobflowutilities.util;
 
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
 public class MFUExperienceUtils {
@@ -41,21 +42,29 @@ public class MFUExperienceUtils {
         return (float) expAfterFullLevels / (float) expForNextLevel;
     }
 
-    public static int getExpNeededForNextLevel(Player player) {
-        return player.getXpNeededForNextLevel() - (int) (player.experienceProgress * player.getXpNeededForNextLevel());
-    }
-
-    public static int removePoints(Player player, int pointsToRemove) {
-        int currentTotalExp = getPlayerTotalExperience(player);
-        int expToRemove = Math.min(currentTotalExp, pointsToRemove);
-        player.giveExperiencePoints(-expToRemove);
-        return expToRemove;
-    }
-
     public static int getPlayerTotalExperience(Player player) {
         int exp = getTotalExperienceForLevel(player.experienceLevel);
         long totalXp = (long) exp + (long) Math.round(player.experienceProgress * player.getXpNeededForNextLevel());
         return (int) Math.min(totalXp, Integer.MAX_VALUE);
+    }
+
+    public static void setPlayerTotalExperience(ServerPlayer player, int totalExp) {
+        totalExp = Math.max(0, totalExp);
+
+        int level = getLevelFromTotalExperience(totalExp);
+        while (level > 0 && getTotalExperienceForLevel(level) > totalExp) {
+            level--;
+        }
+        while (getTotalExperienceForLevel(level + 1) <= totalExp
+                && getTotalExperienceForLevel(level + 1) < Integer.MAX_VALUE) {
+            level++;
+        }
+
+        int remainder = totalExp - getTotalExperienceForLevel(level);
+
+        player.setExperienceLevels(level);
+        player.setExperiencePoints(remainder);
+        player.totalExperience = totalExp;
     }
 
     private MFUExperienceUtils() {}
