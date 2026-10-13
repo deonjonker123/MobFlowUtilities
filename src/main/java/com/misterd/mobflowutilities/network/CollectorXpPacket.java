@@ -43,51 +43,42 @@ public record CollectorXpPacket(BlockPos pos, XpAction action, int amount) imple
             BlockEntity blockEntity = serverPlayer.level().getBlockEntity(packet.pos());
             if (!(blockEntity instanceof CollectorBlockEntity collector)) return;
 
+            int playerXp = MFUExperienceUtils.getPlayerTotalExperience(serverPlayer);
+            int storedXp = collector.getStoredXP();
+
             switch (packet.action()) {
                 case WITHDRAW -> {
-                    int storedXp = collector.getStoredXP();
-                    int depositAmount = Math.min(packet.amount(), storedXp);
-                    if (depositAmount > 0) {
-                        collector.setStoredXP(storedXp - depositAmount);
-                        serverPlayer.giveExperiencePoints(depositAmount);
-                    }
+                    int toGive = Math.min(Math.min(packet.amount(), storedXp), Integer.MAX_VALUE - playerXp);
+                    if (toGive <= 0) return;
+                    collector.setStoredXP(storedXp - toGive);
+                    MFUExperienceUtils.setPlayerTotalExperience(serverPlayer, playerXp + toGive);
                 }
                 case DEPOSIT -> {
-                    int storedXp = serverPlayer.totalExperience;
-                    int depositAmount = Math.min(packet.amount(), storedXp);
-                    if (depositAmount > 0) {
-                        serverPlayer.giveExperiencePoints(-depositAmount);
-                        collector.setStoredXP(collector.getStoredXP() + depositAmount);
-                    }
+                    int toTake = Math.min(Math.min(packet.amount(), playerXp), Integer.MAX_VALUE - storedXp);
+                    if (toTake <= 0) return;
+                    MFUExperienceUtils.setPlayerTotalExperience(serverPlayer, playerXp - toTake);
+                    collector.setStoredXP(storedXp + toTake);
                 }
                 case WITHDRAW_ONE_LEVEL -> {
-                    int storedXp = collector.getStoredXP();
                     if (storedXp <= 0) return;
-                    int partialNeeded = MFUExperienceUtils.getExpNeededForNextLevel(serverPlayer);
-                    if (serverPlayer.experienceProgress > 0.0f && partialNeeded > 0) {
-                        int toGive = Math.min(partialNeeded, storedXp);
-                        serverPlayer.giveExperiencePoints(toGive);
-                        collector.setStoredXP(storedXp - toGive);
-                        return;
-                    }
-                    int xpForOneLevel = MFUExperienceUtils.getExperienceForNextLevel(serverPlayer.experienceLevel);
-                    int toGive = Math.min(xpForOneLevel, storedXp);
+                    int level = serverPlayer.experienceLevel;
+                    int partialXp = playerXp - MFUExperienceUtils.getTotalExperienceForLevel(level);
+                    int wanted = MFUExperienceUtils.getExperienceForNextLevel(level) - Math.max(0, partialXp);
+                    int toGive = Math.min(Math.min(wanted, storedXp), Integer.MAX_VALUE - playerXp);
                     if (toGive <= 0) return;
-                    serverPlayer.giveExperiencePoints(toGive);
                     collector.setStoredXP(storedXp - toGive);
+                    MFUExperienceUtils.setPlayerTotalExperience(serverPlayer, playerXp + toGive);
                 }
                 case DEPOSIT_ONE_LEVEL -> {
-                    int partialXp = (int) Math.round(serverPlayer.experienceProgress * serverPlayer.getXpNeededForNextLevel());
-                    if (partialXp > 0) {
-                        int removed = MFUExperienceUtils.removePoints(serverPlayer, partialXp);
-                        serverPlayer.experienceProgress = 0.0f;
-                        collector.setStoredXP(collector.getStoredXP() + removed);
-                        return;
-                    }
-                    if (serverPlayer.experienceLevel <= 0) return;
-                    int xpForThisLevel = MFUExperienceUtils.getExperienceForNextLevel(serverPlayer.experienceLevel - 1);
-                    serverPlayer.giveExperienceLevels(-1);
-                    collector.setStoredXP(collector.getStoredXP() + xpForThisLevel);
+                    int level = serverPlayer.experienceLevel;
+                    int partialXp = playerXp - MFUExperienceUtils.getTotalExperienceForLevel(level);
+                    int wanted = partialXp > 0
+                            ? partialXp
+                            : (level > 0 ? MFUExperienceUtils.getExperienceForNextLevel(level - 1) : 0);
+                    int toTake = Math.min(Math.min(wanted, playerXp), Integer.MAX_VALUE - storedXp);
+                    if (toTake <= 0) return;
+                    MFUExperienceUtils.setPlayerTotalExperience(serverPlayer, playerXp - toTake);
+                    collector.setStoredXP(storedXp + toTake);
                 }
             }
         });
