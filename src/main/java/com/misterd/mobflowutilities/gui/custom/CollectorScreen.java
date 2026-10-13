@@ -3,6 +3,7 @@ package com.misterd.mobflowutilities.gui.custom;
 import com.misterd.mobflowutilities.client.renderer.CollectorWireframeRenderer;
 import com.misterd.mobflowutilities.network.CollectorXpPacket;
 import com.misterd.mobflowutilities.network.ConfigPacket;
+import com.misterd.mobflowutilities.util.MFUExperienceUtils;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;
@@ -289,7 +290,7 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
 
     private void depositAllXP() {
         if (this.minecraft.player == null) return;
-        int playerXP = this.minecraft.player.totalExperience;
+        int playerXP = MFUExperienceUtils.getPlayerTotalExperience(this.minecraft.player);
         if (playerXP > 0) {
             PacketDistributor.sendToServer(new CollectorXpPacket(this.menu.blockEntity.getBlockPos(), CollectorXpPacket.XpAction.DEPOSIT, playerXP));
             this.storedXP = Math.min(this.maxStoredXP, this.storedXP + playerXP);
