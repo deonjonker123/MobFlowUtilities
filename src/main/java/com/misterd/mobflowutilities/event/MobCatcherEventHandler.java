@@ -6,6 +6,7 @@ import com.misterd.mobflowutilities.item.MFUItems;
 import com.misterd.mobflowutilities.item.custom.EmptyGeneVialItem;
 import com.misterd.mobflowutilities.item.custom.MobCatcherItem;
 import com.misterd.mobflowutilities.util.GeneticHelper;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
@@ -27,7 +28,6 @@ public class MobCatcherEventHandler {
     public static void onEntityInteract(EntityInteract event) {
 
         Entity target = event.getTarget();
-        if (target == null || target instanceof EnderDragon) return;
 
         Player player = event.getEntity();
         InteractionHand hand = event.getHand();
@@ -46,11 +46,6 @@ public class MobCatcherEventHandler {
         if (player.isShiftKeyDown() && stack.getItem() instanceof MobCatcherItem catcher) {
 
             if (target instanceof LivingEntity living) {
-
-                if (living instanceof EnderDragon) {
-                    event.setCanceled(true);
-                    return;
-                }
 
                 InteractionResult result = catcher.interactLivingEntity(stack, player, living, hand);
 
@@ -72,11 +67,11 @@ public class MobCatcherEventHandler {
         if (!GeneticHelper.canCollectDNA(target.getType())) {
 
             if (target instanceof Player) {
-                player.sendSystemMessage(Component.translatable("item.mobflowutilities.empty_gene_vial.player_immunity"));
+                player.sendOverlayMessage(Component.translatable("item.mobflowutilities.empty_gene_vial.player_immunity").withStyle(ChatFormatting.RED));
             } else if (GeneticHelper.getSpawnEgg(target.getType()) == null) {
-                player.sendSystemMessage(Component.translatable("item.mobflowutilities.empty_gene_vial.no_spawn_egg"));
+                player.sendOverlayMessage(Component.translatable("item.mobflowutilities.empty_gene_vial.no_spawn_egg").withStyle(ChatFormatting.RED));
             } else {
-                player.sendSystemMessage(Component.translatable("item.mobflowutilities.empty_gene_vial.blacklisted"));
+                player.sendOverlayMessage(Component.translatable("item.mobflowutilities.empty_gene_vial.blacklisted").withStyle(ChatFormatting.RED));
             }
 
             return true;
@@ -88,7 +83,7 @@ public class MobCatcherEventHandler {
 
         player.setItemInHand(hand, filledVial);
 
-        player.sendSystemMessage(Component.translatable("item.mobflowutilities.empty_gene_vial.collected", target.getDisplayName().getString()));
+        player.sendOverlayMessage(Component.translatable("item.mobflowutilities.empty_gene_vial.collected", target.getDisplayName().getString()).withStyle(ChatFormatting.GREEN));
 
         return true;
     }

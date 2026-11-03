@@ -1,10 +1,12 @@
 package com.misterd.mobflowutilities.util;
 
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
@@ -39,6 +41,15 @@ public class MFUTags {
 
         private static TagKey<Item> createTag(String namespace, String name) {
             return ItemTags.create(Identifier.fromNamespaceAndPath(namespace, name));
+        }
+    }
+
+    public static class Entities {
+        public static final TagKey<EntityType<?>> CANNOT_SAMPLE = createTag("mobflowutilities", "cannot_sample");
+        public static final TagKey<EntityType<?>> CANNOT_CATCH = createTag("mobflowutilities", "cannot_catch");
+
+        private static TagKey<EntityType<?>> createTag(String namespace, String name) {
+            return TagKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(namespace, name));
         }
     }
 }

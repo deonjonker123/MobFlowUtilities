@@ -181,7 +181,7 @@
   "fakeplayer.mobflowutilities.damage_pad": "Mob Flow Utilities Damage Pad",
 
   "item.mobflowutilities.mob_catcher.already_occupied": "Mob Catcher already contains a mob!",
-  "item.mobflowutilities.mob_catcher.boss_immunity": "Boss mobs cannot be captured!",
+  "item.mobflowutilities.mob_catcher.blacklist": "This mob cannot be captured!",
   "item.mobflowutilities.mob_catcher.player_immunity": "Players cannot be captured!",
   "item.mobflowutilities.mob_catcher.captured": "Captured: %s",
   "item.mobflowutilities.mob_catcher.empty": "Mob Catcher is empty!",
@@ -198,8 +198,8 @@
   "item.mobflowutilities.empty_gene_vial.subtitle": "Used to collect genetic material from mobs",
   "item.mobflowutilities.empty_gene_vial.usage": "Shift-Right-click on a mob to collect Gene sample",
   "item.mobflowutilities.empty_gene_vial.player_immunity": "Cannot collect DNA from players!",
-  "item.mobflowutilities.empty_gene_vial.no_spawn_egg": "This creature's DNA cannot be sampled!",
-  "item.mobflowutilities.empty_gene_vial.blacklisted": "This creature's essence is too powerful to capture!",
+  "item.mobflowutilities.empty_gene_vial.no_spawn_egg": "This mob's DNA cannot be sampled!",
+  "item.mobflowutilities.empty_gene_vial.blacklisted": "This mob's essence is too powerful to capture!",
   "item.mobflowutilities.empty_gene_vial.collected": "Collected DNA from: %s",
 
   "item.mobflowutilities.gene_sample_vial.contains": "Gene Sample: %s",

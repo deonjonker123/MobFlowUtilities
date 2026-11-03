@@ -24,18 +24,15 @@ public class DataGenerators {
         PackOutput packOutput = generator.getPackOutput();
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
-        generator.addProvider(true, new LootTableProvider(packOutput, Collections.emptySet(),
-                List.of(new LootTableProvider.SubProviderEntry(MFULootTableProvider::new, LootContextParamSets.BLOCK)), lookupProvider));
+        generator.addProvider(true, new LootTableProvider(packOutput, Collections.emptySet(), List.of(new LootTableProvider.SubProviderEntry(MFULootTableProvider::new, LootContextParamSets.BLOCK)), lookupProvider));
         generator.addProvider(true, new MFURecipeProvider.Runner(packOutput, lookupProvider));
-
         BlockTagsProvider blockTagsProvider = new MFUBlockTagProvider(packOutput, lookupProvider);
         generator.addProvider(true, blockTagsProvider);
         generator.addProvider(true, new MFUItemTagProvider(packOutput, lookupProvider));
-
         generator.addProvider(true, new MFUDataMapProvider(packOutput, lookupProvider));
-
         generator.addProvider(true, new MFUModelProvider(packOutput));
         generator.addProvider(true, new MFUFluidTagsProvider(packOutput, lookupProvider));
+        generator.addProvider(true, new MFUEntityTagsProvider(packOutput, lookupProvider));
     }
 
     @SubscribeEvent
@@ -44,17 +41,14 @@ public class DataGenerators {
         PackOutput packOutput = generator.getPackOutput();
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
-        generator.addProvider(true, new LootTableProvider(packOutput, Collections.emptySet(),
-                List.of(new LootTableProvider.SubProviderEntry(MFULootTableProvider::new, LootContextParamSets.BLOCK)), lookupProvider));
+        generator.addProvider(true, new LootTableProvider(packOutput, Collections.emptySet(), List.of(new LootTableProvider.SubProviderEntry(MFULootTableProvider::new, LootContextParamSets.BLOCK)), lookupProvider));
         generator.addProvider(true, new MFURecipeProvider.Runner(packOutput, lookupProvider));
-
         BlockTagsProvider blockTagsProvider = new MFUBlockTagProvider(packOutput, lookupProvider);
         generator.addProvider(true, blockTagsProvider);
         generator.addProvider(true, new MFUItemTagProvider(packOutput, lookupProvider));
-
         generator.addProvider(true, new MFUDataMapProvider(packOutput, lookupProvider));
-
         generator.addProvider(true, new MFUModelProvider(packOutput));
         generator.addProvider(true, new MFUFluidTagsProvider(packOutput, lookupProvider));
+        generator.addProvider(true, new MFUEntityTagsProvider(packOutput, lookupProvider));
     }
 }
