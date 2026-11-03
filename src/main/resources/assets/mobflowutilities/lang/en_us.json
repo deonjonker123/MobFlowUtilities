@@ -140,7 +140,7 @@
   "fakeplayer.mobflowutilities.damage_pad": "Mob Flow Utilities Damage Pad",
 
   "item.mobflowutilities.mob_catcher.already_occupied": "Mob Catcher already contains a mob!",
-  "item.mobflowutilities.mob_catcher.boss_immunity": "Boss mobs cannot be captured!",
+  "item.mobflowutilities.mob_catcher.blacklist": "This mob cannot be captured!",
   "item.mobflowutilities.mob_catcher.player_immunity": "Players cannot be captured!",
   "item.mobflowutilities.mob_catcher.captured": "Captured: %s",
   "item.mobflowutilities.mob_catcher.empty": "Mob Catcher is empty!",

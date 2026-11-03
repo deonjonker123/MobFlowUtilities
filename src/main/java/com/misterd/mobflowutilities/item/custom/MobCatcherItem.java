@@ -2,6 +2,8 @@ package com.misterd.mobflowutilities.item.custom;
 
 import java.util.List;
 import java.util.Optional;
+
+import com.misterd.mobflowutilities.util.MFUTags;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
@@ -46,8 +48,8 @@ public class MobCatcherItem extends Item {
         } else if (this.hasCapturedMob(stack)) {
             player.displayClientMessage(Component.translatable("item.mobflowutilities.mob_catcher.already_occupied"), true);
             return InteractionResult.FAIL;
-        } else if (this.isBossMob(target)) {
-            player.displayClientMessage(Component.translatable("item.mobflowutilities.mob_catcher.boss_immunity"), true);
+        } else if (this.isBlacklisted(target)) {
+            player.displayClientMessage(Component.translatable("item.mobflowutilities.mob_catcher.blacklist"), true);
             return InteractionResult.FAIL;
         } else if (target instanceof Player) {
             player.displayClientMessage(Component.translatable("item.mobflowutilities.mob_catcher.player_immunity"), true);
@@ -98,8 +100,8 @@ public class MobCatcherItem extends Item {
         }
     }
 
-    private boolean isBossMob(LivingEntity entity) {
-        return entity instanceof WitherBoss || entity instanceof EnderDragon || entity instanceof ElderGuardian || entity instanceof Ravager || entity instanceof Warden || entity.getType().getCategory().getName().equals("boss") || entity.getPersistentData().getBoolean("IsBoss");
+    private boolean isBlacklisted(LivingEntity entity) {
+        return entity.getType().is(MFUTags.Entities.CANNOT_CATCH);
     }
 
     public boolean hasCapturedMob(ItemStack stack) {

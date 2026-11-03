@@ -6,6 +6,7 @@ import com.misterd.mobflowutilities.item.MFUItems;
 import com.misterd.mobflowutilities.item.custom.EmptyGeneVialItem;
 import com.misterd.mobflowutilities.item.custom.MobCatcherItem;
 import com.misterd.mobflowutilities.util.GeneticHelper;
+import com.misterd.mobflowutilities.util.MFUTags;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
@@ -25,16 +26,13 @@ public class MobCatcherEventHandler {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onEntityInteract(EntityInteract event) {
-
         Entity target = event.getTarget();
-        if (target == null || target instanceof EnderDragon) return;
 
         Player player = event.getEntity();
         InteractionHand hand = event.getHand();
         ItemStack stack = player.getItemInHand(hand);
 
         if (player.isShiftKeyDown() && stack.getItem() instanceof EmptyGeneVialItem) {
-
             if (target instanceof LivingEntity living) {
                 if (handleGeneVialInteraction(stack, player, living, hand)) {
                     event.setCanceled(true);
@@ -46,11 +44,6 @@ public class MobCatcherEventHandler {
         if (player.isShiftKeyDown() && stack.getItem() instanceof MobCatcherItem catcher) {
 
             if (target instanceof LivingEntity living) {
-
-                if (living instanceof EnderDragon) {
-                    event.setCanceled(true);
-                    return;
-                }
 
                 InteractionResult result =
                         catcher.interactLivingEntity(stack, player, living, hand);
