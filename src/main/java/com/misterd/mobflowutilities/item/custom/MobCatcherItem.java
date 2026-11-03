@@ -17,11 +17,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
-import net.minecraft.world.entity.boss.wither.WitherBoss;
-import net.minecraft.world.entity.monster.ElderGuardian;
-import net.minecraft.world.entity.monster.Ravager;
-import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -46,16 +41,16 @@ public class MobCatcherItem extends Item {
         } else if (!player.isShiftKeyDown()) {
             return InteractionResult.PASS;
         } else if (this.hasCapturedMob(stack)) {
-            player.displayClientMessage(Component.translatable("item.mobflowutilities.mob_catcher.already_occupied"), true);
+            player.displayClientMessage(Component.translatable("item.mobflowutilities.mob_catcher.already_occupied").withStyle(ChatFormatting.RED), true);
             return InteractionResult.FAIL;
         } else if (this.isBlacklisted(target)) {
-            player.displayClientMessage(Component.translatable("item.mobflowutilities.mob_catcher.blacklist"), true);
+            player.displayClientMessage(Component.translatable("item.mobflowutilities.mob_catcher.blacklist").withStyle(ChatFormatting.RED), true);
             return InteractionResult.FAIL;
         } else if (target instanceof Player) {
-            player.displayClientMessage(Component.translatable("item.mobflowutilities.mob_catcher.player_immunity"), true);
+            player.displayClientMessage(Component.translatable("item.mobflowutilities.mob_catcher.player_immunity").withStyle(ChatFormatting.RED), true);
             return InteractionResult.FAIL;
         } else if (this.captureMob(stack, target, player)) {
-            player.displayClientMessage(Component.translatable("item.mobflowutilities.mob_catcher.captured", new Object[]{target.getDisplayName().getString()}), true);
+            player.displayClientMessage(Component.translatable("item.mobflowutilities.mob_catcher.captured", new Object[]{target.getDisplayName().getString()}).withStyle(ChatFormatting.GREEN), true);
             player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.2F);
             return InteractionResult.SUCCESS;
         } else {
@@ -77,20 +72,20 @@ public class MobCatcherItem extends Item {
             } else {
                 BlockState state = level.getBlockState(pos);
                 if (!state.isSolidRender(level, pos)) {
-                    player.displayClientMessage(Component.translatable("item.mobflowutilities.mob_catcher.invalid_surface"), true);
+                    player.displayClientMessage(Component.translatable("item.mobflowutilities.mob_catcher.invalid_surface").withStyle(ChatFormatting.RED), true);
                     return InteractionResult.FAIL;
                 } else {
                     BlockPos spawnPos = pos.above();
                     if (level.getBlockState(spawnPos).isAir() && level.getBlockState(spawnPos.above()).isAir()) {
                         if (this.releaseMob(stack, (ServerLevel)level, spawnPos, player)) {
-                            player.displayClientMessage(Component.translatable("item.mobflowutilities.mob_catcher.released"), true);
+                            player.displayClientMessage(Component.translatable("item.mobflowutilities.mob_catcher.released").withStyle(ChatFormatting.GREEN), true);
                             level.playSound(null, spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 0.8F);
                             return InteractionResult.SUCCESS;
                         } else {
                             return InteractionResult.FAIL;
                         }
                     } else {
-                        player.displayClientMessage(Component.translatable("item.mobflowutilities.mob_catcher.no_space"), true);
+                        player.displayClientMessage(Component.translatable("item.mobflowutilities.mob_catcher.no_space").withStyle(ChatFormatting.RED), true);
                         return InteractionResult.FAIL;
                     }
                 }
@@ -121,7 +116,7 @@ public class MobCatcherItem extends Item {
             target.discard();
             return true;
         } catch (Exception e) {
-            player.displayClientMessage(Component.translatable("item.mobflowutilities.mob_catcher.capture_failed"), true);
+            player.displayClientMessage(Component.translatable("item.mobflowutilities.mob_catcher.release_failed").withStyle(ChatFormatting.RED), true);
             return false;
         }
     }

@@ -3,6 +3,7 @@
   "package": "com.misterd.mobflowutilities.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "PlayerHurtEntityTriggerMixin",
     "ZombieMixin"
   ]
 }

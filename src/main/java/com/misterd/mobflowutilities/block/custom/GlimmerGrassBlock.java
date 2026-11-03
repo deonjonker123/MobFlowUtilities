@@ -4,24 +4,34 @@ import java.util.List;
 
 import com.misterd.mobflowutilities.block.MFUBlocks;
 import com.misterd.mobflowutilities.config.Config;
+import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import org.joml.Vector3f;
+import org.slf4j.Logger;
 
 public class GlimmerGrassBlock extends Block {
+
+    private static final Logger LOGGER = LogUtils.getLogger();
+
+    private static final int SPAWN_RADIUS = 8;
+    private static final int SPAWN_HEIGHT = 5;
+    private static final int AMBIENT_COUNT_RADIUS = 32;
+    private static final int AMBIENT_COUNT_HEIGHT = 16;
 
     public GlimmerGrassBlock(Properties properties) {
         super(properties);
@@ -60,40 +70,45 @@ public class GlimmerGrassBlock extends Block {
     }
 
     private void attemptMobSpawning(ServerLevel level, BlockPos pos, RandomSource random) {
-        int centerX = pos.getX();
-        int centerZ = pos.getZ();
-        int minX = centerX - 8;
-        int maxX = centerX + 8;
-        int minZ = centerZ - 8;
-        int maxZ = centerZ + 8;
-        AABB spawnArea = new AABB(minX, pos.getY() - 5, minZ, maxX, pos.getY() + 5, maxZ);
-        long existingMobs = level.getEntitiesOfClass(Animal.class, spawnArea).size();
+        MobSpawnSettings mobSettings = level.getBiome(pos).value().getMobSettings();
+        List<SpawnerData> creatureSpawns = mobSettings.getMobs(MobCategory.CREATURE).unwrap();
+        final MobCategory category = creatureSpawns.isEmpty() ? MobCategory.AMBIENT : MobCategory.CREATURE;
+        final List<SpawnerData> spawns = creatureSpawns.isEmpty() ? mobSettings.getMobs(MobCategory.AMBIENT).unwrap() : creatureSpawns;
+        if (spawns.isEmpty()) return;
 
-        if (existingMobs < Config.getGlimmerGrassMobsPerArea()) {
-            List<SpawnerData> passiveSpawns = level.getBiome(pos).value().getMobSettings().getMobs(MobCategory.CREATURE).unwrap();
-            if (passiveSpawns.isEmpty()) {
-                passiveSpawns = level.getBiome(pos).value().getMobSettings().getMobs(MobCategory.AMBIENT).unwrap();
-            }
+        int minX = pos.getX() - SPAWN_RADIUS;
+        int maxX = pos.getX() + SPAWN_RADIUS;
+        int minZ = pos.getZ() - SPAWN_RADIUS;
+        int maxZ = pos.getZ() + SPAWN_RADIUS;
 
-            int mobsToSpawn = Math.min(Config.getGlimmerGrassMobsPerArea() - (int) existingMobs, 3);
+        AABB countArea = category == MobCategory.AMBIENT
+                ? new AABB(pos).inflate(AMBIENT_COUNT_RADIUS, AMBIENT_COUNT_HEIGHT, AMBIENT_COUNT_RADIUS)
+                : new AABB(minX, pos.getY() - SPAWN_HEIGHT, minZ, maxX, pos.getY() + SPAWN_HEIGHT, maxZ);
 
-            for (int i = 0; i < mobsToSpawn; i++) {
-                SpawnerData spawnerData = passiveSpawns.get(random.nextInt(passiveSpawns.size()));
-                EntityType<?> entityType = spawnerData.type;
-                BlockPos spawnPos = this.findSpawnPosition(level, minX, maxX, minZ, maxZ, pos.getY(), random);
+        int cap = Config.getGlimmerGrassMobsPerArea();
+        int existingMobs = level.getEntitiesOfClass(Mob.class, countArea,
+                mob -> mob.getType().getCategory() == category).size();
+        if (existingMobs >= cap) return;
 
-                if (spawnPos != null) {
-                    try {
-                        Mob mob = (Mob) entityType.create(level);
-                        if (mob != null) {
-                            mob.setPos(spawnPos.getX() + 0.5D, spawnPos.getY(), spawnPos.getZ() + 0.5D);
-                            mob.finalizeSpawn(level, level.getCurrentDifficultyAt(spawnPos), MobSpawnType.NATURAL, null);
-                            level.addFreshEntity(mob);
-                        }
-                    } catch (Exception e) {
-                        System.out.println("Failed to spawn passive mob: " + e.getMessage());
-                    }
+        int mobsToSpawn = Math.min(cap - existingMobs, 3);
+
+        for (int i = 0; i < mobsToSpawn; i++) {
+            SpawnerData spawnerData = spawns.get(random.nextInt(spawns.size()));
+            EntityType<?> entityType = spawnerData.type;
+            BlockPos spawnPos = this.findSpawnPosition(level, minX, maxX, minZ, maxZ, pos.getY(), random);
+            if (spawnPos == null) continue;
+
+            try {
+                Entity entity = entityType.create(level);
+                if (entity instanceof Mob mob) {
+                    mob.setPos(spawnPos.getX() + 0.5D, spawnPos.getY(), spawnPos.getZ() + 0.5D);
+                    mob.finalizeSpawn(level, level.getCurrentDifficultyAt(spawnPos), MobSpawnType.NATURAL, null);
+                    level.addFreshEntity(mob);
+                } else if (entity != null) {
+                    entity.discard();
                 }
+            } catch (Exception e) {
+                LOGGER.warn("Glimmer Grass failed to spawn {} at {}", entityType, spawnPos, e);
             }
         }
     }

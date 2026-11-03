@@ -3,6 +3,7 @@ package com.misterd.mobflowutilities.blockentity.custom;
 import com.misterd.mobflowutilities.block.custom.FanBlock;
 import com.misterd.mobflowutilities.blockentity.MFUBlockEntities;
 import com.misterd.mobflowutilities.gui.custom.FanMenu;
+import com.misterd.mobflowutilities.util.EntityTickingHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup.Provider;
@@ -11,6 +12,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
@@ -29,6 +31,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class FanBlockEntity extends BlockEntity implements MenuProvider {
+
+    private static final double PUSH_STRENGTH = 0.3D;
+    private static final double MAX_PUSH_SPEED = 2.0D;
 
     public final ItemStackHandler inventory = new ItemStackHandler(3) {
         @Override
@@ -60,10 +65,10 @@ public class FanBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     public void tick() {
-        if (this.level == null) return;
+        if (!(this.level instanceof ServerLevel serverLevel)) return;
 
-        if (!this.level.isClientSide && getBlockState().getValue(FanBlock.POWERED)) {
-            pushEntities(this.level);
+        if (getBlockState().getValue(FanBlock.POWERED)) {
+            pushEntities(serverLevel);
         }
     }
 
@@ -127,18 +132,34 @@ public class FanBlockEntity extends BlockEntity implements MenuProvider {
         return cachedPushZone;
     }
 
-    private void pushEntities(Level level) {
+    private void pushEntities(ServerLevel level) {
         AABB zone = getPushZone();
         Direction facing = getBlockState().getValue(FanBlock.FACING);
-        Vec3 push = Vec3.atLowerCornerOf(facing.getNormal()).scale(0.3);
+        Vec3 dir = Vec3.atLowerCornerOf(facing.getNormal());
 
         List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, zone);
 
         for (LivingEntity entity : entities) {
-            if (hasClearLane(level, entity)) {
-                entity.push(push.x, push.y, push.z);
-                entity.hurtMarked = true;
+            if (!EntityTickingHelper.isTicking(level, entity)) {
+                clampStoredMotion(entity);
+                continue;
             }
+
+            if (!hasClearLane(level, entity)) continue;
+
+            double along = entity.getDeltaMovement().dot(dir);
+            if (along >= MAX_PUSH_SPEED) continue;
+
+            double amount = Math.min(PUSH_STRENGTH, MAX_PUSH_SPEED - along);
+            entity.push(dir.x * amount, dir.y * amount, dir.z * amount);
+            entity.hurtMarked = true;
+        }
+    }
+
+    private static void clampStoredMotion(LivingEntity entity) {
+        Vec3 v = entity.getDeltaMovement();
+        if (v.lengthSqr() > MAX_PUSH_SPEED * MAX_PUSH_SPEED) {
+            entity.setDeltaMovement(v.normalize().scale(MAX_PUSH_SPEED));
         }
     }
 

@@ -4,9 +4,13 @@ import com.misterd.mobflowutilities.block.MFUBlocks;
 import java.util.List;
 
 import com.misterd.mobflowutilities.blockentity.MFUBlockEntities;
+import com.misterd.mobflowutilities.util.EntityTickingHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
@@ -39,24 +43,22 @@ public class FlowPadBlockEntity extends BlockEntity {
     }
 
     public void tick() {
-        if (level == null || level.isClientSide()) return;
+        if (!(level instanceof ServerLevel serverLevel)) return;
 
         tickCounter++;
         if (tickCounter >= MOVEMENT_INTERVAL) {
             tickCounter = 0;
-            applyMovement();
+            applyMovement(serverLevel);
         }
     }
 
-    private void applyMovement() {
-        if (level == null) return;
-
+    private void applyMovement(ServerLevel level) {
         AABB movementArea = new AABB(
                 worldPosition.getX() - 0.1D, worldPosition.getY() + 0.0625D, worldPosition.getZ() - 0.1D,
                 worldPosition.getX() + 1.1D, worldPosition.getY() + 1.5D, worldPosition.getZ() + 1.1D
         );
 
-        List<Entity> entities = level.getEntitiesOfClass(Entity.class, movementArea, this::shouldMoveEntity);
+        List<Entity> entities = level.getEntitiesOfClass(Entity.class, movementArea, e -> shouldMoveEntity(level, e));
         if (entities.isEmpty()) return;
 
         Direction facing = getFacing();
@@ -68,10 +70,12 @@ public class FlowPadBlockEntity extends BlockEntity {
         }
     }
 
-    private boolean shouldMoveEntity(Entity entity) {
+    private boolean shouldMoveEntity(ServerLevel level, Entity entity) {
         if (entity instanceof Player player && player.isShiftKeyDown()) return false;
 
-        if (entity instanceof net.minecraft.world.entity.LivingEntity || entity instanceof net.minecraft.world.entity.item.ItemEntity) {
+        if (!EntityTickingHelper.isTicking(level, entity)) return false;
+
+        if (entity instanceof LivingEntity || entity instanceof ItemEntity) {
             double entityBottom = entity.getBoundingBox().minY;
             double padTop = worldPosition.getY() + 0.0625D;
             return Math.abs(entityBottom - padTop) < 0.1D;
