@@ -139,7 +139,7 @@
   "item.mobflowutilities.pad_wrench.tooltip.usage.pad": "パッドに使用: リンク/リンク解除",
   "fakeplayer.mobflowutilities.damage_pad": "Mob Flow Utilities Damage Pad",
   "item.mobflowutilities.mob_catcher.already_occupied": "捕獲玉にはすでにモブが捕獲されている！",
-  "item.mobflowutilities.mob_catcher.boss_immunity": "ボスモブは捕獲できません！",
+  "item.mobflowutilities.mob_catcher.blacklist": "このモブは捕獲できません！",
   "item.mobflowutilities.mob_catcher.player_immunity": "プレイヤーは捕獲できません！",
   "item.mobflowutilities.mob_catcher.captured": "捕獲済み: %s",
   "item.mobflowutilities.mob_catcher.empty": "捕獲玉は空っぽです！",
