@@ -16,7 +16,7 @@ public class GeneticHelper {
     }
 
     private static boolean isBlacklisted(EntityType<?> entityType) {
-        return entityType == EntityTypes.ENDER_DRAGON || entityType == EntityTypes.WITHER;
+        return entityType.builtInRegistryHolder().is(MFUTags.Entities.CANNOT_SAMPLE);
     }
 
     public static boolean hasSpawnEgg(EntityType<?> entityType) {

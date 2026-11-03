@@ -51,5 +51,6 @@ public class DataGenerators {
 
         generator.addProvider(true, new MFUItemModelProvider(packOutput));
         generator.addProvider(true, new MFUFluidTagsProvider(packOutput, lookupProvider));
+        generator.addProvider(true, new MFUEntityTagsProvider(packOutput, lookupProvider));
     }
 }
