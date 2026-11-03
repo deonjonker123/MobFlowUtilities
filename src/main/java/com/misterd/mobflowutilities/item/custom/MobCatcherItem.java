@@ -3,31 +3,24 @@ package com.misterd.mobflowutilities.item.custom;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import com.misterd.mobflowutilities.util.MFUTags;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.Identifier;
-import net.minecraft.util.ProblemReporter;
-import net.minecraft.world.level.storage.TagValueInput;
-import net.minecraft.world.level.storage.TagValueOutput;
-import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
-import net.minecraft.world.entity.boss.wither.WitherBoss;
-import net.minecraft.world.entity.monster.ElderGuardian;
-import net.minecraft.world.entity.monster.Ravager;
-import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -37,6 +30,9 @@ import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.TagValueInput;
+import net.minecraft.world.level.storage.TagValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 
 public class MobCatcherItem extends Item {
 
@@ -48,23 +44,24 @@ public class MobCatcherItem extends Item {
         super(properties);
     }
 
+    @Override
     public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity target, InteractionHand hand) {
         if (player.level().isClientSide()) return InteractionResult.SUCCESS;
         if (!player.isShiftKeyDown()) return InteractionResult.PASS;
         if (hasCapturedMob(stack)) {
-            player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.already_occupied"));
+            player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.already_occupied").withStyle(ChatFormatting.RED));
             return InteractionResult.FAIL;
         }
-        if (isBossMob(target)) {
-            player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.boss_immunity"));
+        if (isBlacklisted(target)) {
+            player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.blacklist").withStyle(ChatFormatting.RED));
             return InteractionResult.FAIL;
         }
         if (target instanceof Player) {
-            player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.player_immunity"));
+            player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.player_immunity").withStyle(ChatFormatting.RED));
             return InteractionResult.FAIL;
         }
         if (captureMob(stack, target, player)) {
-            player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.captured", target.getDisplayName().getString()));
+            player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.captured", target.getDisplayName().getString()).withStyle(ChatFormatting.GREEN));
             player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.2F);
             return InteractionResult.SUCCESS;
         }
@@ -87,32 +84,26 @@ public class MobCatcherItem extends Item {
 
         BlockState state = level.getBlockState(pos);
         if (!state.isSolidRender()) {
-            player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.invalid_surface"));
+            player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.invalid_surface").withStyle(ChatFormatting.RED));
             return InteractionResult.FAIL;
         }
 
         BlockPos spawnPos = pos.above();
         if (!level.getBlockState(spawnPos).isAir() || !level.getBlockState(spawnPos.above()).isAir()) {
-            player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.no_space"));
+            player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.no_space").withStyle(ChatFormatting.RED));
             return InteractionResult.FAIL;
         }
 
         if (releaseMob(stack, (ServerLevel) level, spawnPos, player)) {
-            player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.released"));
+            player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.released").withStyle(ChatFormatting.GREEN));
             level.playSound(null, spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 0.8F);
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.FAIL;
     }
 
-    private boolean isBossMob(LivingEntity entity) {
-        return entity instanceof WitherBoss
-                || entity instanceof EnderDragon
-                || entity instanceof ElderGuardian
-                || entity instanceof Ravager
-                || entity instanceof Warden
-                || entity.getType().getCategory().getName().equals("boss")
-                || entity.getPersistentData().getBooleanOr("IsBoss", false);
+    private boolean isBlacklisted(LivingEntity entity) {
+        return entity.getType().builtInRegistryHolder().is(MFUTags.Entities.CANNOT_CATCH);
     }
 
     public boolean hasCapturedMob(ItemStack stack) {
@@ -133,7 +124,7 @@ public class MobCatcherItem extends Item {
             target.discard();
             return true;
         } catch (Exception e) {
-            player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.capture_failed"));
+            player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.capture_failed").withStyle(ChatFormatting.RED));
             return false;
         }
     }
@@ -156,8 +147,7 @@ public class MobCatcherItem extends Item {
             Optional<EntityType<?>> entityTypeOpt = BuiltInRegistries.ENTITY_TYPE.getOptional(entityTypeId);
             if (entityTypeOpt.isEmpty()) return false;
 
-            EntityType<?> entityType = entityTypeOpt.get();
-            Entity entity = entityType.create(level, EntitySpawnReason.LOAD);
+            Entity entity = entityTypeOpt.get().create(level, EntitySpawnReason.LOAD);
             if (entity == null) return false;
 
             ValueInput input = TagValueInput.create(ProblemReporter.DISCARDING, level.registryAccess(), entityTag);
@@ -167,7 +157,7 @@ public class MobCatcherItem extends Item {
             stack.remove(DataComponents.CUSTOM_DATA);
             return true;
         } catch (Exception e) {
-            player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.release_failed"));
+            player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.release_failed").withStyle(ChatFormatting.RED));
             return false;
         }
     }
