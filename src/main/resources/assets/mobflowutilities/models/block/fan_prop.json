@@ -1,11 +1,12 @@
 {
+	"format_version": "26.3",
 	"credit": "Made with Blockbench",
 	"textures": {
 		"0": "mobflowutilities:block/fan_south_inner",
-		"1": "mobflowutilities:block/fan_powered",
 		"2": "mobflowutilities:block/fan_west_inner",
 		"3": "mobflowutilities:block/fan_up_inner",
 		"5": "mobflowutilities:block/fan_east_inner",
+		"6": "mobflowutilities:block/fan",
 		"particle": "mobflowutilities:block/fan_south_inner"
 	},
 	"elements": [
@@ -41,9 +42,9 @@
 			"to": [13, 13, 5.5],
 			"rotation": {"angle": 0, "axis": "y", "origin": [7, 7, 5.5]},
 			"faces": {
-				"north": {"uv": [2, 2, 14, 14], "texture": "#1"},
+				"north": {"uv": [0, 0, 6, 6], "texture": "#6"},
 				"east": {"uv": [0, 0, 0, 12], "texture": "#missing"},
-				"south": {"uv": [2, 2, 14, 14], "texture": "#1"},
+				"south": {"uv": [0, 0, 6, 6], "texture": "#6"},
 				"west": {"uv": [0, 0, 0, 12], "texture": "#missing"},
 				"up": {"uv": [0, 0, 12, 0], "texture": "#missing"},
 				"down": {"uv": [0, 0, 12, 0], "texture": "#missing"}

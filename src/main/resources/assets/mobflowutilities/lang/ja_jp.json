@@ -164,6 +164,7 @@
   "menu.mobflowutilities.fan": "送風機",
   "gui.mobflowutilities.fan": "送風機",
   "tooltip.mobflowutilities.fan.wireframe_toggle": "送風範囲の表示/非表示",
+  "tooltip.mobflowutilities.requires_redstone": "動作にはレッドストーン信号が必要です",
   "message.mobflowutilities.tank.full": "タンクは満杯です",
   "message.mobflowutilities.tank.empty": "タンクは空です",
   "block.mobflowutilities.genesis_infuser": "創世注入機",

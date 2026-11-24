@@ -80,21 +80,24 @@ public class MFUBlocks {
                     .strength(3F, 6F)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.STONE)
-                    .noLootTable()));
+                    .noLootTable()
+                    .noOcclusion()));
 
     public static final DeferredBlock<Block> CONTROLLER = registerBlock("controller",
             id -> new ControllerBlock(BlockBehaviour.Properties.of()
                     .setId(ResourceKey.create(Registries.BLOCK, id))
                     .strength(3F, 6F)
                     .requiresCorrectToolForDrops()
-                    .sound(SoundType.STONE)));
+                    .sound(SoundType.STONE)
+                    .noOcclusion()));
 
     public static final DeferredBlock<Block> FAN = registerBlock("fan",
             id -> new FanBlock(BlockBehaviour.Properties.of()
                     .setId(ResourceKey.create(Registries.BLOCK, id))
                     .strength(3F, 6F)
                     .requiresCorrectToolForDrops()
-                    .sound(SoundType.STONE)));
+                    .sound(SoundType.STONE)
+                    .noOcclusion()));
 
     public static final DeferredBlock<Block> GENESIS_CHAMBER = registerBlock("genesis_chamber",
             id -> new GenesisChamberBlock(BlockBehaviour.Properties.of()

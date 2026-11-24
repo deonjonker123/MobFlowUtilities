@@ -214,6 +214,7 @@
   "menu.mobflowutilities.genesis_infuser": "Genesis Infuser",
 
   "tooltip.mobflowutilities.fan.wireframe_toggle": "Show/Hide Push Zone",
+  "tooltip.mobflowutilities.requires_redstone": "Requires a redstone signal to work",
 
   "message.mobflowutilities.tank.full": "Tank is Full",
   "message.mobflowutilities.tank.empty": "Tank is Empty",

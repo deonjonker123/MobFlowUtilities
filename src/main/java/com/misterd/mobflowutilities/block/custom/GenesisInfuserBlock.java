@@ -36,14 +36,32 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Map;
+
 public class GenesisInfuserBlock extends BaseEntityBlock {
-    public static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
+    private static final Map<Direction, VoxelShape> SHAPES = Shapes.rotateHorizontal(Shapes.or(
+            Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D),
+            Block.box(1.0D, 2.0D, 1.0D, 15.0D, 8.0D, 15.0D),
+            Block.box(2.0D, 8.0D, 2.0D, 4.0D, 14.0D, 4.0D),
+            Block.box(2.0D, 8.0D, 12.0D, 4.0D, 14.0D, 14.0D),
+            Block.box(12.0D, 8.0D, 2.0D, 14.0D, 14.0D, 4.0D),
+            Block.box(12.0D, 8.0D, 12.0D, 14.0D, 14.0D, 14.0D),
+            Block.box(4.0D, 8.0D, 4.0D, 12.0D, 14.0D, 12.0D),
+            Block.box(1.0D, 14.0D, 1.0D, 15.0D, 15.0D, 15.0D),
+            Block.box(5.0D, 15.0D, 5.0D, 11.0D, 16.0D, 11.0D),
+            Block.box(4.0D, 3.0D, 0.5D, 12.0D, 7.0D, 1.0D),
+            Block.box(0.0D, 3.0D, 7.0D, 1.0D, 12.0D, 9.0D),
+            Block.box(15.0D, 3.0D, 7.0D, 16.0D, 12.0D, 9.0D),
+            Block.box(1.0D, 11.0D, 7.0D, 4.0D, 12.0D, 9.0D),
+            Block.box(12.0D, 11.0D, 7.0D, 15.0D, 12.0D, 9.0D)
+    ));
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     public static final MapCodec<GenesisInfuserBlock> CODEC = simpleCodec(GenesisInfuserBlock::new);
 
@@ -59,7 +77,7 @@ public class GenesisInfuserBlock extends BaseEntityBlock {
 
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return SHAPE;
+        return SHAPES.get(state.getValue(FACING));
     }
 
     @Override

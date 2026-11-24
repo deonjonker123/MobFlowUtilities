@@ -2,7 +2,9 @@ package com.misterd.mobflowutilities;
 
 import com.misterd.mobflowutilities.block.MFUBlocks;
 import com.misterd.mobflowutilities.client.MobCatcherOccupiedProperty;
+import com.misterd.mobflowutilities.client.renderer.ber.FanBlockEntityRenderer;
 import com.misterd.mobflowutilities.client.renderer.ber.GenesisChamberBlockEntityRenderer;
+import com.misterd.mobflowutilities.client.renderer.ber.GenesisInfuserBlockEntityRenderer;
 import com.misterd.mobflowutilities.client.renderer.ber.GigaTankBlockEntityRenderer;
 import com.misterd.mobflowutilities.component.MFUDataComponents;
 import com.misterd.mobflowutilities.config.Config;
@@ -28,6 +30,7 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.fluid.FluidTintSources;
+import net.neoforged.neoforge.client.model.standalone.SimpleUnbakedStandaloneModel;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import org.slf4j.Logger;
@@ -81,6 +84,13 @@ public class MobFlowUtilities {
         public static void registerBER(EntityRenderersEvent.RegisterRenderers event) {
             event.registerBlockEntityRenderer(MFUBlockEntities.GENESIS_CHAMBER_BE.get(), GenesisChamberBlockEntityRenderer::new);
             event.registerBlockEntityRenderer(MFUBlockEntities.GIGA_TANK_BE.get(), GigaTankBlockEntityRenderer::new);
+            event.registerBlockEntityRenderer(MFUBlockEntities.GENESIS_INFUSER_BE.get(), GenesisInfuserBlockEntityRenderer::new);
+            event.registerBlockEntityRenderer(MFUBlockEntities.FAN_BE.get(), FanBlockEntityRenderer::new);
+        }
+
+        @SubscribeEvent
+        public static void registerStandaloneModels(ModelEvent.RegisterStandalone event) {
+            event.register(FanBlockEntityRenderer.FAN_PROP, SimpleUnbakedStandaloneModel.simpleModelWrapper(FanBlockEntityRenderer.FAN_PROP_MODEL));
         }
 
         @SubscribeEvent
