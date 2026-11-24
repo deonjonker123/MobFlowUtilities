@@ -14,7 +14,7 @@ public class ZombieMixin {
     @Inject(method = "hurtServer", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/damagesource/DamageSource;getEntity()Lnet/minecraft/world/entity/Entity;", ordinal = 0), cancellable = true)
     public void hurtMixin(net.minecraft.server.level.ServerLevel level, DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         if (source.getEntity() instanceof FakePlayer fakePlayer && FakePlayerHandler.isMobflowutilitiesFakePlayer(fakePlayer)) {
-            cir.setReturnValue(false);
+            cir.setReturnValue(true);
         }
     }
 }

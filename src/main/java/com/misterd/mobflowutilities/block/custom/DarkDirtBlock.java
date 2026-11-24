@@ -9,6 +9,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.WeightedList;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -84,6 +85,7 @@ public class DarkDirtBlock extends Block {
     }
 
     private void attemptMobSpawning(ServerLevel level, BlockPos pos, RandomSource random, int attempts) {
+        if (level.getDifficulty() == Difficulty.PEACEFUL) return;
         for (int i = 0; i < attempts; i++) {
             this.spawnOnce(level, pos, random);
         }

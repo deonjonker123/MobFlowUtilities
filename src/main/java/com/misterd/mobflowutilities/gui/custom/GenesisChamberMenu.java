@@ -10,7 +10,9 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -33,6 +35,7 @@ public class GenesisChamberMenu extends AbstractContainerMenu {
 
     public final GenesisChamberBlockEntity blockEntity;
     private final Level level;
+    private final ContainerData data;
 
     public GenesisChamberMenu(int containerId, Inventory inv, FriendlyByteBuf extraData) {
         this(containerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()));
@@ -46,13 +49,19 @@ public class GenesisChamberMenu extends AbstractContainerMenu {
         addPlayerInventory(inv);
         addPlayerHotbar(inv);
         addBlockEntitySlots();
+        this.data = level.isClientSide() ? new SimpleContainerData(1) : this.blockEntity.getContainerData();
+        addDataSlots(data);
+    }
+
+    public int getScaledBurn() {
+        return data.get(0);
     }
 
     private void addBlockEntitySlots() {
         addSlot(new EggSlot(blockEntity, SLOT_EGG, 80, 23));
         addSlot(new FuelSlot(blockEntity, SLOT_FUEL, 80, 71));
-        addSlot(new ChamberSlot(blockEntity, SLOT_MODULE_1, 8, 71, MFUItems.SPEED_MODULE.get()));
-        addSlot(new ChamberSlot(blockEntity, SLOT_MODULE_2, 26, 71, MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get()));
+        addSlot(new ChamberSlot(blockEntity, SLOT_MODULE_1, 8, 71, MFUItems.SPEED_MODULE.get(), GenesisChamberBlockEntity.MAX_SPEED_MODULES));
+        addSlot(new ChamberSlot(blockEntity, SLOT_MODULE_2, 26, 71, MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get(), GenesisChamberBlockEntity.MAX_RADIUS_MODULES));
     }
 
     @Override
@@ -61,7 +70,7 @@ public class GenesisChamberMenu extends AbstractContainerMenu {
         if (source == null || !source.hasItem()) return ItemStack.EMPTY;
 
         ItemStack stack = source.getItem();
-        ItemStack copy  = stack.copy();
+        ItemStack copy = stack.copy();
 
         if (index < PLAYER_SLOTS) {
             if (!moveToBlockEntity(stack)) return ItemStack.EMPTY;
@@ -143,12 +152,14 @@ public class GenesisChamberMenu extends AbstractContainerMenu {
         private final GenesisChamberBlockEntity be;
         private final int index;
         private final Item allowedItem;
+        private final int maxStack;
 
-        ChamberSlot(GenesisChamberBlockEntity be, int index, int x, int y, Item allowedItem) {
+        ChamberSlot(GenesisChamberBlockEntity be, int index, int x, int y, Item allowedItem, int maxStack) {
             super(new SimpleContainer(be.inventory.size()), index, x, y);
             this.be = be;
             this.index = index;
             this.allowedItem = allowedItem;
+            this.maxStack = maxStack;
         }
 
         @Override public ItemStack getItem() {
@@ -186,7 +197,7 @@ public class GenesisChamberMenu extends AbstractContainerMenu {
         }
 
         @Override
-        public int getMaxStackSize(ItemStack stack) { return 10; }
+        public int getMaxStackSize(ItemStack stack) { return maxStack; }
     }
 
     private static class EggSlot extends Slot {

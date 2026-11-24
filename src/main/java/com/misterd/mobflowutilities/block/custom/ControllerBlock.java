@@ -76,6 +76,7 @@ public class ControllerBlock extends BaseEntityBlock {
     @Override
     protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean movedByPiston) {
         Containers.updateNeighboursAfterDestroy(state, level, pos);
+        clearControllerFromNearbyWrenches(level, pos);
     }
 
     private void clearControllerFromNearbyWrenches(Level level, BlockPos controllerPos) {
@@ -110,6 +111,7 @@ public class ControllerBlock extends BaseEntityBlock {
 
     @Override
     protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (stack.getItem() instanceof PadWrenchItem) return InteractionResult.PASS;
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof ControllerBlockEntity controller && !level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
             serverPlayer.openMenu(new SimpleMenuProvider(controller, Component.translatable("gui.mobflowutilities.controller")), pos);

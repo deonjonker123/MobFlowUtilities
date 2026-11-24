@@ -177,6 +177,8 @@
   "item.mobflowutilities.pad_wrench.tooltip.usage.operation": "Shift+Right-click: Toggle Operation Mode",
   "item.mobflowutilities.pad_wrench.tooltip.usage.controller": "Use on Controller: Select Target",
   "item.mobflowutilities.pad_wrench.tooltip.usage.pad": "Use on Pad: Link/Unlink",
+  "item.mobflowutilities.pad_wrench.multi.too_large": "",
+  "item.mobflowutilities.mob_catcher.not_owner": "",
 
   "fakeplayer.mobflowutilities.damage_pad": "Mob Flow Utilities Damage Pad",
 

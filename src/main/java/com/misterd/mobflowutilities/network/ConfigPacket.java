@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import com.misterd.mobflowutilities.blockentity.custom.CollectorBlockEntity;
 import com.misterd.mobflowutilities.blockentity.custom.GenesisChamberBlockEntity;
+import com.misterd.mobflowutilities.gui.custom.CollectorMenu;
+import com.misterd.mobflowutilities.gui.custom.GenesisChamberMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -13,7 +15,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record ConfigPacket(
@@ -64,12 +65,11 @@ public record ConfigPacket(
         BlockPos pos = packet.pos();
         if (pos == null) return;
 
+        if (!(player.containerMenu instanceof CollectorMenu menu)) return;
+        if (!menu.stillValid(player)) return;
+        CollectorBlockEntity collector = menu.blockEntity;
+        if (collector.isRemoved() || !collector.getBlockPos().equals(pos)) return;
         ServerLevel level = player.level();
-
-        if (player.distanceToSqr(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) > 64.0) return;
-
-        BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (!(blockEntity instanceof CollectorBlockEntity collector)) return;
 
         switch (packet.configType()) {
             case COLLECTOR_XP_COLLECTION_TOGGLE -> collector.setXpCollectionEnabled(packet.boolValue());
@@ -86,12 +86,11 @@ public record ConfigPacket(
         BlockPos pos = packet.pos();
         if (pos == null) return;
 
+        if (!(player.containerMenu instanceof GenesisChamberMenu menu)) return;
+        if (!menu.stillValid(player)) return;
+        GenesisChamberBlockEntity genesisChamber = menu.blockEntity;
+        if (genesisChamber.isRemoved() || !genesisChamber.getBlockPos().equals(pos)) return;
         ServerLevel level = player.level();
-
-        if (player.distanceToSqr(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) > 64.0) return;
-
-        BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (!(blockEntity instanceof GenesisChamberBlockEntity genesisChamber)) return;
 
         switch (packet.configType()) {
             case GENESIS_CHAMBER_DOWN_UP_OFFSET -> genesisChamber.setDownUpOffset(packet.intValue());
@@ -119,12 +118,6 @@ public record ConfigPacket(
         COLLECTOR_DOWN_UP_OFFSET,
         COLLECTOR_NORTH_SOUTH_OFFSET,
         COLLECTOR_EAST_WEST_OFFSET,
-        COLLECTOR_TOP_SIDE,
-        COLLECTOR_EAST_SIDE,
-        COLLECTOR_FRONT_SIDE,
-        COLLECTOR_WEST_SIDE,
-        COLLECTOR_BOTTOM_SIDE,
-        COLLECTOR_BACK_SIDE,
 
         GENESIS_CHAMBER_DOWN_UP_OFFSET,
         GENESIS_CHAMBER_NORTH_SOUTH_OFFSET,

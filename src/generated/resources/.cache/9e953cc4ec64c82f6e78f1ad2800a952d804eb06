@@ -1,3 +1,4 @@
-// 26.1.2	2026-11-03T13:36:01.595046	Tags for minecraft:entity_type mod id vanilla
+// 26.1.2	2026-11-24T23:21:51.3455298	Tags for minecraft:entity_type mod id vanilla
 4057ab775063a2a80e10e8dad00c862454afd2e9 data/mobflowutilities/tags/entity_type/cannot_catch.json
 02b6a7799286f073bd43ecf20b3eab2e16d73deb data/mobflowutilities/tags/entity_type/cannot_sample.json
+02b6a7799286f073bd43ecf20b3eab2e16d73deb data/mobflowutilities/tags/entity_type/genesis_chamber_blacklist.json

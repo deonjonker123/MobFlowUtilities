@@ -30,8 +30,8 @@ A mob farming automation mod.
 
 *   Spawn mobs from spawn eggs using fuel
 *   Uses most vanilla furnace fuels (coal, lava buckets, blaze rods, etc.)
-*   5x5 spawn area, expandable to 10x10 with modules
-*   Base 200 tick spawn interval, down to 50 ticks with Speed Modules
+*   5x5 spawn area, expandable to 15x15 with modules
+*   Base 200 tick spawn interval, down to 5 ticks with Speed Modules
 *   Respects vanilla spawning rules (hostiles in darkness, passives in light)
 *   Configurable mob limit per zone (default 12)
 

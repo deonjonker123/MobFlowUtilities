@@ -26,5 +26,9 @@ public class MFUEntityTagsProvider extends EntityTypeTagsProvider {
                 .add(EntityType.RAVAGER)
                 .add(EntityType.WARDEN);
 
+        tag(MFUTags.Entities.GENESIS_CHAMBER_BLACKLIST)
+                .add(EntityType.ENDER_DRAGON)
+                .add(EntityType.WITHER);
+
     }
 }

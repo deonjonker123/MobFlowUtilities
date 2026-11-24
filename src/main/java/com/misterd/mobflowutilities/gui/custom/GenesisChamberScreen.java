@@ -7,6 +7,7 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.components.WidgetSprites;
+import com.misterd.mobflowutilities.blockentity.custom.GenesisChamberBlockEntity;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.input.MouseButtonEvent;
@@ -207,11 +208,9 @@ public class GenesisChamberScreen extends AbstractContainerScreen<GenesisChamber
     }
 
     private void renderBurnProgress(GuiGraphicsExtractor graphics) {
-        if (this.menu.blockEntity == null) return;
-        int burnTime = this.menu.blockEntity.getBurnTime();
-        int maxBurnTime = this.menu.blockEntity.getMaxBurnTime();
-        if (maxBurnTime > 0) {
-            int progress = (int) (13.0 * burnTime / maxBurnTime);
+        int scaledBurn = this.menu.getScaledBurn();
+        if (scaledBurn > 0) {
+            int progress = (int) (13.0 * scaledBurn / GenesisChamberBlockEntity.BURN_SCALE);
             if (progress > 0) {
                 graphics.blit(RenderPipelines.GUI_TEXTURED, GUI_TEXTURE,
                         this.leftPos + 81, this.topPos + 50 + (13 - progress),
@@ -258,12 +257,12 @@ public class GenesisChamberScreen extends AbstractContainerScreen<GenesisChamber
         int x = (int)(this.leftPos / scale);
         int y = (int)(this.topPos / scale);
 
-        graphics.text(this.font, (this.downUpOffset >= 0 ? "+" : "") + this.downUpOffset,   x + (int)(137 / scale), y + (int)(20 / scale), 0xFF000000, false);
+        graphics.text(this.font, (this.downUpOffset >= 0 ? "+" : "") + this.downUpOffset, x + (int)(137 / scale), y + (int)(20 / scale), 0xFF000000, false);
         graphics.text(this.font, (this.northSouthOffset >= 0 ? "+" : "") + this.northSouthOffset, x + (int)(137 / scale), y + (int)(42 / scale), 0xFF000000, false);
-        graphics.text(this.font, (this.eastWestOffset >= 0 ? "+" : "") + this.eastWestOffset,   x + (int)(137 / scale), y + (int)(64 / scale), 0xFF000000, false);
-        graphics.text(this.font, Component.translatable("gui.mobflowutilities.collector.offset.down_up").getString(),    x + (int)(124 / scale), y + (int)(10 / scale), 0xFF000000, false);
+        graphics.text(this.font, (this.eastWestOffset >= 0 ? "+" : "") + this.eastWestOffset, x + (int)(137 / scale), y + (int)(64 / scale), 0xFF000000, false);
+        graphics.text(this.font, Component.translatable("gui.mobflowutilities.collector.offset.down_up").getString(), x + (int)(124 / scale), y + (int)(10 / scale), 0xFF000000, false);
         graphics.text(this.font, Component.translatable("gui.mobflowutilities.collector.offset.north_south").getString(), x + (int)(124 / scale), y + (int)(32 / scale), 0xFF000000, false);
-        graphics.text(this.font, Component.translatable("gui.mobflowutilities.collector.offset.east_west").getString(),  x + (int)(124 / scale), y + (int)(54 / scale), 0xFF000000, false);
+        graphics.text(this.font, Component.translatable("gui.mobflowutilities.collector.offset.east_west").getString(), x + (int)(124 / scale), y + (int)(54 / scale), 0xFF000000, false);
         pose.popMatrix();
     }
 
