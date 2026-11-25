@@ -21,6 +21,7 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -158,12 +159,24 @@ public class GenesisInfuserBlockEntity extends BlockEntity implements MenuProvid
         return new GenesisInfuserMenu(id, inv, this);
     }
 
-    public int getProgress() {
-        return progress;
-    }
+    private final ContainerData containerData = new ContainerData() {
+        @Override
+        public int get(int index) {
+            return index == 0 ? progress : maxProgress;
+        }
 
-    public int getMaxProgress() {
-        return maxProgress;
+        @Override
+        public void set(int index, int value) {
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+    };
+
+    public ContainerData getContainerData() {
+        return containerData;
     }
 
     public int getFluidAmount() {
@@ -210,10 +223,7 @@ public class GenesisInfuserBlockEntity extends BlockEntity implements MenuProvid
             }
         }
 
-        if (changed) {
-            setChanged();
-            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
-        }
+        if (changed) setChanged();
     }
 
     private int getProcessTicks() {
@@ -248,18 +258,12 @@ public class GenesisInfuserBlockEntity extends BlockEntity implements MenuProvid
         return false;
     }
 
-    private boolean depositOutput(ItemStack result) {
+    private boolean depositOutput(ItemStack result, TransactionContext tx) {
         ItemResource res = ItemResource.of(result);
         for (int i = OUTPUT_START; i < OUTPUT_START + OUTPUT_COUNT; i++) {
             ItemStack cur = getStack(i);
-            if (cur.isEmpty()) {
-                inventory.set(i, res, 1);
-                return true;
-            }
-            if (ItemResource.of(cur).equals(res) && cur.getCount() < cur.getMaxStackSize()) {
-                inventory.set(i, res, cur.getCount() + 1);
-                return true;
-            }
+            if (!cur.isEmpty() && !ItemResource.of(cur).equals(res)) continue;
+            if (inventory.insert(i, res, 1, tx) == 1) return true;
         }
         return false;
     }
@@ -276,12 +280,10 @@ public class GenesisInfuserBlockEntity extends BlockEntity implements MenuProvid
         if (!canFitOutput(result)) return false;
 
         try (Transaction tx = Transaction.openRoot()) {
-            int extracted = inventory.extract(inputSlot, ItemResource.of(input), 1, tx);
-            if (extracted != 1) return false;
+            if (inventory.extract(inputSlot, ItemResource.of(input), 1, tx) != 1) return false;
+            if (!depositOutput(result, tx)) return false;
             tx.commit();
         }
-
-        if (!depositOutput(result)) return false;
 
         tank.amount -= cost;
         if (tank.amount <= 0) {

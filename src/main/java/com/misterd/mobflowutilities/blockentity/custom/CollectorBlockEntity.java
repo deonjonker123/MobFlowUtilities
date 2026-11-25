@@ -44,10 +44,10 @@ public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final int COLLECTION_INTERVAL = 5;
 
-    private static final int SLOT_RADIUS  = 0;
+    private static final int SLOT_RADIUS = 0;
     private static final int MODULE_COUNT = 1;
     private static final int OUTPUT_COUNT = 45;
-    private static final int TOTAL_SLOTS  = MODULE_COUNT + OUTPUT_COUNT;
+    private static final int TOTAL_SLOTS = MODULE_COUNT + OUTPUT_COUNT;
     private LiquidXpFluidTank fluidTank;
 
     public final ItemStacksResourceHandler inventory = new ItemStacksResourceHandler(TOTAL_SLOTS) {
@@ -167,6 +167,10 @@ public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
         if (old != storedXP) setChangedAndUpdate();
     }
 
+    public void setStoredXPWithoutUpdate(int xp) {
+        storedXP = Math.max(0, xp);
+    }
+
     public boolean isXpCollectionEnabled() { return xpCollectionEnabled; }
 
     public void setXpCollectionEnabled(boolean enabled) {
@@ -228,7 +232,7 @@ public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
         pickupRangeDirty = true; invalidateCollectionAreaCache();
     }
 
-    public  void invalidateAllCaches() {
+    public void invalidateAllCaches() {
         invalidatePickupRangeCache();
     }
 
@@ -339,13 +343,18 @@ public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
 
     private void collectXP() {
         AABB area = getCollectionArea();
-        int collected = 0;
+        long collected = 0;
         for (ExperienceOrb orb : level.getEntitiesOfClass(ExperienceOrb.class, area)) {
             if (!orb.isAlive()) continue;
-            collected += orb.getValue();
+            long value = (long) orb.getValue() * orb.count;
+            if (storedXP + collected + value > Integer.MAX_VALUE) break;
+            collected += value;
             orb.discard();
         }
-        if (collected > 0) { storedXP += collected; setChangedAndUpdate(); }
+        if (collected > 0) {
+            storedXP += (int) collected;
+            setChangedAndUpdate();
+        }
     }
 
     private int insertIntoOutput(ItemStack stack) {

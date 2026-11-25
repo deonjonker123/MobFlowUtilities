@@ -32,6 +32,7 @@ public class PadWrenchItem extends Item {
     @Override
     public InteractionResult use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
+        if (level.isClientSide()) return InteractionResult.SUCCESS;
         if (player.isShiftKeyDown()) {
             toggleOperationMode(stack, player);
         } else {
@@ -50,6 +51,11 @@ public class PadWrenchItem extends Item {
 
         if (player == null) {
             return InteractionResult.FAIL;
+        }
+
+        boolean isWrenchTarget = state.getBlock() instanceof ControllerBlock || state.getBlock() instanceof DamagePadBlock;
+        if (level.isClientSide()) {
+            return isWrenchTarget ? InteractionResult.SUCCESS : InteractionResult.PASS;
         }
 
         PadWrenchData data = stack.getOrDefault(MFUDataComponents.PAD_WRENCH_DATA.get(), PadWrenchData.DEFAULT);
@@ -166,6 +172,15 @@ public class PadWrenchItem extends Item {
             return;
         }
 
+        int maxSpan = Config.getDamagePadConnectionRadius() * 2 + 1;
+        int spanX = Math.abs(pos1.getX() - pos2.getX()) + 1;
+        int spanY = Math.abs(pos1.getY() - pos2.getY()) + 1;
+        int spanZ = Math.abs(pos1.getZ() - pos2.getZ()) + 1;
+        if (spanX > maxSpan || spanY > maxSpan || spanZ > maxSpan) {
+            player.sendOverlayMessage(Component.translatable("item.mobflowutilities.pad_wrench.multi.too_large", maxSpan).withStyle(ChatFormatting.RED));
+            return;
+        }
+
         int minX = Math.min(pos1.getX(), pos2.getX());
         int maxX = Math.max(pos1.getX(), pos2.getX());
         int minY = Math.min(pos1.getY(), pos2.getY());
@@ -182,6 +197,7 @@ public class PadWrenchItem extends Item {
             for (int y = minY; y <= maxY; y++) {
                 for (int z = minZ; z <= maxZ; z++) {
                     BlockPos currentPos = new BlockPos(x, y, z);
+                    if (!level.hasChunkAt(currentPos)) continue;
                     BlockState state = level.getBlockState(currentPos);
                     if (!(state.getBlock() instanceof DamagePadBlock)) continue;
 
@@ -194,7 +210,7 @@ public class PadWrenchItem extends Item {
                             case SUCCESS -> linked++;
                             case TOO_FAR -> skippedTooFar++;
                             case CONTROLLER_FULL -> skippedFull++;
-                            case NO_CONTROLLER, INVALID -> { /* ignore silently */ }
+                            case NO_CONTROLLER, INVALID -> { }
                         }
                     } else {
                         if (padEntity.isLinked()) {

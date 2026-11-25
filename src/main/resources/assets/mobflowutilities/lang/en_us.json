@@ -37,7 +37,7 @@
   "item.mobflowutilities.gigatank": "Giga Tank",
   "item.mobflowutilities.gigatank.subtitle": "Holds 1024 buckets",
   "item.mobflowutilities.fan": "Fan",
-  "item.mobflowutilities.fan.subtitle_line1": "Pushes mobs in the facing direction",
+  "item.mobflowutilities.fan.subtitle_line1": "Pushes or pulls mobs along its facing direction",
   "item.mobflowutilities.fan.subtitle_line2": "Can be upgraded with fan upgrades",
 
   "item.mobflowutilities.genesis_chamber": "Genesis Chamber",
@@ -151,6 +151,7 @@
 
   "tooltip.mobflowutilities.genesis_infuser.tank_empty": "Empty",
   "tooltip.mobflowutilities.genesis_infuser.progress": "Progress",
+  "tooltip.mobflowutilities.fan.reverse_hint": "Shift + right-click with an empty hand to switch between push and pull",
 
   "item.mobflowutilities.pad_wrench.mode.add": "Link Mode",
   "item.mobflowutilities.pad_wrench.mode.remove": "Unlink Mode",
@@ -176,6 +177,8 @@
   "item.mobflowutilities.pad_wrench.tooltip.usage.operation": "Shift+Right-click: Toggle Operation Mode",
   "item.mobflowutilities.pad_wrench.tooltip.usage.controller": "Use on Controller: Select Target",
   "item.mobflowutilities.pad_wrench.tooltip.usage.pad": "Use on Pad: Link/Unlink",
+  "item.mobflowutilities.pad_wrench.multi.too_large": "Selection too large (max %s blocks per side)",
+  "item.mobflowutilities.mob_catcher.not_owner": "You can't capture someone else's pet!",
 
   "fakeplayer.mobflowutilities.damage_pad": "Mob Flow Utilities Damage Pad",
 
@@ -211,9 +214,12 @@
   "menu.mobflowutilities.genesis_infuser": "Genesis Infuser",
 
   "tooltip.mobflowutilities.fan.wireframe_toggle": "Show/Hide Push Zone",
+  "tooltip.mobflowutilities.requires_redstone": "Requires a redstone signal to work",
 
   "message.mobflowutilities.tank.full": "Tank is Full",
   "message.mobflowutilities.tank.empty": "Tank is Empty",
+  "message.mobflowutilities.fan.pushing": "Fan set to push",
+  "message.mobflowutilities.fan.pulling": "Fan set to pull",
 
   "item.mobflowutilities.pad_wrench.error.too_far": "Pad is too far from the controller (max %s blocks)",
   "item.mobflowutilities.pad_wrench.error.controller_full": "Controller is full (max %s pads)",

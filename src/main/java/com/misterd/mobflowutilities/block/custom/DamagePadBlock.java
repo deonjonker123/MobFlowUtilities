@@ -38,7 +38,7 @@ public class DamagePadBlock extends BaseEntityBlock {
 
     public static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
 
-    public DamagePadBlock(BlockBehaviour.Properties properties) {
+    public DamagePadBlock(Properties properties) {
         super(properties);
         registerDefaultState(this.stateDefinition.any()
                 .setValue(FACING, Direction.NORTH)
@@ -78,7 +78,8 @@ public class DamagePadBlock extends BaseEntityBlock {
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         return defaultBlockState()
                 .setValue(FACING, context.getHorizontalDirection().getOpposite())
-                .setValue(LINKED, false);
+                .setValue(LINKED, false)
+                .setValue(POWERED, context.getLevel().hasNeighborSignal(context.getClickedPos()));
     }
 
     @Override

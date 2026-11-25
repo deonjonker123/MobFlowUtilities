@@ -31,8 +31,9 @@ public class GigaTankBlockEntityRenderer<T extends BlockEntity> implements Block
     private static final float MAX_X = 0.9375f - INSET;
     private static final float MIN_Z = 0.0625f + INSET;
     private static final float MAX_Z = 0.9375f - INSET;
-    private static final float MIN_Y = 0.0625f + INSET;
-    private static final float MAX_Y_FULL = 0.9375f - INSET;
+    private static final float MIN_Y = 0.125f + INSET;
+    private static final float MAX_Y_FULL = 0.875f - INSET;
+    private static final float MIN_VISIBLE_HEIGHT = 0.0625f;
 
     public GigaTankBlockEntityRenderer(BlockEntityRendererProvider.Context context) {}
 
@@ -70,7 +71,7 @@ public class GigaTankBlockEntityRenderer<T extends BlockEntity> implements Block
         FluidTintSource tintSource = model.fluidTintSource();
 
         state.fluid = fluid;
-        state.fillPercentage = (float) amount / tank.getCapacityAsInt(0, res);
+        state.fillPercentage = Math.min(1f, (float) amount / tank.getCapacityAsInt(0, res));
         state.tintColor = tintSource != null ? tintSource.color(fluid.defaultFluidState()) : -1;
         state.sprite = model.stillMaterial().sprite();
     }
@@ -79,10 +80,12 @@ public class GigaTankBlockEntityRenderer<T extends BlockEntity> implements Block
     public void submit(RenderState state, PoseStack poseStack, SubmitNodeCollector collector, CameraRenderState cameraState) {
         if (state.fluid == null || state.sprite == null || state.fillPercentage <= 0f) return;
 
-        float x0 = MIN_X, x1 = MAX_X;
-        float z0 = MIN_Z, z1 = MAX_Z;
+        float x0 = MIN_X;
+        float x1 = MAX_X;
+        float z0 = MIN_Z;
+        float z1 = MAX_Z;
         float y0 = MIN_Y;
-        float y1 = MIN_Y + (MAX_Y_FULL - MIN_Y) * state.fillPercentage;
+        float y1 = MIN_Y + Math.max(MIN_VISIBLE_HEIGHT, (MAX_Y_FULL - MIN_Y) * state.fillPercentage);
 
         int color = state.tintColor;
         float r = ((color >> 16) & 0xFF) / 255f;
@@ -92,8 +95,10 @@ public class GigaTankBlockEntityRenderer<T extends BlockEntity> implements Block
         float a = rawA == 0 ? 1f : rawA / 255f;
 
         TextureAtlasSprite s = state.sprite;
-        float u0 = s.getU0(), u1 = s.getU1();
-        float v0 = s.getV0(), v1 = s.getV1();
+        float u0 = s.getU0();
+        float u1 = s.getU1();
+        float v0 = s.getV0();
+        float v1 = s.getV1();
 
         collector.submitCustomGeometry(poseStack, RenderTypes.entityTranslucent(TextureAtlas.LOCATION_BLOCKS), (pose, consumer) -> {
             Matrix4f m = pose.pose();

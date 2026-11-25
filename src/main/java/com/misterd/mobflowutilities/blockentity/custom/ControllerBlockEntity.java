@@ -6,6 +6,13 @@ import com.misterd.mobflowutilities.gui.custom.ControllerMenu;
 import com.misterd.mobflowutilities.item.MFUItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.Unit;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.Level;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
@@ -59,6 +66,7 @@ public class ControllerBlockEntity extends BlockEntity implements MenuProvider {
 
         @Override
         protected void onContentsChanged(int index, ItemStack previousContents) {
+            cachedWeapon = null;
             ControllerBlockEntity.this.setChanged();
             if (level != null && !level.isClientSide())
                 level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
@@ -66,7 +74,7 @@ public class ControllerBlockEntity extends BlockEntity implements MenuProvider {
     };
 
     private final Set<BlockPos> linkedPads = new HashSet<>();
-    private boolean playerKillMode = false;
+    @Nullable private ItemStack cachedWeapon;
 
     public ControllerBlockEntity(BlockPos pos, BlockState blockState) {
         super(MFUBlockEntities.CONTROLLER_BE.get(), pos, blockState);
@@ -83,6 +91,26 @@ public class ControllerBlockEntity extends BlockEntity implements MenuProvider {
         return Math.min(getStack(slot).getCount(), 10);
     }
 
+    public ItemStack getWeapon() {
+        if (cachedWeapon == null && level != null) cachedWeapon = buildWeapon(level);
+        return cachedWeapon != null ? cachedWeapon : ItemStack.EMPTY;
+    }
+
+    private ItemStack buildWeapon(Level level) {
+        ItemStack sword = new ItemStack(Items.DIAMOND_SWORD);
+        sword.set(DataComponents.UNBREAKABLE, Unit.INSTANCE);
+        enchant(sword, level, Enchantments.SHARPNESS, getModuleCount(SLOT_SHARPNESS) * 10);
+        enchant(sword, level, Enchantments.FIRE_ASPECT, getModuleCount(SLOT_FIRE_ASPECT));
+        enchant(sword, level, Enchantments.SMITE, getModuleCount(SLOT_SMITE) * 10);
+        enchant(sword, level, Enchantments.BANE_OF_ARTHROPODS, getModuleCount(SLOT_BOA) * 10);
+        enchant(sword, level, Enchantments.LOOTING, getModuleCount(SLOT_LOOTING));
+        return sword;
+    }
+
+    private static void enchant(ItemStack sword, Level level, ResourceKey<Enchantment> key, int enchantLevel) {
+        if (enchantLevel > 0) sword.enchant(level.holderOrThrow(key), enchantLevel);
+    }
+
     public enum PadLinkResult {
         SUCCESS,
         ALREADY_LINKED,
@@ -92,6 +120,7 @@ public class ControllerBlockEntity extends BlockEntity implements MenuProvider {
 
     public PadLinkResult addPad(BlockPos padPos) {
         if (linkedPads.contains(padPos)) return PadLinkResult.ALREADY_LINKED;
+        pruneStalePads();
 
         int radius = Config.getDamagePadConnectionRadius();
         if (padPos.distSqr(this.worldPosition) > (long) radius * radius) {
@@ -108,8 +137,18 @@ public class ControllerBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     public void removePad(BlockPos padPos) {
-        linkedPads.remove(padPos);
-        setChangedAndUpdate();
+        if (linkedPads.remove(padPos)) setChangedAndUpdate();
+    }
+
+    public boolean hasPad(BlockPos padPos) {
+        return linkedPads.contains(padPos);
+    }
+
+    private void pruneStalePads() {
+        if (level == null || level.isClientSide()) return;
+        boolean removed = linkedPads.removeIf(padPos -> level.hasChunkAt(padPos)
+                && !(level.getBlockEntity(padPos) instanceof DamagePadBlockEntity pad && pad.isLinkedTo(worldPosition)));
+        if (removed) setChangedAndUpdate();
     }
 
     public Set<BlockPos> getLinkedPads() {
@@ -119,6 +158,14 @@ public class ControllerBlockEntity extends BlockEntity implements MenuProvider {
     @Override
     public void preRemoveSideEffects(BlockPos pos, BlockState state) {
         drops();
+        if (level == null || level.isClientSide()) return;
+        for (BlockPos padPos : new HashSet<>(linkedPads)) {
+            if (!level.hasChunkAt(padPos)) continue;
+            if (level.getBlockEntity(padPos) instanceof DamagePadBlockEntity pad && pad.isLinkedTo(worldPosition)) {
+                pad.onControllerRemoved();
+            }
+        }
+        linkedPads.clear();
     }
 
     public void drops() {
@@ -142,7 +189,6 @@ public class ControllerBlockEntity extends BlockEntity implements MenuProvider {
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
         inventory.serialize(output);
-        output.putBoolean("playerKillMode", playerKillMode);
 
         output.putInt("linkedPadCount", linkedPads.size());
         int i = 0;
@@ -154,7 +200,7 @@ public class ControllerBlockEntity extends BlockEntity implements MenuProvider {
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
         inventory.deserialize(input);
-        playerKillMode = input.getBooleanOr("playerKillMode", false);
+        cachedWeapon = null;
 
         linkedPads.clear();
         int padCount = input.getIntOr("linkedPadCount", 0);

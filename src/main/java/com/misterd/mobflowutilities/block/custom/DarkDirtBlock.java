@@ -12,6 +12,7 @@ import net.minecraft.util.random.WeightedList;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
@@ -83,6 +84,7 @@ public class DarkDirtBlock extends Block {
     }
 
     private void attemptMobSpawning(ServerLevel level, BlockPos pos, RandomSource random, int attempts) {
+        if (level.getDifficulty() == Difficulty.PEACEFUL) return;
         for (int i = 0; i < attempts; i++) {
             this.spawnOnce(level, pos, random);
         }

@@ -32,5 +32,9 @@ public class MFUEntityTagsProvider extends EntityTypeTagsProvider {
                 .add(key(EntityTypes.ELDER_GUARDIAN))
                 .add(key(EntityTypes.RAVAGER))
                 .add(key(EntityTypes.WARDEN));
+
+        tag(MFUTags.Entities.GENESIS_CHAMBER_BLACKLIST)
+                .add(key(EntityTypes.ENDER_DRAGON))
+                .add(key(EntityTypes.WITHER));
     }
 }

@@ -171,7 +171,12 @@ public class MFUItems {
             props -> new BlockItem(MFUBlocks.FASTEST_FLOW_PAD.get(), props));
 
     public static final DeferredItem<Item> DAMAGE_PAD = ITEMS.registerItem("damage_pad",
-            props -> new BlockItem(MFUBlocks.DAMAGE_PAD.get(), props));
+            props -> new BlockItem(MFUBlocks.DAMAGE_PAD.get(), props) {
+                @Override
+                public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> adder, TooltipFlag flag) {
+                    adder.accept(Component.translatable("tooltip.mobflowutilities.requires_redstone").withStyle(ChatFormatting.RED));
+                }
+            });
 
     public static final DeferredItem<Item> GLIMMER_LAMP = ITEMS.registerItem("glimmer_lamp",
             props -> new BlockItem(MFUBlocks.GLIMMER_LAMP.get(), props));
@@ -212,6 +217,8 @@ public class MFUItems {
                 public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> adder, TooltipFlag flag) {
                     adder.accept(Component.translatable("item.mobflowutilities.fan.subtitle_line1").withStyle(ChatFormatting.GRAY));
                     adder.accept(Component.translatable("item.mobflowutilities.fan.subtitle_line2").withStyle(ChatFormatting.GRAY));
+                    adder.accept(Component.translatable("tooltip.mobflowutilities.fan.reverse_hint").withStyle(ChatFormatting.GRAY));
+                    adder.accept(Component.translatable("tooltip.mobflowutilities.requires_redstone").withStyle(ChatFormatting.RED));
                 }
             });
 

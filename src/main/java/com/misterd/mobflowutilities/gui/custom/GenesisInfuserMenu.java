@@ -11,7 +11,8 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.DataSlot;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -34,8 +35,7 @@ public class GenesisInfuserMenu extends AbstractContainerMenu {
     public final GenesisInfuserBlockEntity blockEntity;
     private final Level level;
 
-    private DataSlot progressData;
-    private DataSlot maxProgressData;
+    private final ContainerData data;
 
     public GenesisInfuserMenu(int containerId, Inventory inv, FriendlyByteBuf extraData) {
         this(containerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()));
@@ -49,7 +49,8 @@ public class GenesisInfuserMenu extends AbstractContainerMenu {
         addPlayerInventory(inv);
         addPlayerHotbar(inv);
         addBlockEntitySlots();
-        addProgressData();
+        this.data = level.isClientSide() ? new SimpleContainerData(2) : this.blockEntity.getContainerData();
+        addDataSlots(data);
     }
 
     private void addBlockEntitySlots() {
@@ -72,35 +73,12 @@ public class GenesisInfuserMenu extends AbstractContainerMenu {
         addSlot(new UpgradeSlot(blockEntity, SLOT_UPGRADE, 152, 19));
     }
 
-    private void addProgressData() {
-        progressData = addDataSlot(new DataSlot() {
-            @Override
-            public int get() {
-                return blockEntity.getProgress();
-            }
-
-            @Override
-            public void set(int value) {
-            }
-        });
-        maxProgressData = addDataSlot(new DataSlot() {
-            @Override
-            public int get() {
-                return blockEntity.getMaxProgress();
-            }
-
-            @Override
-            public void set(int value) {
-            }
-        });
-    }
-
     public int getProgress() {
-        return progressData.get();
+        return data.get(0);
     }
 
     public int getMaxProgress() {
-        return maxProgressData.get();
+        return data.get(1);
     }
 
     @Override

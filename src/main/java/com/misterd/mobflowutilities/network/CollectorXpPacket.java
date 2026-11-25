@@ -1,6 +1,7 @@
 package com.misterd.mobflowutilities.network;
 
 import com.misterd.mobflowutilities.blockentity.custom.CollectorBlockEntity;
+import com.misterd.mobflowutilities.gui.custom.CollectorMenu;
 import com.misterd.mobflowutilities.util.MFUExperienceUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -10,7 +11,6 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record CollectorXpPacket(BlockPos pos, XpAction action, int amount) implements CustomPacketPayload {
@@ -40,8 +40,10 @@ public record CollectorXpPacket(BlockPos pos, XpAction action, int amount) imple
             Player player = context.player();
             if (!(player instanceof ServerPlayer serverPlayer)) return;
 
-            BlockEntity blockEntity = serverPlayer.level().getBlockEntity(packet.pos());
-            if (!(blockEntity instanceof CollectorBlockEntity collector)) return;
+            if (!(serverPlayer.containerMenu instanceof CollectorMenu menu)) return;
+            if (!menu.stillValid(serverPlayer)) return;
+            CollectorBlockEntity collector = menu.blockEntity;
+            if (collector.isRemoved() || !collector.getBlockPos().equals(packet.pos())) return;
 
             int playerXp = MFUExperienceUtils.getPlayerTotalExperience(serverPlayer);
             int storedXp = collector.getStoredXP();
@@ -82,12 +84,6 @@ public record CollectorXpPacket(BlockPos pos, XpAction action, int amount) imple
                 }
             }
         });
-    }
-
-    private static int getTotalForLevel(int level) {
-        if (level <= 16) return level * level + 6 * level;
-        if (level <= 31) return (int) (2.5 * level * level - 40.5 * level + 360);
-        return (int) Math.min((long) (4.5 * level * level - 162.5 * level + 2220), Integer.MAX_VALUE);
     }
 
     public enum XpAction {

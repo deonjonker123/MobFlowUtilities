@@ -85,7 +85,7 @@ public class MFURecipeProvider extends RecipeProvider {
                 .pattern("GPG")
                 .pattern("PCP")
                 .pattern("GPG")
-                .define('G', Tags.Items.STONES)
+                .define('G', Tags.BlockItems.STONES.item())
                 .define('P', Items.IRON_INGOT)
                 .define('C', Items.PISTON)
                 .unlockedBy("has_piston", has(Items.PISTON))
@@ -98,7 +98,7 @@ public class MFURecipeProvider extends RecipeProvider {
                 .define('G', Items.IRON_INGOT)
                 .define('P', Items.ENDER_PEARL)
                 .define('H', Items.HOPPER)
-                .define('C', Tags.Items.CHESTS)
+                .define('C', Tags.BlockItems.CHESTS.item())
                 .define('E', Items.ENDER_EYE)
                 .unlockedBy("has_ender_pearl", has(Items.ENDER_PEARL))
                 .save(output);
@@ -140,7 +140,7 @@ public class MFURecipeProvider extends RecipeProvider {
                 .pattern("GQG")
                 .pattern("SGS")
                 .define('G', Items.IRON_INGOT)
-                .define('S', Tags.Items.STONES)
+                .define('S', Tags.BlockItems.STONES.item())
                 .define('Q', Items.SUGAR)
                 .unlockedBy("has_sugar", has(Items.SUGAR))
                 .save(output);
@@ -283,7 +283,7 @@ public class MFURecipeProvider extends RecipeProvider {
                 .pattern("XCX")
                 .pattern("GXG")
                 .define('G', Items.IRON_INGOT)
-                .define('X', Tags.Items.GLASS_BLOCKS)
+                .define('X', Tags.BlockItems.GLASS_BLOCKS.item())
                 .define('C', ItemTags.COALS)
                 .unlockedBy("has_coal", has(Items.COAL))
                 .save(output);
@@ -293,7 +293,7 @@ public class MFURecipeProvider extends RecipeProvider {
                 .pattern("XSX")
                 .pattern("GXG")
                 .define('G', Items.IRON_INGOT)
-                .define('X', Tags.Items.GLASS_BLOCKS)
+                .define('X', Tags.BlockItems.GLASS_BLOCKS.item())
                 .define('S', Items.GLOWSTONE)
                 .unlockedBy("has_glowstone", has(Items.GLOWSTONE))
                 .save(output);
@@ -303,7 +303,7 @@ public class MFURecipeProvider extends RecipeProvider {
                 .pattern("XSX")
                 .pattern("GXG")
                 .define('G', Items.IRON_INGOT)
-                .define('X', Tags.Items.GLASS_BLOCKS)
+                .define('X', Tags.BlockItems.GLASS_BLOCKS.item())
                 .define('S', Items.BUCKET)
                 .unlockedBy("has_bucket", has(Items.BUCKET))
                 .save(output);
@@ -322,9 +322,9 @@ public class MFURecipeProvider extends RecipeProvider {
         shaped(RecipeCategory.MISC, MFUItems.EMPTY_GENE_VIAL.get())
                 .pattern("BXB")
                 .pattern(" B ")
-                .define('B', Tags.Items.GLASS_BLOCKS)
+                .define('B', Tags.BlockItems.GLASS_BLOCKS.item())
                 .define('X', ItemTags.WOODEN_BUTTONS)
-                .unlockedBy("has_glass_block", has(Tags.Items.GLASS_BLOCKS))
+                .unlockedBy("has_glass_block", has(Tags.BlockItems.GLASS_BLOCKS.item()))
                 .save(output);
     }
 }
