@@ -80,7 +80,7 @@ Using a Gene Sample Vial with some DNA, a life Catalyst and an emerald, you can 
 
 ### Utility Tools
 
-*   **Mob Catcher**: Capture and release any non-boss mob
+*   **Mob Catcher**: Capture and release any non-boss mobs
 
 ### Decorative Blocks
 
