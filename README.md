@@ -1,5 +1,3 @@
-![MFU](https://raw.githubusercontent.com/deonjonker123/MobFlowUtilities/refs/heads/26.1.2/banner2.png)
-
 ## Automate Mobs
 
 A mob farming automation mod.
@@ -44,6 +42,7 @@ A mob farming automation mod.
 
 Pushes mobs in the facing direction.
 *   Area of effect can be upgraded using fan upgrade module
+* Can be reversed to pull instead of push
 
 ### Pad Wrench
 
