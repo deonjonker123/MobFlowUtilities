@@ -178,8 +178,8 @@
   "item.mobflowutilities.pad_wrench.tooltip.usage.operation": "Shift+Right-click: Toggle Operation Mode",
   "item.mobflowutilities.pad_wrench.tooltip.usage.controller": "Use on Controller: Select Target",
   "item.mobflowutilities.pad_wrench.tooltip.usage.pad": "Use on Pad: Link/Unlink",
-  "item.mobflowutilities.pad_wrench.multi.too_large": "",
-  "item.mobflowutilities.mob_catcher.not_owner": "",
+  "item.mobflowutilities.pad_wrench.multi.too_large": "Selection too large (max %s blocks per side)",
+  "item.mobflowutilities.mob_catcher.not_owner": "You can't capture someone else's pet!",
 
   "fakeplayer.mobflowutilities.damage_pad": "Mob Flow Utilities Damage Pad",
 
