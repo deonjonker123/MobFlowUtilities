@@ -206,6 +206,7 @@ public class MFUItems {
                 public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> adder, TooltipFlag flag) {
                     adder.accept(Component.translatable("item.mobflowutilities.fan.subtitle_line1").withStyle(ChatFormatting.GRAY));
                     adder.accept(Component.translatable("item.mobflowutilities.fan.subtitle_line2").withStyle(ChatFormatting.GRAY));
+                    adder.accept(Component.translatable("tooltip.mobflowutilities.fan.reverse_hint").withStyle(ChatFormatting.GRAY));
                     adder.accept(Component.translatable("tooltip.mobflowutilities.requires_redstone").withStyle(ChatFormatting.RED));
                 }
             });

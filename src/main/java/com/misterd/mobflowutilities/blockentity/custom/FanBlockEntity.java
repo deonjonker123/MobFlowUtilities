@@ -41,7 +41,7 @@ public class FanBlockEntity extends BlockEntity implements MenuProvider {
     private static final int SLOT_COUNT = 3;
 
     private static final double PUSH_STRENGTH = 0.3D;
-    private static final double MAX_PUSH_SPEED = 2.0D; // matches FlowPadBlockEntity
+    private static final double MAX_PUSH_SPEED = 2.0D;
 
     public final ItemStacksResourceHandler inventory = new ItemStacksResourceHandler(SLOT_COUNT) {
         @Override
@@ -122,8 +122,10 @@ public class FanBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     private void pushEntities(ServerLevel level) {
-        Direction facing = getBlockState().getValue(FanBlock.FACING);
+        BlockState state = getBlockState();
+        Direction facing = state.getValue(FanBlock.FACING);
         Vec3 dir = Vec3.atLowerCornerOf(facing.getUnitVec3i());
+        if (state.getValue(FanBlock.REVERSED)) dir = dir.reverse();
 
         for (LivingEntity entity : level.getEntitiesOfClass(LivingEntity.class, getPushZone())) {
             if (!EntityTickingHelper.isTicking(level, entity)) {

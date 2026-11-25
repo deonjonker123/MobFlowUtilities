@@ -29,7 +29,6 @@
   "item.mobflowutilities.gigatank": "ギガタンク",
   "item.mobflowutilities.gigatank.subtitle": "バケツ1024杯分まで液体を保管できる",
   "item.mobflowutilities.fan": "送風機",
-  "item.mobflowutilities.fan.subtitle_line1": "向いている方向へモブを押し出す",
   "item.mobflowutilities.fan.subtitle_line2": "送風機アップグレードで強化できます",
   "item.mobflowutilities.genesis_chamber": "創世室",
   "item.mobflowutilities.genesis_chamber.subtitle": "周囲5x5範囲にモブをスポーンさせる。稼働には燃料が必要",
@@ -53,8 +52,6 @@
   "item.mobflowutilities.looting_module.subtitle": "モブからのアイテムドロップ数とレアドロップ率が増加する",
   "item.mobflowutilities.radius_increase_module": "範囲拡張モジュール",
   "item.mobflowutilities.radius_increase_module.subtitle": "回収機の回収範囲と創世室のスポーン範囲を拡張する",
-  "item.mobflowutilities.void_filter_module": "破棄フィルターモジュール",
-  "item.mobflowutilities.void_filter_module.subtitle": "回収機で回収したアイテムがフィルターと一致していたら破棄する",
   "item.mobflowutilities.speed_module": "速度モジュール",
   "item.mobflowutilities.speed_module.subtitle": "創世室のスポーン頻度を増加させる",
   "item.mobflowutilities.fan_width_increase_module": "送風範囲拡張モジュール",
@@ -184,5 +181,9 @@
   "item.mobflowutilities.pad_wrench.error.controller_missing": "選択したパッド操作機が存在しません",
   "item.mobflowutilities.pad_wrench.error.invalid": "無効なリンク先です",
   "item.mobflowutilities.pad_wrench.multi.skipped_far": "%s個のパッドをスキップしました：遠すぎます（最大%sブロック）",
-  "item.mobflowutilities.pad_wrench.multi.skipped_full": "%s個のパッドをスキップしました：パッド操作機がいっぱいです"
+  "item.mobflowutilities.pad_wrench.multi.skipped_full": "%s個のパッドをスキップしました：パッド操作機がいっぱいです",
+  "item.mobflowutilities.fan.subtitle_line1": "向いている方向にモブを押し出す、または引き寄せる",
+  "tooltip.mobflowutilities.fan.reverse_hint": "素手でShift+右クリックすると押し出し/引き寄せを切り替えます",
+  "message.mobflowutilities.fan.pushing": "ファン: 押し出し",
+  "message.mobflowutilities.fan.pulling": "ファン: 引き寄せ"
 }

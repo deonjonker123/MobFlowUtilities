@@ -55,10 +55,12 @@ public class FanBlockEntityRenderer implements BlockEntityRenderer<FanBlockEntit
         state.facing = blockState.hasProperty(FanBlock.FACING) ? blockState.getValue(FanBlock.FACING) : Direction.NORTH;
 
         boolean powered = blockState.hasProperty(FanBlock.POWERED) && blockState.getValue(FanBlock.POWERED);
+        boolean reversed = blockState.hasProperty(FanBlock.REVERSED) && blockState.getValue(FanBlock.REVERSED);
         Level level = blockEntity.getLevel();
         if (powered && level != null) {
             float ticks = (level.getGameTime() % TICKS_PER_ROTATION) + partialTick;
-            state.angle = (ticks * DEGREES_PER_TICK) % 360.0F;
+            float angle = (ticks * DEGREES_PER_TICK) % 360.0F;
+            state.angle = reversed ? -angle : angle;
         } else {
             state.angle = 0.0F;
         }
