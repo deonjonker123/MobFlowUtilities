@@ -3,6 +3,7 @@
     "mobflowutilities:controller",
     "mobflowutilities:collector",
     "mobflowutilities:genesis_chamber",
+    "mobflowutilities:genesis_infuser",
     "mobflowutilities:fan"
   ]
 }

@@ -4,6 +4,7 @@ import com.misterd.mobflowutilities.block.MFUBlocks;
 import com.misterd.mobflowutilities.config.Config;
 import com.misterd.mobflowutilities.blockentity.MFUBlockEntities;
 import com.misterd.mobflowutilities.gui.custom.GenesisChamberMenu;
+import com.misterd.mobflowutilities.item.MFUItems;
 import com.misterd.mobflowutilities.util.MFUTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -18,7 +19,10 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
@@ -33,8 +37,6 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
@@ -43,6 +45,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvider {
+    public static final int MAX_SPEED_MODULES = 10;
+    public static final int MAX_RADIUS_MODULES = 5;
+    public static final int BURN_SCALE = 1000;
+    private static final int ZONE_CHECK_INTERVAL = 10;
+
     public Entity cachedEntity = null;
 
     private int downUpOffset = 0;
@@ -54,14 +61,44 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
     private int spawnTimer = 0;
 
     private boolean requiresRedstone = false;
+    private boolean zoneIsFull = false;
+
+    private final ContainerData containerData = new ContainerData() {
+        @Override
+        public int get(int index) {
+            return maxBurnTime > 0 ? (int) ((long) burnTime * BURN_SCALE / maxBurnTime) : 0;
+        }
+
+        @Override
+        public void set(int index, int value) {
+        }
+
+        @Override
+        public int getCount() {
+            return 1;
+        }
+    };
 
     public final ItemStackHandler inventory = new ItemStackHandler(4) {
         @Override
         public int getSlotLimit(int slot) {
-            if (slot == 0) {
-                return 1;
-            }
-            return super.getSlotLimit(slot);
+            return switch (slot) {
+                case 0 -> 1;
+                case 2 -> MAX_SPEED_MODULES;
+                case 3 -> MAX_RADIUS_MODULES;
+                default -> super.getSlotLimit(slot);
+            };
+        }
+
+        @Override
+        public boolean isItemValid(int slot, ItemStack stack) {
+            return switch (slot) {
+                case 0 -> stack.getItem() instanceof SpawnEggItem;
+                case 1 -> stack.is(MFUTags.Items.GENESIS_CHAMBER_FUELS);
+                case 2 -> stack.getItem() == MFUItems.SPEED_MODULE.get();
+                case 3 -> stack.getItem() == MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get();
+                default -> false;
+            };
         }
 
         @Override
@@ -232,29 +269,17 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
         }
     }
 
-    public int getBurnTime() {
-        return burnTime;
-    }
-
-    public int getMaxBurnTime() {
-        return maxBurnTime;
+    public ContainerData getContainerData() {
+        return containerData;
     }
 
     public void tick() {
         if (level == null || level.isClientSide()) return;
 
-        boolean wasLit = burnTime > 0;
+        if (requiresRedstone && !level.hasNeighborSignal(worldPosition)) return;
+
         boolean changed = false;
-
-        boolean zoneIsFull = isSpawnZoneFull();
-
-        if (requiresRedstone && !level.hasNeighborSignal(worldPosition)) {
-            if (changed) {
-                setChanged();
-                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
-            }
-            return;
-        }
+        if (level.getGameTime() % ZONE_CHECK_INTERVAL == 0) zoneIsFull = isSpawnZoneFull();
 
         if (burnTime > 0 && !zoneIsFull) {
             burnTime--;
@@ -284,16 +309,14 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
                 if (attemptSpawn()) {
                     spawnTimer = 0;
                     changed = true;
+                    zoneIsFull = isSpawnZoneFull();
                 }
             }
         } else {
             spawnTimer = 0;
         }
 
-        if (changed) {
-            setChanged();
-            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
-        }
+        if (changed) setChanged();
     }
 
     private void spawnFireParticles(ServerLevel serverLevel) {
@@ -321,18 +344,22 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
 
     private boolean canOperate() {
         ItemStack eggStack = inventory.getStackInSlot(0);
-        return eggStack.getItem() instanceof SpawnEggItem;
+        if (!(eggStack.getItem() instanceof SpawnEggItem spawnEgg)) return false;
+        EntityType<?> type = spawnEgg.getType(eggStack);
+        if (type == null) return false;
+        if (type.builtInRegistryHolder().is(MFUTags.Entities.GENESIS_CHAMBER_BLACKLIST)) return false;
+        return !(level.getDifficulty() == Difficulty.PEACEFUL && type.getCategory() == MobCategory.MONSTER);
     }
 
     private int getSpawnInterval() {
         ItemStack speedModules = inventory.getStackInSlot(2);
-        int moduleCount = Math.min(10, speedModules.getCount());
+        int moduleCount = Math.min(MAX_SPEED_MODULES, speedModules.getCount());
         return Math.max(5, 200 - (moduleCount * 20));
     }
 
     private int getSpawnRadius() {
         ItemStack radiusModules = inventory.getStackInSlot(3);
-        int moduleCount = Math.min(5, radiusModules.getCount());
+        int moduleCount = Math.min(MAX_RADIUS_MODULES, radiusModules.getCount());
         return 2 + moduleCount;
     }
 
@@ -413,24 +440,7 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
 
     private boolean isValidLightLevel(BlockPos pos, EntityType<?> entityType) {
         int lightLevel = level.getMaxLocalRawBrightness(pos);
-
-        Entity testEntity = entityType.create(level);
-        if (testEntity instanceof Mob mob) {
-            boolean isFriendly = mob.getType().getCategory().isFriendly();
-
-            testEntity.discard();
-
-            if (isFriendly) {
-                return lightLevel >= 9;
-            } else {
-                return lightLevel <= 7;
-            }
-        }
-
-        if (testEntity != null) {
-            testEntity.discard();
-        }
-        return true;
+        return entityType.getCategory().isFriendly() ? lightLevel >= 9 : lightLevel <= 7;
     }
 
     private int getBurnDuration(ItemStack stack) {
@@ -458,14 +468,6 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
                 pos.getX() + radius + 1 + eastWestOffset,
                 pos.getY() + 2 + downUpOffset,
                 pos.getZ() + radius + 1 + northSouthOffset
-        );
-    }
-
-    public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, MFUBlockEntities.GENESIS_CHAMBER_BE.get(),
-                (blockEntity, direction) -> blockEntity instanceof GenesisChamberBlockEntity genesisChamberBlockEntity
-                        ? genesisChamberBlockEntity.getItemHandler(direction)
-                        : null
         );
     }
 }

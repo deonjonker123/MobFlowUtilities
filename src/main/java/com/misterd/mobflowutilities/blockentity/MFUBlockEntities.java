@@ -53,6 +53,10 @@ public class MFUBlockEntities {
             BLOCK_ENTITIES.register("giga_tank_be", () -> BlockEntityType.Builder.of(
                     GigaTankBlockEntity::new, MFUBlocks.GIGATANK.get()).build(null));
 
+    public static final Supplier<BlockEntityType<GenesisInfuserBlockEntity>> GENESIS_INFUSER_BE =
+            BLOCK_ENTITIES.register("genesis_infuser_be", () -> BlockEntityType.Builder.of(
+                    GenesisInfuserBlockEntity::new, MFUBlocks.GENESIS_INFUSER.get()).build(null));
+
     private static void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, COLLECTOR_BE.get(),
                 (blockEntity, direction) -> {
@@ -83,6 +87,18 @@ public class MFUBlockEntities {
                     }
                     return null;
                 });
+
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, GENESIS_INFUSER_BE.get(),
+                (blockEntity, direction) -> blockEntity instanceof GenesisInfuserBlockEntity infuser
+                        ? infuser.getItemHandler(direction)
+                        : null
+        );
+
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, GENESIS_INFUSER_BE.get(),
+                (blockEntity, direction) -> blockEntity instanceof GenesisInfuserBlockEntity infuser
+                        ? infuser.tank
+                        : null
+        );
 
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, GIGATANK_BE.get(),
                 (blockEntity, direction) -> {

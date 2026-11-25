@@ -3,9 +3,12 @@ package com.misterd.mobflowutilities.block.custom;
 import com.misterd.mobflowutilities.blockentity.MFUBlockEntities;
 import com.misterd.mobflowutilities.blockentity.custom.FanBlockEntity;
 import com.mojang.serialization.MapCodec;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.SimpleMenuProvider;
@@ -31,13 +34,15 @@ public class FanBlock extends BaseEntityBlock {
 
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
+    public static final BooleanProperty REVERSED = BooleanProperty.create("reversed");
     public static final MapCodec<FanBlock> CODEC = simpleCodec(FanBlock::new);
 
     public FanBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(FACING, Direction.NORTH)
-                .setValue(POWERED, false));
+                .setValue(POWERED, false)
+                .setValue(REVERSED, false));
     }
 
     @Override
@@ -52,14 +57,14 @@ public class FanBlock extends BaseEntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, POWERED);
+        builder.add(FACING, POWERED, REVERSED);
     }
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         return this.defaultBlockState()
                 .setValue(FACING, context.getNearestLookingDirection().getOpposite())
-                .setValue(POWERED, false);
+                .setValue(POWERED, context.getLevel().hasNeighborSignal(context.getClickedPos()));
     }
 
     @Override
@@ -75,6 +80,10 @@ public class FanBlock extends BaseEntityBlock {
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (player.isShiftKeyDown() && stack.isEmpty()) {
+            if (!level.isClientSide()) toggleReversed(state, level, pos, player);
+            return ItemInteractionResult.SUCCESS;
+        }
         if (!level.isClientSide()) {
             BlockEntity be = level.getBlockEntity(pos);
             if (be instanceof FanBlockEntity fan) {
@@ -85,6 +94,15 @@ public class FanBlock extends BaseEntityBlock {
             }
         }
         return ItemInteractionResult.SUCCESS;
+    }
+
+    private void toggleReversed(BlockState state, Level level, BlockPos pos, Player player) {
+        boolean reversed = !state.getValue(REVERSED);
+        level.setBlock(pos, state.setValue(REVERSED, reversed), 3);
+        level.playSound(null, pos, SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 0.5F, reversed ? 0.6F : 0.5F);
+        player.displayClientMessage(Component.translatable(reversed
+                ? "message.mobflowutilities.fan.pulling"
+                : "message.mobflowutilities.fan.pushing").withStyle(ChatFormatting.AQUA), true);
     }
 
     @Nullable

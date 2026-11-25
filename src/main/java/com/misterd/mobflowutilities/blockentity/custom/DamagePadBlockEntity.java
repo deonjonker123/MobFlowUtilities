@@ -22,8 +22,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.state.BlockState;
@@ -98,22 +96,8 @@ public class DamagePadBlockEntity extends BlockEntity {
         FakePlayer fakePlayer = this.fakePlayer.get();
 
         if (fakePlayer != null) {
-            ItemStack tempSword = new ItemStack(Items.DIAMOND_SWORD);
-
-            int sharpness = controller.getModuleCount(0);
-            if (sharpness > 0) tempSword.enchant(this.level.holderOrThrow(Enchantments.SHARPNESS), sharpness * 10);
-
-            int fireAspect = controller.getModuleCount(1);
-            if (fireAspect > 0) tempSword.enchant(this.level.holderOrThrow(Enchantments.FIRE_ASPECT), fireAspect);
-
-            int smite = controller.getModuleCount(2);
-            if (smite > 0) tempSword.enchant(this.level.holderOrThrow(Enchantments.SMITE), smite * 10);
-
-            int baneOfArthropods = controller.getModuleCount(3);
-            if (baneOfArthropods > 0) tempSword.enchant(this.level.holderOrThrow(Enchantments.BANE_OF_ARTHROPODS), baneOfArthropods * 10);
-
-            int looting = controller.getModuleCount(4);
-            if (looting > 0) tempSword.enchant(this.level.holderOrThrow(Enchantments.LOOTING), looting);
+            ItemStack tempSword = controller.getWeapon();
+            if (tempSword.isEmpty()) return;
 
             fakePlayer.setItemInHand(InteractionHand.MAIN_HAND, tempSword);
 

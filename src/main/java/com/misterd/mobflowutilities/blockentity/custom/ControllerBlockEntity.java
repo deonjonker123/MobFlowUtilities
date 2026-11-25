@@ -12,6 +12,13 @@ import com.misterd.mobflowutilities.gui.custom.ControllerMenu;
 import com.misterd.mobflowutilities.item.MFUItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.Unbreakable;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.Level;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.LongTag;
@@ -37,6 +44,7 @@ public class ControllerBlockEntity extends BlockEntity implements MenuProvider {
         }
 
         protected void onContentsChanged(int slot) {
+            cachedWeapon = null;
             ControllerBlockEntity.this.setChanged();
             if (!ControllerBlockEntity.this.level.isClientSide()) {
                 ControllerBlockEntity.this.level.sendBlockUpdated(ControllerBlockEntity.this.getBlockPos(), ControllerBlockEntity.this.getBlockState(), ControllerBlockEntity.this.getBlockState(), 3);
@@ -70,6 +78,7 @@ public class ControllerBlockEntity extends BlockEntity implements MenuProvider {
         }
     };
     private final Set<BlockPos> linkedPads = new HashSet();
+    @Nullable private ItemStack cachedWeapon;
     private boolean playerKillMode = false;
 
     public ControllerBlockEntity(BlockPos pos, BlockState blockState) {
@@ -144,6 +153,26 @@ public class ControllerBlockEntity extends BlockEntity implements MenuProvider {
         } else {
             return 0;
         }
+    }
+
+    public ItemStack getWeapon() {
+        if (cachedWeapon == null && level != null) cachedWeapon = buildWeapon(level);
+        return cachedWeapon != null ? cachedWeapon : ItemStack.EMPTY;
+    }
+
+    private ItemStack buildWeapon(Level level) {
+        ItemStack sword = new ItemStack(Items.DIAMOND_SWORD);
+        sword.set(DataComponents.UNBREAKABLE, new Unbreakable(false));
+        enchant(sword, level, Enchantments.SHARPNESS, getModuleCount(0) * 10);
+        enchant(sword, level, Enchantments.FIRE_ASPECT, getModuleCount(1));
+        enchant(sword, level, Enchantments.SMITE, getModuleCount(2) * 10);
+        enchant(sword, level, Enchantments.BANE_OF_ARTHROPODS, getModuleCount(3) * 10);
+        enchant(sword, level, Enchantments.LOOTING, getModuleCount(4));
+        return sword;
+    }
+
+    private static void enchant(ItemStack sword, Level level, ResourceKey<Enchantment> key, int enchantLevel) {
+        if (enchantLevel > 0) sword.enchant(level.holderOrThrow(key), enchantLevel);
     }
 
     public boolean hasSharpnessModule() {
@@ -241,6 +270,7 @@ public class ControllerBlockEntity extends BlockEntity implements MenuProvider {
     protected void loadAdditional(CompoundTag tag, Provider registries) {
         super.loadAdditional(tag, registries);
         this.inventory.deserializeNBT(registries, tag.getCompound("inventory"));
+        this.cachedWeapon = null;
         this.playerKillMode = tag.getBoolean("playerKillMode");
         this.linkedPads.clear();
         if (tag.contains("linkedPads")) {

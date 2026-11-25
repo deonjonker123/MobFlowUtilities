@@ -90,6 +90,17 @@ public class MFURecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_diamond", has(Items.DIAMOND))
                 .save(recipeOutput);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUBlocks.GENESIS_INFUSER.get())
+                .pattern("GSG")
+                .pattern("PHP")
+                .pattern("GSG")
+                .define('G', Items.IRON_INGOT)
+                .define('P', Items.DIAMOND)
+                .define('H', new FluidTagBucketIngredient(MFUTags.Fluids.EXPERIENCE).toVanilla())
+                .define('S', Items.OBSIDIAN)
+                .unlockedBy("has_diamond", has(Items.DIAMOND))
+                .save(recipeOutput);
+
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MFUBlocks.DAMAGE_PAD.get(), 5)
                 .pattern("ISI")
                 .pattern("SGS")

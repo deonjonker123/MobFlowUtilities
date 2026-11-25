@@ -30,6 +30,7 @@ public class MFUCreativeTab {
                         output.accept(MFUBlocks.FAN);
                         output.accept(MFUBlocks.GENESIS_CHAMBER);
                         output.accept(MFUBlocks.GIGATANK);
+                        output.accept(MFUBlocks.GENESIS_INFUSER);
 
                         output.accept(MFUBlocks.DARK_DIRT);
                         output.accept(MFUBlocks.GLIMMER_GRASS);
@@ -54,6 +55,8 @@ public class MFUCreativeTab {
                         output.accept(MFUItems.GLOOM_SPORE);
                         output.accept(MFUItems.GLIMMER_SPROUT);
                         output.accept(MFUItems.LIFE_CATALYST);
+                        output.accept(MFUItems.INFUSED_COAL);
+                        output.accept(MFUItems.INFUSED_CHARCOAL);
                         output.accept(MFUItems.EMPTY_GENE_VIAL);
                         output.accept(MFUItems.GENE_SAMPLE_VIAL);
                         output.accept(MFUItems.MOB_CATCHER);

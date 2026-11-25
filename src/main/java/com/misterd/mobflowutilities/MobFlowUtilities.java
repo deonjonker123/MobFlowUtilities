@@ -1,7 +1,9 @@
 package com.misterd.mobflowutilities;
 
 import com.misterd.mobflowutilities.block.MFUBlocks;
+import com.misterd.mobflowutilities.client.renderer.ber.FanBlockEntityRenderer;
 import com.misterd.mobflowutilities.client.renderer.ber.GenesisChamberBlockEntityRenderer;
+import com.misterd.mobflowutilities.client.renderer.ber.GenesisInfuserBlockEntityRenderer;
 import com.misterd.mobflowutilities.client.renderer.ber.GigaTankBlockEntityRenderer;
 import com.misterd.mobflowutilities.component.MFUDataComponents;
 import com.misterd.mobflowutilities.config.Config;
@@ -21,6 +23,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
@@ -75,9 +78,11 @@ public class MobFlowUtilities {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             event.enqueueWork(() -> {
-                ItemBlockRenderTypes.setRenderLayer(MFUBlocks.GENESIS_CHAMBER.get(), RenderType.translucent());
-                ItemBlockRenderTypes.setRenderLayer(MFUBlocks.COLLECTOR.get(), RenderType.translucent());
-                ItemBlockRenderTypes.setRenderLayer(MFUBlocks.FAN.get(), RenderType.translucent());
+                ItemBlockRenderTypes.setRenderLayer(MFUBlocks.GENESIS_CHAMBER.get(), RenderType.cutoutMipped());
+                ItemBlockRenderTypes.setRenderLayer(MFUBlocks.COLLECTOR.get(), RenderType.cutoutMipped());
+                ItemBlockRenderTypes.setRenderLayer(MFUBlocks.FAN.get(), RenderType.cutoutMipped());
+                ItemBlockRenderTypes.setRenderLayer(MFUBlocks.GENESIS_INFUSER.get(), RenderType.cutoutMipped());
+                ItemBlockRenderTypes.setRenderLayer(MFUBlocks.GIGATANK.get(), RenderType.cutoutMipped());
             });
             MFUItemProperties.addCustomItemProperties();
         }
@@ -91,6 +96,13 @@ public class MobFlowUtilities {
         public static void registerBER(EntityRenderersEvent.RegisterRenderers event) {
             event.registerBlockEntityRenderer(MFUBlockEntities.GENESIS_CHAMBER_BE.get(), GenesisChamberBlockEntityRenderer::new);
             event.registerBlockEntityRenderer(MFUBlockEntities.GIGATANK_BE.get(), GigaTankBlockEntityRenderer::new);
+            event.registerBlockEntityRenderer(MFUBlockEntities.GENESIS_INFUSER_BE.get(), GenesisInfuserBlockEntityRenderer::new);
+            event.registerBlockEntityRenderer(MFUBlockEntities.FAN_BE.get(), FanBlockEntityRenderer::new);
+        }
+
+        @SubscribeEvent
+        public static void registerAdditionalModels(ModelEvent.RegisterAdditional event) {
+            event.register(FanBlockEntityRenderer.FAN_PROP);
         }
 
         @SubscribeEvent
@@ -99,6 +111,7 @@ public class MobFlowUtilities {
             event.register(MFUMenuTypes.CONTROLLER_MENU.get(), ControllerScreen::new);
             event.register(MFUMenuTypes.GENESIS_CHAMBER_MENU.get(), GenesisChamberScreen::new);
             event.register(MFUMenuTypes.FAN_MENU.get(), FanScreen::new);
+            event.register(MFUMenuTypes.GENESIS_INFUSER_MENU.get(), GenesisInfuserScreen::new);
         }
 
         @SubscribeEvent

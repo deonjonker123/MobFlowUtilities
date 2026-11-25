@@ -18,7 +18,7 @@ public class MFUItemTagProvider extends ItemTagsProvider {
 
     public MFUItemTagProvider(PackOutput output,
                               CompletableFuture<HolderLookup.Provider> lookupProvider,
-                              CompletableFuture<TagsProvider.TagLookup<Block>> blockTags,
+                              CompletableFuture<TagLookup<Block>> blockTags,
                               @Nullable ExistingFileHelper existingFileHelper) {
         super(output, lookupProvider, blockTags, "mobflowutilities", existingFileHelper);
     }
@@ -56,6 +56,8 @@ public class MFUItemTagProvider extends ItemTagsProvider {
                 .add(Items.COAL_BLOCK)
                 .add(Items.BLAZE_ROD)
                 .add(Items.LAVA_BUCKET)
+                .add(MFUItems.INFUSED_COAL.get())
+                .add(MFUItems.INFUSED_CHARCOAL.get())
                 .addTag(ItemTags.COALS);
 
         tag(MFUTags.Items.GLIMMER_SPROUT_CRAFTING_ING)

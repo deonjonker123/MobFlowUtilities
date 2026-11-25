@@ -134,8 +134,10 @@ public class FanBlockEntity extends BlockEntity implements MenuProvider {
 
     private void pushEntities(ServerLevel level) {
         AABB zone = getPushZone();
-        Direction facing = getBlockState().getValue(FanBlock.FACING);
+        BlockState state = getBlockState();
+        Direction facing = state.getValue(FanBlock.FACING);
         Vec3 dir = Vec3.atLowerCornerOf(facing.getNormal());
+        if (state.getValue(FanBlock.REVERSED)) dir = dir.reverse();
 
         List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, zone);
 

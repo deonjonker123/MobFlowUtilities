@@ -2,6 +2,7 @@ package com.misterd.mobflowutilities.item.custom;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import com.misterd.mobflowutilities.util.MFUTags;
 import net.minecraft.ChatFormatting;
@@ -17,6 +18,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -49,6 +51,9 @@ public class MobCatcherItem extends Item {
         } else if (target instanceof Player) {
             player.displayClientMessage(Component.translatable("item.mobflowutilities.mob_catcher.player_immunity").withStyle(ChatFormatting.RED), true);
             return InteractionResult.FAIL;
+        } else if (this.isOwnedBySomeoneElse(target, player)) {
+            player.displayClientMessage(Component.translatable("item.mobflowutilities.mob_catcher.not_owner").withStyle(ChatFormatting.RED), true);
+            return InteractionResult.FAIL;
         } else if (this.captureMob(stack, target, player)) {
             player.displayClientMessage(Component.translatable("item.mobflowutilities.mob_catcher.captured", new Object[]{target.getDisplayName().getString()}).withStyle(ChatFormatting.GREEN), true);
             player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.2F);
@@ -71,28 +76,25 @@ public class MobCatcherItem extends Item {
                 return InteractionResult.FAIL;
             } else {
                 BlockState state = level.getBlockState(pos);
-                if (!state.isSolidRender(level, pos)) {
-                    player.displayClientMessage(Component.translatable("item.mobflowutilities.mob_catcher.invalid_surface").withStyle(ChatFormatting.RED), true);
-                    return InteractionResult.FAIL;
+                BlockPos spawnPos = state.getCollisionShape(level, pos).isEmpty() ? pos : pos.relative(context.getClickedFace());
+                if (this.releaseMob(stack, (ServerLevel)level, spawnPos, player)) {
+                    player.displayClientMessage(Component.translatable("item.mobflowutilities.mob_catcher.released").withStyle(ChatFormatting.GREEN), true);
+                    level.playSound(null, spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 0.8F);
+                    return InteractionResult.SUCCESS;
                 } else {
-                    BlockPos spawnPos = pos.above();
-                    if (level.getBlockState(spawnPos).isAir() && level.getBlockState(spawnPos.above()).isAir()) {
-                        if (this.releaseMob(stack, (ServerLevel)level, spawnPos, player)) {
-                            player.displayClientMessage(Component.translatable("item.mobflowutilities.mob_catcher.released").withStyle(ChatFormatting.GREEN), true);
-                            level.playSound(null, spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 0.8F);
-                            return InteractionResult.SUCCESS;
-                        } else {
-                            return InteractionResult.FAIL;
-                        }
-                    } else {
-                        player.displayClientMessage(Component.translatable("item.mobflowutilities.mob_catcher.no_space").withStyle(ChatFormatting.RED), true);
-                        return InteractionResult.FAIL;
-                    }
+                    return InteractionResult.FAIL;
                 }
             }
         } else {
             return InteractionResult.SUCCESS;
         }
+    }
+
+    private boolean isOwnedBySomeoneElse(LivingEntity target, Player player) {
+        if (player.isCreative()) return false;
+        if (!(target instanceof OwnableEntity ownable)) return false;
+        UUID owner = ownable.getOwnerUUID();
+        return owner != null && !owner.equals(player.getUUID());
     }
 
     private boolean isBlacklisted(LivingEntity entity) {
@@ -144,7 +146,15 @@ public class MobCatcherItem extends Item {
                         } else {
                             entity.load(entityTag);
                             entity.setPos(spawnPos.getX() + 0.5D, spawnPos.getY(), spawnPos.getZ() + 0.5D);
-                            level.addFreshEntity(entity);
+                            if (!level.noCollision(entity, entity.getBoundingBox())) {
+                                player.displayClientMessage(Component.translatable("item.mobflowutilities.mob_catcher.no_space").withStyle(ChatFormatting.RED), true);
+                                return false;
+                            }
+                            if (level.getEntity(entity.getUUID()) != null) entity.setUUID(UUID.randomUUID());
+                            if (!level.addFreshEntity(entity)) {
+                                player.displayClientMessage(Component.translatable("item.mobflowutilities.mob_catcher.release_failed").withStyle(ChatFormatting.RED), true);
+                                return false;
+                            }
                             stack.remove(DataComponents.CUSTOM_DATA);
                             return true;
                         }

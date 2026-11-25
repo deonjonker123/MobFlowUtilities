@@ -17,7 +17,7 @@ public class MFUItems {
     public static final DeferredItem<Item> BOA_MODULE = ITEMS.register("bane_of_arthropods_module",
             () -> new Item(new Item.Properties()) {
                 @Override
-                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
                     tooltipComponents.add(Component.translatable("item.mobflowutilities.bane_of_arthropods_module.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
                 }
             });
@@ -25,7 +25,7 @@ public class MFUItems {
     public static final DeferredItem<Item> FIRE_ASPECT_MODULE = ITEMS.register("fire_aspect_module",
             () -> new Item(new Item.Properties()) {
                 @Override
-                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
                     tooltipComponents.add(Component.translatable("item.mobflowutilities.fire_aspect_module.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
                 }
             });
@@ -33,7 +33,7 @@ public class MFUItems {
     public static final DeferredItem<Item> LOOTING_MODULE = ITEMS.register("looting_module",
             () -> new Item(new Item.Properties()) {
                 @Override
-                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
                     tooltipComponents.add(Component.translatable("item.mobflowutilities.looting_module.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
                 }
             });
@@ -41,7 +41,7 @@ public class MFUItems {
     public static final DeferredItem<Item> SHARPNESS_MODULE = ITEMS.register("sharpness_module",
             () -> new Item(new Item.Properties()) {
                 @Override
-                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
                     tooltipComponents.add(Component.translatable("item.mobflowutilities.sharpness_module.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
                 }
             });
@@ -49,7 +49,7 @@ public class MFUItems {
     public static final DeferredItem<Item> SMITE_MODULE = ITEMS.register("smite_module",
             () -> new Item(new Item.Properties()) {
                 @Override
-                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
                     tooltipComponents.add(Component.translatable("item.mobflowutilities.smite_module.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
                 }
             });
@@ -57,7 +57,7 @@ public class MFUItems {
     public static final DeferredItem<Item> COLLECTION_RADIUS_INCREASE_MODULE = ITEMS.register("radius_increase_module",
             () -> new Item(new Item.Properties()) {
                 @Override
-                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
                     tooltipComponents.add(Component.translatable("item.mobflowutilities.radius_increase_module.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
                 }
             });
@@ -65,7 +65,7 @@ public class MFUItems {
     public static final DeferredItem<Item> SPEED_MODULE = ITEMS.register("speed_module",
             () -> new Item(new Item.Properties()) {
                 @Override
-                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
                     tooltipComponents.add(Component.translatable("item.mobflowutilities.speed_module.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
                 }
             });
@@ -73,7 +73,7 @@ public class MFUItems {
     public static final DeferredItem<Item> FAN_WIDTH_INCREASE_MODULE = ITEMS.register("fan_width_increase_module",
             () -> new Item(new Item.Properties()) {
                 @Override
-                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
                     tooltipComponents.add(Component.translatable("item.mobflowutilities.fan_width_increase_module.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
                 }
             });
@@ -81,7 +81,7 @@ public class MFUItems {
     public static final DeferredItem<Item> FAN_HEIGHT_INCREASE_MODULE = ITEMS.register("fan_height_increase_module",
             () -> new Item(new Item.Properties()) {
                 @Override
-                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
                     tooltipComponents.add(Component.translatable("item.mobflowutilities.fan_height_increase_module.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
                 }
             });
@@ -89,7 +89,7 @@ public class MFUItems {
     public static final DeferredItem<Item> FAN_DISTANCE_INCREASE_MODULE = ITEMS.register("fan_distance_increase_module",
             () -> new Item(new Item.Properties()) {
                 @Override
-                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
                     tooltipComponents.add(Component.translatable("item.mobflowutilities.fan_distance_increase_module.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
                 }
             });
@@ -97,7 +97,7 @@ public class MFUItems {
     public static final DeferredItem<Item> GLOOM_SPORE = ITEMS.register("gloom_spore",
             () -> new GloomSporeItem(new Item.Properties()) {
                 @Override
-                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
                     tooltipComponents.add(Component.translatable("item.mobflowutilities.gloom_spore.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
                 }
             });
@@ -105,7 +105,7 @@ public class MFUItems {
     public static final DeferredItem<Item> GLIMMER_SPROUT = ITEMS.register("glimmer_sprout",
             () -> new GlimmerSproutItem(new Item.Properties()) {
                 @Override
-                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
                     tooltipComponents.add(Component.translatable("item.mobflowutilities.glimmer_sprout.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
                 }
             });
@@ -113,8 +113,24 @@ public class MFUItems {
     public static final DeferredItem<Item> LIFE_CATALYST = ITEMS.register("life_catalyst",
             () -> new Item(new Item.Properties()) {
                 @Override
-                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
                     tooltipComponents.add(Component.translatable("item.mobflowutilities.life_catalyst.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
+                }
+            });
+
+    public static final DeferredItem<Item> INFUSED_COAL = ITEMS.register("infused_coal",
+            () -> new Item(new Item.Properties()) {
+                @Override
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("item.mobflowutilities.infused_coal.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
+                }
+            });
+
+    public static final DeferredItem<Item> INFUSED_CHARCOAL = ITEMS.register("infused_charcoal",
+            () -> new Item(new Item.Properties()) {
+                @Override
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("item.mobflowutilities.infused_charcoal.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
                 }
             });
 

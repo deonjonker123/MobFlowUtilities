@@ -31,6 +31,7 @@ public class MFULootTableProvider extends BlockLootSubProvider {
         dropSelf(MFUBlocks.DARK_GLASS.get());
         dropSelf(MFUBlocks.GLIMMER_LAMP.get());
         dropSelf(MFUBlocks.GIGATANK.get());
+        dropSelf(MFUBlocks.GENESIS_INFUSER.get());
 
         add(MFUBlocks.DARK_DIRT.get(),
                 block -> createSilkTouchDispatchTable(

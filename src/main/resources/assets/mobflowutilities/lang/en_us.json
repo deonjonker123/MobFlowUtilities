@@ -9,7 +9,7 @@
   "block.mobflowutilities.collector": "Collector",
   "block.mobflowutilities.controller": "Controller",
   "block.mobflowutilities.fan": "Fan",
-  "block.mobflowutilities.fan.subtitle_line1": "Pushes mobs in the facing direction",
+  "block.mobflowutilities.fan.subtitle_line1": "Pushes or pulls mobs along its facing direction",
   "block.mobflowutilities.fan.subtitle_line2": "Can be upgraded with fan upgrades",
 
   "block.mobflowutilities.genesis_chamber": "Genesis Chamber",
@@ -39,7 +39,7 @@
   "item.mobflowutilities.radius_increase_module": "Radius Increase Module",
   "item.mobflowutilities.radius_increase_module.subtitle": "Extends the pickup range of Collectors and spawn radius of the Genesis Chamber",
   "item.mobflowutilities.speed_module": "Speed Module",
-  "item.mobflowutilities.speed_module.subtitle": "Increases spawn rates of the Genesis Chamber",
+  "item.mobflowutilities.speed_module.subtitle": "Increases spawn rates of the Genesis Chamber and processing speed of the Genesis Infuser",
 
   "item.mobflowutilities.fan_width_increase_module": "Fan Width Increase Module",
   "item.mobflowutilities.fan_width_increase_module.subtitle": "Increases the Fan's effective blowing width",
@@ -175,5 +175,22 @@
 
   "fluid_type.mobflowutilities.liquid_xp": "Liquid XP",
   "block.mobflowutilities.liquid_xp_block": "Liquid XP",
-  "item.mobflowutilities.liquid_xp_bucket": "Liquid XP Bucket"
+  "item.mobflowutilities.liquid_xp_bucket": "Liquid XP Bucket",
+
+  "block.mobflowutilities.genesis_infuser": "Genesis Infuser",
+  "block.mobflowutilities.genesis_infuser.subtitle": "Infuses coal and charcoal with experience to create longer-burning fuel",
+  "item.mobflowutilities.infused_coal": "Infused Coal",
+  "item.mobflowutilities.infused_coal.subtitle": "Burns 8x longer than vanilla coal.",
+  "item.mobflowutilities.infused_charcoal": "Infused Charcoal",
+  "item.mobflowutilities.infused_charcoal.subtitle": "Burns 8x longer than vanilla charcoal.",
+  "gui.mobflowutilities.genesis_infuser": "Genesis Infuser",
+  "menu.mobflowutilities.genesis_infuser": "Genesis Infuser",
+  "tooltip.mobflowutilities.genesis_infuser.tank_empty": "Empty",
+  "tooltip.mobflowutilities.genesis_infuser.progress": "Progress",
+  "tooltip.mobflowutilities.requires_redstone": "Requires a redstone signal to work",
+  "tooltip.mobflowutilities.fan.reverse_hint": "Shift + right-click with an empty hand to switch between push and pull",
+  "message.mobflowutilities.fan.pushing": "Fan set to push",
+  "message.mobflowutilities.fan.pulling": "Fan set to pull",
+  "item.mobflowutilities.pad_wrench.multi.too_large": "Selection too large (max %s blocks per side)",
+  "item.mobflowutilities.mob_catcher.not_owner": "You can't capture someone else's pet!"
 }

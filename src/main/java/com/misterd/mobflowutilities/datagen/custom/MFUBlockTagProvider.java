@@ -35,7 +35,8 @@ public class MFUBlockTagProvider extends BlockTagsProvider {
 
                 .add(MFUBlocks.DARK_GLASS.get())
                 .add(MFUBlocks.GLIMMER_LAMP.get())
-                .add(MFUBlocks.GIGATANK.get());
+                .add(MFUBlocks.GIGATANK.get())
+                .add(MFUBlocks.GENESIS_INFUSER.get());
 
         tag(BlockTags.MINEABLE_WITH_SHOVEL)
                 .add(MFUBlocks.DARK_DIRT.get())
@@ -51,6 +52,7 @@ public class MFUBlockTagProvider extends BlockTagsProvider {
                 .add(MFUBlocks.CONTROLLER.get())
                 .add(MFUBlocks.COLLECTOR.get())
                 .add(MFUBlocks.GENESIS_CHAMBER.get())
+                .add(MFUBlocks.GENESIS_INFUSER.get())
                 .add(MFUBlocks.FAN.get());
 
         tag(BlockTags.WITHER_IMMUNE)

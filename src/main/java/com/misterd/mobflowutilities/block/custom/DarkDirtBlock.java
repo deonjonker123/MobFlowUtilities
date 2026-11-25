@@ -10,6 +10,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
@@ -70,6 +71,7 @@ public class DarkDirtBlock extends Block {
     }
 
     private void attemptMobSpawning(ServerLevel level, BlockPos pos, RandomSource random) {
+        if (level.getDifficulty() == Difficulty.PEACEFUL) return;
         int radius = 8;
         int searchRadius = radius * 2;
         AABB searchBox = new AABB(
@@ -88,8 +90,6 @@ public class DarkDirtBlock extends Block {
             if (spawnPos != null) {
                 List<SpawnerData> biomeSpawners = level.getBiome(spawnPos).value().getMobSettings().getMobs(MobCategory.MONSTER).unwrap();
 
-                // Build the candidate list from the biome, then inject slimes if the
-                // biome doesn't already include them so they can spawn anywhere.
                 List<SpawnerData> spawners = new ArrayList<>(biomeSpawners);
                 boolean hasSlime = spawners.stream().anyMatch(s -> s.type == EntityType.SLIME);
                 if (!hasSlime) {

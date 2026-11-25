@@ -45,7 +45,13 @@ public class MFUBlocks {
             () -> new DamagePadBlock(BlockBehaviour.Properties.of()
                     .strength(3F, 6F)
                     .requiresCorrectToolForDrops()
-                    .sound(SoundType.DEEPSLATE)));
+                    .sound(SoundType.DEEPSLATE))
+            {
+                @Override
+                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("tooltip.mobflowutilities.requires_redstone").withStyle(ChatFormatting.RED));
+                }
+            });
 
     public static final DeferredBlock<Block> DARK_DIRT = registerBlock("dark_dirt",
             () -> new DarkDirtBlock(BlockBehaviour.Properties.of()
@@ -96,24 +102,29 @@ public class MFUBlocks {
                     .strength(3F, 6F)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.STONE)
-                    .noLootTable()));
+                    .noLootTable()
+                    .noOcclusion()));
 
     public static final DeferredBlock<Block> CONTROLLER = registerBlock("controller",
             () -> new ControllerBlock(BlockBehaviour.Properties.of()
                     .strength(3F, 6F)
                     .requiresCorrectToolForDrops()
-                    .sound(SoundType.STONE)));
+                    .sound(SoundType.STONE)
+                    .noOcclusion()));
 
     public static final DeferredBlock<Block> FAN = registerBlock("fan",
             () -> new FanBlock(BlockBehaviour.Properties.of()
                     .strength(3F, 6F)
                     .requiresCorrectToolForDrops()
-                    .sound(SoundType.STONE))
+                    .sound(SoundType.STONE)
+                    .noOcclusion())
             {
                 @Override
                 public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
                     tooltipComponents.add(Component.translatable("block.mobflowutilities.fan.subtitle_line1").withStyle(ChatFormatting.LIGHT_PURPLE));
                     tooltipComponents.add(Component.translatable("block.mobflowutilities.fan.subtitle_line2").withStyle(ChatFormatting.LIGHT_PURPLE));
+                    tooltipComponents.add(Component.translatable("tooltip.mobflowutilities.fan.reverse_hint").withStyle(ChatFormatting.LIGHT_PURPLE));
+                    tooltipComponents.add(Component.translatable("tooltip.mobflowutilities.requires_redstone").withStyle(ChatFormatting.RED));
                 }
             });
 
@@ -136,6 +147,19 @@ public class MFUBlocks {
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.STONE)
                     .noOcclusion()));
+
+    public static final DeferredBlock<Block> GENESIS_INFUSER = registerBlock("genesis_infuser",
+            () -> new GenesisInfuserBlock(BlockBehaviour.Properties.of()
+                    .strength(2.0F)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.STONE)
+                    .noOcclusion())
+            {
+                @Override
+                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("block.mobflowutilities.genesis_infuser.subtitle").withStyle(ChatFormatting.LIGHT_PURPLE));
+                }
+            });
 
     private static <T extends Block> DeferredBlock<T> registerBlock (String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);

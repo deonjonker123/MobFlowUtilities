@@ -9,7 +9,9 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -23,6 +25,7 @@ public class GenesisChamberMenu extends AbstractContainerMenu {
 
     public final GenesisChamberBlockEntity blockEntity;
     private final Level level;
+    private final ContainerData data;
 
     public GenesisChamberMenu(int containerId, Inventory inv, FriendlyByteBuf extraData) {
         this(containerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()));
@@ -38,8 +41,15 @@ public class GenesisChamberMenu extends AbstractContainerMenu {
 
         addSlot(new EggSlot(this.blockEntity.inventory, 0, 80, 23));
         addSlot(new FuelSlot(this.blockEntity.inventory, 1, 80, 71));
-        addSlot(new ModuleSlot(this.blockEntity.inventory, 2, 8, 71, MFUItems.SPEED_MODULE.get()));
-        addSlot(new ModuleSlot(this.blockEntity.inventory, 3, 26, 71, MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get()));
+        addSlot(new ModuleSlot(this.blockEntity.inventory, 2, 8, 71, MFUItems.SPEED_MODULE.get(), GenesisChamberBlockEntity.MAX_SPEED_MODULES));
+        addSlot(new ModuleSlot(this.blockEntity.inventory, 3, 26, 71, MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get(), GenesisChamberBlockEntity.MAX_RADIUS_MODULES));
+
+        this.data = level.isClientSide() ? new SimpleContainerData(1) : this.blockEntity.getContainerData();
+        addDataSlots(data);
+    }
+
+    public int getScaledBurn() {
+        return data.get(0);
     }
 
     @Override
@@ -98,10 +108,12 @@ public class GenesisChamberMenu extends AbstractContainerMenu {
 
     private static class ModuleSlot extends SlotItemHandler {
         private final Item allowedModule;
+        private final int maxStack;
 
-        public ModuleSlot(IItemHandler handler, int index, int x, int y, Item allowedModule) {
+        public ModuleSlot(IItemHandler handler, int index, int x, int y, Item allowedModule, int maxStack) {
             super(handler, index, x, y);
             this.allowedModule = allowedModule;
+            this.maxStack = maxStack;
         }
 
         @Override
@@ -109,10 +121,9 @@ public class GenesisChamberMenu extends AbstractContainerMenu {
             return stack.getItem() == allowedModule;
         }
 
-        // Update max module count
         @Override
         public int getMaxStackSize(ItemStack stack) {
-            return 10;
+            return maxStack;
         }
     }
 

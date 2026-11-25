@@ -1,5 +1,3 @@
-![MFU](https://raw.githubusercontent.com/deonjonker123/MobFlowUtilities/refs/heads/26.1.2/banner2.png)
-
 ## Automate Mobs
 
 A mob farming automation mod.
@@ -23,7 +21,7 @@ A mob farming automation mod.
 
 ### Collector Block
 
-*   Configurable collection area and size. Can be increased with modules
+*   Configurable collection area and size. Can be be increased with modules
 *   Can collect and store XP as a fluid.
 
 ### Genesis Chamber
@@ -35,10 +33,16 @@ A mob farming automation mod.
 *   Respects vanilla spawning rules (hostiles in darkness, passives in light)
 *   Configurable mob limit per zone (default 12)
 
+### Genesis Infuser
+
+*   Infuses coal and charcoal with liquid XP to make Infused Coal and Infused Charcoal, each burning 8x longer than its vanilla counterpart
+*   Takes 125mB of liquid XP per item — a full bucket makes 8 infused items
+
 ### Fan
 
 Pushes mobs in the facing direction.
 *   Area of effect can be upgraded using fan upgrade module
+* Can be reversed to pull instead of push
 
 ### Pad Wrench
 
@@ -69,6 +73,10 @@ Pushes mobs in the facing direction.
 *   **Life Catalyst**: Used for crafting spawn eggs
 
 Using a Gene Sample Vial with some DNA, a life Catalyst and an emerald, you can craft the sampled DNA into a spawn egg. Doesn't work on bosses (except the Warden, cause why not)
+
+### Infused Coal and Charcoal
+
+*   Burns 8x longer than vanilla coal and charcoal. One Infused Coal/Charcoal can smelt a stack (64) of items.
 
 ### Utility Tools
 

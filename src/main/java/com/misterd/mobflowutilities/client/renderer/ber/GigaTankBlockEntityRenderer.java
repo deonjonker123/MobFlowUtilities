@@ -19,6 +19,8 @@ import org.joml.Matrix4f;
 
 public class GigaTankBlockEntityRenderer <T extends BlockEntity> implements BlockEntityRenderer<T> {
 
+    private static final float MIN_VISIBLE_HEIGHT = 0.0625f;
+
     public GigaTankBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
     }
 
@@ -37,15 +39,16 @@ public class GigaTankBlockEntityRenderer <T extends BlockEntity> implements Bloc
 
         int capacity = tank.getCapacity();
         int amount = tank.getFluidAmount();
-        float fillPercentage = (float) amount / capacity;
+        float fillPercentage = Math.min(1f, (float) amount / capacity);
 
-        float minX = 0.025f;
-        float minY = 0.0625f;
-        float minZ = 0.025f;
-        float maxX = 0.975f;
-        float maxZ = 0.975f;
+        float minX = 0.0725f;
+        float minY = 0.135f;
+        float minZ = 0.0725f;
+        float maxX = 0.9275f;
+        float maxZ = 0.9275f;
+        float maxY = 0.865f;
 
-        float fluidHeight = minY + (0.9375f - minY) * fillPercentage;
+        float fluidHeight = minY + Math.max(MIN_VISIBLE_HEIGHT, (maxY - minY) * fillPercentage);
 
         renderFluid(fluidStack.getFluid(), poseStack, bufferSource,
                 minX, minY, minZ, maxX, fluidHeight, maxZ,

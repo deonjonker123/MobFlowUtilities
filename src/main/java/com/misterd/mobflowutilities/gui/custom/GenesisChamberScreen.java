@@ -1,6 +1,7 @@
 package com.misterd.mobflowutilities.gui.custom;
 
 import com.misterd.mobflowutilities.MobFlowUtilities;
+import com.misterd.mobflowutilities.blockentity.custom.GenesisChamberBlockEntity;
 import com.misterd.mobflowutilities.client.renderer.GenesisChamberWireframeRenderer;
 import com.misterd.mobflowutilities.network.ConfigPacket;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -280,21 +281,15 @@ public class GenesisChamberScreen extends AbstractContainerScreen<GenesisChamber
     }
 
     private void renderBurnProgress(GuiGraphics guiGraphics, int x, int y) {
-        if (this.menu.blockEntity != null) {
-            int burnTime = this.menu.blockEntity.getBurnTime();
-            int maxBurnTime = this.menu.blockEntity.getMaxBurnTime();
-
-            if (maxBurnTime > 0) {
-                int progress = (int) (13.0 * burnTime / maxBurnTime);
-
-                if (progress > 0) {
-                    guiGraphics.blit(GUI_TEXTURE,
-                            x + 81, y + 50 + (13 - progress),
-                            176, 13 - progress,
-                            14, progress
-                    );
-                }
-            }
+        int scaledBurn = this.menu.getScaledBurn();
+        if (scaledBurn <= 0) return;
+        int progress = (int) (13.0 * scaledBurn / GenesisChamberBlockEntity.BURN_SCALE);
+        if (progress > 0) {
+            guiGraphics.blit(GUI_TEXTURE,
+                    x + 81, y + 50 + (13 - progress),
+                    176, 13 - progress,
+                    14, progress
+            );
         }
     }
 

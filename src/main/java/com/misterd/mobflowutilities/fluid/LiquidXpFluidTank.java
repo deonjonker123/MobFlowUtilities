@@ -43,15 +43,13 @@ public class LiquidXpFluidTank implements IFluidHandler {
     public int fill(FluidStack resource, FluidAction action) {
         if (resource.isEmpty() || !isFluidValid(0, resource)) return 0;
 
-        int amount = resource.getAmount();
-        int acceptable = amount - (amount % MB_PER_XP);
-        if (acceptable <= 0) return 0;
+        int xpToAdd = Math.min(resource.getAmount() / MB_PER_XP, Integer.MAX_VALUE - collector.getStoredXP());
+        if (xpToAdd <= 0) return 0;
 
         if (action.execute()) {
-            int xpToAdd = acceptable / MB_PER_XP;
             collector.setStoredXP(collector.getStoredXP() + xpToAdd);
         }
-        return acceptable;
+        return xpToAdd * MB_PER_XP;
     }
 
     @Override

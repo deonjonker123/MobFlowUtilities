@@ -22,6 +22,8 @@ public class MFUItemModelProvider extends ItemModelProvider {
         basicItem(MFUItems.LOOTING_MODULE.get());
         basicItem(MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get());
         basicItem(MFUItems.SPEED_MODULE.get());
+        basicItem(MFUItems.INFUSED_COAL.get());
+        basicItem(MFUItems.INFUSED_CHARCOAL.get());
         basicItem(MFUItems.FAN_WIDTH_INCREASE_MODULE.get());
         basicItem(MFUItems.FAN_HEIGHT_INCREASE_MODULE.get());
         basicItem(MFUItems.FAN_DISTANCE_INCREASE_MODULE.get());

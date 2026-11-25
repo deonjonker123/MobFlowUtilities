@@ -430,14 +430,16 @@ public class CollectorBlockEntity extends BlockEntity implements MenuProvider {
     private void collectXP() {
         AABB area = getCollectionArea();
         List<ExperienceOrb> orbs = level.getEntitiesOfClass(ExperienceOrb.class, area);
-        int collected = 0;
+        long collected = 0;
         for (ExperienceOrb orb : orbs) {
             if (!orb.isAlive()) continue;
-            collected += orb.getValue();
+            long value = (long) orb.getValue() * orb.count;
+            if (storedXP + collected + value > Integer.MAX_VALUE) break;
+            collected += value;
             orb.discard();
         }
         if (collected > 0) {
-            storedXP += collected;
+            storedXP += (int) collected;
             setChangedAndUpdate();
         }
     }
