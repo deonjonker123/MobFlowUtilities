@@ -1,6 +1,7 @@
 package com.misterd.mobflowutilities.item.custom;
 
 import java.util.Optional;
+import java.util.UUID;
 import java.util.function.Consumer;
 
 import com.misterd.mobflowutilities.util.MFUTags;
@@ -19,7 +20,9 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -60,6 +63,10 @@ public class MobCatcherItem extends Item {
             player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.player_immunity").withStyle(ChatFormatting.RED));
             return InteractionResult.FAIL;
         }
+        if (isOwnedBySomeoneElse(target, player)) {
+            player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.not_owner").withStyle(ChatFormatting.RED));
+            return InteractionResult.FAIL;
+        }
         if (captureMob(stack, target, player)) {
             player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.captured", target.getDisplayName().getString()).withStyle(ChatFormatting.GREEN));
             player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.2F);
@@ -83,16 +90,7 @@ public class MobCatcherItem extends Item {
         }
 
         BlockState state = level.getBlockState(pos);
-        if (!state.isSolidRender()) {
-            player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.invalid_surface").withStyle(ChatFormatting.RED));
-            return InteractionResult.FAIL;
-        }
-
-        BlockPos spawnPos = pos.above();
-        if (!level.getBlockState(spawnPos).isAir() || !level.getBlockState(spawnPos.above()).isAir()) {
-            player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.no_space").withStyle(ChatFormatting.RED));
-            return InteractionResult.FAIL;
-        }
+        BlockPos spawnPos = state.getCollisionShape(level, pos).isEmpty() ? pos : pos.relative(context.getClickedFace());
 
         if (releaseMob(stack, (ServerLevel) level, spawnPos, player)) {
             player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.released").withStyle(ChatFormatting.GREEN));
@@ -100,6 +98,13 @@ public class MobCatcherItem extends Item {
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.FAIL;
+    }
+
+    private boolean isOwnedBySomeoneElse(LivingEntity target, Player player) {
+        if (player.isCreative()) return false;
+        if (!(target instanceof OwnableEntity ownable)) return false;
+        EntityReference<LivingEntity> owner = ownable.getOwnerReference();
+        return owner != null && !owner.getUUID().equals(player.getUUID());
     }
 
     private boolean isBlacklisted(LivingEntity entity) {
@@ -153,7 +158,15 @@ public class MobCatcherItem extends Item {
             ValueInput input = TagValueInput.create(ProblemReporter.DISCARDING, level.registryAccess(), entityTag);
             entity.load(input);
             entity.snapTo(spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5);
-            level.addFreshEntity(entity);
+            if (!level.noCollision(entity, entity.getBoundingBox())) {
+                player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.no_space").withStyle(ChatFormatting.RED));
+                return false;
+            }
+            if (level.getEntity(entity.getUUID()) != null) entity.setUUID(UUID.randomUUID());
+            if (!level.addFreshEntity(entity)) {
+                player.sendOverlayMessage(Component.translatable("item.mobflowutilities.mob_catcher.release_failed").withStyle(ChatFormatting.RED));
+                return false;
+            }
             stack.remove(DataComponents.CUSTOM_DATA);
             return true;
         } catch (Exception e) {

@@ -17,8 +17,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.state.BlockState;
@@ -38,7 +36,7 @@ public class DamagePadBlockEntity extends BlockEntity {
     @Nullable private UUID placer;
     private WeakReference<FakePlayer> fakePlayer = new WeakReference<>(null);
 
-    private static final float BASE_DAMAGE  = 5.0F;
+    private static final float BASE_DAMAGE = 5.0F;
     private static final int DAMAGE_INTERVAL = 5;
     private int tickCounter = 0;
 
@@ -54,6 +52,7 @@ public class DamagePadBlockEntity extends BlockEntity {
 
     public void tick() {
         if (level == null || level.isClientSide()) return;
+        if (controllerPos != null && level.getGameTime() % 100 == 0) getLinkedController();
         tickCounter++;
         if (tickCounter >= DAMAGE_INTERVAL) {
             tickCounter = 0;
@@ -86,22 +85,8 @@ public class DamagePadBlockEntity extends BlockEntity {
         FakePlayer fp = fakePlayer.get();
         if (fp == null) return;
 
-        ItemStack sword = new ItemStack(Items.DIAMOND_SWORD);
-
-        int sharpness = controller.getModuleCount(0);
-        if (sharpness > 0) sword.enchant(level.holderOrThrow(Enchantments.SHARPNESS), sharpness * 10);
-
-        int fireAspect = controller.getModuleCount(1);
-        if (fireAspect > 0) sword.enchant(level.holderOrThrow(Enchantments.FIRE_ASPECT), fireAspect);
-
-        int smite = controller.getModuleCount(2);
-        if (smite > 0) sword.enchant(level.holderOrThrow(Enchantments.SMITE),smite * 10);
-
-        int boa = controller.getModuleCount(3);
-        if (boa > 0) sword.enchant(level.holderOrThrow(Enchantments.BANE_OF_ARTHROPODS), boa * 10);
-
-        int looting = controller.getModuleCount(4);
-        if (looting > 0) sword.enchant(level.holderOrThrow(Enchantments.LOOTING), looting);
+        ItemStack sword = controller.getWeapon();
+        if (sword.isEmpty()) return;
 
         fp.setItemInHand(InteractionHand.MAIN_HAND, sword);
         sword.forEachModifier(EquipmentSlot.MAINHAND, (attr, mod) -> {
@@ -131,8 +116,24 @@ public class DamagePadBlockEntity extends BlockEntity {
     @Nullable
     private ControllerBlockEntity getLinkedController() {
         if (controllerPos == null || level == null) return null;
+        if (!level.hasChunkAt(controllerPos)) return null;
         BlockEntity be = level.getBlockEntity(controllerPos);
-        return be instanceof ControllerBlockEntity c ? c : null;
+        if (be instanceof ControllerBlockEntity c && c.hasPad(worldPosition)) return c;
+        setControllerPosInternal(null);
+        return null;
+    }
+
+    public void onControllerRemoved() {
+        setControllerPosInternal(null);
+    }
+
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        if (controllerPos == null || level == null || level.isClientSide()) return;
+        if (!level.hasChunkAt(controllerPos)) return;
+        if (level.getBlockEntity(controllerPos) instanceof ControllerBlockEntity controller) {
+            controller.removePad(worldPosition);
+        }
     }
 
     @Nullable

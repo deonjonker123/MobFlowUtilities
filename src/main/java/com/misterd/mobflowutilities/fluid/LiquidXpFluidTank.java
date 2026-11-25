@@ -51,12 +51,11 @@ public class LiquidXpFluidTank implements ResourceHandler<FluidResource> {
     public int insert(int index, FluidResource resource, int amount, TransactionContext transaction) {
         TransferPreconditions.checkNonEmptyNonNegative(resource, amount);
         if (!isValid(index, resource)) return 0;
-        int acceptable = amount - (amount % MB_PER_XP);
-        if (acceptable <= 0) return 0;
-        int xpToAdd = acceptable / MB_PER_XP;
+        int xpToAdd = Math.min(amount / MB_PER_XP, Integer.MAX_VALUE - collector.getStoredXP());
+        if (xpToAdd <= 0) return 0;
         journal.updateSnapshots(transaction);
-        collector.setStoredXP(collector.getStoredXP() + xpToAdd);
-        return acceptable;
+        collector.setStoredXPWithoutUpdate(collector.getStoredXP() + xpToAdd);
+        return xpToAdd * MB_PER_XP;
     }
 
     @Override
@@ -69,7 +68,7 @@ public class LiquidXpFluidTank implements ResourceHandler<FluidResource> {
         int xpAvailable = Math.min(collector.getStoredXP(), xpNeeded);
         if (xpAvailable <= 0) return 0;
         journal.updateSnapshots(transaction);
-        collector.setStoredXP(collector.getStoredXP() - xpAvailable);
+        collector.setStoredXPWithoutUpdate(collector.getStoredXP() - xpAvailable);
         return xpAvailable * MB_PER_XP;
     }
 
@@ -81,7 +80,7 @@ public class LiquidXpFluidTank implements ResourceHandler<FluidResource> {
 
         @Override
         protected void revertToSnapshot(Integer snapshot) {
-            collector.setStoredXP(snapshot);
+            collector.setStoredXPWithoutUpdate(snapshot);
         }
 
         @Override

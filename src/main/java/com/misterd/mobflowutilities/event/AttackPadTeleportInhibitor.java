@@ -5,7 +5,6 @@ import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.EnderMan;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.bus.api.EventPriority;
@@ -33,11 +32,7 @@ public class AttackPadTeleportInhibitor {
     }
 
     private static boolean shouldBlockTeleportation(LivingEntity entity) {
-        if (entity instanceof EnderMan) {
-            return true;
-        } else {
-            return entity instanceof Player ? false : false;
-        }
+        return entity instanceof EnderMan;
     }
 
     private static boolean isNearAttackPad(LivingEntity entity) {

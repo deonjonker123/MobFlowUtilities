@@ -19,7 +19,10 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -35,8 +38,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
-import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
@@ -54,6 +55,10 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
     private static final int SLOT_MODULE_1 = 2;
     private static final int SLOT_MODULE_2 = 3;
     private static final int SLOT_COUNT = 4;
+    public static final int MAX_SPEED_MODULES = 10;
+    public static final int MAX_RADIUS_MODULES = 5;
+    public static final int BURN_SCALE = 1000;
+    private static final int ZONE_CHECK_INTERVAL = 10;
 
     public Entity cachedEntity = null;
 
@@ -62,6 +67,8 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
         public long getCapacityAsLong(int index, ItemResource resource) {
             return switch (index) {
                 case SLOT_EGG -> 1;
+                case SLOT_MODULE_1 -> MAX_SPEED_MODULES;
+                case SLOT_MODULE_2 -> MAX_RADIUS_MODULES;
                 default -> resource.toStack().getMaxStackSize();
             };
         }
@@ -73,8 +80,8 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
             return switch (index) {
                 case SLOT_EGG -> stack.getItem() instanceof SpawnEggItem;
                 case SLOT_FUEL -> stack.is(MFUTags.Items.GENESIS_CHAMBER_FUELS);
-                case SLOT_MODULE_1, SLOT_MODULE_2 ->
-                        stack.getItem() == MFUItems.SPEED_MODULE.get() || stack.getItem() == MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get();
+                case SLOT_MODULE_1 -> stack.getItem() == MFUItems.SPEED_MODULE.get();
+                case SLOT_MODULE_2 -> stack.getItem() == MFUItems.COLLECTION_RADIUS_INCREASE_MODULE.get();
                 default -> false;
             };
         }
@@ -96,6 +103,23 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
     private int spawnTimer = 0;
 
     private boolean requiresRedstone = false;
+    private boolean zoneIsFull = false;
+
+    private final ContainerData containerData = new ContainerData() {
+        @Override
+        public int get(int index) {
+            return maxBurnTime > 0 ? (int) ((long) burnTime * BURN_SCALE / maxBurnTime) : 0;
+        }
+
+        @Override
+        public void set(int index, int value) {
+        }
+
+        @Override
+        public int getCount() {
+            return 1;
+        }
+    };
 
     public GenesisChamberBlockEntity(BlockPos pos, BlockState blockState) {
         super(MFUBlockEntities.GENESIS_CHAMBER_BE.get(), pos, blockState);
@@ -144,11 +168,6 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
         };
     }
 
-    public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-        event.registerBlockEntity(Capabilities.Item.BLOCK, MFUBlockEntities.GENESIS_CHAMBER_BE.get(),
-                (be, dir) -> be instanceof GenesisChamberBlockEntity gc ? gc.getItemHandler(dir) : null);
-    }
-
     @Override
     public Component getDisplayName() {
         return Component.translatable("gui.mobflowutilities.genesis_chamber");
@@ -184,12 +203,8 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
         eastWestOffset = Math.max(-10, Math.min(10, v)); setChanged();
     }
 
-    public int getBurnTime() {
-        return burnTime;
-    }
-
-    public int getMaxBurnTime() {
-        return maxBurnTime;
+    public ContainerData getContainerData() {
+        return containerData;
     }
 
     public boolean getRequiresRedstone() {
@@ -231,16 +246,10 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
     public void tick() {
         if (level == null || level.isClientSide()) return;
 
-        boolean changed = false;
-        boolean zoneIsFull = isSpawnZoneFull();
+        if (requiresRedstone && !level.hasNeighborSignal(worldPosition)) return;
 
-        if (requiresRedstone && !level.hasNeighborSignal(worldPosition)) {
-            if (changed) {
-                setChanged();
-                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
-            }
-            return;
-        }
+        boolean changed = false;
+        if (level.getGameTime() % ZONE_CHECK_INTERVAL == 0) zoneIsFull = isSpawnZoneFull();
 
         if (burnTime > 0 && !zoneIsFull) { burnTime--; changed = true; }
 
@@ -264,29 +273,35 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
             spawnFireParticles((ServerLevel) level);
             spawnTimer++;
             if (spawnTimer >= getSpawnInterval()) {
-                if (attemptSpawn()) { spawnTimer = 0; changed = true; }
+                if (attemptSpawn()) {
+                    spawnTimer = 0;
+                    changed = true;
+                    zoneIsFull = isSpawnZoneFull();
+                }
             }
         } else {
             spawnTimer = 0;
         }
 
-        if (changed) {
-            setChanged();
-            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
-        }
+        if (changed) setChanged();
     }
 
     private boolean canOperate() {
-        return getStack(SLOT_EGG).getItem() instanceof SpawnEggItem;
+        ItemStack egg = getStack(SLOT_EGG);
+        if (!(egg.getItem() instanceof SpawnEggItem spawnEgg)) return false;
+        EntityType<?> type = spawnEgg.getType(egg);
+        if (type == null) return false;
+        if (type.builtInRegistryHolder().is(MFUTags.Entities.GENESIS_CHAMBER_BLACKLIST)) return false;
+        return !(level.getDifficulty() == Difficulty.PEACEFUL && type.getCategory() == MobCategory.MONSTER);
     }
 
     private int getSpawnInterval() {
-        int modules = Math.min(10, inventory.getAmountAsInt(SLOT_MODULE_1));
+        int modules = Math.min(MAX_SPEED_MODULES, inventory.getAmountAsInt(SLOT_MODULE_1));
         return Math.max(5, 200 - (modules * 20));
     }
 
     private int getSpawnRadius() {
-        int modules = Math.min(5, inventory.getAmountAsInt(SLOT_MODULE_2));
+        int modules = Math.min(MAX_RADIUS_MODULES, inventory.getAmountAsInt(SLOT_MODULE_2));
         return 2 + modules;
     }
 
@@ -331,9 +346,9 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
 
     private boolean isValidSpawnPosition(BlockPos pos) {
         BlockState ground = level.getBlockState(pos);
-        BlockState above  = level.getBlockState(pos.above());
+        BlockState above = level.getBlockState(pos.above());
         return (ground.isAir() || ground.canBeReplaced() || isPad(ground.getBlock())) &&
-                (above.isAir()  || above.canBeReplaced()  || isPad(above.getBlock()));
+                (above.isAir() || above.canBeReplaced() || isPad(above.getBlock()));
     }
 
     private boolean isPad(Block block) {
@@ -345,14 +360,7 @@ public class GenesisChamberBlockEntity extends BlockEntity implements MenuProvid
 
     private boolean isValidLightLevel(BlockPos pos, EntityType<?> type) {
         int light = level.getMaxLocalRawBrightness(pos);
-        Entity test = type.create(level, EntitySpawnReason.NATURAL);
-        if (test instanceof Mob mob) {
-            boolean friendly = mob.getType().getCategory().isFriendly();
-            test.discard();
-            return friendly ? light >= 9 : light <= 7;
-        }
-        if (test != null) test.discard();
-        return true;
+        return type.getCategory().isFriendly() ? light >= 9 : light <= 7;
     }
 
     private int getBurnDuration(ItemStack stack) {

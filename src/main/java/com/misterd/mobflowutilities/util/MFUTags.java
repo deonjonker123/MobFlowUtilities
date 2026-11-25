@@ -47,6 +47,7 @@ public class MFUTags {
     public static class Entities {
         public static final TagKey<EntityType<?>> CANNOT_SAMPLE = createTag("mobflowutilities", "cannot_sample");
         public static final TagKey<EntityType<?>> CANNOT_CATCH = createTag("mobflowutilities", "cannot_catch");
+        public static final TagKey<EntityType<?>> GENESIS_CHAMBER_BLACKLIST = createTag("mobflowutilities", "genesis_chamber_blacklist");
 
         private static TagKey<EntityType<?>> createTag(String namespace, String name) {
             return TagKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(namespace, name));

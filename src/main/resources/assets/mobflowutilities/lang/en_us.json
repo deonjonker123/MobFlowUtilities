@@ -37,7 +37,7 @@
   "item.mobflowutilities.gigatank": "Giga Tank",
   "item.mobflowutilities.gigatank.subtitle": "Holds 1024 buckets",
   "item.mobflowutilities.fan": "Fan",
-  "item.mobflowutilities.fan.subtitle_line1": "Pushes mobs in the facing direction",
+  "item.mobflowutilities.fan.subtitle_line1": "Pushes or pulls mobs along its facing direction",
   "item.mobflowutilities.fan.subtitle_line2": "Can be upgraded with fan upgrades",
 
   "item.mobflowutilities.genesis_chamber": "Genesis Chamber",
@@ -220,5 +220,11 @@
   "item.mobflowutilities.pad_wrench.error.controller_missing": "Selected controller no longer exists",
   "item.mobflowutilities.pad_wrench.error.invalid": "Invalid link target",
   "item.mobflowutilities.pad_wrench.multi.skipped_far": "%s pad(s) skipped: too far (max %s blocks)",
-  "item.mobflowutilities.pad_wrench.multi.skipped_full": "%s pad(s) skipped: controller full"
+  "item.mobflowutilities.pad_wrench.multi.skipped_full": "%s pad(s) skipped: controller full",
+  "tooltip.mobflowutilities.requires_redstone": "Requires a redstone signal to work",
+  "tooltip.mobflowutilities.fan.reverse_hint": "Shift + right-click with an empty hand to switch between push and pull",
+  "message.mobflowutilities.fan.pushing": "Fan set to push",
+  "message.mobflowutilities.fan.pulling": "Fan set to pull",
+  "item.mobflowutilities.pad_wrench.multi.too_large": "Selection too large (max %s blocks per side)",
+  "item.mobflowutilities.mob_catcher.not_owner": "You can't capture someone else's pet!"
 }
